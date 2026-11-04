@@ -29,8 +29,16 @@ A variant of an Element built as its own separate model named `Name_State`, swap
 _Avoid_: variant, skin
 
 **Piece**:
-One separately built part of a room shell (floor, a wall, ceiling) so the camera can hide walls.
-_Avoid_: part, section
+One separately built section of a room shell (floor, a wall, ceiling) so the camera can hide walls.
+_Avoid_: section
+
+**Part**:
+One named shape inside an Element (the bezel, neck, base of a Monitor). Listed with a size and colour key in the Spec, and placed relative to other Parts in the Layout.
+_Avoid_: component, shape
+
+**Layout**:
+The `layout.toml` of one Element. Says where each Part sits relative to the others; the Spec says what the Parts are. Generated build output is never edited by hand.
+_Avoid_: model file, placement file
 
 **Assembly**:
 A group of built Elements put together by hand in Blender, with no build call of its own.

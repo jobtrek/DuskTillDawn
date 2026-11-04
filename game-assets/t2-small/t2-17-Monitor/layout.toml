@@ -1,0 +1,50 @@
+# Monitor layout. Spec gives sizes and colours; this says where each Part sits.
+[base]
+
+[neck]
+on = "base.top"
+y = "flush-back"
+
+[bezel]
+on = "neck.top"
+offset_z = -5.5          # lower end overlaps the neck
+
+[screen]
+on = "bezel.front"
+gap = -0.78              # sunk into the front face
+align = "top"
+offset_z = -2.3
+
+["power LED"]
+on = "bezel.front"
+align = ["left", "bottom"]
+offset_x = 3.9
+offset_z = 0.78
+
+[buttons]
+on = "bezel.front"
+align = ["right", "bottom"]
+offset_x = -4.7
+offset_z = 0.78
+repeat = { x = 4, pitch_x = 3.1 }
+
+["back vents"]
+on = "bezel.back"
+size = [0.78, 0.78, 8]
+align = "top"
+offset_z = -3.1
+repeat = { x = 7, pitch_x = 4.7 }
+
+["VESA plate"]
+on = "bezel.back"
+size = [10, 0.78, 6]
+align = "bottom"
+offset_z = 3.9
+
+[ports]
+on = "bezel.back"
+size = [2, 0.78, 2]
+align = ["right", "bottom"]
+offset_x = -4
+offset_z = 3.9
+repeat = { x = 4, pitch_x = 3.1 }

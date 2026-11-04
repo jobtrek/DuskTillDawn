@@ -29,6 +29,7 @@ Add the small features: power LED, buttons, back vents, VESA plate, ports.
 - [2] bezel: 54 x 5 x 28 cm, plastic_black
 - [2] neck: 6 x 5 x 12 cm, chassis_dark
 - [2] base: 22 x 17 x 1.5 cm, chassis
+- [2] screen: 49 x 1 x 23 cm, screen
 - [3] power LED: 1 cm, led_green
 - [3] buttons: 2 x 1 cm, trim
 - [3] back vents: 1 x 8 cm slots, seam

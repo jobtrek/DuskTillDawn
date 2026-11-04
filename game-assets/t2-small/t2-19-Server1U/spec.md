@@ -31,11 +31,14 @@ Add the small features: vents, drive bays, 2×2 LEDs, power button, screws.
 
 ## Parts (tier; cm size + colour key to fill before first build)
 
-- [1] chassis 45 x 60 x 4.4 cm, chassis
-- [2] bezel 42 x 0.8 x 4.4 cm, chassis_dark
-- [2] rack ear handles 2x 1.6 x 5.5 x 4.4 cm, metal
-- [3] vents (tile) 8 slits 0.8 x 3 cm, seam
-- [3] drive bays 3x 4.7 x 3 cm, metal_dark
-- [3] 2x2 LEDs: activity (led_green) + status (green / orange / red / off)
-- [3] power button 1.6 cm, trim; screws 4x, metal
-- [3] label 8 x 5 cm on top, label
+- [1] chassis: 45 x 60 x 4.4 cm, chassis
+- [2] bezel: 42 x 0.8 x 4.4 cm, chassis_dark
+- [2] rack ear left: 1.6 x 5.5 x 4.4 cm, metal
+- [2] rack ear right: 1.6 x 5.5 x 4.4 cm, metal
+- [3] vents: 0.8 x 3 cm slits (8x), seam
+- [3] drive bays: 4.7 x 3 cm (3x), metal_dark
+- [3] activity LED: 1.6 cm, led_green
+- [3] status LED: 1.6 cm, led_green
+- [3] power button: 1.6 cm, trim
+- [3] screws: 0.8 cm (4x), metal
+- [3] label: 8 x 5 cm on top, label

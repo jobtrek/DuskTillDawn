@@ -29,6 +29,7 @@ Add the small features: coffee surface, logo label, base ring, chip wear.
 
 ## Parts (tier; cm size + colour key to fill before first build)
 
+- [1] body: 7.8 x 7.8 x 7.8 cm, plastic_white
 - [2] handle: 3 x 2 x 7 cm, plastic_white
 - [2] rim: 1 cm top ring, trim
 - [3] coffee surface: 7 x 7 cm, wood_dark
