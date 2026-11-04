@@ -32,8 +32,10 @@ def test_layout_matches_existing_build_within_one_voxel(element):
     assert abs(r.counts[dominant] - counts[dominant]) / counts[dominant] < 0.05
 
 
-# Mug and Server1U have States, which stay hand-authored in v1, so only Monitor's build.py is generated.
+# build.py is generated and git-ignored; check the thin form stays small and the standalone form is complete.
 @pytest.mark.parametrize('element', ['t2-small/t2-17-Monitor'])
-def test_checked_in_build_py_is_current(element):
-    assert (ASSETS / element / 'build.py').read_text() == render(ASSETS / element)[0], \
-        f'stale build.py, run: uv run voxel-sdk build {element}'
+def test_thin_build_is_short_and_standalone_is_complete(element):
+    thin, _ = render(ASSETS / element)
+    full, _ = render(ASSETS / element, standalone=True)
+    assert len(thin.splitlines()) < 120 < len(full.splitlines())
+    assert 'engine_blender.py' in thin and 'def build(' not in thin and 'def build(' in full
