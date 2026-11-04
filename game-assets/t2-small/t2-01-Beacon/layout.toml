@@ -1,0 +1,48 @@
+["square base"]
+
+["darker base lip"]
+on = "square base.top"
+gap = -0.78
+shape = "hollow"
+
+["base bolts"]
+on = "square base.top"
+repeat = { x = 2, pitch_x = 9.38, y = 2, pitch_y = 9.38 }
+
+[lens]
+on = "square base.top"
+shape = "hollow"
+
+["lens 2"]
+on = "lens.top"
+shape = "hollow"
+
+["lens 3"]
+on = "lens 2.top"
+shape = "hollow"
+
+["glowing bulb inside"]
+on = "base bolts.top"
+
+["top cap"]
+on = "lens 3.top"
+
+["vertical lens ribs"]
+on = "base bolts.top"
+offset_y = -3.91
+repeat = { x = 2, pitch_x = 4.69 }
+
+["vertical lens ribs 2"]
+on = "base bolts.top"
+offset_y = 3.91
+repeat = { x = 2, pitch_x = 4.69 }
+
+[cable]
+on = "square base.back"
+align = "bottom"
+
+[states.On]
+lens = { key = "led_orange" }
+"lens 2" = { key = "led_orange" }
+"lens 3" = { key = "led_orange" }
+"glowing bulb inside" = { key = "led_yellow" }

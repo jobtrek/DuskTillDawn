@@ -1,0 +1,52 @@
+[palette]
+cable = [0.1, 0.1, 0.12]
+
+["keyboard case"]
+
+["rubber tilt feet"]
+on = "keyboard case.bottom"
+y = "flush-back"
+repeat = { x = 2, pitch_x = 39.06, y = 2, pitch_y = 10.94 }
+
+["upper key rows"]
+on = "keyboard case.top"
+offset_x = -3.91
+offset_y = 1.56
+repeat = { x = 14, pitch_x = 2.34, y = 4, pitch_y = 2.34 }
+
+["bottom row left modifier"]
+on = "keyboard case.top"
+offset_x = -17.19
+offset_y = -3.91
+repeat = { x = 3, pitch_x = 2.34 }
+
+["space bar"]
+on = "keyboard case.top"
+offset_x = -7.81
+offset_y = -3.91
+
+["bottom row right keys"]
+on = "keyboard case.top"
+offset_x = 5.47
+offset_y = -3.91
+repeat = { x = 7, pitch_x = 2.34 }
+
+["arrow cluster"]
+on = "keyboard case.top"
+offset_x = 17.19
+offset_y = -3.91
+repeat = { x = 3, pitch_x = 2.34 }
+
+["arrow cluster 2"]
+on = "keyboard case.top"
+offset_x = 17.19
+offset_y = -1.56
+
+["brand label strip"]
+on = "keyboard case.top"
+gap = -0.78
+y = "flush-back"
+offset_x = 18.75
+
+["cable out"]
+on = "keyboard case.back"

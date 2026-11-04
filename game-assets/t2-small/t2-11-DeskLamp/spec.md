@@ -29,10 +29,10 @@ Add the small features: switch, hinge joints, cable, bulb.
 
 ## Parts (tier; cm size + colour key to fill before first build)
 
-- [2] arm
-- [2] shade
-- [2] base
-- [3] switch
-- [3] hinge joints
-- [3] cable
-- [3] bulb
+- [2] arm: 2 x 2 x 30 cm, metal
+- [2] shade: 14 x 12 x 12 cm, chassis
+- [2] base: 12 x 12 x 3 cm, chassis_dark
+- [3] switch: 2 x 1 x 1 cm, trim
+- [3] hinge joints: 4 x 4 cm, metal_dark
+- [3] cable: 1 cm, rubber
+- [3] bulb: 3 x 3 x 3 cm, led_yellow

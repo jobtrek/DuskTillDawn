@@ -26,9 +26,11 @@ Add the small features: glazing bars, handle, sill, hinge.
 
 ## Parts (tier; cm size + colour key to fill before first build)
 
-- [2] frame
-- [2] glass
-- [3] glazing bars
-- [3] handle
-- [3] sill
-- [3] hinge
+- [2] outer frame ring: 120.31 x 9.38 x 120.31 cm, trim
+- [2] glass pane: 104.69 x 3.12 x 104.69 cm, glass
+- [3] vertical and horizontal glazing: 3.12 x 6.25 x 104.69 cm, plastic_white
+- [3] vertical and horizontal glazing 2: 104.69 x 6.25 x 3.12 cm, plastic_white
+- [3] concrete sill sticking out: 120.31 x 1.56 x 4.69 cm, concrete
+- [3] window handle: 4.69 x 3.12 x 15.62 cm, metal
+- [2] hinges: 4.69 x 1.56 x 9.38 cm, 2 copies, metal_dark
+
