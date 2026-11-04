@@ -1,4 +1,4 @@
-# Mug (t1-06) -- fully self-contained Blender script.
+# InverterBox (t2-20) -- fully self-contained Blender script.
 # Usage: Blender > Scripting workspace > Open this file > Run Script (Alt+P).
 # Needs Blender 4.x/5.x (bundled numpy). No other files needed.
 # To modify: edit ONLY section 3 (MODEL). Each shape line says what part it is and what its numbers mean.
@@ -6,42 +6,44 @@
 #
 # ---- spec.md (design intent) ----
 #   ---
-#   name: Mug
-#   id: t1-06
-#   tier: T1
-#   room: Control
+#   name: InverterBox
+#   id: t2-20
+#   tier: T2
+#   room: Roof
 #   priority: V1
-#   size_cm: 11x8x9
-#   voxels: 14x10x12
+#   size_cm: 40x20x60
+#   voxels: 51x26x77
 #   grid: F
 #   grain: 0
 #   collider: false
 #   states:
-#     Full: coffee surface (dark brown) just below the rim
-#     Empty: dark inner wall, no liquid, coffee stain ring at the bottom
+#     On: display lit, green LED
+#     Off: display dark, all LEDs off
+#     Broken: cracked display, red LED, scorch marks around the vents
 #   ---
 #
-#   # Mug
+#   # InverterBox
 #
 #   ## Prompt
 #
 #   ### Shape
-#   Build a voxel Mug for the Control room, about 11x8x9 cm (14x10x12 voxels). Main forms: handle, rim.
+#   Build a voxel InverterBox for the Roof room, about 40x20x60 cm (51x26x77 voxels). Main forms: housing, display.
 #
 #   ### Materials
 #   Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.
 #
 #   ### Details
-#   Add the small features: coffee surface, logo label, base ring, chip wear.
+#   Add the small features: LEDs, heat fins, DC switch, cable glands, label.
 #
 #   ## Parts (tier; cm size + colour key to fill before first build)
 #
-#   - [2] handle: 3 x 2 x 7 cm, plastic_white
-#   - [2] rim: 1 cm top ring, trim
-#   - [3] coffee surface: 7 x 7 cm, wood_dark
-#   - [3] logo label: 3 x 4 cm, warning_red
-#   - [3] base ring: 6 x 6 cm, chassis_dark
-#   - [3] chip wear: 1 cm, carved
+#   - [2] housing
+#   - [2] display
+#   - [3] LEDs
+#   - [3] heat fins
+#   - [3] DC switch
+#   - [3] cable glands
+#   - [3] label
 
 # ======================================================================
 # 1. VOXEL ENGINE (grid, shapes, greedy meshing, materials, export)
@@ -561,45 +563,51 @@ PALETTE = {
 
 
 # ======================================================================
-# 3. MODEL: Mug
+# 3. MODEL: InverterBox
 # ======================================================================
-C = {**PALETTE}
-# DESCRIPTION: White ceramic coffee mug with a handle, red logo and grey rim; Full has coffee, Empty has a stain ring. 11x8x9 cm.
-# UNITS: FINE_SIZE (7.8 mm); x = width incl. handle (14), y = depth (10, -y front), z = up (12).
-def model(state):
+C = {**PALETTE, 'disp_on': (0.08, 0.45, 0.38)}
+
+# DESCRIPTION: Solar inverter box: 40x20x60 cm white housing, display, LEDs, heat fins, DC switch, glands, label; 3 states.
+# UNITS: 1 voxel = 1/128 m (F); x right, y back, z up; 51x26x77 voxels
+S, F = VOXEL_SIZE, FINE_SIZE
+
+def inverter(state):
     V = Grid()
-    # base ring
-    box(V, -6, 1, -4, 3, 0, 0, 'chassis_dark')
-    # mug body
-    box(V, -7, 2, -5, 4, 1, 10, 'plastic_white')
-    # grey rim ring on top
-    box(V, -7, 2, -5, 4, 11, 11, 'trim')
-    # hollow out the inside
-    hole = Grid()
-    box(hole, -6, 1, -4, 3, 2, 11, 'plastic_white')
-    carve(V, hole)
-    # chip wear on the rim
-    chip = Grid()
-    box(chip, 2, 2, 4, 4, 11, 11, 'plastic_white')
-    carve(V, chip)
-    # handle: top bar, bottom bar, outer bar
-    box(V, 3, 6, -1, 2, 8, 9, 'plastic_white')
-    box(V, 3, 6, -1, 2, 3, 4, 'plastic_white')
-    box(V, 5, 6, -1, 2, 5, 7, 'plastic_white')
-    # red logo on the front
-    box(V, -5, -2, -5, -5, 4, 8, 'warning_red')
-    if state == 'Full':
-        # coffee surface just below the rim
-        box(V, -6, 1, -4, 3, 2, 9, 'wood_dark')
-    else:
-        # dark inner wall
-        tile(V, -6, -6, -4, 3, 2, 10, 'chassis_dark', nx=1)
-        tile(V, 1, 1, -4, 3, 2, 10, 'chassis_dark')
-        tile(V, -5, 0, -4, -4, 2, 10, 'chassis_dark')
-        tile(V, -5, 0, 3, 3, 2, 10, 'chassis_dark')
-        # coffee stain ring and dark floor
-        box(V, -5, 0, -3, 2, 2, 2, 'rust')
-        box(V, -4, -1, -2, 1, 2, 2, 'chassis_dark')
+    # feet
+    tile(V, -23, -18, -10, -4, 0, 1, 'rubber', nx=2, ny=2, dx=41, dy=12)
+    # cable glands
+    tile(V, -14, -12, -6, -4, 0, 0, 'plastic_black', nx=4, dx=9)
+    tile(V, -14, -12, -6, -4, 1, 1, 'metal', nx=4, dx=9)
+    # housing
+    box(V, -22, 22, -12, 12, 2, 74, 'plastic_white')
+    # top cap
+    box(V, -22, 22, -12, 12, 75, 76, 'metal_dark')
+    # heat fins R
+    tile(V, 23, 25, -10, -10, 6, 68, 'metal', ny=6, dy=4)
+    # heat fins L
+    tile(V, -25, -23, -10, -10, 6, 68, 'metal', ny=6, dy=4)
+    if state == 'Broken':                                                      # scorch marks
+        box(V, -19, 19, -13, -13, 6, 19, 'wood_dark'); box(V, -12, 8, -13, -13, 20, 24, 'wood_dark')
+    # vent slots
+    tile(V, -18, 18, -13, -13, 8, 8, 'chassis_dark', nz=4, dz=3)
+    # display bezel
+    box(V, -15, 15, -13, -13, 44, 70, 'chassis_dark')
+    # screen
+    box(V, -13, 13, -13, -13, 46, 68, 'disp_on' if state == 'On' else 'screen')
+    if state == 'On':
+        for i in range(5): box(V, -10 + i * 5, -8 + i * 5, -13, -13, 50, 52 + 3 * i, 'led_green')
+    if state == 'Broken':                                                      # cracks
+        for i in range(22): box(V, -12 + i, -12 + i, -13, -13, 46 + i, 46 + i, 'trim')
+        for i in range(12): box(V, 4 - i, 4 - i, -13, -13, 58 + i, 58 + i, 'trim')
+        box(V, 6, 12, -13, -13, 46, 50, 'glass')
+    on = {'On': ('led_green', 'led_off', 'led_off'), 'Off': ('led_off',) * 3,
+          'Broken': ('led_off', 'led_off', 'led_red')}[state]
+    # status LEDs
+    for i, k in enumerate(on): box(V, -8 + 8 * i, -7 + 8 * i, -13, -13, 72, 73, k)
+    # label
+    box(V, -20, -6, -13, -13, 26, 36, 'label')
+    tile(V, -18, -8, -13, -13, 28, 28, 'label_text', nz=3, dz=3)
+    # DC switch
+    box(V, 12, 20, -13, -13, 24, 32, 'plastic_black'); box(V, 14, 18, -13, -13, 26, 30, 'warning_red')
     return V, C
-result = build_states('Mug', model, ['Full', 'Empty'], size=FINE_SIZE, grain=0)
-result = {s: {k: r[k] for k in ('object', 'voxels', 'height_m', 'warnings')} for s, r in result.items()}
+result = build_states('InverterBox', inverter, ['On', 'Off', 'Broken'], size=F, grain=0)

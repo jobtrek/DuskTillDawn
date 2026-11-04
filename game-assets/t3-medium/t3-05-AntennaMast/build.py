@@ -1,4 +1,4 @@
-# Desk (t4-01) -- fully self-contained Blender script.
+# AntennaMast (t3-05) -- fully self-contained Blender script.
 # Usage: Blender > Scripting workspace > Open this file > Run Script (Alt+P).
 # Needs Blender 4.x/5.x (bundled numpy). No other files needed.
 # To modify: edit ONLY section 3 (MODEL). Each shape line says what part it is and what its numbers mean.
@@ -6,41 +6,39 @@
 #
 # ---- spec.md (design intent) ----
 #   ---
-#   name: Desk
-#   id: t4-01
-#   tier: T4
-#   room: Control
+#   name: AntennaMast
+#   id: t3-05
+#   tier: T3
+#   room: Roof
 #   priority: V1
-#   size_cm: 160x80x75
-#   voxels: 102x51x48
-#   grid: S
-#   grain: 0.08
-#   collider: true
+#   size_cm: 30x30x100
+#   voxels: 38x38x128
+#   grid: F
+#   grain: 0
+#   collider: false
 #   ---
 #
-#   # Desk
+#   # AntennaMast
 #
 #   ## Prompt
 #
 #   ### Shape
-#   Build a voxel Desk for the Control room, about 160x80x75 cm (102x51x48 voxels). Main forms: top, side panels, drawer.
+#   Build a voxel AntennaMast for the Roof room, about 30x30x100 cm (38x38x128 voxels). Main forms: pole, base plate.
 #
 #   ### Materials
-#   Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.08.
+#   Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.
 #
 #   ### Details
-#   Add the small features: handles, cable grommet, edge trim, screws, wood grain.
+#   Add the small features: bolts, clamp brackets, cable clips, rust.
 #
 #   ## Parts (tier; cm size + colour key to fill before first build)
 #
-#   - [2] top: 160 x 80 x 3 cm, wood
-#   - [2] side panels: 3 x 74 x 70 cm, wood_dark
-#   - [2] drawer pedestal: 28 x 72 x 70 cm, wood, 3 drawers
-#   - [3] handles: 8 x 2 x 1.5 cm, metal
-#   - [3] cable grommet: 6 x 5 cm, chassis_dark
-#   - [3] edge trim: 1.5 cm border, wood_dark
-#   - [3] screws: 1.5 cm, metal
-#   - [3] wood grain: 1 cm lines, wood_dark
+#   - [2] pole
+#   - [2] base plate
+#   - [3] bolts
+#   - [3] clamp brackets
+#   - [3] cable clips
+#   - [3] rust
 
 # ======================================================================
 # 1. VOXEL ENGINE (grid, shapes, greedy meshing, materials, export)
@@ -560,49 +558,40 @@ PALETTE = {
 
 
 # ======================================================================
-# 3. MODEL: Desk
+# 3. MODEL: AntennaMast
 # ======================================================================
 C = {**PALETTE}
-# DESCRIPTION: Wooden office desk 160x80x75 cm with a 3-drawer pedestal on the right and a cable grommet.
-# UNITS: VOXEL_SIZE (1.56 cm); x = width (102), y = depth (51, -y front), z = up (48).
-V = Grid()
-# left side panel
-box(V, -48, -47, -23, 23, 0, 45, 'wood_dark')
-# right side panel (pedestal outer wall)
-box(V, 47, 48, -23, 23, 0, 45, 'wood_dark')
-# back modesty panel
-box(V, -46, 46, 21, 22, 12, 45, 'wood_dark')
-# pedestal body
-box(V, 28, 46, -22, 22, 0, 45, 'wood')
-# pedestal inner side wall
-box(V, 27, 27, -23, 23, 0, 45, 'wood_dark')
-# dark plinth under the pedestal
-box(V, 27, 48, -23, 23, 0, 1, 'chassis_dark')
-# three drawer fronts
-tile(V, 30, 45, -23, -23, 3, 12, 'wood', nz=3, dz=14)
-# dark gaps between drawers
-tile(V, 29, 46, -23, -23, 2, 2, 'seam', nz=3, dz=14)
-# drawer handles
-tile(V, 34, 41, -24, -24, 8, 9, 'metal', nz=3, dz=14)
-# left foot plinth
-box(V, -48, -47, -23, 23, 0, 1, 'chassis_dark')
-# apron under the top (front rail)
-box(V, -46, 26, -22, -21, 42, 45, 'wood_dark')
-# desk top slab
-box(V, -51, 50, -25, 25, 46, 47, 'wood')
-# dark underside of the top
-box(V, -51, 50, -25, 25, 45, 45, 'wood_dark')
-# edge trim around the top
-hollow(V, -51, 50, -25, 25, 47, 47, 'wood_dark', t=1)
-# wood grain streaks on the top
-tile(V, -44, -30, -18, -18, 47, 47, 'wood_dark', nx=2, ny=4, dx=40, dy=11)
-tile(V, -20, -8, -12, -12, 47, 47, 'wood_dark', nx=3, ny=3, dx=23, dy=17)
-# cable grommet ring and hole at the back left
-box(V, -40, -36, 17, 20, 47, 47, 'metal_dark')
-box(V, -39, -37, 18, 19, 47, 47, 'seam')
-# screws on the left panel top corners
-tile(V, -49, -49, -20, -20, 42, 42, 'metal', ny=2, dy=40)
-# screws on the right panel top corners
-tile(V, 49, 49, -20, -20, 42, 42, 'metal', ny=2, dy=40)
-R = build('Desk', V, C, size=VOXEL_SIZE, grain=0.08, collider=True, metallic=('metal',))
-result = {k: R[k] for k in ('object', 'voxels', 'height_m', 'warnings')}
+
+# DESCRIPTION: Antenna mast: 30x30x100 cm steel pole on a bolted base plate with gussets, clamps, cable and rust.
+# UNITS: 1 voxel = 1/128 m (F); x right, y back, z up; 38x38x128 voxels
+S, F = VOXEL_SIZE, FINE_SIZE
+
+def mast():
+    V = Grid()
+    # base plate
+    box(V, -19, 18, -19, 18, 0, 2, 'metal_dark')
+    # plate bolts
+    tile(V, -17, -16, -17, -16, 3, 3, 'metal', nx=2, ny=2, dx=33, dy=33)
+    # lower pole
+    box(V, -3, 2, -3, 2, 3, 60, 'metal')
+    # upper pole
+    box(V, -2, 1, -2, 1, 61, 127, 'trim')
+    # gussets
+    for i in range(10):
+        w = 10 - i; z = 3 + 2 * i
+        box(V, 3, 2 + w, -1, 0, z, z + 1, 'metal_dark'); box(V, -3 - w, -4, -1, 0, z, z + 1, 'metal_dark')
+        box(V, -1, 0, 3, 2 + w, z, z + 1, 'metal_dark'); box(V, -1, 0, -3 - w, -4, z, z + 1, 'metal_dark')
+    # clamp brackets
+    for z in (40, 85):
+        box(V, -4, 3, -4, 3, z, z + 3, 'metal_dark'); box(V, -1, 0, -5, -5, z + 1, z + 2, 'metal')
+    # cross arm
+    box(V, -15, 14, -1, 0, 95, 96, 'trim')
+    # cable
+    box(V, 1, 1, 3, 3, 8, 125, 'plastic_black')
+    # cable clips
+    for z in (20, 55, 100): box(V, 0, 2, 3, 4, z, z + 1, 'metal')
+    box(V, -3, -3, -2, 0, 10, 18, 'rust'); box(V, 2, 2, -3, -1, 25, 31, 'rust'); box(V, 1, 2, -3, -3, 45, 52, 'rust')
+    # beacon tip
+    box(V, -1, 0, -1, 0, 126, 127, 'led_red')
+    return V
+result = build('AntennaMast', mast(), C, size=F, grain=0)

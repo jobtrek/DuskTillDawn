@@ -1,4 +1,4 @@
-# RackFrame (t3-13) -- fully self-contained Blender script.
+# Room_Roof (t5-03) -- fully self-contained Blender script.
 # Usage: Blender > Scripting workspace > Open this file > Run Script (Alt+P).
 # Needs Blender 4.x/5.x (bundled numpy). No other files needed.
 # To modify: edit ONLY section 3 (MODEL). Each shape line says what part it is and what its numbers mean.
@@ -6,46 +6,32 @@
 #
 # ---- spec.md (design intent) ----
 #   ---
-#   name: RackFrame
-#   id: t3-13
-#   tier: T3
-#   room: Basement
+#   name: Room_Roof
+#   id: t5-03
+#   tier: T5
+#   room: Roof
 #   priority: V1
-#   size_cm: 60x80x120
-#   voxels: 77x102x154
-#   grid: F
+#   size_cm: 1000x800x100
+#   voxels: 640x512x64
+#   grid: S
 #   grain: 0
 #   collider: true
-#   states:
-#     Ok: top LED `led_green`
-#     Warn: top LED `led_orange`
-#     Failed: top LED `led_red`
+#   pieces: Floor, Parapet_Back, Parapet_Front, Parapet_Left, Parapet_Right, Chimney
+#   wall_cm: 12
 #   ---
 #
-#   # RackFrame
-#
 #   ## Prompt
-#
-#   ### Shape
-#   Build a voxel RackFrame for the Basement room, about 60x80x120 cm (77x102x154 voxels). Main forms: posts, side panels, door.
-#
-#   ### Materials
-#   Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.
-#
-#   ### Details
-#   Add the small features: rail holes, vent slots, casters, lock, label.
-#
-#   ## Parts (tier; cm size + colour key to fill before first build)
-#
-#   - [1] posts 4x 2.3 x 2.3 x 113 cm, metal
-#   - [2] side panels 2x 1.6 x 78 x 112 cm, chassis
-#   - [2] front door frame + mesh bars 54 x 1.6 x 109 cm, chassis_dark
-#   - [3] rail holes (tile) 24U, 1 x 2 voxels every 6 voxels on the front posts, seam
-#   - [3] vent slots 8x on each side panel, seam
-#   - [3] casters 4x, rubber on metal_dark fork
-#   - [3] lock + handle 1.6 x 3 cm on the door, metal
-#   - [3] top-of-rack LED 4x4: led_green (Ok) / led_orange (Warn) / led_red (Failed)
-#   - [3] label (24U) 18 x 4 cm, label
+#   Voxel roof room, 1000x800x100 cm (640x512x64 voxels), hard-edged, grain 0, colour keys from `game-assets/palette.py`. Floor z0-9, parapets z10-63, centred x/y.
+#   ## Parts
+#   - [1] floor slab: 1000 x 800 x 16 cm, chassis_dark
+#   - [1] parapets: 12 cm thick, up to 100 cm, concrete
+#   - [2] coping: 12 x 5 cm cap on parapets, trim
+#   - [2] drain outlets: 2 x 12 x 12 cm scuppers in front parapet, metal_dark
+#   - [2] gutter: 10 x 6 cm channel along front base, metal
+#   - [3] tar seams: 1 voxel lines every 100 cm, seam
+#   - [3] hatch hole: 80 x 80 cm carved, concrete curb 20 cm high
+#   - [3] vents: 3 pipe vents 6 x 6 x 30 cm, metal + metal_dark cap
+#   - [2] chimney: 50 x 50 x 86 cm at back right, solar array fits front-centre, rust + concrete cap
 
 # ======================================================================
 # 1. VOXEL ENGINE (grid, shapes, greedy meshing, materials, export)
@@ -424,7 +410,7 @@ def build(name, V, colors, size=VOXEL_SIZE, metallic=(), mesh='greedy', material
         mat_index = np.arange(-1, len(names), dtype=np.int32)
         mat_index[0] = 0
 
-    nz = np.argwhere(ids) + np.array(V.o)   # lattice coords, not array indices
+    nz = np.argwhere(ids)
     lo, hi = nz.min(0), nz.max(0)
     ox = (lo[0] + hi[0] + 1) / 2
     oy = (lo[1] + hi[1] + 1) / 2
@@ -486,8 +472,8 @@ def build(name, V, colors, size=VOXEL_SIZE, metallic=(), mesh='greedy', material
 
     col_name = None
     if collider:
-        w_lo = (np.array(lo) - np.array([ox, oy, oz])) * size
-        w_hi = (np.array(hi) + 1 - np.array([ox, oy, oz])) * size
+        w_lo = (np.array(lo) + W.o - np.array([ox, oy, oz])) * size
+        w_hi = (np.array(hi) + 1 + W.o - np.array([ox, oy, oz])) * size
         cx = [(a_ + b_) / 2 for a_, b_ in zip(w_lo, w_hi)]
         cs = [b_ - a_ for a_, b_ in zip(w_lo, w_hi)]
         cverts = [(cx[0] + dx * cs[0] / 2, cx[1] + dy * cs[1] / 2, cx[2] + dz * cs[2] / 2)
@@ -554,7 +540,7 @@ PALETTE = {
     'rubber': (0.04, 0.04, 0.04),
     'plastic_white': (0.80, 0.80, 0.78), 'plastic_black': (0.06, 0.06, 0.07),
     'label': (0.85, 0.82, 0.70), 'label_text': (0.10, 0.10, 0.12),
-    'led_green': (0.05, 0.90, 0.15), 'led_yellow': (0.95, 0.75, 0.05), 'led_orange': (0.98, 0.45, 0.03),
+    'led_green': (0.05, 0.90, 0.15), 'led_yellow': (0.95, 0.75, 0.05),
     'led_red': (0.95, 0.08, 0.05), 'led_off': (0.10, 0.12, 0.10),
     'wood': (0.40, 0.24, 0.11), 'wood_dark': (0.22, 0.12, 0.05),
     'fabric': (0.20, 0.30, 0.50), 'fabric_dark': (0.10, 0.15, 0.28),
@@ -565,42 +551,71 @@ PALETTE = {
 
 
 # ======================================================================
-# 3. MODEL: RackFrame
+# 3. MODEL: Room_Roof
 # ======================================================================
-# DESCRIPTION: 24U server rack frame: four posts, vented side panels, a mesh-barred front door with lock, casters and a 4x4 status LED on top (green / orange / red). 60x80x120 cm.
-# UNITS: FINE_SIZE (7.8 mm) voxels; x = width, y = depth (-y front), z = up. 1U = 6 voxels (24U = 144 voxels, z 6..149).
-def model(state):
-    led = {'Ok': 'led_green', 'Warn': 'led_orange', 'Failed': 'led_red'}[state]
-    V = Grid()
-    # four casters with forks
-    tile(V, -38, -36, -51, -49, 0, 3, 'rubber', nx=2, ny=2, dx=74, dy=99)
-    tile(V, -38, -36, -51, -49, 4, 5, 'metal_dark', nx=2, ny=2, dx=74, dy=99)
-    # four corner posts
-    tile(V, -38, -36, -51, -49, 6, 149, 'metal', nx=2, ny=2, dx=74, dy=99)
-    # side panels
-    box(V, -38, -37, -48, 47, 6, 149, 'chassis')
-    box(V, 37, 38, -48, 47, 6, 149, 'chassis')
-    # vent slots in both side panels
-    tile(V, -38, -38, -30, -29, 30, 120, 'seam', ny=8, dy=8)
-    tile(V, 38, 38, -30, -29, 30, 120, 'seam', ny=8, dy=8)
-    # top panel and bottom tray
-    box(V, -35, 35, -48, 47, 150, 152, 'chassis')
-    box(V, -35, 35, -48, 47, 6, 7, 'chassis')
-    # rail holes: 24 rack units on both front posts
-    tile(V, -37, -37, -51, -51, 8, 9, 'seam', nz=24, dz=6)
-    tile(V, 37, 37, -51, -51, 8, 9, 'seam', nz=24, dz=6)
-    # front door: frame with vertical mesh bars
-    box(V, -35, 35, -51, -50, 8, 10, 'chassis_dark')
-    box(V, -35, 35, -51, -50, 146, 148, 'chassis_dark')
-    box(V, -35, -33, -51, -50, 11, 145, 'chassis_dark')
-    box(V, 33, 35, -51, -50, 11, 145, 'chassis_dark')
-    tile(V, -30, -30, -51, -50, 11, 145, 'chassis_dark', nx=16, dx=4)
-    # door lock and handle on the right
-    box(V, 29, 31, -52, -52, 70, 76, 'metal')
-    # label on the top rail
-    box(V, -9, 9, -52, -52, 149, 152, 'label')
-    # top-of-rack LED, 4x4
-    box(V, -2, 1, -3, 0, 153, 153, led)
-    return V, PALETTE
-R = build_states('RackFrame', model, ['Ok', 'Warn', 'Failed'], size=FINE_SIZE, grain=0, collider=True, metallic=('metal',))
-result = {s: {k: r[k] for k in ('object', 'voxels', 'height_m', 'warnings')} for s, r in R.items()}
+C = {**PALETTE, 'tar': (0.07, 0.07, 0.08), 'brick': (0.38, 0.16, 0.10)}
+# DESCRIPTION: Flat tar roof 1000x800 cm with 100 cm concrete parapets, hatch, 3 vents, 2 drains, front gutter and a chimney.
+# UNITS: 1 voxel = 1.56 cm (64/m); x right, y back (-y front), z up; floor z0-9, parapets z10-63; centred on x/y.
+X0, X1, Y0, Y1, W = -320, 319, -256, 255, 8
+FL, TOP = 9, 63
+
+def piece(name, V):
+    # build one piece and put it back at its place in the shared roof frame
+    lo, hi = V.bounds()
+    r = build(name, V, C, size=VOXEL_SIZE, collider=True, grain=0)
+    o = bpy.data.objects[name]
+    # shift so the mesh's min corner lands on the piece's voxel min corner (build's own origin is unreliable)
+    mn = [min(c[i] for c in o.bound_box) for i in range(3)]
+    o.location = tuple(lo[i] * VOXEL_SIZE - mn[i] for i in range(3))
+    return r
+
+def parapet(V, x0, x1, y0, y1):
+    # concrete wall with a lighter coping cap on top
+    box(V, x0, x1, y0, y1, FL + 1, TOP - 3, 'concrete')
+    box(V, x0, x1, y0, y1, TOP - 2, TOP, 'trim')
+
+res = {}
+# --- floor: tar slab, seams, hatch curb and hole, vents, gutter
+V = Grid()
+# tar floor slab, full footprint
+box(V, X0, X1, Y0, Y1, 0, FL, 'tar')
+# concrete edge strip under parapets
+box(V, X0, X1, Y0, Y0 + W - 1, 0, FL, 'chassis_dark'); box(V, X0, X1, Y1 - W + 1, Y1, 0, FL, 'chassis_dark')
+# tar seams every 100 cm (64 voxels), lengthwise and crosswise
+for x in range(X0 + 64, X1 - 8, 64): box(V, x, x, Y0 + W, Y1 - W, FL, FL, 'seam')
+for y in range(Y0 + 64, Y1 - 8, 64): box(V, X0 + W, X1 - W, y, y, FL, FL, 'seam')
+# hatch curb 20 cm high around the hole
+box(V, -284, -217, -36, 31, FL + 1, FL + 13, 'concrete')
+box(V, -284, -217, -36, 31, FL + 14, FL + 14, 'trim')
+# 3 pipe vents with dark caps
+for vx, vy in ((-220, 200), (-190, 200), (-140, 215)):
+    box(V, vx, vx + 3, vy, vy + 3, FL + 1, FL + 19, 'metal')
+    box(V, vx - 1, vx + 4, vy - 1, vy + 4, FL + 20, FL + 21, 'metal_dark')
+# gutter: open metal channel along the front parapet base
+box(V, X0 + W, X1 - W, Y0 + W, Y0 + W + 5, FL + 1, FL + 4, 'metal')
+box(V, X0 + W, X1 - W, Y0 + W + 1, Y0 + W + 4, FL + 2, FL + 4, 'metal_dark')
+# carve the hatch hole through slab and curb
+R = Grid(); box(R, -276, -225, -28, 23, 0, FL + 14, 'x'); carve(V, R)
+res['Floor'] = piece('Room_Roof_Floor', V)
+
+# --- four parapets
+V = Grid(); parapet(V, X0, X1, Y1 - W + 1, Y1); res['Back'] = piece('Room_Roof_Parapet_Back', V)
+V = Grid(); parapet(V, X0, X1, Y0, Y0 + W - 1)
+# two drain outlets (scuppers) cut through the front parapet, metal-lined
+for sx in (-120, 100):
+    R = Grid(); box(R, sx, sx + 15, Y0, Y0 + W - 1, FL + 1, FL + 8, 'x'); carve(V, R)
+    box(V, sx, sx + 15, Y0, Y0 + W - 1, FL + 1, FL + 1, 'metal_dark')
+    box(V, sx - 1, sx - 1, Y0, Y0 + 1, FL + 1, FL + 9, 'metal_dark'); box(V, sx + 16, sx + 16, Y0, Y0 + 1, FL + 1, FL + 9, 'metal_dark')
+res['Front'] = piece('Room_Roof_Parapet_Front', V)
+V = Grid(); parapet(V, X0, X0 + W - 1, Y0 + W, Y1 - W); res['Left'] = piece('Room_Roof_Parapet_Left', V)
+V = Grid(); parapet(V, X1 - W + 1, X1, Y0 + W, Y1 - W); res['Right'] = piece('Room_Roof_Parapet_Right', V)
+
+# --- chimney: brick stack, concrete cap, dark flue
+V = Grid()
+box(V, 262, 293, 190, 221, FL + 1, TOP - 4, 'brick')
+# mortar bands every 6 voxels
+for z in range(FL + 6, TOP - 4, 6): box(V, 262, 293, 190, 221, z, z, 'concrete')
+box(V, 260, 295, 188, 223, TOP - 3, TOP, 'trim')
+box(V, 270, 285, 198, 213, TOP, TOP, 'chassis_dark')
+res['Chimney'] = piece('Room_Roof_Chimney', V)
+result = {k: {'voxels': v['voxels'], 'height_m': v['height_m'], 'warnings': v['warnings']} for k, v in res.items()}

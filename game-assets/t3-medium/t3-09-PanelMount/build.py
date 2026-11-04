@@ -1,4 +1,4 @@
-# Chair (t3-06) -- fully self-contained Blender script.
+# PanelMount (t3-09) -- fully self-contained Blender script.
 # Usage: Blender > Scripting workspace > Open this file > Run Script (Alt+P).
 # Needs Blender 4.x/5.x (bundled numpy). No other files needed.
 # To modify: edit ONLY section 3 (MODEL). Each shape line says what part it is and what its numbers mean.
@@ -6,41 +6,40 @@
 #
 # ---- spec.md (design intent) ----
 #   ---
-#   name: Chair
-#   id: t3-06
+#   name: PanelMount
+#   id: t3-09
 #   tier: T3
-#   room: Control
+#   room: Roof
 #   priority: V1
-#   size_cm: 60x60x100
-#   voxels: 38x38x64
-#   grid: S
-#   grain: 0.08
+#   size_cm: 110x60x70
+#   voxels: 141x77x90
+#   grid: F
+#   grain: 0
 #   collider: false
 #   ---
 #
-#   # Chair
+#   # PanelMount
 #
 #   ## Prompt
 #
 #   ### Shape
-#   Build a voxel Chair for the Control room, about 60x60x100 cm (38x38x64 voxels). Main forms: seat, back, armrests.
+#   Build a voxel PanelMount for the Roof room, about 110x60x70 cm (141x77x90 voxels). Main forms: legs, rails.
 #
 #   ### Materials
-#   Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.08.
+#   Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.
 #
 #   ### Details
-#   Add the small features: 5 wheels, gas lift, star base, stitching seam, lever.
+#   Add the small features: bolts, braces, clamps, rust, feet.
 #
 #   ## Parts (tier; cm size + colour key to fill before first build)
 #
-#   - [2] seat: 50 x 48 x 8 cm, fabric
-#   - [2] back: 46 x 6 x 40 cm, fabric
-#   - [2] armrests: 6 x 22 x 16 cm, plastic_black
-#   - [3] 5 wheels: 4 x 4 x 4 cm, rubber
-#   - [3] gas lift: 3 x 3 x 30 cm, metal
-#   - [3] star base: 5 arms 24 cm, chassis_dark
-#   - [3] stitching seam: 1.5 cm lines, fabric_dark
-#   - [3] lever: 8 x 2 x 2 cm, metal
+#   - [2] legs
+#   - [2] rails
+#   - [3] bolts
+#   - [3] braces
+#   - [3] clamps
+#   - [3] rust
+#   - [3] feet
 
 # ======================================================================
 # 1. VOXEL ENGINE (grid, shapes, greedy meshing, materials, export)
@@ -560,45 +559,44 @@ PALETTE = {
 
 
 # ======================================================================
-# 3. MODEL: Chair
+# 3. MODEL: PanelMount
 # ======================================================================
 C = {**PALETTE}
-# DESCRIPTION: Blue fabric office chair with 5-wheel star base, gas lift, armrests, 60x60x100 cm.
-# UNITS: VOXEL_SIZE (1.56 cm); x = width (38), y = depth (38, -y front), z = up (64).
-import math
-V = Grid()
-# five star-base arms with a wheel at each tip
-for k in range(5):
-    a = math.radians(90 + 72 * k)
-    for t in range(0, 15):
-        x, y = round(t * math.cos(a)), round(t * math.sin(a))
-        box(V, x, x + 1, y, y + 1, 3, 4, 'chassis_dark')
-    x, y = round(15 * math.cos(a)), round(15 * math.sin(a))
-    box(V, x - 1, x + 1, y - 1, y + 1, 0, 2, 'rubber')
-# hub in the centre of the star
-box(V, -2, 2, -2, 2, 3, 5, 'chassis_dark')
-# gas lift column
-box(V, -1, 0, -1, 0, 6, 24, 'metal')
-# dark cover on the lower gas lift
-box(V, -2, 1, -2, 1, 6, 13, 'plastic_black')
-# seat mechanism plate
-box(V, -5, 4, -5, 4, 23, 24, 'chassis_dark')
-# height lever under the right side of the seat
-box(V, 5, 10, -1, 0, 22, 22, 'metal')
-# seat cushion
-box(V, -13, 12, -13, 12, 25, 30, 'fabric')
-# stitched seam ring on the seat top
-box(V, -11, 10, -11, 10, 30, 30, 'fabric_dark')
-box(V, -10, 9, -10, 9, 30, 30, 'fabric')
-# backrest support spine
-box(V, -1, 0, 9, 11, 24, 36, 'chassis_dark')
-# backrest cushion
-box(V, -11, 10, 12, 14, 33, 63, 'fabric')
-# vertical stitching seams on the backrest front
-tile(V, -6, -6, 11, 11, 36, 60, 'fabric_dark', nx=2, dx=11)
-# armrest posts
-tile(V, -15, -14, -3, -2, 25, 37, 'plastic_black', nx=2, dx=29)
-# armrest pads
-tile(V, -16, -13, -10, 5, 38, 39, 'plastic_black', nx=2, dx=28)
-R = build('Chair', V, C, size=VOXEL_SIZE, grain=0.08, metallic=('metal',))
-result = {k: R[k] for k in ('object', 'voxels', 'height_m', 'warnings')}
+
+# DESCRIPTION: Solar panel mount: 110x60x70 cm sloped steel rack with legs, rails, braces, clamps and rust.
+# UNITS: 1 voxel = 1/128 m (F); x right, y back, z up; 141x77x90 voxels
+S, F = VOXEL_SIZE, FINE_SIZE
+
+def mx(V, x0, x1, y0, y1, z0, z1, k):
+    # box on both sides of x=0
+    box(V, x0, x1, y0, y1, z0, z1, k); box(V, -x1, -x0, y0, y1, z0, z1, k)
+
+def mount():
+    V = Grid()
+    # front legs
+    mx(V, 58, 63, -36, -33, 2, 45, 'metal')
+    # rear legs
+    mx(V, 58, 63, 33, 36, 2, 89, 'metal')
+    # feet
+    mx(V, 56, 65, -38, -31, 0, 1, 'rubber'); mx(V, 56, 65, 31, 38, 0, 1, 'rubber')
+    # base tie bars
+    mx(V, 59, 62, -34, 34, 12, 14, 'metal_dark')
+    # diagonal braces
+    for y in range(-30, 10):
+        z = 15 + int((y + 30) * 1.4); mx(V, 59, 62, y, y, z, z + 2, 'metal_dark')
+    # front cross rail
+    box(V, -66, 66, -37, -34, 42, 45, 'metal_dark')
+    # rear cross rail
+    box(V, -66, 66, 33, 36, 86, 89, 'metal_dark')
+    # sloped panel rails
+    for y in range(-36, 37):
+        z = 42 + int((y + 36) * 44 / 72); mx(V, 38, 42, y, y, z, z + 3, 'metal')
+    # clamps
+    for y in (-20, 20):
+        z = 42 + int((y + 36) * 44 / 72); mx(V, 36, 44, y - 2, y + 2, z - 1, z + 4, 'trim')
+    # bolts
+    mx(V, 59, 60, -37, -37, 40, 41, 'metal_dark'); mx(V, 59, 60, 37, 37, 84, 85, 'metal_dark')
+    # rust
+    mx(V, 58, 59, -36, -33, 6, 14, 'rust'); mx(V, 58, 59, 33, 36, 6, 14, 'rust')
+    return V
+result = build('PanelMount', mount(), C, size=F, grain=0)
