@@ -16,17 +16,6 @@ states:
 
 # Beacon
 
-## Prompt
-
-### Shape
-Build a voxel Beacon for the Control + Basement room, about 12x12x16 cm (15x15x20 voxels). Main forms: dome, base.
-
-### Materials
-Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.
-
-### Details
-Add the small features: lens ribs, bolts, wire, bulb.
-
 ## Parts (tier; cm size + colour key to fill before first build)
 
 - [2] dome

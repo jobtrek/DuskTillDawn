@@ -13,17 +13,6 @@ collider: false
 
 # FireAlarmButton
 
-## Prompt
-
-### Shape
-Build a voxel FireAlarmButton for the Basement room, about 10x4x10 cm (13x5x13 voxels). Main forms: housing, glass cover.
-
-### Materials
-Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.
-
-### Details
-Add the small features: label, striker, screws, LED.
-
 ## Parts (tier; cm size + colour key to fill before first build)
 
 - [1] red back plate against: 10.16 x 1.56 x 10.16 cm, warning_red

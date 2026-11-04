@@ -16,17 +16,6 @@ states:
 
 # SpareDriveBox
 
-## Prompt
-
-### Shape
-Build a voxel SpareDriveBox for the Basement room, about 20x30x10 cm (26x38x13 voxels). Main forms: box, lid.
-
-### Materials
-Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.
-
-### Details
-Add the small features: hinge, latch, foam, labels, drives inside.
-
 ## Parts (tier; cm size + colour key to fill before first build)
 
 - [1] box 20 x 30 x 5.5 cm, chassis

@@ -5,7 +5,7 @@ A single-player game about the only sysadmin on a solar-powered night shift, kee
 ## Language
 
 **Asset table**:
-The tables in `docs/3d-assets.md`. A generated index of every Element, rebuilt from the Specs. Never edited by hand.
+`game-assets/INDEX.md`. A generated index of every Element, rebuilt from the Specs by `voxel-sdk index`. Never edited by hand.
 _Avoid_: asset list, master list
 
 **Element**:
@@ -13,7 +13,7 @@ One thing built as its own model (a Desk, a Server1U). Each Element has its own 
 _Avoid_: object, asset, model
 
 **Spec**:
-The hand-owned `spec.md` of one Element (30 lines max). The single source of truth for that Element's size, grid, states and detail lists.
+The hand-owned `spec.md` of one Element (40 lines max). The single source of truth for that Element's size, grid, states and detail lists.
 _Avoid_: build spec, asset file, spec doc
 
 **Tier**:

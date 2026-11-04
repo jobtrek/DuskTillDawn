@@ -9,7 +9,7 @@
 3. `uv run voxel-sdk check <dir>`. For States also `check <dir> --state <Name>`.
 4. `uv run voxel-sdk build <dir>`.
 5. If the overall size changed, update `size_cm:` and `voxels:` together, and ask the user first.
-6. Run `uv run scripts/build_index.py` from the repo root if the Spec changed.
+6. Run `uv run voxel-sdk index` from `game-assets/sdk/` if the Spec changed.
 
 Tips:
 - Rename a Part with find and replace across `spec.md`, `layout.toml` and every `[states.<Name>]` table.

@@ -13,17 +13,6 @@ collider: false
 
 # CableTray
 
-## Prompt
-
-### Shape
-Build a voxel CableTray for the Basement room, about 30x120x10 cm (38x154x13 voxels). Main forms: side rails, rungs.
-
-### Materials
-Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.
-
-### Details
-Add the small features: brackets, bolts, cables, ties.
-
 ## Parts (tier; cm size + colour key to fill before first build)
 
 - [1] side rails: 1.56 x 120.31 x 7.81 cm, metal

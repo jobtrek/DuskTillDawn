@@ -18,17 +18,6 @@ states:
 
 # Laptop
 
-## Prompt
-
-### Shape
-Build a voxel Laptop for the Basement room, about 33x23x2.5 cm (42x29x3 voxels). Main forms: closed body, hinge.
-
-### Materials
-Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.
-
-### Details
-Add the small features: lying flat with the screen side down (keyboard deck up), status LED on the front edge, vents, rubber feet, power port, label.
-
 ## Parts (tier; cm size + colour key to fill before first build)
 
 - [1] base: 33 x 22 x 0.8 cm, metal

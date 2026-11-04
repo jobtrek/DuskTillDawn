@@ -13,17 +13,6 @@ collider: true
 
 # StairFlight
 
-## Prompt
-
-### Shape
-Build a voxel StairFlight for the Between floors room, about 100x225x140 cm (64x144x90 voxels). Main forms: treads, stringers, railing.
-
-### Materials
-Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.
-
-### Details
-Add the small features: nosing strips, anti-slip, balusters, bolts, wear.
-
 ## Parts (tier; cm size + colour key to fill before first build)
 
 - [2] treads

@@ -13,17 +13,6 @@ collider: false
 
 # RaidTower
 
-## Prompt
-
-### Shape
-Build a voxel RaidTower for the Basement room, about 25x50x60 cm (32x64x77 voxels). Main forms: case, bays.
-
-### Materials
-Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.
-
-### Details
-Add the small features: 8 drive caddies, handles, LEDs, vents, label.
-
 ## Parts (tier; cm size + colour key to fill before first build)
 
 - [2] front plate: 23.44 x 1.56 x 60.16 cm, chassis_dark

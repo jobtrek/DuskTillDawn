@@ -17,17 +17,6 @@ states:
 
 # ACUnit
 
-## Prompt
-
-### Shape
-Build a voxel ACUnit for the Basement room, about 70x90x200 cm (45x58x128 voxels). Main forms: cabinet, doors.
-
-### Materials
-Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.
-
-### Details
-Add the small features: display, louvres, handles, logo, LED, pipe stubs, feet.
-
 ## Parts (tier; cm size + colour key to fill before first build)
 
 - [3] feet: 4.69 x 4.69 x 4.69 cm, 4 copies, metal_dark

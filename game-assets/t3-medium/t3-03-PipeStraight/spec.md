@@ -13,17 +13,6 @@ collider: false
 
 # PipeStraight
 
-## Prompt
-
-### Shape
-Build a voxel PipeStraight for the Basement room, about 8x100x8 cm (10x128x10 voxels). Main forms: pipe, flanges.
-
-### Materials
-Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.
-
-### Details
-Add the small features: bolts, clamps, flow arrow, rust.
-
 ## Parts (tier; cm size + colour key to fill before first build)
 
 - [1] pipe 6.2 cm dia (8 voxels) x 100 cm, trim

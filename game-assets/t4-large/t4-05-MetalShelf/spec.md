@@ -13,17 +13,6 @@ collider: true
 
 # MetalShelf
 
-## Prompt
-
-### Shape
-Build a voxel MetalShelf for the Basement room, about 100x40x180 cm (64x26x115 voxels). Main forms: 5 shelves, posts.
-
-### Materials
-Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.
-
-### Details
-Add the small features: bolts, labelled bins, boxes, rust.
-
 ## Parts (tier; cm size + colour key to fill before first build)
 
 - [1] corner posts: 3.12 x 3.12 x 179.69 cm, 4 copies, metal

@@ -13,17 +13,6 @@ collider: false
 
 # Keyboard
 
-## Prompt
-
-### Shape
-Build a voxel Keyboard for the Control room, about 44x14x3 cm (56x18x4 voxels). Main forms: case, tilt feet.
-
-### Materials
-Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.
-
-### Details
-Add the small features: individual keys, space bar, arrow cluster, cable, label.
-
 ## Parts (tier; cm size + colour key to fill before first build)
 
 - [2] case

@@ -8,6 +8,7 @@ Read this page first. Open only the file your task needs.
 | Change an Element (size, colour, Part, State) | [modify-element.md](modify-element.md) |
 | Delete or rename an Element | [delete-element.md](delete-element.md) |
 | Element has no `layout.toml` (hand-written `build.py`) | [hand-written.md](hand-written.md) |
+| Rules every Element follows (grids, axes, detail layers, palette) | [build-rules.md](build-rules.md) |
 | Something fails or looks wrong | [gotchas.md](gotchas.md) |
 
 Terms (Element, Spec, Part, Layout, Grid, State): `CONTEXT.md`. Layout keys and States: `sdk/README.md`.
@@ -27,5 +28,6 @@ uv run voxel-sdk check ../<tier>/<id>-<Name>              # validate + compact p
 uv run voxel-sdk check ../<tier>/<id>-<Name> --state On   # one State
 uv run voxel-sdk build ../<tier>/<id>-<Name>              # write build.py (thin)
 uv run voxel-sdk build --standalone ../<tier>/<id>-<Name> # build.py that runs in Blender without the repo
+uv run voxel-sdk index [--check]                           # regenerate game-assets/INDEX.md
 uv run pytest                                             # SDK tests
 ```

@@ -13,17 +13,6 @@ collider: true
 
 # StairShaft
 
-## Prompt
-
-### Shape
-Build a voxel StairShaft for the Between floors room, about 150x350x280 cm (96x224x179 voxels). Main forms: walls, door holes, light fixture mounts, wall trim.
-
-### Materials
-Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.
-
-### Details
-Add the small features: walls, door holes, light fixture mounts, wall trim.
-
 ## Parts (tier; cm size + colour key to fill before first build)
 
 - [2/3] walls

@@ -18,17 +18,6 @@ states:
 
 # PDU
 
-## Prompt
-
-### Shape
-Build a voxel PDU for the Basement room, about 44x10x4.4 cm (56x13x6 voxels). Main forms: case, ear brackets.
-
-### Materials
-Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.
-
-### Details
-Add the small features: outlets, status LED, breaker switch, power cord, label.
-
 ## Parts (tier; cm size + colour key to fill before first build)
 
 - [1] case: 40.6 x 8.6 x 4.7 cm, chassis
