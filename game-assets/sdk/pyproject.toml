@@ -1,0 +1,23 @@
+[project]
+name = "voxel-sdk"
+version = "0.1.0"
+description = "Spec + Layout to validated voxel model and self-contained Blender build.py"
+authors = [
+    { name = "Thomas Lucking", email = "128782962+ThomasLucking@users.noreply.github.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "numpy>=2.5.4",
+]
+
+[project.scripts]
+voxel-sdk = "voxel_sdk:main"
+
+[build-system]
+requires = ["uv_build>=0.13.4,<0.14.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+]
