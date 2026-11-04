@@ -26,9 +26,8 @@ Add the small features: gasket, bolts, corner flashing.
 
 ## Parts (tier; cm size + colour key to fill before first build)
 
-- [1] open shaft: 90.62 x 90.62 x 25 cm, concrete
-- [2] open shaft 2: 87.5 x 87.5 x 1.56 cm, rubber
-- [2] open shaft 3: 90.62 x 90.62 x 3.12 cm, metal
-- [2] open shaft 4: 6.25 x 6.25 x 3.12 cm, 4 copies, rust
-- [2] open shaft 5: 3.12 x 3.12 x 1.56 cm, 8 copies, metal_dark
-
+- [2] curb
+- [2] frame
+- [3] gasket
+- [3] bolts
+- [3] corner flashing

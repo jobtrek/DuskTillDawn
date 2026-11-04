@@ -26,9 +26,9 @@ Add the small features: leaves, soil, rim, saucer.
 
 ## Parts (tier; cm size + colour key to fill before first build)
 
-- [2] pot: 24 x 24 x 18 cm, rust
-- [2] stem: 2 x 2 cm stems, stem
-- [3] leaves (blob ok, organic): 14 cm blobs, leaf
-- [3] soil: 20 x 20 cm, wood_dark
-- [3] rim: 28 x 28 x 3 cm, copper
-- [3] saucer: 30 x 30 x 1.5 cm, metal_dark
+- [2] pot
+- [2] stem
+- [3] leaves (blob ok, organic)
+- [3] soil
+- [3] rim
+- [3] saucer

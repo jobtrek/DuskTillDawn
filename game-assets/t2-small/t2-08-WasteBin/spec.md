@@ -26,8 +26,8 @@ Add the small features: ridges, crumpled paper, label.
 
 ## Parts (tier; cm size + colour key to fill before first build)
 
-- [2] rim: 32 x 32 x 4 cm, trim
-- [2] liner: 1 cm inner skin, plastic_black
-- [3] ridges: 1 cm bands, chassis_dark
-- [3] crumpled paper: 5 cm balls, label
-- [3] label: 6 x 5 cm, warning_yellow
+- [2] rim
+- [2] liner
+- [3] ridges
+- [3] crumpled paper
+- [3] label

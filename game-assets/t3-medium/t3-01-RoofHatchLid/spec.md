@@ -26,16 +26,12 @@ Add the small features: handle, latch, seam, bolts.
 
 ## Parts (tier; cm size + colour key to fill before first build)
 
-- [3] corner bolts: 90.62 x 90.62 x 4.69 cm, chassis
-- [3] corner bolts 2: 87.5 x 87.5 x 1.56 cm, trim
-- [3] corner bolts 3: 1.56 x 87.5 x 1.56 cm, seam
-- [3] corner bolts 4: 1.56 x 87.5 x 1.56 cm, seam
-- [3] corner bolts 5: 14.06 x 4.69 x 6.25 cm, metal
-- [3] corner bolts 6: 14.06 x 4.69 x 6.25 cm, metal
-- [3] corner bolts 7: 18.75 x 15.62 x 1.56 cm, metal_dark
-- [3] corner bolts 8: 12.5 x 3.12 x 1.56 cm, warning_yellow
-- [3] corner bolts 9: 9.38 x 4.69 x 4.69 cm, rust
-- [3] corner bolts 10: 3.12 x 3.12 x 1.56 cm, 4 copies, metal_dark
+- [2] lid
+- [2] hinge
+- [3] handle
+- [3] latch
+- [3] seam
+- [3] bolts
 
 ## Notes
 
