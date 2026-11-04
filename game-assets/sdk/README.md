@@ -29,6 +29,13 @@ One table per Part, in placement order; the first Part sits at x/y centre, z=0. 
 | `thickness`, `open` | cm wall for hollow/ring; `open = ["top", ...]` leaves a hollow face open |
 | `[[raw]]` `code = "..."` | escape hatch: engine calls on `V` (box, hollow, tile, disc, blob, carve, Grid, shell, ellipse). Same checks; counted in the report |
 
+Top-level tables that are not Parts:
+
+| table | meaning |
+|---|---|
+| `[build]` | `metallic = ["metal", "trim"]` (default: `["metal"]` when metal is used), `collider = true/false` (default: Spec `collider:`) |
+| `[palette]` | Element-only colours, `cable = [0.05, 0.05, 0.07]` (linear RGB), merged over `palette.py` |
+
 Checks: unknown Part/anchor/face/key, unknown palette key, size vs Spec `voxels:` within 1 voxel, floating Parts (errors);
 same-colour neighbouring Parts, Spec Parts missing from the Layout (warnings).
 

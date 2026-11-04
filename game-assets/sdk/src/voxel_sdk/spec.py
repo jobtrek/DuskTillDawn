@@ -19,6 +19,7 @@ class Spec:
     size_cm: tuple
     voxels: tuple
     grain: float
+    collider: bool | None = None   # front matter collider: true/false; None when absent
     states: list = field(default_factory=list)    # State names in Spec order; the first is the base State
     parts: dict = field(default_factory=dict)
     text: str = ''
@@ -65,6 +66,8 @@ def load_spec(path):
     spec = Spec(name=kv['name'], id=kv['id'], grid=kv.get('grid', 'S').strip().upper(),
                 size_cm=dims(kv['size_cm']), voxels=tuple(int(n) for n in kv['voxels'].split('x')),
                 grain=float(kv.get('grain', 0)), text=text.rstrip())
+    if kv.get('collider', '').strip().lower() in ('true', 'false'):
+        spec.collider = kv['collider'].strip().lower() == 'true'
     flat = kv.get('states', '').strip()
     st = re.search(r'^states:[ \t]*\n((?:[ \t]+\S.*\n?)+)', fm.group(1) + '\n', re.M)
     if flat.startswith('['):                       # states: [On, Off]

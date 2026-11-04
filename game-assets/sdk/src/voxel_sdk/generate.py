@@ -119,7 +119,10 @@ def render(element_dir, standalone=False):
     extras = '\n\n'.join(inspect.getsource(f).rstrip() for f in (shapes.shell, shapes.ellipse) if f.__name__ in fns)
     used = {k for m in models for k in m.grid.keys}
     size = 'FINE_SIZE' if spec.grid == 'F' else 'VOXEL_SIZE'
-    metal = ", metallic=('metal',)" if 'metal' in used else ''
+    metallic = model.build.get('metallic', ['metal'] if 'metal' in used else [])
+    metal = f', metallic={tuple(metallic)!r}' if metallic else ''
+    collider = model.build.get('collider', spec.collider)
+    metal = (f', collider={collider!r}' if collider is not None and (collider or 'collider' in model.build) else '') + metal
     bar = '# ' + '=' * 70
     kw = f'size={size}, grain={spec.grain:g}{metal}'
     if spec.states:

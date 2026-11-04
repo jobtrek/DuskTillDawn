@@ -19,6 +19,8 @@ PART_KEYS = {'on', 'align', 'y', 'gap', 'offset_x', 'offset_y', 'offset_z', 'rep
 OVERRIDE_KEYS = {'key', 'size', 'offset_x', 'offset_y', 'offset_z', 'gap', 'omit'}
 SHAPES = {'box', 'hollow', 'disc', 'circle', 'ring'}
 TOLERANCE = 1
+BUILD_KEYS = {'metallic', 'collider'}
+TOP_TABLES = ('raw', 'states', 'build', 'palette')   # Layout tables that are not Parts
 
 
 @dataclass
@@ -98,6 +100,7 @@ class Model:
     ops: list
     palette: dict
     state: str | None = None
+    build: dict = field(default_factory=dict)   # Layout [build] table: metallic, collider
 
 
 def _round(x):
@@ -123,7 +126,7 @@ def _resolve(spec, layout, report, inst=None, expand=()):
     sv = lambda cm: _round(cm / cmpv)       # signed, may be 0
     boxes, ops, order = {}, [], []
     for name, cfg in layout.items():
-        if name == 'raw':
+        if name in TOP_TABLES:
             continue
         where = f'Part "{name}"'
         if not isinstance(cfg, dict):
@@ -436,7 +439,7 @@ def _states_layout(spec, layout, state, report):
     """Apply one State's overrides to the Layout.
     Returns (layout {part: cfg}, inst {part: {n: override}}, expand {parts}, extra raw blocks)."""
     table = layout.get('states', {})
-    parts = {k: v for k, v in layout.items() if k not in ('raw', 'states')}
+    parts = {k: v for k, v in layout.items() if k not in TOP_TABLES}
     if not isinstance(table, dict):
         report.errors.append('[states] must be a table of State tables')
         table = {}
@@ -513,10 +516,14 @@ def build_model(element_dir, palette=None, state=None):
         palette, _ = _find_palette(d)
     report = Report()
     layout = tomllib.loads((d / 'layout.toml').read_text())
+    palette = {**palette, **{k: tuple(v) for k, v in layout.get('palette', {}).items()}}
+    build = layout.get('build', {})
+    if set(build) - BUILD_KEYS:
+        report.errors.append(f'[build]: unknown key(s) {sorted(set(build) - BUILD_KEYS)} (use {sorted(BUILD_KEYS)})')
     base = spec.states[0] if spec.states else None
     if state is not None and state not in spec.states:
         report.errors.append(f'unknown State "{state}" (Spec states: {spec.states or "none"})')
-        return Model(spec, shapes.Grid(), report, [], palette, state)
+        return Model(spec, shapes.Grid(), report, [], palette, state, build)
     state = state or base
     report.state = state
     bad = [s for s in spec.states if not re.fullmatch(r'[A-Za-z][A-Za-z0-9_]*', s)]
@@ -530,7 +537,7 @@ def build_model(element_dir, palette=None, state=None):
     if not boxes and not report.errors:
         report.errors.append('no Parts placed in this State')
     if report.errors:
-        return _finish(Model(spec, shapes.Grid(), report, ops, palette, state))
+        return _finish(Model(spec, shapes.Grid(), report, ops, palette, state, build))
     sh = _shift_of(boxes)
     if state != base:                       # keep the base State's origin so States line up
         b_eff, b_inst, _, _ = _states_layout(spec, layout, base, Report())
@@ -549,7 +556,7 @@ def build_model(element_dir, palette=None, state=None):
     _validate(spec, M, pid, pnames, palette, report, strict=(state == base))
     if report.bounds:
         _ascii(M, report)
-    return _finish(Model(spec, M, report, ops, palette, state))
+    return _finish(Model(spec, M, report, ops, palette, state, build))
 
 
 def _finish(model):
