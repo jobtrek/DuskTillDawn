@@ -13,17 +13,6 @@ collider: false
 
 # Door_Steel
 
-## Prompt
-
-### Shape
-Build a voxel Door Steel for the Basement room, about 100x10x205 cm (64x6x131 voxels). Main forms: slab, frame.
-
-### Materials
-Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.
-
-### Details
-Add the small features: push bar, 3 hinges, lock, warning sign, rivets.
-
 ## Parts (tier; cm size + colour key to fill before first build)
 
 - [2] dark steel frame: 100 x 9.38 x 204.69 cm, metal_dark

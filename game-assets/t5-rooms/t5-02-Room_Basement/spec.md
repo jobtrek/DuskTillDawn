@@ -15,17 +15,6 @@ wall_cm: 12
 
 # Room_Basement
 
-## Prompt
-
-### Shape
-Build a voxel Room Basement for the Basement room, about 800x600x240 cm (512x384x154 voxels). Main forms: floor drain, concrete seams, pipe brackets, conduit, wall stains.
-
-### Materials
-Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.
-
-### Details
-Add the small features: floor drain, concrete seams, pipe brackets, conduit, wall stains.
-
 ## Parts (tier; cm size + colour key to fill before first build)
 
 - [2/3] floor drain 25 x 23 cm grate in a metal frame at the room centre-front, metal / metal_dark / seam slots

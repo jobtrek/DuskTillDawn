@@ -13,17 +13,6 @@ collider: false
 
 # AntennaDish
 
-## Prompt
-
-### Shape
-Build a voxel AntennaDish for the Roof room, about 60x40x60 cm (77x51x77 voxels). Main forms: dish, feed horn, struts.
-
-### Materials
-Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.
-
-### Details
-Add the small features: ribs, mount clamp, cable, label, bolts.
-
 ## Parts (tier; cm size + colour key to fill before first build)
 
 - [2] dish

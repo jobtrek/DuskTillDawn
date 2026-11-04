@@ -13,17 +13,6 @@ collider: false
 
 # Extinguisher
 
-## Prompt
-
-### Shape
-Build a voxel Extinguisher for the Basement room, about 16x16x55 cm (20x20x70 voxels). Main forms: body, hose, handle.
-
-### Materials
-Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.
-
-### Details
-Add the small features: pin, gauge, label, nozzle, strap.
-
 ## Parts (tier; cm size + colour key to fill before first build)
 
 - [1] body 14 x 14 x 37 cm round, warning_red

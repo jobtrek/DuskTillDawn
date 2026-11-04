@@ -17,17 +17,6 @@ states:
 
 # SolarPanel
 
-## Prompt
-
-### Shape
-Build a voxel SolarPanel for the Roof room, about 100x4x165 cm (128x5x211 voxels). Main forms: frame, glass.
-
-### Materials
-Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.
-
-### Details
-Add the small features: 60 cells, busbars, junction box, corner keys, label.
-
 ## Parts (tier; cm size + colour key to fill before first build)
 
 - [2] frame

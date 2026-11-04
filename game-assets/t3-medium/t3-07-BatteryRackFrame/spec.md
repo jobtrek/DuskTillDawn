@@ -13,17 +13,6 @@ collider: true
 
 # BatteryRackFrame
 
-## Prompt
-
-### Shape
-Build a voxel BatteryRackFrame for the Basement room, about 60x80x100 cm (77x102x128 voxels). Main forms: posts, shelves, side panels.
-
-### Materials
-Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.
-
-### Details
-Add the small features: rail holes, cable entries, casters, label.
-
 ## Parts (tier; cm size + colour key to fill before first build)
 
 - [1] posts 4x 2.3 x 2.3 x 94 cm, metal

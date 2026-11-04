@@ -86,7 +86,7 @@ Every feature supports at least one. If not, it waits.
 
 ## 6. Open decisions (`TBD`)
 
-To settle in the contract meeting. Proposals are in `initial_organisation.md`.
+To settle in the contract meeting. Team rules are in [team-rules.md](team-rules.md).
 
 | # | Question | Proposal |
 |---|---|---|

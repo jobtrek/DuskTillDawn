@@ -16,17 +16,6 @@ states:
 
 # CableBundle
 
-## Prompt
-
-### Shape
-Build a voxel CableBundle for the Basement room, about 30x20x8 cm (38x26x10 voxels). Main forms: 4 cable colours, connectors.
-
-### Materials
-Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.
-
-### Details
-Add the small features: ties, labels, kinks.
-
 ## Parts (tier; cm size + colour key to fill before first build)
 
 - [2] 4 cables 1.6 cm thick: cable_red, cable_yellow, cable_blue, cable_green

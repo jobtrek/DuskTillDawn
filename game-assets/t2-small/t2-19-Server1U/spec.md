@@ -18,17 +18,6 @@ states:
 
 # Server1U
 
-## Prompt
-
-### Shape
-Build a voxel Server1U for the Basement room, about 45x60x4.4 cm (58x77x6 voxels). Main forms: bezel, handles.
-
-### Materials
-Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.
-
-### Details
-Add the small features: vents, drive bays, 2×2 LEDs, power button, screws.
-
 ## Parts (tier; cm size + colour key to fill before first build)
 
 - [1] chassis: 45 x 60 x 4.4 cm, chassis

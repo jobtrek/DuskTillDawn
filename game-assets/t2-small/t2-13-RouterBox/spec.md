@@ -17,17 +17,6 @@ states:
 
 # RouterBox
 
-## Prompt
-
-### Shape
-Build a voxel RouterBox for the Basement room, about 44x25x4.4 cm (56x32x6 voxels). Main forms: case, ear brackets.
-
-### Materials
-Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.
-
-### Details
-Add the small features: ports, LEDs, vents, label.
-
 ## Parts (tier; cm size + colour key to fill before first build)
 
 - [1] main case: 40.62 x 25 x 4.69 cm, chassis

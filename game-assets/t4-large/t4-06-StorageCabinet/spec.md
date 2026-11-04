@@ -13,17 +13,6 @@ collider: true
 
 # StorageCabinet
 
-## Prompt
-
-### Shape
-Build a voxel StorageCabinet for the Control room, about 90x45x180 cm (58x29x115 voxels). Main forms: body, doors.
-
-### Materials
-Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.
-
-### Details
-Add the small features: handles, lock, vent slots, hinge seams, feet.
-
 ## Parts (tier; cm size + colour key to fill before first build)
 
 - [2] body

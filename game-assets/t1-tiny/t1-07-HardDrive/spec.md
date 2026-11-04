@@ -16,17 +16,6 @@ states:
 
 # HardDrive
 
-## Prompt
-
-### Shape
-Build a voxel HardDrive for the Basement room, about 10x15x3 cm (13x19x4 voxels). Main forms: casing, label.
-
-### Materials
-Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.
-
-### Details
-Add the small features: screws, connector pins, PCB edge, 2×2 LED.
-
 ## Parts (tier; cm size + colour key to fill before first build)
 
 - [3] green pcb layer: 10.16 x 14.84 x 0.78 cm, pcb

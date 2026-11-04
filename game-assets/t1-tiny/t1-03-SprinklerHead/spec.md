@@ -13,17 +13,6 @@ collider: false
 
 # SprinklerHead
 
-## Prompt
-
-### Shape
-Build a voxel SprinklerHead for the Basement room, about 6x6x10 cm (8x8x13 voxels). Main forms: frame arms, deflector.
-
-### Materials
-Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.
-
-### Details
-Add the small features: glass bulb, thread, seam.
-
 ## Parts (tier; cm size + colour key to fill before first build)
 
 - [3] brass thread: 3.12 x 3.12 x 2.34 cm, copper

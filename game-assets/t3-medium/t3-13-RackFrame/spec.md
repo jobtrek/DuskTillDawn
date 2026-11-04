@@ -17,17 +17,6 @@ states:
 
 # RackFrame
 
-## Prompt
-
-### Shape
-Build a voxel RackFrame for the Basement room, about 60x80x120 cm (77x102x154 voxels). Main forms: posts, side panels, door.
-
-### Materials
-Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.
-
-### Details
-Add the small features: rail holes, vent slots, casters, lock, label.
-
 ## Parts (tier; cm size + colour key to fill before first build)
 
 - [2] casters: 4 x 4 x 4 cm, rubber

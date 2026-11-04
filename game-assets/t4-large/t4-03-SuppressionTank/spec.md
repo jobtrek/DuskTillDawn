@@ -13,17 +13,6 @@ collider: false
 
 # SuppressionTank
 
-## Prompt
-
-### Shape
-Build a voxel SuppressionTank for the Basement room, about 30x30x170 cm (19x19x109 voxels). Main forms: cylinder, valve.
-
-### Materials
-Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.
-
-### Details
-Add the small features: gauge, hose, band, label, bracket.
-
 ## Parts (tier; cm size + colour key to fill before first build)
 
 - [1] cylinder 28 x 28 x 140 cm stepped round, warning_red (dome shoulders + metal_dark foot ring)

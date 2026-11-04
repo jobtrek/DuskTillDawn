@@ -1,4 +1,4 @@
-"""voxel-sdk check <dir> [--state <State>] | build <dir>"""
+"""voxel-sdk check <dir> [--state <State>] | build <dir> | index [--check]"""
 import sys
 from pathlib import Path
 
@@ -7,7 +7,7 @@ import numpy as np
 from .core import build_model
 from .generate import write_build, write_hand_standalone
 
-USAGE = 'usage: voxel-sdk check <element-dir> [--state <State>] [--full] | voxel-sdk build <element-dir> [--standalone]'
+USAGE = 'usage: voxel-sdk check <element-dir> [--state <State>] [--full] | voxel-sdk build <element-dir> [--standalone] | voxel-sdk index [--check]'
 
 
 def _voxels(grid):
@@ -50,6 +50,9 @@ def check(d, state=None, full=False):
 
 def main(argv=None):
     argv = sys.argv[1:] if argv is None else argv
+    if argv[:1] == ['index']:
+        from .index import run
+        return run(check='--check' in argv[1:]) if set(argv[1:]) <= {'--check'} else print(USAGE) or 2
     state = None
     full, standalone = '--full' in argv, '--standalone' in argv
     argv = [a for a in argv if a not in ('--full', '--standalone')]

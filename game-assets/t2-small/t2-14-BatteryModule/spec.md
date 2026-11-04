@@ -17,17 +17,6 @@ states:
 
 # BatteryModule
 
-## Prompt
-
-### Shape
-Build a voxel BatteryModule for the Basement room, about 44x45x13 cm (56x58x17 voxels). Main forms: case, handles.
-
-### Materials
-Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.
-
-### Details
-Add the small features: terminals, BMS display, LED bar, vents, label.
-
 ## Parts (tier; cm size + colour key to fill before first build)
 
 - [1] main case: 43.75 x 44.53 x 11.72 cm, chassis

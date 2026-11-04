@@ -17,17 +17,6 @@ states:
 
 # InverterBox
 
-## Prompt
-
-### Shape
-Build a voxel InverterBox for the Roof room, about 40x20x60 cm (51x26x77 voxels). Main forms: housing, display.
-
-### Materials
-Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.
-
-### Details
-Add the small features: LEDs, heat fins, DC switch, cable glands, label.
-
 ## Parts (tier; cm size + colour key to fill before first build)
 
 - [2] housing

@@ -13,17 +13,6 @@ collider: false
 
 # PipeCorner
 
-## Prompt
-
-### Shape
-Build a voxel PipeCorner for the Basement room, about 40x40x8 cm (51x51x10 voxels). Main forms: pipe, flanges.
-
-### Materials
-Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.
-
-### Details
-Add the small features: bolts, clamps, weld seam.
-
 ## Parts (tier; cm size + colour key to fill before first build)
 
 - [1] pipe L-elbow 6.2 cm dia (8 voxels), trim

@@ -16,17 +16,6 @@ states:
 
 # StripLight
 
-## Prompt
-
-### Shape
-Build a voxel StripLight for the Control + Basement room, about 120x10x6 cm (154x13x8 voxels). Main forms: housing, diffuser.
-
-### Materials
-Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.
-
-### Details
-Add the small features: end caps, brackets, chain hangers, wires.
-
 ## Parts (tier; cm size + colour key to fill before first build)
 
 - [2] housing

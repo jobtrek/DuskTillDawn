@@ -13,17 +13,6 @@ collider: false
 
 # WallVent
 
-## Prompt
-
-### Shape
-Build a voxel WallVent for the Basement room, about 30x5x30 cm (38x6x38 voxels). Main forms: frame, louvres.
-
-### Materials
-Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.
-
-### Details
-Add the small features: screws, dust, slats.
-
 ## Parts (tier; cm size + colour key to fill before first build)
 
 - [3] dark duct: 29.69 x 1.56 x 29.69 cm, chassis_dark

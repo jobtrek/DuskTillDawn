@@ -13,17 +13,6 @@ collider: false
 
 # Plant
 
-## Prompt
-
-### Shape
-Build a voxel Plant for the Control room, about 30x30x60 cm (38x38x77 voxels). Main forms: pot, stem.
-
-### Materials
-Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.08.
-
-### Details
-Add the small features: leaves, soil, rim, saucer.
-
 ## Parts (tier; cm size + colour key to fill before first build)
 
 - [2] pot

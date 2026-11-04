@@ -13,17 +13,6 @@ collider: true
 
 # BuildingExterior
 
-## Prompt
-
-### Shape
-Build a voxel BuildingExterior for the Whole building room, about 1000x700x400 cm (640x448x256 voxels). Main forms: windows, entrance door, wall panels, downpipes, outdoor AC.
-
-### Materials
-Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.
-
-### Details
-Add the small features: windows, entrance door, wall panels, downpipes, outdoor AC.
-
 ## Parts (tier; cm size + colour key to fill before first build)
 
 - [2/3] windows (tile)

@@ -16,9 +16,10 @@ Turns an Element's `spec.md` + `layout.toml` into a validated voxel model and a 
 - Run from `game-assets/sdk/`:
   - `uv run voxel-sdk check <element-dir>`: validate + compact preview (`--full` for raw ASCII, `--state <Name>` for one State). Exit 1 on errors.
   - `uv run voxel-sdk build <element-dir>`: write a thin `build.py` (`--standalone` inlines the engine).
+  - `uv run voxel-sdk index`: regenerate `game-assets/INDEX.md` (`--check` fails if stale).
   - `uv run pytest`
 - Elements with no `layout.toml` are hand-written: their tracked `build.py` is the only source. Never run plain `build` on them (`agent-guide/hand-written.md`).
 - The Layout is the authored file. `build.py` is generated and git-ignored: change the Layout and rebuild.
-- Layout keys: `game-assets/sdk/README.md`. Design and scope: `docs/specs/voxel-sdk.md`, ADR `docs/adr/0001-generate-build-py-from-spec-and-layout.md`.
+- Layout keys: `game-assets/sdk/README.md`. Design and scope: ADR `docs/adr/0001-generate-build-py-from-spec-and-layout.md`.
 - States: overrides under `[states.<Name>]` in the Layout (README "States"); `check <dir> --state <Name>` previews one. Pieces (`pieces:`) still need hand-written builds (see the `blender-voxel-py` skill).
 - Examples: `t2-small/t2-17-Monitor` (one model), `t2-small/t2-26-PDU` and `t2-small/t2-19-Server1U` (States), `t1-tiny/t1-06-Mug` (round shapes).

@@ -18,17 +18,6 @@ pieces:
 
 # Engineer
 
-## Prompt
-
-### Shape
-Build a voxel Engineer for the All room, about 50x30x172 cm (32x19x110 voxels). Main forms: head, hoodie.
-
-### Materials
-Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.08.
-
-### Details
-Add the small features: face, hair, pockets, lanyard badge, belt, shoes, hands.
-
 ## Parts (tier; cm size + colour key to fill before first build)
 
 - [2] head (blob ok, organic), hoodie

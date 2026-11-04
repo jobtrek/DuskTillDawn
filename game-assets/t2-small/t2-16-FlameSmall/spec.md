@@ -16,17 +16,6 @@ states:
 
 # FlameSmall
 
-## Prompt
-
-### Shape
-Build a voxel FlameSmall for the Basement room, about 30x30x50 cm (19x19x32 voxels). Main forms: 3 flame layers.
-
-### Materials
-Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.
-
-### Details
-Add the small features: hot core, stepped tips, ember voxels at the base.
-
 ## Parts (tier; cm size + colour key to fill before first build)
 
 - [2] flame outer layer 30 x 30 x 50 cm stepped, led_red

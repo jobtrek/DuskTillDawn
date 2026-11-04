@@ -18,17 +18,6 @@ states:
 
 # TowerServer
 
-## Prompt
-
-### Shape
-Build a voxel TowerServer for the Basement room, about 20x45x45 cm (26x58x58 voxels). Main forms: case, front panel.
-
-### Materials
-Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.
-
-### Details
-Add the small features: mesh vent, drive bays, power button, status LED, network port, rear PSU.
-
 ## Parts (tier; cm size + colour key to fill before first build)
 
 - [1] rubber feet: 2.34 x 2.34 x 0.78 cm, 4 copies, rubber
