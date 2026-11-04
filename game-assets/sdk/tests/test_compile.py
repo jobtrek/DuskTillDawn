@@ -224,3 +224,14 @@ def test_hidden_part_warns_and_compact_output(element):
     _, r = compile(d)
     assert any('fully covered' in w for w in r.warnings) or r.visible['cover'] > 0
     assert len(r.render()) <= len(r.render(full=True))
+
+
+def test_hand_written_thin_build_gets_a_standalone_copy(tmp_path):
+    from voxel_sdk.generate import render_hand_standalone
+    (tmp_path / 'build.py').write_text(
+        "# Thing (t1-01) -- hand-written model; engine loaded from the SDK checkout (thin).\n# u\n# ---- spec.md ----\n#   x\n\n"
+        "import os\ntry:\n    _here = os.path.dirname(os.path.abspath(__file__))\nexcept NameError:\n    _here = '/x'\n"
+        "exec(open(os.path.normpath(os.path.join(_here, '../engine_blender.py'))).read())\n\n"
+        "# 2. COLOUR PALETTE\nPALETTE = {}\n# 3. MODEL: Thing\nV = Grid()\n")
+    out = render_hand_standalone(tmp_path)
+    assert 'exec(open' not in out and 'VOXEL ENGINE' in out and 'def box(' in out and out.rstrip().endswith('V = Grid()')

@@ -6,6 +6,8 @@ Spec + Layout -> validated voxel model -> self-contained Blender `build.py`. No 
 uv run voxel-sdk check ../t2-small/t2-17-Monitor   # validate + compact preview (RLE views, per-Part table); add --full for raw ASCII
 uv run voxel-sdk check ../t2-small/t2-26-PDU --state Tripped   # full preview of one State
 uv run voxel-sdk build ../t2-small/t2-17-Monitor   # write build.py (generated, never hand-edited)
+uv run voxel-sdk build --standalone ../t2-small/t2-17-Monitor   # inline the engine: runs in Blender without the repo
+uv run voxel-sdk build --standalone ../t3-medium/t3-03-PipeStraight   # hand-written model (no layout.toml): writes build.standalone.py
 uv run pytest
 ```
 

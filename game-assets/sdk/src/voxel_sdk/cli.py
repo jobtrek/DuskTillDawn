@@ -1,10 +1,11 @@
 """voxel-sdk check <dir> [--state <State>] | build <dir>"""
 import sys
+from pathlib import Path
 
 import numpy as np
 
 from .core import build_model
-from .generate import write_build
+from .generate import write_build, write_hand_standalone
 
 USAGE = 'usage: voxel-sdk check <element-dir> [--state <State>] [--full] | voxel-sdk build <element-dir> [--standalone]'
 
@@ -66,6 +67,17 @@ def main(argv=None):
     cmd, d = argv
     if cmd == 'check':
         return check(d, state, full)
+    if not (Path(d) / 'layout.toml').exists() and (Path(d) / 'build.py').exists():
+        if not standalone:
+            print(f'{d} has no layout.toml: it is a hand-written model. Use --standalone to write build.standalone.py')
+            return 1
+        try:
+            write_hand_standalone(d)
+        except ValueError as e:
+            print(e)
+            return 1
+        print(f'wrote {d}/build.standalone.py')
+        return 0
     try:
         report = write_build(d, standalone)
     except ValueError as e:

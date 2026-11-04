@@ -1,6 +1,7 @@
 """Turn a compiled Model into a self-contained Blender build.py (engine inlined, Alt+P to run)."""
 import inspect
 import os
+import re
 import textwrap
 from pathlib import Path
 
@@ -170,3 +171,30 @@ def write_build(element_dir, standalone=False):
     text, report = render(element_dir, standalone)
     (Path(element_dir) / 'build.py').write_text(text)
     return report
+
+
+_LOADER = re.compile(r"import os\ntry:\n    _here = .*?\nexec\(open\(os\.path\.normpath\(.*?\)\)\.read\(\)\)\n", re.S)
+
+
+def render_hand_standalone(element_dir):
+    """Hand-written thin build.py (no layout.toml): inline the engine in place of the loader."""
+    text = (Path(element_dir) / 'build.py').read_text()
+    m = _LOADER.search(text)
+    if not m or 'VOXEL ENGINE' in text:
+        raise ValueError(f'{element_dir}/build.py is not a thin hand-written build (nothing to inline)')
+    i = text.index('# ---- spec.md')
+    name = text.split(' -- ', 1)[0]
+    bar = '# ' + '=' * 70
+    head = (f"{name} -- fully self-contained Blender script.\n"
+            "# Standalone copy of the hand-written build.py (engine inlined by `voxel-sdk build --standalone`). Do not edit.\n"
+            "# Usage: Blender > Scripting workspace > Open this file > Run Script (Alt+P).\n"
+            "# Needs Blender 4.x/5.x (bundled numpy). No other files needed.\n")
+    engine = (HERE / 'engine_blender.py').read_text().rstrip()
+    out = (head + text[i:m.start()] + f"{bar}\n# 1. VOXEL ENGINE (grid, shapes, greedy meshing, materials, export)\n{bar}\n{engine}\n\n"
+           + text[m.end():].lstrip('\n'))
+    compile(out, 'build.standalone.py', 'exec')
+    return out
+
+
+def write_hand_standalone(element_dir):
+    (Path(element_dir) / 'build.standalone.py').write_text(render_hand_standalone(element_dir))
