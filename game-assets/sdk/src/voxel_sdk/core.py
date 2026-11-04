@@ -32,6 +32,7 @@ class Report:
     parts: dict = field(default_factory=dict)   # name -> (lo, hi) placement box in voxels
     slices: dict = field(default_factory=dict)
     legend: dict = field(default_factory=dict)
+    visible: dict = field(default_factory=dict)  # name -> voxels still visible after later Parts overwrote it
     state: str | None = None             # State this report is for (None when the Element has no States)
 
     @property
@@ -39,14 +40,43 @@ class Report:
         return not self.errors
 
     def __str__(self):
-        out = ([f'state {self.state}'] if self.state else []) + [f"bounds {self.bounds}  size {self.size}  raw blocks {self.raw_count}",
+        return self.render()
+
+    def render(self, full=False):
+        """Compact by default: views are run-length encoded ('C3D60C3' = 3xC, 60xD, 3xC) and repeated rows
+        collapse to '<n>x <row>'. full=True prints the raw ASCII art."""
+        out = ([f'state {self.state}'] if self.state else []) + [
+               f"bounds {self.bounds}  size {self.size}  raw blocks {self.raw_count}",
                'colours: ' + ', '.join(f'{k}={v}' for k, v in self.counts.items())]
         out += [f'ERROR: {e}' for e in self.errors] + [f'warning: {w}' for w in self.warnings]
+        if self.visible:
+            out += ['parts (visible voxels, box lo..hi): ' + '; '.join(
+                f'{n}={self.visible.get(n, 0)} {self.parts[n][0]}..{self.parts[n][1]}' for n in self.parts)]
         for name, art in self.slices.items():
-            out += ['', f'-- {name} --', art]
+            out += ['', f'-- {name} --', art if full else _rle(art)]
         out += ['', 'legend: ' + '  '.join(f'{c}={k}' for k, c in self.legend.items())]
         out.append('OK' if self.ok else f'FAILED ({len(self.errors)} errors)')
         return '\n'.join(out)
+
+
+def _rle(art):
+    out, prev, n = [], None, 0
+    for row in art.splitlines() + [None]:
+        if row == prev:
+            n += 1
+            continue
+        if prev is not None:
+            runs = []
+            i = 0
+            while i < len(prev):
+                j = i
+                while j < len(prev) and prev[j] == prev[i]:
+                    j += 1
+                runs.append(prev[i] + (str(j - i) if j - i > 1 else ''))
+                i = j
+            out.append((f'{n}x ' if n > 1 else '') + ''.join(runs))
+        prev, n = row, 1
+    return '\n'.join(out)
 
 
 @dataclass
@@ -364,6 +394,10 @@ def _validate(spec, M, pid, pnames, palette, report, strict=True):
         for comp in comps[1:]:
             who = sorted({pnames.get(int(pid[p]), '?') for p in comp})
             report.errors.append(f'floating Part(s) {who}: {len(comp)} voxels not connected to the main body')
+    for i, name in pnames.items():
+        report.visible[name] = int(np.count_nonzero(pid == i))
+        if name in report.parts and not report.visible[name]:
+            report.warnings.append(f'Part "{name}" is fully covered by later Parts (invisible); move it or drop it')
     pairs = set()
     for ax in range(3):
         a = np.moveaxis(M.a, ax, 0)

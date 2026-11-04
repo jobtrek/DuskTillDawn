@@ -30,12 +30,13 @@ Add the small features: rail holes, vent slots, casters, lock, label.
 
 ## Parts (tier; cm size + colour key to fill before first build)
 
-- [1] posts 4x 2.3 x 2.3 x 113 cm, metal
-- [2] side panels 2x 1.6 x 78 x 112 cm, chassis
-- [2] front door frame + mesh bars 54 x 1.6 x 109 cm, chassis_dark
-- [3] rail holes (tile) 24U, 1 x 2 voxels every 6 voxels on the front posts, seam
-- [3] vent slots 8x on each side panel, seam
-- [3] casters 4x, rubber on metal_dark fork
-- [3] lock + handle 1.6 x 3 cm on the door, metal
-- [3] top-of-rack LED 4x4: led_green (Ok) / led_orange (Warn) / led_red (Failed)
-- [3] label (24U) 18 x 4 cm, label
+- [2] casters: 4 x 4 x 4 cm, rubber
+- [2] posts: 3 x 3 x 114 cm, chassis_dark
+- [2] top plate: 60 x 80 x 2 cm, chassis
+- [2] side panels: 0.8 x 74 x 104 cm, chassis
+- [2] door: 56 x 1.6 x 108 cm, metal_dark
+- [2] rail holes: 0.8 x 0.8 x 1.6 cm, seam
+- [2] vent slots: 40 x 0.8 x 1 cm, chassis_dark
+- [2] lock: 3 x 0.8 x 4 cm, metal
+- [2] label: 8 x 0.8 x 3 cm, label
+- [3] top-of-rack LED: 3.1 x 0.8 x 3.1 cm (Ok green / Warn orange / Failed red), led_green

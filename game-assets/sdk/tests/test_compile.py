@@ -167,13 +167,13 @@ def test_report_has_preview_and_legend(element):
 
 def test_render_is_self_contained_python_and_deterministic(element):
     d = element(TWO, '[base]\n[top]\non = "base.top"\n', voxels='10x10x7')
-    text, _ = render(d)
+    text, _ = render(d, standalone=True)
     compile_ = __builtins__['compile'] if isinstance(__builtins__, dict) else __builtins__.compile
     compile_(text, 'build.py', 'exec')
     assert 'import bpy' in text and 'GENERATED' in text
     assert 'def ellipse' not in text and 'def shell' not in text      # extra shapes only when a Part uses them
     assert 'box(V, ' in text and "R = build('Thing', V, C, size=FINE_SIZE, grain=0)" in text
-    assert render(d)[0] == text
+    assert render(d, standalone=True)[0] == text
 
 
 def test_render_inlines_extra_shapes_only_when_used(element):
@@ -204,7 +204,7 @@ def test_generated_build_py_reproduces_the_compiled_grid(element, monkeypatch):
                 "[[raw]]\ncode = \"box(V, 0, 0, 0, 0, 10, 10, 'b')\"\n", voxels='10x11x15')
     grid, r = compile(d)
     assert r.ok, r.errors
-    text, _ = render(d)
+    text, _ = render(d, standalone=True)
     head, model = text.split('# 3. MODEL', 1)
     ns = {}
     exec(head, ns)
@@ -215,3 +215,12 @@ def test_generated_build_py_reproduces_the_compiled_grid(element, monkeypatch):
     counts = {k: int((V.a == i + 1).sum()) for i, k in enumerate(V.keys)}
     assert counts == r.counts
     assert V.bounds() == r.bounds
+
+
+def test_hidden_part_warns_and_compact_output(element):
+    d = element(['base: 10 x 10 x 10 cm, a', 'cover: 2 x 2 x 2 cm, b'],
+                '[base]\n[cover]\non = "base.top"\ngap = -2\noffset_z = -0\n')
+    from voxel_sdk.core import compile
+    _, r = compile(d)
+    assert any('fully covered' in w for w in r.warnings) or r.visible['cover'] > 0
+    assert len(r.render()) <= len(r.render(full=True))

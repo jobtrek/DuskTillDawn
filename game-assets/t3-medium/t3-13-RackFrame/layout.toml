@@ -1,0 +1,35 @@
+[casters]
+repeat = { x = 2, pitch_x = 56, y = 2, pitch_y = 76 }
+[posts]
+on = "casters.top"
+repeat = { x = 2, pitch_x = 57, y = 2, pitch_y = 77 }
+["top plate"]
+on = "posts.top"
+["side panels"]
+on = "posts.left"
+gap = -60
+repeat = { x = 2, pitch_x = 59.2 }
+[door]
+on = "posts.front"
+gap = -1.6
+offset_z = 1
+["rail holes"]
+on = "posts.front"
+gap = -1.6
+repeat = { z = 40, pitch_z = 2.7 }
+[lock]
+on = "door.front"
+gap = -0.8
+align = "right"
+offset_x = -2
+["vent slots"]
+on = "door.front"
+gap = -0.8
+offset_z = 8
+repeat = { z = 10, pitch_z = 3 }
+[label]
+on = "door.front"
+gap = -0.8
+align = "left"
+offset_x = 4
+offset_z = 34

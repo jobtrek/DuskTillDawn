@@ -6,7 +6,7 @@ import numpy as np
 from .core import build_model
 from .generate import write_build
 
-USAGE = 'usage: voxel-sdk check <element-dir> [--state <State>] | voxel-sdk build <element-dir>'
+USAGE = 'usage: voxel-sdk check <element-dir> [--state <State>] [--full] | voxel-sdk build <element-dir> [--standalone]'
 
 
 def _voxels(grid):
@@ -26,9 +26,9 @@ def _strip(msg):
     return msg.split('] ', 1)[1] if msg.startswith('[') else msg
 
 
-def check(d, state=None):
+def check(d, state=None, full=False):
     base = build_model(d, state=state)
-    print(base.report)
+    print(base.report.render(full))
     ok = base.report.ok
     if state is not None or not base.spec.states:
         return 0 if ok else 1
@@ -50,6 +50,8 @@ def check(d, state=None):
 def main(argv=None):
     argv = sys.argv[1:] if argv is None else argv
     state = None
+    full, standalone = '--full' in argv, '--standalone' in argv
+    argv = [a for a in argv if a not in ('--full', '--standalone')]
     argv = [x for a in argv for x in (a.split('=', 1) if a.startswith('--state=') else [a])]
     if '--state' in argv:
         i = argv.index('--state')
@@ -63,12 +65,12 @@ def main(argv=None):
         return 2
     cmd, d = argv
     if cmd == 'check':
-        return check(d, state)
+        return check(d, state, full)
     try:
-        report = write_build(d)
+        report = write_build(d, standalone)
     except ValueError as e:
         print(e)
         return 1
-    print(report)
+    print(report.render(full))
     print(f'wrote {d}/build.py')
     return 0

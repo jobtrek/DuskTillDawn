@@ -3,7 +3,7 @@
 Spec + Layout -> validated voxel model -> self-contained Blender `build.py`. No Blender needed to check.
 
 ```
-uv run voxel-sdk check ../t2-small/t2-17-Monitor   # validate + ASCII preview (front/side/top)
+uv run voxel-sdk check ../t2-small/t2-17-Monitor   # validate + compact preview (RLE views, per-Part table); add --full for raw ASCII
 uv run voxel-sdk check ../t2-small/t2-26-PDU --state Tripped   # full preview of one State
 uv run voxel-sdk build ../t2-small/t2-17-Monitor   # write build.py (generated, never hand-edited)
 uv run pytest

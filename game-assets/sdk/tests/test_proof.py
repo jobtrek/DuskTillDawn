@@ -74,8 +74,10 @@ def test_every_state_matches_existing_build(element, state):
         assert abs(r.counts[k] - ej.get(k, 0) - counts[k]) <= TIGHT, (k, r.counts[k], counts[k])
 
 
-# Mug has States but no overrides yet, so its build.py stays hand-authored.
+# build.py is generated and git-ignored; check the thin form stays small and the standalone form is complete.
 @pytest.mark.parametrize('element', ['t2-small/t2-17-Monitor', *STATE_REFERENCE])
-def test_checked_in_build_py_is_current(element):
-    assert (ASSETS / element / 'build.py').read_text() == render(ASSETS / element)[0], \
-        f'stale build.py, run: uv run voxel-sdk build {element}'
+def test_thin_build_is_short_and_standalone_is_complete(element):
+    thin, _ = render(ASSETS / element)
+    full, _ = render(ASSETS / element, standalone=True)
+    assert len(thin.splitlines()) < 120 < len(full.splitlines())
+    assert 'engine_blender.py' in thin and 'def build(' not in thin and 'def build(' in full

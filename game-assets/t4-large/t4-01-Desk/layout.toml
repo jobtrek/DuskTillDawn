@@ -1,0 +1,30 @@
+["side panels"]
+repeat = { x = 2, pitch_x = 157 }
+[top]
+on = "side panels.top"
+[drawer]
+on = "top.bottom"
+align = "right"
+offset_x = -6
+["edge trim"]
+on = "top.front"
+gap = -1.6
+[handles]
+on = "drawer.front"
+gap = -1.6
+[screws]
+on = "drawer.front"
+gap = -1.6
+offset_z = 4
+repeat = { x = 2, pitch_x = 48 }
+["cable grommet"]
+on = "top.top"
+gap = -1.6
+align = "left"
+y = "flush-back"
+offset_x = 10
+offset_y = -8
+["wood grain"]
+on = "top.top"
+gap = -0.8
+repeat = { y = 6, pitch_y = 11 }
