@@ -30,10 +30,10 @@ Add the small features: terminals, BMS display, LED bar, vents, label.
 
 ## Parts (tier; cm size + colour key to fill before first build)
 
-- [2] case
-- [2] handles
-- [3] terminals
-- [3] BMS display
-- [3] LED bar
-- [3] vents
-- [3] label
+- [1] case 44 x 44 x 11 cm, chassis
+- [2] handles 2x 5.5 x 0.8 x 3 cm on the front, metal
+- [3] terminals 2x 3 x 3 x 1.6 cm on top, copper + warning_red / rubber caps
+- [3] BMS display 12 x 0.8 x 3 cm, screen + coloured digits
+- [3] LED bar 5x 2x2 voxels, led_green / led_red / led_orange / led_off
+- [3] vents 4 slots each side, seam (orange when Overheating)
+- [3] label 15 x 12 cm on top, label

@@ -26,11 +26,11 @@ Add the small features: drive bays, mesh vent, power button, USB, LEDs.
 
 ## Parts (tier; cm size + colour key to fill before first build)
 
-- [2] case
-- [2] front panel
-- [3] drive bays
-- [3] mesh vent (tile)
-- [3] power button
-- [3] USB
-- [3] LEDs
-- [3] rear PSU
+- [2] case: 20 x 44 x 45 cm, chassis
+- [2] front panel: 18 x 1 x 43 cm, plastic_black
+- [3] drive bays: 14 x 1 x 3 cm, chassis_dark
+- [3] mesh vent (tile): 16 x 1 x 8 cm, seam
+- [3] power button: 3 x 1 x 3 cm, trim
+- [3] USB: 3 x 1 x 1.5 cm, metal_dark
+- [3] LEDs: 1.5 cm, led_green
+- [3] rear PSU: 10 x 2 x 10 cm, metal_dark

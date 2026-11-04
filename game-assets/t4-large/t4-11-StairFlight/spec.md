@@ -26,11 +26,11 @@ Add the small features: nosing strips, anti-slip, balusters, bolts, wear.
 
 ## Parts (tier; cm size + colour key to fill before first build)
 
-- [2] treads
-- [2] stringers
-- [2] railing
-- [3] nosing strips
-- [3] anti-slip
-- [3] balusters
-- [3] bolts
-- [3] wear
+- [2] treads: 58 x 20 x 2 cm, metal
+- [2] stringers: 3 x 225 x var cm, chassis
+- [2] railing: 3 x 225 x 3 cm, trim
+- [3] nosing strips: 58 x 3 cm, warning_yellow
+- [3] anti-slip: 54 x 1.5 cm, metal_dark
+- [3] balusters: 3 x 3 x 40 cm, metal_dark
+- [3] bolts: 1.5 cm, metal
+- [3] wear: 3 cm patches, rust

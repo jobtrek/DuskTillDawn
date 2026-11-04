@@ -26,8 +26,8 @@ Add the small features: screws, buckle, sign.
 
 ## Parts (tier; cm size + colour key to fill before first build)
 
-- [2] wall plate
-- [2] strap
-- [3] screws
-- [3] buckle
-- [3] sign
+- [2] wall plate 20 x 2.3 x 20 cm, metal_dark
+- [2] strap 20 x 7.5 x 2.3 cm U-band, rubber
+- [3] screws 4x 0.8 cm, metal
+- [3] buckle 1.6 x 0.8 x 2.3 cm, metal
+- [3] sign 8 x 0.8 x 6 cm, warning_red + plastic_white cross

@@ -29,9 +29,9 @@ Add the small features: coffee surface, logo label, base ring, chip wear.
 
 ## Parts (tier; cm size + colour key to fill before first build)
 
-- [2] handle
-- [2] rim
-- [3] coffee surface
-- [3] logo label
-- [3] base ring
-- [3] chip wear
+- [2] handle: 3 x 2 x 7 cm, plastic_white
+- [2] rim: 1 cm top ring, trim
+- [3] coffee surface: 7 x 7 cm, wood_dark
+- [3] logo label: 3 x 4 cm, warning_red
+- [3] base ring: 6 x 6 cm, chassis_dark
+- [3] chip wear: 1 cm, carved

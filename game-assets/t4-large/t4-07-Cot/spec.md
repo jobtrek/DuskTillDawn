@@ -26,9 +26,9 @@ Add the small features: pillow, blanket folds, stitching, legs.
 
 ## Parts (tier; cm size + colour key to fill before first build)
 
-- [2] frame
-- [2] mattress
-- [3] pillow
-- [3] blanket folds
-- [3] stitching
-- [3] legs
+- [2] frame: 190 x 80 x 12 cm, metal
+- [2] mattress: 184 x 74 x 12 cm, fabric
+- [3] pillow: 28 x 44 x 8 cm, plastic_white
+- [3] blanket folds: 2 cm ridges, fabric_dark
+- [3] stitching: 3 x 1 cm, label
+- [3] legs: 3 x 3 x 22 cm, metal_dark

@@ -29,8 +29,8 @@ Add the small features: ties, labels, kinks.
 
 ## Parts (tier; cm size + colour key to fill before first build)
 
-- [2] 4 cable colours
-- [2] connectors
-- [3] ties
-- [3] labels
-- [3] kinks
+- [2] 4 cables 1.6 cm thick: cable_red, cable_yellow, cable_blue, cable_green
+- [2] connectors 4x 3 x 1.6 x 1.6 cm, plastic_black + metal tip
+- [3] cable ties 3x, plastic_white (Tidy) / 1x (Messy)
+- [3] labels 2x 1.6 cm, label
+- [3] kinks: sharp bends only in Messy

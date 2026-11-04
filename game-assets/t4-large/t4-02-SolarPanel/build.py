@@ -422,7 +422,7 @@ def build(name, V, colors, size=VOXEL_SIZE, metallic=(), mesh='greedy', material
         mat_index = np.arange(-1, len(names), dtype=np.int32)
         mat_index[0] = 0
 
-    nz = np.argwhere(ids)
+    nz = np.argwhere(ids) + np.array(V.o)   # lattice coords, not array indices
     lo, hi = nz.min(0), nz.max(0)
     ox = (lo[0] + hi[0] + 1) / 2
     oy = (lo[1] + hi[1] + 1) / 2
@@ -484,8 +484,8 @@ def build(name, V, colors, size=VOXEL_SIZE, metallic=(), mesh='greedy', material
 
     col_name = None
     if collider:
-        w_lo = (np.array(lo) + W.o - np.array([ox, oy, oz])) * size
-        w_hi = (np.array(hi) + 1 + W.o - np.array([ox, oy, oz])) * size
+        w_lo = (np.array(lo) - np.array([ox, oy, oz])) * size
+        w_hi = (np.array(hi) + 1 - np.array([ox, oy, oz])) * size
         cx = [(a_ + b_) / 2 for a_, b_ in zip(w_lo, w_hi)]
         cs = [b_ - a_ for a_, b_ in zip(w_lo, w_hi)]
         cverts = [(cx[0] + dx * cs[0] / 2, cx[1] + dy * cs[1] / 2, cx[2] + dz * cs[2] / 2)
@@ -552,7 +552,7 @@ PALETTE = {
     'rubber': (0.04, 0.04, 0.04),
     'plastic_white': (0.80, 0.80, 0.78), 'plastic_black': (0.06, 0.06, 0.07),
     'label': (0.85, 0.82, 0.70), 'label_text': (0.10, 0.10, 0.12),
-    'led_green': (0.05, 0.90, 0.15), 'led_yellow': (0.95, 0.75, 0.05),
+    'led_green': (0.05, 0.90, 0.15), 'led_yellow': (0.95, 0.75, 0.05), 'led_orange': (0.98, 0.45, 0.03),
     'led_red': (0.95, 0.08, 0.05), 'led_off': (0.10, 0.12, 0.10),
     'wood': (0.40, 0.24, 0.11), 'wood_dark': (0.22, 0.12, 0.05),
     'fabric': (0.20, 0.30, 0.50), 'fabric_dark': (0.10, 0.15, 0.28),

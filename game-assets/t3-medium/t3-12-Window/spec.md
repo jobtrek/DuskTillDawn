@@ -26,9 +26,9 @@ Add the small features: glazing bars, handle, sill, hinge.
 
 ## Parts (tier; cm size + colour key to fill before first build)
 
-- [2] frame
-- [2] glass
-- [3] glazing bars
-- [3] handle
-- [3] sill
-- [3] hinge
+- [2] frame: 120 x 9 x 8 cm border, trim
+- [2] glass: 104 x 3 x 104 cm, glass
+- [3] glazing bars: 3 x 6 cm, plastic_white
+- [3] handle: 3 x 3 x 10 cm, metal
+- [3] sill: 120 x 5 x 3 cm, concrete
+- [3] hinge: 3 x 1 x 8 cm, metal_dark

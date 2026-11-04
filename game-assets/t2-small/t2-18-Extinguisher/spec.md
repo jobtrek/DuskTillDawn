@@ -26,11 +26,11 @@ Add the small features: pin, gauge, label, nozzle, strap.
 
 ## Parts (tier; cm size + colour key to fill before first build)
 
-- [2] body
-- [2] hose
-- [2] handle
-- [3] pin
-- [3] gauge
-- [3] label
-- [3] nozzle
-- [3] strap
+- [1] body 14 x 14 x 37 cm round, warning_red
+- [2] hose 1.6 cm along the right side, rubber
+- [2] head + handle 6 x 5 x 8 cm, metal / metal_dark
+- [3] safety pin 1.6 x 0.8 cm, warning_yellow
+- [3] pressure gauge 2.4 cm, glass in metal_dark bezel
+- [3] label 4.7 x 0.8 x 12 cm, label + label_text
+- [3] nozzle 1.6 x 3 cm, metal_dark
+- [3] strap ring 1.6 cm, rubber

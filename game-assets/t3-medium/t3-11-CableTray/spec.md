@@ -26,9 +26,9 @@ Add the small features: brackets, bolts, cables, ties.
 
 ## Parts (tier; cm size + colour key to fill before first build)
 
-- [2] side rails
-- [2] rungs
-- [3] brackets
-- [3] bolts
-- [3] cables
-- [3] ties
+- [1] side rails 2x 1.6 x 120 x 7 cm, metal
+- [2] rungs 20x 28 x 1.6 x 1.6 cm every 6.2 cm, metal_dark
+- [3] brackets 3x pairs under the rails, trim
+- [3] bolts 6x 0.8 cm on the rails, metal
+- [3] cables 3x 1.6 cm: cable_blue, cable_red, cable_yellow
+- [3] cable ties 3x, plastic_white

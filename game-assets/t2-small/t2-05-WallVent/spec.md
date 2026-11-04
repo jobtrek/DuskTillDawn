@@ -26,8 +26,8 @@ Add the small features: screws, dust, slats.
 
 ## Parts (tier; cm size + colour key to fill before first build)
 
-- [2] frame
-- [2] louvres
-- [3] screws
-- [3] dust
-- [3] slats (tile)
+- [2] frame 30 x 4 x 30 cm, 3-voxel border, trim
+- [2] louvres 8 slats 24 x 1.6 x 1.6 cm, metal
+- [3] screws 4x 0.8 cm in frame corners, metal_dark
+- [3] dust on slats, dust
+- [3] slats (tile) over dark duct, chassis_dark

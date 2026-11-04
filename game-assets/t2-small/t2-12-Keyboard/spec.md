@@ -26,10 +26,10 @@ Add the small features: individual keys, space bar, arrow cluster, cable, label.
 
 ## Parts (tier; cm size + colour key to fill before first build)
 
-- [2] case
-- [2] tilt feet
-- [3] individual keys
-- [3] space bar
-- [3] arrow cluster
-- [3] cable
-- [3] label
+- [2] case: 44 x 14 x 1.5 cm, chassis
+- [2] tilt feet: 2 x 1 x 0.8 cm, rubber
+- [3] individual keys: 1.6 cm, plastic_black
+- [3] space bar: 10 x 1.6 cm, plastic_black
+- [3] arrow cluster: 3 keys, trim
+- [3] cable: 1 x 1 cm, cable
+- [3] label: 3 x 1 cm, label

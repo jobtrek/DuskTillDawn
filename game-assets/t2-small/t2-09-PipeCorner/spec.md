@@ -26,8 +26,8 @@ Add the small features: bolts, clamps, weld seam.
 
 ## Parts (tier; cm size + colour key to fill before first build)
 
-- [2] pipe
-- [2] flanges
-- [3] bolts
-- [3] clamps
-- [3] weld seam
+- [1] pipe L-elbow 6.2 cm dia (8 voxels), trim
+- [2] flanges 2x 7.8 cm dia x 2.3 cm, metal_dark
+- [3] bolts 8x 0.8 cm on the flange faces, metal
+- [3] clamps 2x 7.8 cm dia x 1.6 cm, rubber
+- [3] weld seam 2x ring at the elbow, seam

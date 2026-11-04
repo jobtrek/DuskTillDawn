@@ -26,9 +26,9 @@ Add the small features: label, striker, screws, LED.
 
 ## Parts (tier; cm size + colour key to fill before first build)
 
-- [2] housing
-- [2] glass cover
-- [3] label
-- [3] striker
-- [3] screws
-- [3] LED
+- [2] housing 10 x 4 x 10 cm, warning_red
+- [2] glass cover 6.4 x 1.6 x 6.4 cm, glass
+- [3] label strip 6 x 0.4 x 1.6 cm, label
+- [3] striker button 2.4 x 0.8 x 3 cm, warning_yellow
+- [3] screws 4x 0.8 x 0.8 cm, metal
+- [3] LED 1.6 x 1.6 cm, led_green

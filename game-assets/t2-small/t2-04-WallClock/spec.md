@@ -26,8 +26,8 @@ Add the small features: hour ticks, hands, battery bump.
 
 ## Parts (tier; cm size + colour key to fill before first build)
 
-- [2] frame
-- [2] glass
-- [3] hour ticks
-- [3] hands
-- [3] battery bump
+- [2] frame: 30 x 4 x 30 cm, chassis
+- [2] glass: 24 x 0.8 x 24 cm, glass
+- [3] hour ticks: 2 x 2 cm, seam
+- [3] hands: 1.5 cm wide, chassis_dark
+- [3] battery bump: 6 x 1 x 7 cm, chassis

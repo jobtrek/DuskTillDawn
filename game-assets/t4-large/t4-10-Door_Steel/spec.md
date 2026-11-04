@@ -26,14 +26,13 @@ Add the small features: push bar, 3 hinges, lock, warning sign, rivets.
 
 ## Parts (tier; cm size + colour key to fill before first build)
 
-- [2] slab
-- [2] frame
-- [3] push bar
-- [3] 3 hinges
-- [3] lock
-- [3] warning sign
-- [3] rivets
-- [3] dents
+- [1] slab 88 x 3 x 197 cm, metal
+- [2] frame 100 x 10 x 205 cm, 4-voxel border, metal_dark
+- [3] push bar 70 x 3 x 5 cm + end brackets, metal / trim
+- [3] 3 hinges 6 x 3 x 12 cm on the left, metal
+- [3] lock plate 5 x 1.6 x 10 cm with keyhole, trim / seam
+- [3] warning sign 24 x 24 cm, warning_yellow + plastic_black
+- [3] rivets round the slab edge, metal_dark; dents (chassis) and rust at the foot
 
 ## Notes
 

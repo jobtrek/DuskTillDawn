@@ -30,7 +30,10 @@ Add the small features: display, louvres, handles, logo, LED, pipe stubs, feet.
 
 ## Parts (tier; cm size + colour key to fill before first build)
 
-- [2] cabinet, doors
-- [3] display, louvres, handles, logo, LED, pipe stubs, feet
-
-(A 2nd AC upgrade reuses this model.)
+- [1] cabinet 70 x 90 x 200 cm, plastic_white
+- [2] lower double doors 63 x 1.6 x 117 cm, paint_wall (_Broken: left door buckled out)
+- [2] upper control panel 63 x 1.6 x 70 cm, chassis
+- [3] display 30 x 17 cm, screen + digits led_green (On) / led_red (Broken)
+- [3] louvres 6 slots, seam; handles 2x metal
+- [3] logo bar label; LED 2x2 led_green / led_off / led_red
+- [3] pipe stubs 2x 5 cm on the back, copper; feet 4x metal_dark

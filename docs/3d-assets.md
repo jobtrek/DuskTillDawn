@@ -90,17 +90,20 @@ Priority: **V1** = needed for the first playable. **UP** = needed when that upgr
 | [t2-10](../game-assets/t2-small/t2-10-CleanerRobot/spec.md) | **CleanerRobot** | Roof | 30×40×15 → 38×51×19 | F | one | body, brush wheels · bumper, sensor, LED, handle | UP |
 | [t2-11](../game-assets/t2-small/t2-11-DeskLamp/spec.md) | **DeskLamp** | Control | 20×20×42 → 26×26×54 | F | _On, _Off | arm, shade, base · switch, hinge joints, cable, bulb | V1 |
 | [t2-12](../game-assets/t2-small/t2-12-Keyboard/spec.md) | **Keyboard** | Control | 44×14×3 → 56×18×4 | F | one | case, tilt feet · individual keys, space bar, arrow cluster, cable, label | V1 |
-| [t2-13](../game-assets/t2-small/t2-13-RouterBox/spec.md) | **RouterBox** | Basement | 44×25×4.4 → 56×32×6 | F | one | case, ear brackets · ports (tile), LEDs, vents, label | UP |
+| [t2-13](../game-assets/t2-small/t2-13-RouterBox/spec.md) | **RouterBox** | Basement | 44×25×4.4 → 56×32×6 | F | _On, _Hot, _Failed | case, ear brackets · ports (tile), status LED + port LEDs (2x2), vents, label | UP |
 | [t2-14](../game-assets/t2-small/t2-14-BatteryModule/spec.md) | **BatteryModule** | Basement | 44×45×13 → 56×58×17 | F | _Charged, _Low, _Overheating | case, handles · terminals, BMS display, LED bar, vents, label | V1 |
 | [t2-15](../game-assets/t2-small/t2-15-ComputerTower/spec.md) | **ComputerTower** | Control | 20×45×45 → 26×58×58 | F | one | case, front panel · drive bays, mesh vent (tile), power button, USB, LEDs, rear PSU | V1 |
 | [t2-16](../game-assets/t2-small/t2-16-FlameSmall/spec.md) | **FlameSmall** | Basement | 30×30×50 → 19×19×32 | S | _A, _B | 3 flame layers (red / orange / yellow) · hot core, stepped tips, ember voxels at the base | V1 |
 | [t2-17](../game-assets/t2-small/t2-17-Monitor/spec.md) | **Monitor** | Control | 54×18×36 → 69×23×46 | F | one | bezel, neck, base · power LED, buttons, back vents, VESA plate, ports | V1 |
 | [t2-18](../game-assets/t2-small/t2-18-Extinguisher/spec.md) | **Extinguisher** | Basement | 16×16×55 → 20×20×70 | F | one | body, hose, handle · pin, gauge, label, nozzle, strap | V1 |
-| [t2-19](../game-assets/t2-small/t2-19-Server1U/spec.md) | **Server1U** | Basement | 45×60×4.4 → 58×77×6 | F | _On, _Off, _Failed | bezel, handles · vents (tile), drive bays, 2×2 LEDs, power button, screws, label | V1 |
+| [t2-19](../game-assets/t2-small/t2-19-Server1U/spec.md) | **Server1U** | Basement | 45×60×4.4 → 58×77×6 | F | _On, _Hot, _Off, _Failed | bezel, handles · vents (tile), drive bays, 2×2 LEDs, power button, screws, label | V1 |
 | [t2-20](../game-assets/t2-small/t2-20-InverterBox/spec.md) | **InverterBox** | Roof | 40×20×60 → 51×26×77 | F | _On, _Off, _Broken | housing, display · LEDs, heat fins, DC switch, cable glands, label | V1 |
 | [t2-21](../game-assets/t2-small/t2-21-Plant/spec.md) | **Plant** | Control | 30×30×60 → 38×38×77 | F | one | pot, stem · leaves (blob ok, organic), soil, rim, saucer | V1 |
 | [t2-22](../game-assets/t2-small/t2-22-RaidTower/spec.md) | **RaidTower** | Basement | 25×50×60 → 32×64×77 | F | one | case, bays · 8 drive caddies (tile), handles, LEDs, vents, label | UP |
 | [t2-23](../game-assets/t2-small/t2-23-AntennaDish/spec.md) | **AntennaDish** | Roof | 60×40×60 → 77×51×77 | F | one | dish, feed horn, struts · ribs, mount clamp, cable, label, bolts | V1 |
+| [t2-24](../game-assets/t2-small/t2-24-Laptop/spec.md) | **Laptop** | Basement | 33×23×2.5 → 42×29×3 | F | _On, _Hot, _Failed, _Off | closed body, hinge · status LED (2x2, front edge), vents, rubber feet, power port, label | V1 |
+| [t2-25](../game-assets/t2-small/t2-25-TowerServer/spec.md) | **TowerServer** | Basement | 20×45×45 → 26×58×58 | F | _On, _Hot, _Failed, _Off | case, front panel · status LED (2x2), mesh vent (tile), drive bays, power button, network port, rear PSU | UP |
+| [t2-26](../game-assets/t2-small/t2-26-PDU/spec.md) | **PDU** | Basement | 44×10×4.4 → 56×13×6 | F | _On, _Overload, _Tripped, _Off | case, ear brackets · outlets (tile), status LED (2x2), breaker switch, power cord, label | UP |
 <!-- /index:T2 -->
 
 ## T3: Medium (60 cm–1.3 m)
@@ -120,7 +123,7 @@ Priority: **V1** = needed for the first playable. **UP** = needed when that upgr
 | [t3-10](../game-assets/t3-medium/t3-10-StripLight/spec.md) | **StripLight** | Control + Basement | 120×10×6 → 154×13×8 | F | _On, _Off | housing, diffuser · end caps, brackets, chain hangers, wires | V1 |
 | [t3-11](../game-assets/t3-medium/t3-11-CableTray/spec.md) | **CableTray** | Basement | 30×120×10 → 38×154×13 | F | one | side rails, rungs · brackets, bolts, cables, ties | V1 |
 | [t3-12](../game-assets/t3-medium/t3-12-Window/spec.md) | **Window** | Control | 120×12×120 → 77×8×77 | S | one | frame, glass · glazing bars, handle, sill, hinge | V1 |
-| [t3-13](../game-assets/t3-medium/t3-13-RackFrame/spec.md) | **RackFrame** | Basement | 60×80×120 → 77×102×154 | F | one | posts, side panels, door · rail holes (tile), vent slots, casters, lock, label (24U) | V1 |
+| [t3-13](../game-assets/t3-medium/t3-13-RackFrame/spec.md) | **RackFrame** | Basement | 60×80×120 → 77×102×154 | F | _Ok, _Warn, _Failed | posts, side panels, door · rail holes (tile), vent slots, casters, lock, top-of-rack LED (4x4, visible across the room), label (24U) | V1 |
 | [t3-14](../game-assets/t3-medium/t3-14-FlameLarge/spec.md) | **FlameLarge** | Basement | 80×80×120 → 51×51×77 | S | _A, _B | 3 flame layers (red / orange / yellow) · hot core, stepped tips, ember voxels at the base | V1 |
 | [t3-15](../game-assets/t3-medium/t3-15-Broom/spec.md) | **Broom** | Roof | 40×6×130 → 51×8×166 | F | one | handle, head · bristle rows (tile), bolts, grip tape, wear | V1 |
 <!-- /index:T3 -->
@@ -158,7 +161,7 @@ Rooms are built as **separate pieces** so the isometric camera can hide the near
 |---|---|---|---|---|---|---|
 | [t5-01](../game-assets/t5-rooms/t5-01-Room_Control/spec.md) | **Room_Control** | Control room | 800×600×280 → 512×384×179 | Floor, Wall_Back, Wall_Front, Wall_Left, Wall_Right, Ceiling | skirting, wall panel seams, outlets, conduit, floor tiles (tile), stair door hole in `Room_Control_Wall_Right` + office door + window holes (carve), paint wear | V1 |
 | [t5-02](../game-assets/t5-rooms/t5-02-Room_Basement/spec.md) | **Room_Basement** | Basement | 800×600×240 → 512×384×154 | Floor, Wall_Back, Wall_Front, Wall_Left, Wall_Right, Ceiling | floor drain, concrete seams, pipe brackets, conduit, wall stains, stair door hole in `Room_Basement_Wall_Right`, painted lines | V1 |
-| [t5-03](../game-assets/t5-rooms/t5-03-Room_Roof/spec.md) | **Room_Roof** | Roof | 800×600×100 → 512×384×64 | Floor, Parapet_Back, Parapet_Front, Parapet_Left, Parapet_Right, Chimney | coping, drain outlets, tar seams, hatch hole, vents, gutter | V1 |
+| [t5-03](../game-assets/t5-rooms/t5-03-Room_Roof/spec.md) | **Room_Roof** | Roof | 1000×800×100 → 640×512×64 | Floor, Parapet_Back, Parapet_Front, Parapet_Left, Parapet_Right, Chimney |  | V1 |
 | [t5-04](../game-assets/t5-rooms/t5-04-StairShaft/spec.md) | **StairShaft** | Between floors | 150×350×280 → 96×224×179 | one | walls, door holes (into each floor's `Wall_Right`), light fixture mounts, wall trim | V1 |
 | [t6-01](../game-assets/t6-building/t6-01-BuildingExterior/spec.md) | **BuildingExterior** | Whole building | 1000×700×400 → 640×448×256 | one | windows (tile), entrance door, wall panels, downpipes, outdoor AC, roof edge (matches the `Room_Roof` parapets), signage | V1 |
 | [t6-02](../game-assets/t6-building/t6-02-LotPlate/spec.md) | **LotPlate** | Whole building | 2000×1600×10 → 1280×1024×6 | one | gravel, paving slabs, paint lines, drain covers, kerb. grain | V1 |
@@ -173,7 +176,11 @@ Wall thickness 12 cm = 8 voxels. Cut door and window holes with `carve`.
 | Assembly | Made from | Variants |
 |---|---|---|
 | **MainComputerStation** | Desk + 3 × Monitor + Keyboard + Mouse + ComputerTower + Chair + DeskLamp + Mug + Notepad | normal / alarm (Beacon_On nearby) |
-| **ServerRack_Full** | RackFrame + 8 × Server1U | normal (all `_On`), hot, on fire (swap in `Server1U_Failed` + FlameSmall / FlameLarge) |
+| **LaptopShelf_Full** (progression tier 2) | MetalShelf + 5 × Laptop, screens facing down | all `_On`, one `_Hot`, one `_Failed` |
+| **TowerSetup_Full** (tier 3) | MetalShelf + 4 × TowerServer + RouterBox | all `_On`, one `_Hot`, one `_Failed` |
+| **ServerRack_Full** (tier 4) | RackFrame (`_Ok`/`_Warn`/`_Failed` top LED) + 8 × Server1U + RouterBox + PDU | normal (all `_On`), hot (`Server1U_Hot`), on fire (swap in `Server1U_Failed` + FlameSmall / FlameLarge) |
+| **ServerRoom_MultiRack** (tier 5) | 2-4 × ServerRack_Full + CableTray + ACUnit in Room_Basement | each rack's top LED shows its worst unit |
+| **UPS** (tier 4, no new model) | BatteryRackFrame + BatteryModule + InverterBox, placed beside the rack | feeds the PDU; `_Charged` normal, `_Low` on power cut, `_Overheating` on fault |
 | **BatteryRack_Full** | BatteryRackFrame + 6 × BatteryModule | normal, hot (`_Overheating`) |
 | **SolarArray** | 6 × SolarPanel + PanelMount | clean, dirty, damaged (swap panel objects) |
 | **PipeNetwork** | PipeStraight + PipeCorner, cloned | one |
@@ -188,7 +195,7 @@ Wall thickness 12 cm = 8 voxels. Cut door and window holes with `carve`.
 
 | Thing | How instead |
 |---|---|
-| Status LEDs | Painted as 2×2 voxel colour keys on the host object (too small to be objects) |
+| Status LEDs | Painted as 2×2 voxel colour keys on the host object (too small to be objects). Colours: `led_green` ok, `led_orange` hot, `led_red` failed, `led_off` no power. State = swap the model (`_On`/`_Hot`/`_Failed`/`_Off`). Progression: [server-progression.md](server-progression.md) |
 | Hardware security key (2FA upgrade) | UI icon only; 18 × 5 mm is below the 2-voxel rule |
 | Screen content | Texture / UI in Godot on the `screen` key |
 | Smoke, sparks, steam, water spray | Godot particles |
