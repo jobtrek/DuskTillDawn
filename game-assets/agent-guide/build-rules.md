@@ -11,6 +11,7 @@ Rules every Element follows. `uv run voxel-sdk check` enforces the ones marked (
 | Smallest feature | Keys, ports, buttons, LEDs are 2 voxels or more (3.1 cm on S, 1.6 cm on F). Only Seams may be 1 voxel. |
 | Axes | +z up, -y front, centred on x/y, feet on z=0. Wall-mounted: back at +y. |
 | Build order | Large forms first, small details last (later writes overwrite earlier ones). Model one half and mirror for symmetric Elements. |
+| Resizing | Bigger or smaller = change the voxel count. Never change the Grid or voxel size. Update `size_cm` and `voxels` together. |
 | Grids | S = 1/64 m (1.5625 cm): characters, doors, furniture, large props, rooms. F = 1/128 m (0.78125 cm): hand-held props and small parts. Parts that assemble together share a Grid (checked: Grid must be S or F). |
 | `grain` | `0` for electronics, metal, glass, room shells. `0.08` for wood, fabric, skin, plants. `0.15` for LotPlate. |
 | `collider` | true for floors, walls, parapets, stairs, Desk, StorageCabinet, MetalShelf, RackFrame, BatteryRackFrame, ACUnit, Cot. |

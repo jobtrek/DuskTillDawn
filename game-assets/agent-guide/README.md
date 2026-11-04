@@ -18,7 +18,7 @@ Terms (Element, Spec, Part, Layout, Grid, State): `CONTEXT.md`. Layout keys and 
 1. The **Spec** (`spec.md`) and **Layout** (`layout.toml`) are the source. `build.py` next to them is generated and git-ignored: never edit it, never commit it.
 2. Always run `uv run voxel-sdk check <dir>` (from `game-assets/sdk/`) before `build`. Exit 1 means errors; fix them first.
 3. An Element folder without `layout.toml` is hand-written. Its `build.py` is the only source: do not run plain `build` on it ([hand-written.md](hand-written.md)).
-4. Do not change the Spec's `voxels:` or `size_cm:` to make a check pass without asking the user. A mismatch usually means the model is wrong.
+4. Do not change the Spec's `voxels:` or `size_cm:` to make a check pass without asking the user. A mismatch usually means the model is wrong. A resize the user asked for is fine: change the voxel count, never the Grid, and update both fields together (cm = voxels x voxel size).
 5. Commit or push only when the user asks.
 
 ## Commands (run from `game-assets/sdk/`)
