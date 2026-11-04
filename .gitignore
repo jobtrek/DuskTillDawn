@@ -1,0 +1,28 @@
+# Blender
+*.blend
+*.blend1
+*.blend2
+
+# Godot
+.godot/
+.import/
+export_presets.cfg
+*.translation
+/builds/
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+
+# Secrets
+.env
+.env.*
+
+# Claude Code local settings
+.claude/settings.local.json
