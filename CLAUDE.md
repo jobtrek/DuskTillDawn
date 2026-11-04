@@ -9,6 +9,8 @@ Glossary for the 3D asset pipeline (Element, Spec, Part, Layout, Grid, Seam): `C
 
 ## Voxel SDK (`game-assets/sdk/`)
 
+Creating, changing or deleting an Element: read `game-assets/agent-guide/README.md` first.
+
 Turns an Element's `spec.md` + `layout.toml` into a validated voxel model and a `build.py`. Pure Python, no Blender needed to check.
 
 - Run from `game-assets/sdk/`:
