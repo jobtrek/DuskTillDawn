@@ -541,39 +541,6 @@ def build_states(name, model, states, **kw):
     return {s: build(f'{name}_{s}', *model(s), **kw) for s in states}
 
 
-# SDK extra shapes
-def shell(V, x0, x1, y0, y1, z0, z1, m, t=1, open=()):
-    """Hollow box like hollow(), but faces named in `open` (top/bottom/front/back/left/right) have no wall."""
-    if x1 < x0 or y1 < y0 or z1 < z0:
-        return
-    v = V.view(x0, x1, y0, y1, z0, z1)
-    ix = np.arange(x1 - x0 + 1)[:, None, None]
-    iy = np.arange(y1 - y0 + 1)[None, :, None]
-    iz = np.arange(z1 - z0 + 1)[None, None, :]
-    d = np.full(v.shape, 1 << 30, np.int64)
-    for name, dist in (('left', ix), ('right', x1 - x0 - ix), ('front', iy), ('back', y1 - y0 - iy),
-                       ('bottom', iz), ('top', z1 - z0 - iz)):
-        if name not in open:
-            d = np.minimum(d, dist)
-    v[d < t] = V.kid(m)
-
-def ellipse(V, x0, x1, y0, y1, z0, z1, m, t=0):
-    """Round column fitted in the box: filled disc (t=0) or ring of wall thickness t, extruded over z0..z1."""
-    if x1 < x0 or y1 < y0 or z1 < z0:
-        return
-    v = V.view(x0, x1, y0, y1, z0, z1)
-    cx, cy = (x0 + x1) / 2, (y0 + y1) / 2
-    rx, ry = (x1 - x0 + 1) / 2, (y1 - y0 + 1) / 2
-    X, Y = np.ogrid[x0:x1 + 1, y0:y1 + 1]
-    keep = ((X - cx) / rx) ** 2 + ((Y - cy) / ry) ** 2 <= 1
-    inner = keep if t else np.zeros_like(keep)
-    for _ in range(t):          # erode by a 3x3 square so the ring stays 6-connected (no diagonal gaps)
-        p = np.pad(inner, 1)
-        inner = np.logical_and.reduce([p[1 + i:p.shape[0] - 1 + i, 1 + j:p.shape[1] - 1 + j]
-                                       for i in (-1, 0, 1) for j in (-1, 0, 1)])
-    v[(keep & ~inner)[:, :, None] & np.ones(v.shape, bool)] = V.kid(m)
-
-
 # ======================================================================
 # 2. COLOUR PALETTE (linear RGB 0-1)
 # ======================================================================
@@ -585,23 +552,23 @@ PALETTE = {'chassis': (0.18, 0.19, 0.21), 'chassis_dark': (0.08, 0.09, 0.1), 'tr
 # ======================================================================
 C = {**PALETTE}
 V = Grid()
-# base (chassis)
+# base
 box(V, -13, 14, -11, 10, 0, 1, 'chassis')
-# neck (chassis_dark)
+# neck
 box(V, -3, 4, 5, 10, 2, 16, 'chassis_dark')
-# bezel (plastic_black)
+# bezel
 box(V, -34, 34, 5, 10, 10, 45, 'plastic_black')
-# screen (screen)
+# screen
 box(V, -31, 31, 5, 5, 14, 42, 'screen')
-# power LED (led_green)
+# power LED
 box(V, -29, -29, 4, 4, 11, 11, 'led_green')
-# buttons (trim)
-tile(V, 14, 16, 4, 4, 11, 11, 'trim', nx=4, ny=1, nz=1, dx=4, dy=0, dz=0)
-# back vents (seam)
-tile(V, -18, -18, 11, 11, 32, 41, 'seam', nx=7, ny=1, nz=1, dx=6, dy=0, dz=0)
-# VESA plate (metal_dark)
+# buttons
+tile(V, 14, 16, 4, 4, 11, 11, 'trim', nx=4, dx=4)
+# back vents
+tile(V, -18, -18, 11, 11, 32, 41, 'seam', nx=7, dx=6)
+# VESA plate
 box(V, -6, 6, 11, 11, 15, 22, 'metal_dark')
-# ports (metal)
-tile(V, 15, 17, 11, 11, 15, 17, 'metal', nx=4, ny=1, nz=1, dx=4, dy=0, dz=0)
+# ports
+tile(V, 15, 17, 11, 11, 15, 17, 'metal', nx=4, dx=4)
 R = build('Monitor', V, C, size=FINE_SIZE, grain=0, metallic=('metal',))
 result = {k: R[k] for k in ('object', 'voxels', 'height_m', 'warnings')}

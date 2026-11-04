@@ -19,6 +19,7 @@ class Spec:
     size_cm: tuple
     voxels: tuple
     grain: float
+    states: list = field(default_factory=list)    # State names in Spec order; the first is the base State
     parts: dict = field(default_factory=dict)
     text: str = ''
 
@@ -64,6 +65,15 @@ def load_spec(path):
     spec = Spec(name=kv['name'], id=kv['id'], grid=kv.get('grid', 'S').strip().upper(),
                 size_cm=dims(kv['size_cm']), voxels=tuple(int(n) for n in kv['voxels'].split('x')),
                 grain=float(kv.get('grain', 0)), text=text.rstrip())
+    flat = kv.get('states', '').strip()
+    st = re.search(r'^states:[ \t]*\n((?:[ \t]+\S.*\n?)+)', fm.group(1) + '\n', re.M)
+    if flat.startswith('['):                       # states: [On, Off]
+        spec.states = [x.strip() for x in flat.strip('[]').split(',') if x.strip()]
+    elif st:                                        # one 'Name: note' line per State, at the first indent level
+        lines = st.group(1).splitlines()
+        ind = min(len(l) - len(l.lstrip()) for l in lines)
+        spec.states = [l.strip().split(':', 1)[0].strip() for l in lines
+                       if len(l) - len(l.lstrip()) == ind and ':' in l]
     sect = re.search(r'^## Parts[^\n]*\n(.*?)(?=^## |\Z)', text, re.M | re.S)
     for line in (sect.group(1).splitlines() if sect else []):
         part = parse_part_line(line) if line.lstrip().startswith('-') else None

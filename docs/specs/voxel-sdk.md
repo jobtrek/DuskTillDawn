@@ -94,6 +94,81 @@ repeat = { x = 4, pitch_x = 4 }
 - Any change to the Spec format, its 30-line cap, or `build_index.py`.
 - Blender-side rendering, previews as images, or GLB export changes.
 
+## v2: States
+
+Triage: `ready-for-agent`. Supersedes "States" in Out of Scope above; Pieces stay out.
+
+### Problem
+
+16 of the 30 basement Elements have `states:` (Server1U, Laptop, TowerServer, PDU, RouterBox, RackFrame, ...), so v1 cannot generate their `build.py`. Server1U already has a Layout, but it only builds the `On` state. A survey of the hand-written builds (git 5ab9393) shows three kinds of state difference:
+
+| Kind | Example | Elements |
+|---|---|---|
+| Colour swap on a Part | status LED `led_green` → `led_orange`; top vents `seam` → `led_orange` when Hot | 12 (Server1U, Laptop, TowerServer, RouterBox, RackFrame, HardDrive, StripLight, BatteryModule, ...) |
+| Part moves or resizes | PDU breaker lever up (On) / down (Tripped); Server1U drive bay 2 ejected by 2 voxels when Failed | 3 (PDU, ACUnit, Server1U) |
+| Part present in some states only | CableBundle Tidy vs Messy runs; SpareDriveBox drives only when Full; ACUnit Broken extras | 3 (CableBundle, SpareDriveBox, ACUnit) |
+
+Per-layer procedural differences (FlameSmall/FlameLarge lean) are not covered; they need `[[raw]]` or the future `tube`/profile shape.
+
+### User stories
+
+1. As an agent, I want to describe a State as a few overrides on the base Layout, so that I do not repeat the whole Element per State.
+2. As an agent, I want to swap a Part's colour key per State in one line, so that LED states cost one line each.
+3. As an agent, I want to move, resize or hide a Part per State, so that levers, ejected bays and broken parts are expressible.
+4. As an agent, I want to address one copy of a repeated Part (drive bay 2 of 3), so that a single ejected bay does not need its own Part.
+5. As an agent, I want a Part that exists only in some States, so that Tidy/Messy or Full/Empty variants are expressible.
+6. As an agent, I want every State validated with the same checks as the base, so that an ejected bay that floats free fails before Blender.
+7. As an agent, I want `check` to show a short per-State diff (changed voxels, colour count changes) and a full preview on demand, so that my context stays small.
+8. As a maintainer, I want State names in the Layout checked against the Spec's `states:` keys, so that the two cannot drift.
+9. As a designer, I want the generated `build.py` to keep using `build_states`, so that objects stay named `Name_State` and the Blender flow is unchanged.
+
+### Implementation decisions
+
+- **Spec unchanged.** The Spec's `states:` keys give the State names and order; the prose next to each key stays human intent. All State geometry and colour lives in the Layout.
+- **Base State** is the first key in the Spec's `states:`. The plain Part tables in the Layout describe it; nothing else is needed for the base.
+- **Overrides** live under `[states.<Name>]`, one inline table per Part: `"<part>" = { ... }`. Allowed keys: `key` (colour), `size`, `offset_x|y|z`, `gap`, `omit = true`. An override is applied on top of the base Part, then the State is resolved from scratch (Parts anchored `on` an overridden Part move with it).
+- **Repeat instances** are addressed as `"<part>#<n>"` (1-based, x then y then z order). An instance override detaches that copy from the group; the rest keep their alignment. A `size` override grows the copy away from its host face, so it stays attached.
+- **State-only Parts:** a base Part table may carry `states = ["Messy"]`; it is placed only in those States. It must still be in the Spec Parts list.
+- **Raw per State:** `[[states.<Name>.raw]]` with `code = "..."`, run after the base raw blocks. Counted in the report like other raw blocks.
+- **Errors:** unknown State name, unknown Part or instance in an override, unknown override key, `#n` out of range, `states = [...]` naming an unknown State. Every State runs the full v1 checks (bounds vs Spec within 1 voxel, floating Parts, palette keys, same-colour neighbours); messages are prefixed `[<State>]`. The Spec size describes the base State, so in other States a bounds mismatch is a warning (an ejected bay may stick out).
+- **Seam:** `compile(element_dir, state=None)` returns the grid and report for that State (`None` = base). `check` compiles every State; it prints the base preview in full and one line per other State: `Hot: 16 voxels changed (seam -8, led_orange +8)`. `check <dir> --state Hot` prints that State's full preview.
+- **Origin:** every State uses the base State's centring shift, so States line up when swapped in place.
+- **Generation:** `build` emits one `def model(state)` and `R = build_states('<Name>', model, [<states>], ...)`. Ops identical in every State are emitted once; ops that differ get an inline `{'On': ..., 'Hot': ...}[state]` for a colour-only change, or an `if state in (...):` block for a geometry change or omission.
+
+### Layout format (Server1U, illustrative)
+
+```toml
+# base Parts as today = State "On" (first key in the Spec)
+["top vents"]
+on = "chassis.top"
+...
+
+[states.Hot]
+"status LED" = { key = "led_orange" }
+"top vents"  = { key = "led_orange" }
+
+[states.Off]
+"status LED"   = { key = "led_off" }
+"activity LED" = { key = "led_off" }
+
+[states.Failed]
+"status LED"    = { key = "led_red" }
+"activity LED"  = { key = "led_off" }
+"drive bays#2"  = { size = [4.7, 2.3, 3] }   # 3 voxels deep: sticks out 2 voxels
+```
+
+### Testing decisions
+
+- Same seam: `compile(element_dir, state=...)`. Fixture Elements with 2-3 States assert on grid cells and colour counts per State.
+- Failure cases at the seam: unknown State, unknown override Part, `#n` out of range, an override that makes a Part float, a State-only Part missing from the Spec.
+- Proof: Server1U (colour swaps plus an instance move), Laptop (colour swaps only) and PDU (Part moves between States). Each State is compared to the hand-written build in git 5ab9393 within 1 voxel, measured the same way as the v1 REFERENCE table. Exception: the old Server1U build never ejected drive bay 2 although its Spec asks for it, so `Failed` is compared on bounds and colour counts with that bay's voxels excluded. After the proof passes, Server1U's `build.py` is generated and joins `test_checked_in_build_py_is_current`.
+
+### Out of scope (v2)
+
+- Pieces (Room_Basement and other rooms).
+- Per-layer procedural shapes (Flame lean, pipe profiles).
+- Animations or transitions between States; States stay separate swapped models.
+
 ## Further Notes
 
 - About 95% of the repo's lines are bundled engine copies, not agent-authored code. The generator removes most of that by making `build.py` generated output.

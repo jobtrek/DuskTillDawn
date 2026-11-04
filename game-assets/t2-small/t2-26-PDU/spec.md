@@ -31,10 +31,13 @@ Add the small features: outlets, status LED, breaker switch, power cord, label.
 
 ## Parts (tier; cm size + colour key to fill before first build)
 
-- [1] case 44 x 10 x 4.4 cm, chassis
-- [2] ear brackets 2x 1.6 x 10 x 3.9 cm, metal
-- [3] outlets 8x (tile) 3 x 2.3 cm, plastic_black with metal pins
-- [3] status LED 2x2: led_green / led_orange / led_red / led_off
-- [3] breaker switch 3 x 3 cm, plastic_black housing, lever plastic_white (On) / warning_red (Tripped)
-- [3] power cord 3 x 1.6 x 3 cm at the back, rubber
-- [3] label 7.8 x 3 cm on top, label
+- [1] case: 40.6 x 8.6 x 4.7 cm, chassis
+- [2] ear left: 1.6 x 5.5 x 3.9 cm, metal
+- [2] ear right: 1.6 x 5.5 x 3.9 cm, metal
+- [3] outlets: 3.1 x 0.8 x 2.3 cm (8x), plastic_black
+- [3] outlet pins: 1.6 x 0.8 x 0.8 cm (8x), metal
+- [3] breaker switch: 3.1 x 0.8 x 3.1 cm, plastic_black
+- [3] breaker lever: 1.6 x 0.8 x 1.6 cm (up On, down red Tripped), plastic_white
+- [3] status LED: 1.6 x 0.8 x 1.6 cm (colour per State), led_green
+- [3] power cord: 3.1 x 1.6 x 3.1 cm (back), rubber
+- [3] label: 7.8 x 3.9 x 0.8 cm (on top), label

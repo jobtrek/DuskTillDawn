@@ -31,10 +31,11 @@ Add the small features: lying flat with the screen side down (keyboard deck up),
 
 ## Parts (tier; cm size + colour key to fill before first build)
 
-- [1] closed body 33 x 22 x 1.6 cm (lid chassis over metal base)
-- [2] hinge 2x 5.5 x 1.6 x 1.6 cm at the back, metal_dark
-- [3] status LED 2x2 voxels (front edge), led_green / led_orange / led_red / led_off
-- [3] vents 6 slots on the left edge, seam (orange when Hot)
-- [3] rubber feet 4x 2.3 x 1.6 x 0.8 cm, rubber
-- [3] power port 2.3 x 1.6 cm on the left edge, plastic_black
-- [3] label (logo plate) 3 x 3 cm on the lid, trim
+- [1] base: 33 x 22 x 0.8 cm, metal
+- [1] lid: 33 x 22 x 0.8 cm, chassis
+- [2] hinges: 4.7 x 0.8 x 1.6 cm (2x, back), metal_dark
+- [3] status LED: 1.6 x 0.8 x 1.6 cm (front edge; colour per State), led_green
+- [3] vents: 0.8 x 0.8 x 0.8 cm (6x, left edge; orange when Hot), seam
+- [3] rubber feet: 2.3 x 1.6 x 0.8 cm (4x), rubber
+- [3] power port: 0.8 x 3.1 x 0.8 cm (left edge), plastic_black
+- [3] logo plate: 3.1 x 3.1 x 0.8 cm (on the lid), trim

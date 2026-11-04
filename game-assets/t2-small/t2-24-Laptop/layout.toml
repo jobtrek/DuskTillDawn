@@ -1,0 +1,47 @@
+# Laptop layout. Base State On (closed, lying flat); other States are overrides at the bottom.
+[base]
+
+["rubber feet"]
+on = "base.bottom"
+offset_x = 0.78
+repeat = { x = 2, pitch_x = 29.69, y = 2, pitch_y = 18.75 }
+
+[lid]
+on = "base.top"
+
+[hinges]
+on = "base.back"
+gap = -0.78              # inside the back edge
+align = "bottom"
+size = [4.7, 0.78, 1.56]
+repeat = { x = 2, pitch_x = 17.19 }
+
+["logo plate"]
+on = "lid.top"
+gap = -0.78              # painted into the lid
+
+[vents]
+on = "base.left"
+gap = -0.78
+repeat = { y = 6, pitch_y = 2.34 }
+
+["power port"]
+on = "base.left"
+gap = -0.78
+offset_y = 7.81
+
+["status LED"]
+on = "base.front"
+gap = -0.78
+align = "bottom"
+offset_x = 0.78
+
+[states.Hot]
+"status LED" = { key = "led_orange" }
+vents = { key = "led_orange" }
+
+[states.Failed]
+"status LED" = { key = "led_red" }
+
+[states.Off]
+"status LED" = { key = "led_off" }

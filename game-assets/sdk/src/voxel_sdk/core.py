@@ -1,5 +1,6 @@
 """compile(element_dir): Spec + Layout -> voxel grid + report. No Blender needed."""
 import math
+import re
 import tomllib
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -13,7 +14,9 @@ FACES = {'top': (2, 1), 'bottom': (2, -1), 'front': (1, -1), 'back': (1, 1), 'le
 ALIGN = {'center-x': (0, 'c'), 'left': (0, 'lo'), 'right': (0, 'hi'),
          'center-y': (1, 'c'), 'center-z': (2, 'c'), 'bottom': (2, 'lo'), 'top': (2, 'hi')}
 YFLUSH = {'flush-front': 'lo', 'flush-back': 'hi'}
-PART_KEYS = {'on', 'align', 'y', 'gap', 'offset_x', 'offset_y', 'offset_z', 'repeat', 'size', 'shape', 'thickness', 'open'}
+PART_KEYS = {'on', 'align', 'y', 'gap', 'offset_x', 'offset_y', 'offset_z', 'repeat', 'size', 'shape', 'thickness', 'open',
+             'states'}
+OVERRIDE_KEYS = {'key', 'size', 'offset_x', 'offset_y', 'offset_z', 'gap', 'omit'}
 SHAPES = {'box', 'hollow', 'disc', 'circle', 'ring'}
 TOLERANCE = 1
 
@@ -29,13 +32,14 @@ class Report:
     parts: dict = field(default_factory=dict)   # name -> (lo, hi) placement box in voxels
     slices: dict = field(default_factory=dict)
     legend: dict = field(default_factory=dict)
+    state: str | None = None             # State this report is for (None when the Element has no States)
 
     @property
     def ok(self):
         return not self.errors
 
     def __str__(self):
-        out = [f"bounds {self.bounds}  size {self.size}  raw blocks {self.raw_count}",
+        out = ([f'state {self.state}'] if self.state else []) + [f"bounds {self.bounds}  size {self.size}  raw blocks {self.raw_count}",
                'colours: ' + ', '.join(f'{k}={v}' for k, v in self.counts.items())]
         out += [f'ERROR: {e}' for e in self.errors] + [f'warning: {w}' for w in self.warnings]
         for name, art in self.slices.items():
@@ -53,6 +57,7 @@ class Op:
     kwargs: dict
     key: str | None = None
     code: str | None = None     # raw blocks only
+    uid: tuple = ()             # stable id across States: (part, instance) or ('raw', ...)
 
 
 @dataclass
@@ -62,6 +67,7 @@ class Model:
     report: Report
     ops: list
     palette: dict
+    state: str | None = None
 
 
 def _round(x):
@@ -78,8 +84,10 @@ def _find_palette(element_dir):
     raise FileNotFoundError(f'palette.py not found above {element_dir}')
 
 
-def _resolve(spec, layout, report):
-    """Place every Part. Returns (boxes {name: (lo, hi)}, ops). Errors go to the report."""
+def _resolve(spec, layout, report, inst=None, expand=()):
+    """Place every Part. Returns (boxes {name: (lo, hi)}, ops). Errors go to the report.
+    inst: {part: {n: override}} for single repeat copies; expand: Parts always emitted one op per copy."""
+    inst = inst or {}
     cmpv = spec.cm_per_voxel
     vox = lambda cm: max(1, _round(cm / cmpv))
     sv = lambda cm: _round(cm / cmpv)       # signed, may be 0
@@ -94,11 +102,15 @@ def _resolve(spec, layout, report):
         if name not in spec.parts:
             report.errors.append(f'{where} is in the Layout but not in the Spec Parts list')
             continue
-        bad = set(cfg) - PART_KEYS
+        bad = set(cfg) - PART_KEYS - {'_key'}
         if bad:
             report.errors.append(f'{where}: unknown Layout key(s) {sorted(bad)}')
             continue
         sp = spec.parts[name]
+        color = cfg.get('_key', sp.color)
+        if not color:
+            report.errors.append(f'{where}: no colour key in the Spec')
+            continue
         cm = cfg.get('size') or sp.size_cm
         if not cm:
             report.errors.append(f'{where}: no size in Spec and no size= in Layout')
@@ -119,6 +131,11 @@ def _resolve(spec, layout, report):
                     break
                 pitch[i] = max(1, _round(rep[f'pitch_{ax}'] / cmpv))
         else:
+            total = n[0] * n[1] * n[2]
+            out_of_range = [k for k in inst.get(name, {}) if k > total]
+            if out_of_range:
+                report.errors.append(f'{where}: "{name}#{out_of_range[0]}" out of range, the Part has {total} copies')
+                continue
             ext = [s[i] + (n[i] - 1) * pitch[i] for i in range(3)]
             lo = _place(name, cfg, ext, boxes, order, sv, report, where)
             if lo is None:
@@ -126,7 +143,9 @@ def _resolve(spec, layout, report):
             hi = [lo[i] + ext[i] - 1 for i in range(3)]
             boxes[name] = (lo, hi)
             order.append(name)
-            ops += _ops_for(name, sp.color, shape, cfg, lo, s, n, pitch, vox, report, where)
+            face = FACES[str(cfg['on']).rpartition('.')[2]] if cfg.get('on') else None
+            ops += _ops_for(name, color, shape, cfg, lo, s, n, pitch, vox, sv, report, where,
+                            inst.get(name, {}), name in expand, face)
     return boxes, ops
 
 
@@ -179,8 +198,10 @@ def _place(name, cfg, ext, boxes, order, sv, report, where):
     return lo
 
 
-def _ops_for(name, color, shape, cfg, lo, s, n, pitch, vox, report, where):
-    """Engine calls for one Part. All coordinates are final voxel coordinates (before the global shift)."""
+def _ops_for(name, color, shape, cfg, lo, s, n, pitch, vox, sv, report, where, inst, expand, face):
+    """Engine calls for one Part. All coordinates are final voxel coordinates (before the global shift).
+    inst {n: override} changes single copies (1-based, x fastest, then y, then z); a resized copy grows away
+    from its host face so it stays attached."""
     t = vox(cfg['thickness']) if 'thickness' in cfg else 1
     opn = tuple(cfg.get('open', ()))
     for f in opn:
@@ -188,32 +209,54 @@ def _ops_for(name, color, shape, cfg, lo, s, n, pitch, vox, report, where):
             report.errors.append(f'{where}: open face "{f}" unknown')
             return []
     hi = [lo[i] + s[i] - 1 for i in range(3)]
-    if shape == 'box' and max(n) > 1:
+    if shape == 'box' and max(n) > 1 and not expand and not inst:
         return [Op(name, 'tile', (lo[0], hi[0], lo[1], hi[1], lo[2], hi[2], color),
-                   {'nx': n[0], 'ny': n[1], 'nz': n[2], 'dx': pitch[0], 'dy': pitch[1], 'dz': pitch[2]}, color)]
+                   {'nx': n[0], 'ny': n[1], 'nz': n[2], 'dx': pitch[0], 'dy': pitch[1], 'dz': pitch[2]}, color,
+                   uid=(name, 0))]
     out = []
+    base_color = color
     for i in range(n[0]):
         for j in range(n[1]):
             for k in range(n[2]):
+                idx = 1 + i + n[0] * (j + n[1] * k)
+                ov = inst.get(idx, {})
+                if ov.get('omit'):
+                    continue
+                color = ov.get('key', base_color)
                 a = [lo[0] + i * pitch[0], lo[1] + j * pitch[1], lo[2] + k * pitch[2]]
-                b = [a[0] + s[0] - 1, a[1] + s[1] - 1, a[2] + s[2] - 1]
+                si = list(s)
+                if 'size' in ov:
+                    si = ([vox(c) for c in ov['size']] + [1] * 3)[:3]
+                for ax, key in enumerate(('offset_x', 'offset_y', 'offset_z')):
+                    a[ax] += sv(ov.get(key, 0))
+                if face:
+                    fa, sign = face
+                    if 'gap' in ov:
+                        a[fa] += sign * (sv(ov['gap']) - sv(cfg.get('gap', 0)))
+                    if sign < 0:
+                        a[fa] -= si[fa] - s[fa]
+                b = [a[0] + si[0] - 1, a[1] + si[1] - 1, a[2] + si[2] - 1]
                 c = (a[0], b[0], a[1], b[1], a[2], b[2])
                 if shape == 'box':
-                    out.append(Op(name, 'box', (*c, color), {}, color))
-                elif shape == 'hollow' and opn:
-                    out.append(Op(name, 'shell', (*c, color), {'t': t, 'open': opn}, color))
+                    out.append(Op(name, 'box', (*c, color), {}, color, uid=(name, idx)))
+                    continue
+                if shape == 'hollow' and opn:
+                    out.append(Op(name, 'shell', (*c, color), {'t': t, 'open': opn}, color, uid=(name, idx)))
                 elif shape == 'hollow':
-                    out.append(Op(name, 'hollow', (*c, color), {'t': t} if t != 1 else {}, color))
+                    out.append(Op(name, 'hollow', (*c, color), {'t': t} if t != 1 else {}, color, uid=(name, idx)))
                 else:
                     wall = {'disc': 0, 'circle': 1, 'ring': t}[shape]
-                    out.append(Op(name, 'ellipse', (*c, color), {'t': wall} if wall else {}, color))
+                    out.append(Op(name, 'ellipse', (*c, color), {'t': wall} if wall else {}, color, uid=(name, idx)))
     return out
 
 
-def _shift(ops, boxes):
+def _shift_of(boxes):
     lo = [min(b[0][i] for b in boxes.values()) for i in range(3)]
     hi = [max(b[1][i] for b in boxes.values()) for i in range(3)]
-    sh = (-lo[0] - (hi[0] - lo[0] + 1) // 2, 0, -lo[2])
+    return (-lo[0] - (hi[0] - lo[0] + 1) // 2, 0, -lo[2])
+
+
+def _shift(ops, boxes, sh):
     for op in ops:
         a = list(op.args)
         for i in range(6):
@@ -239,17 +282,23 @@ def _paste(M, pid, T, key, pidx):
 
 
 def _execute(ops, boxes, report):
-    names = list(boxes) + [f'raw#{i + 1}' for i in range(sum(o.code is not None for o in ops))]
     lo = [min(b[0][i] for b in boxes.values()) for i in range(3)]
     hi = [max(b[1][i] for b in boxes.values()) for i in range(3)]
     M = shapes.Grid()
+    tmp = {}
+    for i, op in enumerate(ops):          # draw every op first so M covers copies that stick out of their Part box
+        if op.code is None:
+            T = tmp[i] = shapes.Grid()
+            getattr(shapes, op.fn)(T, *op.args, **op.kwargs)
+            if T.a.size:
+                lo = [min(l, o) for l, o in zip(lo, T.o)]
+                hi = [max(h, o + n - 1) for h, o, n in zip(hi, T.o, T.a.shape)]
     M.ensure(lo, hi)
     pid = np.zeros(M.a.shape, np.int32)
     labels = {}
-    for op in ops:
+    for i, op in enumerate(ops):
         if op.code is None:
-            T = shapes.Grid()
-            getattr(shapes, op.fn)(T, *op.args, **op.kwargs)
+            T = tmp[i]
             labels.setdefault(op.part, len(labels) + 1)
             _paste(M, pid, T, op.key, labels[op.part])
         else:
@@ -293,7 +342,7 @@ def _components(M):
     return comps
 
 
-def _validate(spec, M, pid, pnames, palette, report):
+def _validate(spec, M, pid, pnames, palette, report, strict=True):
     nz = np.argwhere(M.a)
     if not len(nz):
         report.errors.append('model is empty')
@@ -303,7 +352,7 @@ def _validate(spec, M, pid, pnames, palette, report):
     report.size = tuple(int(v) for v in hi - lo + 1)
     for ax, (got, want) in enumerate(zip(report.size, spec.voxels)):
         if abs(got - want) > TOLERANCE:
-            report.errors.append(f'size {"xyz"[ax]}: model is {got} voxels, Spec says {want} (tolerance {TOLERANCE})')
+            (report.errors if strict else report.warnings).append(f'size {"xyz"[ax]}: model is {got} voxels, Spec says {want} (tolerance {TOLERANCE})')
     for i, k in enumerate(M.keys):
         report.counts[k] = int(np.count_nonzero(M.a == i + 1))
         if k not in palette:
@@ -349,37 +398,136 @@ def _ascii(M, report):
     report.legend = {k: c for k, c in legend.items() if report.counts.get(k)}
 
 
-def build_model(element_dir, palette=None):
+def _states_layout(spec, layout, state, report):
+    """Apply one State's overrides to the Layout.
+    Returns (layout {part: cfg}, inst {part: {n: override}}, expand {parts}, extra raw blocks)."""
+    table = layout.get('states', {})
+    parts = {k: v for k, v in layout.items() if k not in ('raw', 'states')}
+    if not isinstance(table, dict):
+        report.errors.append('[states] must be a table of State tables')
+        table = {}
+    if table and not spec.states:
+        report.errors.append('Layout has [states] but the Spec has no states:')
+    expand = set()
+    for sname, over in table.items():
+        if spec.states and sname not in spec.states:
+            report.errors.append(f'unknown State "{sname}" in [states] (Spec states: {spec.states})')
+            continue
+        if not isinstance(over, dict):
+            report.errors.append(f'[states.{sname}] must be a table')
+            continue
+        for key, ov in over.items():
+            if key == 'raw':
+                continue
+            where = f'[states.{sname}] "{key}"'
+            part, hash_, n = key.partition('#')
+            if part not in parts:
+                report.errors.append(f'{where}: unknown Part "{part}"')
+            elif not isinstance(ov, dict):
+                report.errors.append(f'{where}: must be an inline table, e.g. {{ key = "led_red" }}')
+            elif set(ov) - OVERRIDE_KEYS:
+                report.errors.append(f'{where}: unknown override key(s) {sorted(set(ov) - OVERRIDE_KEYS)} '
+                                     f'(use {sorted(OVERRIDE_KEYS)})')
+            elif hash_ and not (n.isdigit() and int(n) >= 1):
+                report.errors.append(f'{where}: copy number must be a whole number from 1, e.g. "{part}#2"')
+            elif hash_:
+                expand.add(part)
+    eff, inst = {}, {}
+    for name, cfg in parts.items():
+        if isinstance(cfg, dict) and 'states' in cfg:
+            only = cfg['states']
+            only = [only] if isinstance(only, str) else list(only)
+            bad = [x for x in only if x not in spec.states]
+            if bad:
+                report.errors.append(f'Part "{name}": states = {bad} not in the Spec states {spec.states}')
+            cfg = {k: v for k, v in cfg.items() if k != 'states'}
+            if state not in only:
+                continue
+        eff[name] = dict(cfg) if isinstance(cfg, dict) else cfg
+    over = table.get(state, {}) if state else {}
+    over = over if isinstance(over, dict) else {}
+    for key, ov in over.items():
+        if key == 'raw' or not isinstance(ov, dict) or set(ov) - OVERRIDE_KEYS:
+            continue
+        part, hash_, n = key.partition('#')
+        if part not in eff or not isinstance(eff[part], dict):
+            if part in parts:
+                report.errors.append(f'[states.{state}] "{key}": Part "{part}" is not placed in this State '
+                                     f'(omitted or limited by states = [...])')
+            continue
+        if hash_ and 'gap' in ov and not eff[part].get('on'):
+            report.errors.append(f'[states.{state}] "{key}": gap needs the Part to have on="<part>.<face>"')
+            continue
+        if hash_:
+            if n.isdigit() and int(n) >= 1:
+                inst.setdefault(part, {})[int(n)] = ov
+        elif ov.get('omit'):
+            del eff[part]
+        else:
+            eff[part].update({k: v for k, v in ov.items() if k not in ('key', 'omit')})
+            if 'key' in ov:
+                eff[part]['_key'] = ov['key']
+    raws = over.get('raw', [])
+    return eff, inst, expand, raws if isinstance(raws, list) else []
+
+
+def build_model(element_dir, palette=None, state=None):
+    """Compile one State (None = the base State, the first in the Spec's states:)."""
     d = Path(element_dir)
     spec = load_spec(d / 'spec.md')
     if palette is None:
         palette, _ = _find_palette(d)
     report = Report()
     layout = tomllib.loads((d / 'layout.toml').read_text())
-    boxes, ops = _resolve(spec, layout, report)
+    base = spec.states[0] if spec.states else None
+    if state is not None and state not in spec.states:
+        report.errors.append(f'unknown State "{state}" (Spec states: {spec.states or "none"})')
+        return Model(spec, shapes.Grid(), report, [], palette, state)
+    state = state or base
+    report.state = state
+    bad = [s for s in spec.states if not re.fullmatch(r'[A-Za-z][A-Za-z0-9_]*', s)]
+    if bad:
+        report.errors.append(f'State name(s) {bad} in the Spec: use letters, digits and _ (they become object names)')
+    eff, inst, expand, state_raws = _states_layout(spec, layout, state, report)
+    boxes, ops = _resolve(spec, eff, report, inst, expand)
     for name, sp in spec.parts.items():
         if name not in layout:
             report.warnings.append(f'Spec Part "{name}" has no Layout entry')
-    for name in boxes:
-        c = spec.parts[name].color
-        if not c:
-            report.errors.append(f'Part "{name}": no colour key in the Spec')
-    if report.errors or not boxes:
-        return Model(spec, shapes.Grid(), report, ops, palette)
-    boxes = _shift(ops, boxes)
+    if not boxes and not report.errors:
+        report.errors.append('no Parts placed in this State')
+    if report.errors:
+        return _finish(Model(spec, shapes.Grid(), report, ops, palette, state))
+    sh = _shift_of(boxes)
+    if state != base:                       # keep the base State's origin so States line up
+        b_eff, b_inst, _, _ = _states_layout(spec, layout, base, Report())
+        b_boxes, _ = _resolve(spec, b_eff, Report(), b_inst, expand)
+        if b_boxes:
+            sh = _shift_of(b_boxes)
+    boxes = _shift(ops, boxes, sh)
     report.parts = {k: (tuple(b[0]), tuple(b[1])) for k, b in boxes.items()}
     raws = layout.get('raw', [])
     for i, r in enumerate(raws):
-        ops.append(Op(f'raw#{i + 1}', 'raw', (), {}, code=str(r.get('code', ''))))
-    report.raw_count = len(raws)
+        ops.append(Op(f'raw#{i + 1}', 'raw', (), {}, code=str(r.get('code', '')), uid=('raw', i)))
+    for i, r in enumerate(state_raws):
+        ops.append(Op(f'raw#{len(raws) + i + 1}', 'raw', (), {}, code=str(r.get('code', '')), uid=('raw', state, i)))
+    report.raw_count = len(raws) + len(state_raws)
     M, pid, pnames = _execute(ops, boxes, report)
-    _validate(spec, M, pid, pnames, palette, report)
+    _validate(spec, M, pid, pnames, palette, report, strict=(state == base))
     if report.bounds:
         _ascii(M, report)
-    return Model(spec, M, report, ops, palette)
+    return _finish(Model(spec, M, report, ops, palette, state))
 
 
-def compile(element_dir, palette=None):
-    """Public entry point: returns (voxel Grid, Report) for the Element folder (spec.md + layout.toml)."""
-    m = build_model(element_dir, palette)
+def _finish(model):
+    r = model.report
+    if model.spec.states:
+        r.errors = [f'[{model.state}] {e}' for e in r.errors]
+        r.warnings = [f'[{model.state}] {w}' for w in r.warnings]
+    return model
+
+
+def compile(element_dir, palette=None, state=None):
+    """Public entry point: returns (voxel Grid, Report) for one State of the Element folder (spec.md + layout.toml).
+    state=None compiles the base State (the first in the Spec's states:, or the only model)."""
+    m = build_model(element_dir, palette, state)
     return m.grid, m.report
