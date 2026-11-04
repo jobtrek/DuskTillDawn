@@ -1,0 +1,46 @@
+["back cover"]
+
+["paper pad"]
+on = "back cover.top"
+y = "flush-front"
+
+["ruled lines"]
+on = "back cover.top"
+offset_x = 0.78
+repeat = { y = 8, pitch_y = 2.34 }
+
+["red margin line"]
+on = "back cover.top"
+offset_x = -3.12
+offset_y = -0.78
+
+["spiral binding"]
+on = "back cover.top"
+y = "flush-back"
+align = "right"
+repeat = { x = 6, pitch_x = 2.34 }
+
+["pen lying"]
+on = "paper pad.top"
+offset_x = 4.69
+offset_y = -1.56
+
+["pen clip"]
+on = "paper pad.top"
+offset_x = 6.25
+offset_y = 3.12
+
+["sticky tabs"]
+on = "back cover.top"
+offset_x = 7.81
+offset_y = -6.25
+
+["sticky tabs 2"]
+on = "back cover.top"
+offset_x = 7.81
+offset_y = -0.78
+
+["sticky tabs 3"]
+on = "back cover.top"
+offset_x = 7.81
+offset_y = 4.69

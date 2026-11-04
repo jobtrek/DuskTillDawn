@@ -1,0 +1,45 @@
+[build]
+metallic = []
+
+["corner bolts"]
+
+["corner bolts 2"]
+on = "corner bolts.top"
+
+["corner bolts 3"]
+on = "corner bolts.top"
+offset_x = -23.44
+
+["corner bolts 4"]
+on = "corner bolts.top"
+offset_x = 26.56
+
+["corner bolts 5"]
+on = "corner bolts.top"
+gap = -4.69
+y = "flush-back"
+offset_x = 26.56
+
+["corner bolts 6"]
+on = "corner bolts.top"
+gap = -4.69
+y = "flush-back"
+offset_x = -23.44
+
+["corner bolts 7"]
+on = "corner bolts.top"
+shape = "hollow"
+
+["corner bolts 8"]
+on = "corner bolts.top"
+
+["corner bolts 9"]
+on = "corner bolts.top"
+gap = -3.12
+y = "flush-front"
+
+["corner bolts 10"]
+on = "corner bolts.top"
+offset_x = 1.56
+offset_y = 1.56
+repeat = { x = 2, pitch_x = 82.81, y = 2, pitch_y = 82.81 }
