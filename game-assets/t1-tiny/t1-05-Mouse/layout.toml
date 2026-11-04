@@ -1,0 +1,52 @@
+[palette]
+cable = [0.1, 0.1, 0.12]
+
+["mouse body"]
+
+["palm hump"]
+on = "mouse body.top"
+offset_y = 2.34
+
+["palm rest base"]
+on = "mouse body.top"
+y = "flush-back"
+
+["left and right buttons"]
+on = "mouse body.top"
+y = "flush-front"
+repeat = { x = 2, pitch_x = 3.91 }
+
+["split seam"]
+on = "mouse body.top"
+y = "flush-front"
+
+["seam across the button"]
+on = "mouse body.top"
+offset_y = -0.78
+
+["scroll wheel"]
+on = "mouse body.top"
+offset_y = -3.12
+
+["optical sensor window"]
+on = "mouse body.top"
+gap = -2.34
+offset_y = 0.78
+
+["side grip dots"]
+on = "mouse body.top"
+gap = -1.56
+align = "left"
+offset_y = 2.34
+repeat = { y = 3, pitch_y = 1.56 }
+
+["side grip dots 2"]
+on = "mouse body.top"
+gap = -1.56
+align = "right"
+offset_y = 2.34
+repeat = { y = 3, pitch_y = 1.56 }
+
+["cable out"]
+on = "mouse body.front"
+align = "top"

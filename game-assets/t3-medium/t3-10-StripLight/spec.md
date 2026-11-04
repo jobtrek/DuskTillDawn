@@ -29,9 +29,11 @@ Add the small features: end caps, brackets, chain hangers, wires.
 
 ## Parts (tier; cm size + colour key to fill before first build)
 
-- [1] housing 120 x 10 x 3 cm channel, metal
-- [2] diffuser 118 x 8 x 0.8 cm underside, diffuser_on (On) / diffuser_off (Off)
-- [3] end caps 2x 0.8 x 10 x 3 cm, plastic_black
-- [3] brackets 2x 1.6 x 10 x 0.8 cm, metal_dark
-- [3] chain hangers 2x 0.8 x 1.6 cm, trim
-- [3] wires 2x, rubber
+- [2] diffuser panel underneath: 118.75 x 8.59 x 0.78 cm, diffuser_on
+- [1] metal housing channel above: 120.31 x 10.16 x 3.12 cm, metal
+- [3] black end caps: 0.78 x 10.16 x 3.91 cm, plastic_black
+- [3] black end caps 2: 0.78 x 10.16 x 3.91 cm, plastic_black
+- [3] clip brackets: 1.56 x 10.16 x 0.78 cm, 2 copies, metal_dark
+- [3] chain hangers: 0.78 x 0.78 x 1.56 cm, 2 copies, trim
+- [2] supply wire out: 1.56 x 0.78 x 2.34 cm, rubber
+

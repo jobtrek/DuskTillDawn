@@ -1,0 +1,218 @@
+["frame ring"]
+
+["frame ring 2"]
+on = "frame ring.bottom"
+gap = 23.44
+
+["frame ring 3"]
+on = "frame ring.top"
+gap = -29.69
+align = "left"
+
+["frame ring 4"]
+on = "frame ring.top"
+gap = -29.69
+align = "right"
+
+["bright inner lip"]
+on = "frame ring.top"
+gap = -27.34
+y = "flush-front"
+
+["white clock face"]
+on = "frame ring.top"
+gap = -27.34
+y = "flush-back"
+
+["glass edge ring and"]
+on = "frame ring 2.top"
+gap = -0.78
+offset_y = -0.78
+
+["glass edge ring and 2"]
+on = "frame ring.top"
+gap = -3.12
+offset_y = -0.78
+
+["glass edge ring and 3"]
+on = "frame ring.top"
+gap = -27.34
+offset_x = -11.72
+offset_y = -0.78
+
+["glass edge ring and 4"]
+on = "frame ring.top"
+gap = -27.34
+offset_x = 12.5
+offset_y = -0.78
+
+["box 22"]
+on = "bright inner lip.back"
+offset_x = -7.81
+offset_z = 7.81
+
+["box 23"]
+on = "bright inner lip.back"
+offset_x = -5.47
+offset_z = 5.47
+
+["twelve hour ticks"]
+on = "white clock face.front"
+offset_x = 0.78
+offset_z = 10.16
+
+["twelve hour ticks 2"]
+on = "white clock face.front"
+offset_x = 5.47
+offset_z = 8.59
+
+["twelve hour ticks 3"]
+on = "white clock face.front"
+offset_x = 8.59
+offset_z = 5.47
+
+["twelve hour ticks 4"]
+on = "white clock face.front"
+offset_x = 10.16
+
+["twelve hour ticks 5"]
+on = "white clock face.front"
+offset_x = 8.59
+offset_z = -4.69
+
+["twelve hour ticks 6"]
+on = "white clock face.front"
+offset_x = 5.47
+offset_z = -7.81
+
+["twelve hour ticks 7"]
+on = "white clock face.front"
+offset_x = 0.78
+offset_z = -9.38
+
+["twelve hour ticks 8"]
+on = "white clock face.front"
+offset_x = -4.69
+offset_z = -7.81
+
+["twelve hour ticks 9"]
+on = "white clock face.front"
+offset_x = -7.81
+offset_z = -4.69
+
+["twelve hour ticks 10"]
+on = "white clock face.front"
+offset_x = -9.38
+
+["twelve hour ticks 11"]
+on = "white clock face.front"
+offset_x = -7.81
+offset_z = 5.47
+
+["twelve hour ticks 12"]
+on = "white clock face.front"
+offset_x = -4.69
+offset_z = 8.59
+
+["hour hand and minute"]
+on = "white clock face.front"
+offset_z = 0.78
+
+["hour hand and minute 2"]
+on = "white clock face.front"
+offset_x = -0.78
+offset_z = 1.56
+
+["hour hand and minute 3"]
+on = "white clock face.front"
+offset_x = -0.78
+offset_z = 1.56
+
+["hour hand and minute 4"]
+on = "white clock face.front"
+offset_x = -1.56
+offset_z = 2.34
+
+["hour hand and minute 5"]
+on = "white clock face.front"
+offset_x = -2.34
+offset_z = 2.34
+
+["hour hand and minute 6"]
+on = "white clock face.front"
+offset_x = -3.12
+offset_z = 3.12
+
+["hour hand and minute 7"]
+on = "white clock face.front"
+offset_x = -3.12
+offset_z = 3.91
+
+["hour hand and minute 8"]
+on = "white clock face.front"
+offset_x = -3.91
+offset_z = 3.91
+
+["hour hand and minute 9"]
+on = "white clock face.front"
+offset_z = 0.78
+
+["hour hand and minute 10"]
+on = "white clock face.front"
+offset_x = 0.78
+offset_z = 1.56
+
+["hour hand and minute 11"]
+on = "white clock face.front"
+offset_x = 1.56
+offset_z = 2.34
+
+["hour hand and minute 12"]
+on = "white clock face.front"
+offset_x = 1.56
+offset_z = 3.12
+
+["hour hand and minute 13"]
+on = "white clock face.front"
+offset_x = 2.34
+offset_z = 3.91
+
+["hour hand and minute 14"]
+on = "white clock face.front"
+offset_x = 3.12
+offset_z = 4.69
+
+["hour hand and minute 15"]
+on = "white clock face.front"
+offset_x = 3.91
+offset_z = 5.47
+
+["hour hand and minute 16"]
+on = "white clock face.front"
+offset_x = 4.69
+offset_z = 6.25
+
+["hour hand and minute 17"]
+on = "white clock face.front"
+offset_x = 4.69
+offset_z = 7.03
+
+["hour hand and minute 18"]
+on = "white clock face.front"
+offset_x = 5.47
+offset_z = 7.81
+
+["hour hand and minute 19"]
+on = "white clock face.front"
+offset_x = 6.25
+offset_z = 8.59
+
+["red second hand and"]
+on = "bright inner lip.back"
+offset_z = -3.91
+
+["red second hand and 2"]
+on = "bright inner lip.back"
+
+["battery bump"]
+on = "white clock face.back"

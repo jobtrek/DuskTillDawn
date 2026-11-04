@@ -1,0 +1,45 @@
+[build]
+metallic = []
+
+["end cap"]
+
+["end cap 2"]
+on = "end cap.top"
+gap = -18.75
+align = "left"
+repeat = { x = 9, pitch_x = 4.69 }
+
+["end cap 3"]
+on = "end cap.top"
+gap = -18.75
+offset_x = -7.03
+
+["end cap 4"]
+on = "end cap.top"
+
+["end cap 5"]
+on = "end cap 4.top"
+gap = -4.69
+y = "flush-front"
+repeat = { x = 2, pitch_x = 27.34 }
+
+["end cap 6"]
+on = "end cap 4.top"
+
+["end cap 7"]
+on = "end cap 6.top"
+y = "flush-back"
+offset_x = 0.78
+
+["end cap 8"]
+on = "end cap 7.top"
+gap = -35.94
+
+["end cap 9"]
+on = "end cap 7.top"
+gap = -34.38
+repeat = { z = 6, pitch_z = 3.12 }
+
+["end cap 10"]
+on = "end cap 7.top"
+gap = -2.34

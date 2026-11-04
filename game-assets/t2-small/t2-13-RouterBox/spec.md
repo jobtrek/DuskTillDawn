@@ -30,9 +30,13 @@ Add the small features: ports, LEDs, vents, label.
 
 ## Parts (tier; cm size + colour key to fill before first build)
 
-- [1] case 44 x 25 x 4.4 cm, chassis
-- [2] ear brackets 2x 2.3 x 12 x 3.9 cm, metal
-- [3] ports 8x tile 2.3 x 1.6 cm, screen
-- [3] status LED 2x2 + port LEDs 4x 2x2, led_green / led_orange / led_red / led_off
-- [3] vents 7 slots on top, seam (glow led_orange when Hot)
-- [3] label 7.8 x 4.7 cm on top, label
+- [1] main case: 40.62 x 25 x 4.69 cm, chassis
+- [2] rack ear brackets: 1.56 x 9.38 x 3.91 cm, metal
+- [2] rack ear brackets 2: 1.56 x 9.38 x 3.91 cm, metal
+- [3] dark screw slots: 0.78 x 0.78 x 1.56 cm, 4 copies, seam
+- [3] eight ports: 1.56 x 0.78 x 1.56 cm, 8 copies, screen
+- [3] port leds above every: 1.56 x 0.78 x 1.56 cm, 4 copies, led_green
+- [3] status led 2x2: 1.56 x 0.78 x 1.56 cm, led_green
+- [3] seven vent slots: 0.78 x 10.94 x 0.78 cm, 7 copies, seam
+- [3] paper label: 7.81 x 5.47 x 0.78 cm, label
+

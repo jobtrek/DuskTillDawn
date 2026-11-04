@@ -26,9 +26,12 @@ Add the small features: label, striker, screws, LED.
 
 ## Parts (tier; cm size + colour key to fill before first build)
 
-- [2] housing 10 x 4 x 10 cm, warning_red
-- [2] glass cover 6.4 x 1.6 x 6.4 cm, glass
-- [3] label strip 6 x 0.4 x 1.6 cm, label
-- [3] striker button 2.4 x 0.8 x 3 cm, warning_yellow
-- [3] screws 4x 0.8 x 0.8 cm, metal
-- [3] LED 1.6 x 1.6 cm, led_green
+- [1] red back plate against: 10.16 x 1.56 x 10.16 cm, warning_red
+- [2] red front frame: 10.16 x 2.34 x 10.16 cm, warning_red
+- [2] dark recess: 7.03 x 0.78 x 7.03 cm, chassis_dark
+- [3] yellow striker button: 1.56 x 0.78 x 3.91 cm, warning_yellow
+- [2] glass cover set into: 7.03 x 0.78 x 7.03 cm, glass
+- [3] paper label: 4.69 x 0.78 x 1.56 cm, label
+- [3] green status led: 1.56 x 0.78 x 1.56 cm, led_green
+- [3] corner screws: 0.78 x 0.78 x 0.78 cm, 2 copies, metal
+

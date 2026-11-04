@@ -1,0 +1,25 @@
+[build]
+metallic = ["metal", "trim", "copper"]
+
+["brass thread"]
+
+["dark seam ring"]
+on = "brass thread.top"
+
+["frame body block"]
+on = "dark seam ring.top"
+
+["frame arms rising"]
+on = "frame body block.top"
+align = "left"
+repeat = { x = 2, pitch_x = 3.91 }
+
+["red glass bulb"]
+on = "frame body block.top"
+
+["deflector plate"]
+on = "frame arms rising.top"
+
+["dark rim"]
+on = "deflector plate.top"
+shape = "hollow"

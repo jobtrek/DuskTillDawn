@@ -26,9 +26,14 @@ Add the small features: bristle rows, bolts, grip tape, wear.
 
 ## Parts (tier; cm size + colour key to fill before first build)
 
-- [2] handle
-- [2] head
-- [3] bristle rows (tile)
-- [3] bolts
-- [3] grip tape
-- [3] wear
+- [1] end cap: 39.84 x 6.25 x 18.75 cm, label
+- [2] end cap 2: 0.78 x 6.25 x 17.97 cm, 9 copies, wood
+- [2] end cap 3: 5.47 x 6.25 x 1.56 cm, wood
+- [2] end cap 4: 39.84 x 6.25 x 7.81 cm, wood_dark
+- [2] end cap 5: 1.56 x 0.78 x 1.56 cm, 2 copies, metal
+- [2] end cap 6: 4.69 x 3.12 x 9.38 cm, metal_dark
+- [2] end cap 7: 2.34 x 2.34 x 93.75 cm, wood
+- [2] end cap 8: 3.91 x 3.91 x 20.31 cm, rubber
+- [2] end cap 9: 3.91 x 3.91 x 0.78 cm, 6 copies, chassis
+- [2] end cap 10: 2.34 x 2.34 x 2.34 cm, metal
+

@@ -26,8 +26,11 @@ Add the small features: glass bulb, thread, seam.
 
 ## Parts (tier; cm size + colour key to fill before first build)
 
-- [2] frame arms 2x 1.6 x 1.6 x 5 cm, metal
-- [2] deflector plate 6 x 6 x 1.6 cm, trim
-- [3] glass bulb 1.6 x 1.6 x 3.9 cm (2 voxels wide), led_red
-- [3] thread 3 x 3 x 2.3 cm, copper
-- [3] seam ring under frame, seam
+- [3] brass thread: 3.12 x 3.12 x 2.34 cm, copper
+- [3] dark seam ring: 3.12 x 3.12 x 0.78 cm, seam
+- [2] frame body block: 4.69 x 4.69 x 1.56 cm, metal
+- [2] frame arms rising: 1.56 x 1.56 x 3.12 cm, 2 copies, metal
+- [3] red glass bulb: 1.56 x 1.56 x 3.12 cm, led_red
+- [2] deflector plate: 6.25 x 6.25 x 1.56 cm, trim
+- [2] dark rim: 6.25 x 6.25 x 0.78 cm, metal_dark
+
