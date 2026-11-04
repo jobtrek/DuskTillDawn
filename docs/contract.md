@@ -97,13 +97,3 @@ To settle in the contract meeting. Proposals are in `initial_organisation.md`.
 | 5 | Roles (Dev 1/2/3, product owner, first scrum master) | Assign by interest |
 | 6 | Audience and client | Confirm with the client |
 | 7 | Isometric vertical angle (30° or about 35°) | Pick in the grey-box |
-
-## 7. Signatures
-
-Written together, agreed by all 3.
-
-| Name | Role | Date |
-|---|---|---|
-| | | |
-| | | |
-| | | |
