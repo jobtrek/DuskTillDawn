@@ -26,11 +26,11 @@ Add the small features: 5 wheels, gas lift, star base, stitching seam, lever.
 
 ## Parts (tier; cm size + colour key to fill before first build)
 
-- [2] seat
-- [2] back
-- [2] armrests
-- [3] 5 wheels
-- [3] gas lift
-- [3] star base
-- [3] stitching seam
-- [3] lever
+- [2] wheels: 3 x 3 x 3 cm, rubber
+- [2] star base: 30 x 30 x 2 cm, metal_dark
+- [2] gas lift: 4 x 4 x 20 cm, metal
+- [2] seat: 60 x 60 x 8 cm, fabric
+- [2] back: 60 x 6 x 75 cm, fabric_dark
+- [2] armrests: 4 x 28 x 16 cm, fabric_dark
+- [2] lever: 8 x 2 x 2 cm, trim
+- [2] stitching seam: 40 x 1.6 x 1.6 cm, seam

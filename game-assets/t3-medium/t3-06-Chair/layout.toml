@@ -1,0 +1,25 @@
+[wheels]
+repeat = { x = 2, pitch_x = 27, y = 2, pitch_y = 27 }
+["star base"]
+on = "wheels.top"
+["gas lift"]
+on = "star base.top"
+[seat]
+on = "gas lift.top"
+[back]
+on = "seat.back"
+align = "bottom"
+gap = -6
+[armrests]
+on = "seat.top"
+repeat = { x = 2, pitch_x = 56 }
+[lever]
+on = "seat.bottom"
+gap = -2
+align = "right"
+y = "flush-front"
+offset_y = 6
+offset_x = -6
+["stitching seam"]
+on = "seat.top"
+gap = -1.6
