@@ -9,6 +9,10 @@ voxels: 77x102x154
 grid: F
 grain: 0
 collider: true
+states:
+  Ok: top LED `led_green`
+  Warn: top LED `led_orange`
+  Failed: top LED `led_red`
 ---
 
 # RackFrame
@@ -35,3 +39,4 @@ Add the small features: rail holes, vent slots, casters, lock, label.
 - [2] vent slots: 40 x 0.8 x 1 cm, chassis_dark
 - [2] lock: 3 x 0.8 x 4 cm, metal
 - [2] label: 8 x 0.8 x 3 cm, label
+- [3] top-of-rack LED: 3.1 x 0.8 x 3.1 cm (Ok green / Warn orange / Failed red), led_green

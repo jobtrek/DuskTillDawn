@@ -1,0 +1,90 @@
+[build]
+metallic = ["metal", "trim"]
+
+["corner posts"]
+repeat = { x = 2, pitch_x = 96.88, y = 2, pitch_y = 37.5 }
+
+[shelves]
+on = "corner posts.top"
+gap = -170.31
+repeat = { z = 5, pitch_z = 34.38 }
+
+[bolts]
+on = "corner posts.top"
+gap = -170.31
+y = "flush-front"
+repeat = { x = 2, pitch_x = 98.44, z = 5, pitch_z = 34.38 }
+
+["blue bins"]
+on = "corner posts.top"
+gap = -167.19
+offset_x = 1.56
+offset_y = -3.12
+repeat = { x = 4, pitch_x = 23.44 }
+
+["bin lids"]
+on = "corner posts.top"
+gap = -154.69
+offset_x = 1.56
+offset_y = -3.12
+repeat = { x = 4, pitch_x = 23.44 }
+
+["paper label"]
+on = "corner posts.top"
+gap = -162.5
+offset_x = 1.56
+offset_y = -14.06
+repeat = { x = 4, pitch_x = 23.44 }
+
+[stack]
+on = "corner posts.top"
+gap = -98.44
+offset_x = -25
+offset_y = -1.56
+
+["stack 2"]
+on = "corner posts.top"
+gap = -98.44
+offset_x = 9.38
+offset_y = -1.56
+
+["stack 3"]
+on = "corner posts.top"
+gap = -78.12
+offset_x = -25
+offset_y = -1.56
+
+["tape strips"]
+on = "corner posts.top"
+gap = -79.69
+offset_x = -26.56
+offset_y = -1.56
+
+["tape strips 2"]
+on = "corner posts.top"
+gap = -85.94
+offset_x = 7.81
+offset_y = -1.56
+
+["smaller box"]
+on = "corner posts.top"
+gap = -29.69
+offset_x = 28.12
+
+["smaller box 2"]
+on = "corner posts.top"
+gap = -17.19
+offset_x = 26.56
+
+["rust patches"]
+on = "corner posts.top"
+gap = -170.31
+y = "flush-front"
+offset_x = -3.12
+repeat = { x = 2, pitch_x = 62.5, z = 2, pitch_z = 68.75 }
+
+["rust patches 2"]
+on = "corner posts.top"
+gap = -117.19
+y = "flush-front"
+align = "right"

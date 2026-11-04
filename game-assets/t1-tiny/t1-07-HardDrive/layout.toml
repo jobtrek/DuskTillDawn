@@ -1,0 +1,41 @@
+[palette]
+pcb = [0.04, 0.26, 0.1]
+
+["green pcb layer"]
+
+["metal casing"]
+on = "green pcb layer.top"
+
+[label]
+on = "metal casing.top"
+gap = -0.78
+offset_y = -2.34
+
+["label text lines"]
+on = "metal casing.top"
+gap = -0.78
+offset_y = -2.34
+repeat = { y = 3, pitch_y = 1.56 }
+
+["corner screws"]
+on = "metal casing.top"
+gap = -0.78
+repeat = { x = 2, pitch_x = 7.81, y = 2, pitch_y = 11.72 }
+
+["black connector block"]
+on = "green pcb layer.top"
+y = "flush-back"
+
+["gold connector pins"]
+on = "green pcb layer.top"
+y = "flush-back"
+repeat = { x = 5, pitch_x = 1.56 }
+
+["status led 2x2"]
+on = "metal casing.top"
+gap = -0.78
+y = "flush-front"
+offset_x = 3.91
+
+[states.Failed]
+"status led 2x2" = { key = "led_red" }

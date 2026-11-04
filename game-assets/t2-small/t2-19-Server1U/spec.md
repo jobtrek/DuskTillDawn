@@ -41,4 +41,5 @@ Add the small features: vents, drive bays, 2×2 LEDs, power button, screws.
 - [3] status LED: 1.6 cm, led_green
 - [3] power button: 1.6 cm, trim
 - [3] screws: 0.8 cm (4x), metal
+- [3] top vents: 0.8 x 32 cm slots (8x), seam
 - [3] label: 8 x 5 cm on top, label

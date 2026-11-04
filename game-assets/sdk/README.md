@@ -4,7 +4,10 @@ Spec + Layout -> validated voxel model -> self-contained Blender `build.py`. No 
 
 ```
 uv run voxel-sdk check ../t2-small/t2-17-Monitor   # validate + compact preview (RLE views, per-Part table); add --full for raw ASCII
+uv run voxel-sdk check ../t2-small/t2-26-PDU --state Tripped   # full preview of one State
 uv run voxel-sdk build ../t2-small/t2-17-Monitor   # write build.py (generated, never hand-edited)
+uv run voxel-sdk build --standalone ../t2-small/t2-17-Monitor   # inline the engine: runs in Blender without the repo
+uv run voxel-sdk build --standalone ../t3-medium/t3-03-PipeStraight   # hand-written model (no layout.toml): writes build.standalone.py
 uv run pytest
 ```
 
@@ -28,5 +31,34 @@ One table per Part, in placement order; the first Part sits at x/y centre, z=0. 
 | `thickness`, `open` | cm wall for hollow/ring; `open = ["top", ...]` leaves a hollow face open |
 | `[[raw]]` `code = "..."` | escape hatch: engine calls on `V` (box, hollow, tile, disc, blob, carve, Grid, shell, ellipse). Same checks; counted in the report |
 
+Top-level tables that are not Parts:
+
+| table | meaning |
+|---|---|
+| `[build]` | `metallic = ["metal", "trim"]` (default: `["metal"]` when metal is used), `collider = true/false` (default: Spec `collider:`) |
+| `[palette]` | Element-only colours, `cable = [0.05, 0.05, 0.07]` (linear RGB), merged over `palette.py` |
+
 Checks: unknown Part/anchor/face/key, unknown palette key, size vs Spec `voxels:` within 1 voxel, floating Parts (errors);
 same-colour neighbouring Parts, Spec Parts missing from the Layout (warnings).
+
+## States
+
+The Spec's `states:` keys name the States; the first is the base State, described by the plain Part tables.
+Each other State is a table of overrides (examples: `t2-26-PDU`, `t2-24-Laptop`, `t2-19-Server1U`):
+
+```toml
+[states.Tripped]
+"status LED"    = { key = "led_red" }                       # colour swap
+"breaker lever" = { key = "warning_red", offset_z = -1.56 } # move
+"drive bays#2"  = { size = [4.7, 2.3, 3] }                  # one copy of a repeat; grows away from its host face
+```
+
+| key | meaning |
+|---|---|
+| `key` `size` `offset_x/y/z` `gap` | same as the Part keys, for that State only |
+| `omit = true` | Part (or copy) absent in that State |
+| `states = ["Messy"]` | on a Part table: the Part exists only in those States |
+| `[[states.<Name>.raw]]` | raw block run only in that State |
+
+`check` prints the base State in full and one diff line per other State. Non-base States may exceed the Spec size (warning, not error).
+

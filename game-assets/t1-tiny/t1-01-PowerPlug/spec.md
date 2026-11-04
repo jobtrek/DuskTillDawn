@@ -26,10 +26,11 @@ Add the small features: grip ridges both sides trim, seam ring at top of body se
 
 ## Parts (cm → key). Plug stands on its pins, cable exits up.
 
-- [1] body 5x4x3.2 plastic_white (z 2-5)
-- [2] pins 2x ~0.6x0.3x1.6 metal
-- [2] strain relief 3x2.4x0.8 rubber
-- [2] cable stub 1.5x1.5x0.8 cable
-- [3] grip ridges both sides trim
-- [3] seam ring at top of body seam
-- [3] label on front face label
+- [2] metal pins: 0.78 x 1.56 x 1.56 cm, 2 copies, metal
+- [1] white plastic body: 4.69 x 3.91 x 3.12 cm, plastic_white
+- [3] grip ridges: 0.78 x 2.34 x 1.56 cm, 2 copies, trim
+- [3] dark seam ring: 4.69 x 3.91 x 0.78 cm, seam
+- [3] paper label: 1.56 x 0.78 x 1.56 cm, label
+- [2] rubber strain relief: 3.12 x 2.34 x 0.78 cm, rubber
+- [2] cable stub: 1.56 x 1.56 x 0.78 cm, cable
+

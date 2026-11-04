@@ -1,4 +1,4 @@
-# Server1U layout (base state: On). Spec chassis 45 cm includes the ears, so the body is narrower.
+# Server1U layout. Base State On; other States are overrides at the bottom. Spec chassis 45 cm includes the ears, so the body is narrower.
 [chassis]
 size = [42, 59, 4.4]
 
@@ -67,3 +67,23 @@ align = "left"
 y = "flush-front"
 offset_x = 5.5
 offset_y = 12.5
+
+["top vents"]
+on = "chassis.top"
+gap = -0.78
+offset_x = 10.16
+offset_y = -8.59
+repeat = { x = 8, pitch_x = 2.34 }
+
+[states.Hot]
+"status LED" = { key = "led_orange" }
+"top vents" = { key = "led_orange" }
+
+[states.Off]
+"status LED" = { key = "led_off" }
+"activity LED" = { key = "led_off" }
+
+[states.Failed]
+"status LED" = { key = "led_red" }
+"activity LED" = { key = "led_off" }
+"drive bays#2" = { size = [4.7, 2.3, 3] }   # ejected 2 voxels out of the bezel

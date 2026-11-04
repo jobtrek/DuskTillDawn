@@ -1,0 +1,71 @@
+["rubber feet"]
+repeat = { x = 2, pitch_x = 16.41, y = 2, pitch_y = 40.62 }
+
+["main case"]
+on = "rubber feet.top"
+
+["dark front panel"]
+on = "rubber feet.top"
+offset_y = -21.88
+
+["mesh vent"]
+on = "main case.top"
+gap = -40.62
+y = "flush-front"
+repeat = { x = 9, pitch_x = 1.56, z = 8, pitch_z = 1.56 }
+
+["drive bays"]
+on = "main case.top"
+gap = -17.19
+y = "flush-front"
+repeat = { z = 2, pitch_z = 4.69 }
+
+["drive bay slots"]
+on = "main case.top"
+gap = -15.62
+y = "flush-front"
+repeat = { z = 2, pitch_z = 4.69 }
+
+["power button"]
+on = "main case.top"
+gap = -7.03
+y = "flush-front"
+offset_x = -5.47
+
+["status led 2x2"]
+on = "main case.top"
+gap = -7.03
+y = "flush-front"
+offset_x = 5.47
+
+["rear psu block"]
+on = "main case.top"
+gap = -15.62
+y = "flush-back"
+
+["psu fan grille"]
+on = "main case.top"
+gap = -12.5
+y = "flush-back"
+offset_x = 0.78
+repeat = { x = 6, pitch_x = 1.56, z = 4, pitch_z = 2.34 }
+
+["rear network port"]
+on = "main case.top"
+gap = -34.38
+y = "flush-back"
+
+["rear network port 2"]
+on = "main case.top"
+gap = -33.59
+y = "flush-back"
+
+[states.Hot]
+"mesh vent" = { key = "led_orange" }
+"status led 2x2" = { key = "led_orange" }
+
+[states.Failed]
+"status led 2x2" = { key = "led_red" }
+
+[states.Off]
+"status led 2x2" = { key = "led_off" }

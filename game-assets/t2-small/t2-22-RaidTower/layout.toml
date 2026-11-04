@@ -1,0 +1,52 @@
+["front plate"]
+
+["main case"]
+on = "front plate.back"
+
+["dark recess"]
+on = "front plate.top"
+gap = -39.84
+
+["eight drive caddies"]
+on = "front plate.top"
+gap = -39.06
+offset_x = -0.78
+repeat = { x = 2, pitch_x = 10.94, z = 4, pitch_z = 8.59 }
+
+["caddy pull handles"]
+on = "front plate.top"
+gap = -38.28
+offset_x = -0.78
+repeat = { x = 2, pitch_x = 10.94, z = 4, pitch_z = 8.59 }
+
+["caddy status leds"]
+on = "front plate.top"
+gap = -34.38
+offset_x = 2.34
+repeat = { x = 2, pitch_x = 10.94, z = 4, pitch_z = 8.59 }
+
+["seven horizontal vent slots"]
+on = "front plate.top"
+gap = -57.03
+repeat = { z = 7, pitch_z = 2.34 }
+
+["paper label top-left"]
+on = "front plate.top"
+gap = -3.91
+offset_x = -5.47
+
+["power button and power"]
+on = "front plate.top"
+gap = -3.12
+offset_x = 2.34
+
+["power button and power 2"]
+on = "front plate.top"
+gap = -3.12
+offset_x = 7.03
+
+["side carry handles"]
+on = "main case.top"
+gap = -13.28
+offset_y = -0.78
+repeat = { x = 2, pitch_x = 24.22 }
