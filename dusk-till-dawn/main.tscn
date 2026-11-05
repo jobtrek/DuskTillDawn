@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=11 format=3]
 
 [ext_resource type="Script" path="res://Main.cs" id="1_main"]
 [ext_resource type="Script" path="res://Player.cs" id="2_player"]
@@ -11,6 +11,23 @@ height = 1.8
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_player"]
 radius = 0.3
 height = 1.8
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_computer_area"]
+size = Vector3(2.4, 2, 2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_edge_x"]
+size = Vector3(0.2, 2.5, 6.4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_edge_z"]
+size = Vector3(8.4, 2.5, 0.2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_screen"]
+bg_color = Color(0.05, 0.09, 0.14, 0.97)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.25, 0.65, 0.85, 1)
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_main")
@@ -26,6 +43,38 @@ size = Vector3(8, 0.2, 6)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, -3.1)
 use_collision = true
 size = Vector3(8, 2.5, 0.2)
+
+[node name="WallBackX" type="CSGBox3D" parent="Room"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.1, 1.25, 0)
+use_collision = true
+size = Vector3(0.2, 2.5, 6)
+
+[node name="Desk" type="CSGBox3D" parent="Room"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2, 0.375, -2.5)
+use_collision = true
+size = Vector3(1.6, 0.75, 0.8)
+
+[node name="Computer" type="CSGBox3D" parent="Room"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2, 0.95, -2.6)
+size = Vector3(0.6, 0.4, 0.05)
+
+[node name="ComputerArea" type="Area3D" parent="Room"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2, 1, -1.8)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Room/ComputerArea"]
+shape = SubResource("BoxShape3D_computer_area")
+
+[node name="EdgeFrontX" type="StaticBody3D" parent="Room"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.1, 1.25, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Room/EdgeFrontX"]
+shape = SubResource("BoxShape3D_edge_x")
+
+[node name="EdgeFrontZ" type="StaticBody3D" parent="Room"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 3.1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Room/EdgeFrontZ"]
+shape = SubResource("BoxShape3D_edge_z")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.707107, -0.40558, 0.579228, 0, 0.819152, 0.573576, -0.707107, -0.40558, 0.579228, 10, 10, 10)
@@ -71,5 +120,46 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 40
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PromptLabel" type="Label" parent="Hud"]
+visible = false
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -64.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 24
+text = "E: use the computer"
+horizontal_alignment = 1
+
+[node name="ComputerScreen" type="Panel" parent="Hud"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 120.0
+offset_top = 120.0
+offset_right = -120.0
+offset_bottom = -60.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_screen")
+
+[node name="TitleLabel" type="Label" parent="Hud/ComputerScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 32
+text = "Computer
+
+E or Esc: close"
 horizontal_alignment = 1
 vertical_alignment = 1

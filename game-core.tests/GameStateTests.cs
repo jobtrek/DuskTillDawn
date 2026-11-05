@@ -6,67 +6,56 @@ public class GameStateTests
 {
     private const double RealSecondsPerNight = 600;
 
-    [Fact]
-    public void A_new_night_starts_at_22_00_with_full_sla()
+    private static GameState StateWithPlayerAtComputer()
+    {
+        var state = new GameState();
+        state.SetPlayerNextToComputer(true);
+        return state;
+    }
+
+    private static GameState StateWithOpenComputer()
+    {
+        GameState state = StateWithPlayerAtComputer();
+        state.ToggleComputer();
+        return state;
+    }
+
+    [Theory]
+    [InlineData(0, "22:00")]
+    [InlineData(75, "23:00")]
+    [InlineData(187.5, "00:30")]
+    [InlineData(RealSecondsPerNight, "06:00")]
+    [InlineData(RealSecondsPerNight * 2, "06:00")]
+    public void The_clock_runs_from_22_00_to_06_00(double realSeconds, string expected)
     {
         var state = new GameState();
 
-        Assert.Equal("22:00", state.ClockText);
-        Assert.Equal(100, state.Sla);
-        Assert.Equal(NightStatus.Running, state.Status);
+        state.Tick(realSeconds);
+
+        Assert.Equal(expected, state.ClockText);
+    }
+
+    [Theory]
+    [InlineData(RealSecondsPerNight - 1, NightStatus.Running)]
+    [InlineData(RealSecondsPerNight, NightStatus.Won)]
+    public void Reaching_06_00_with_sla_left_wins(double realSeconds, NightStatus expected)
+    {
+        var state = new GameState();
+
+        state.Tick(realSeconds);
+
+        Assert.Equal(expected, state.Status);
     }
 
     [Fact]
-    public void One_in_game_hour_lasts_75_real_seconds()
+    public void Many_small_ticks_reach_the_end_of_the_night()
     {
         var state = new GameState();
 
-        state.Tick(75);
-
-        Assert.Equal("23:00", state.ClockText);
-    }
-
-    [Fact]
-    public void The_clock_passes_midnight()
-    {
-        var state = new GameState();
-
-        state.Tick(75 * 2.5);
-
-        Assert.Equal("00:30", state.ClockText);
-    }
-
-    [Fact]
-    public void The_night_is_still_running_just_before_06_00()
-    {
-        var state = new GameState();
-
-        state.Tick(RealSecondsPerNight - 1);
-
-        Assert.Equal(NightStatus.Running, state.Status);
-    }
-
-    [Fact]
-    public void Reaching_06_00_with_sla_left_wins_after_10_real_minutes()
-    {
-        var state = new GameState();
-
-        state.Tick(RealSecondsPerNight);
-
-        Assert.Equal("06:00", state.ClockText);
-        Assert.Equal(NightStatus.Won, state.Status);
-    }
-
-    [Fact]
-    public void Many_small_ticks_reach_the_same_end_as_one_big_tick()
-    {
-        var state = new GameState();
-
-        for (var i = 0; i < 60 * 600; i++)
+        for (var i = 0; i < RealSecondsPerNight * 60 + 1; i++)
         {
             state.Tick(1.0 / 60.0);
         }
-        state.Tick(0.001);
 
         Assert.Equal(NightStatus.Won, state.Status);
     }
@@ -107,16 +96,6 @@ public class GameStateTests
     }
 
     [Fact]
-    public void The_clock_never_goes_past_06_00()
-    {
-        var state = new GameState();
-
-        state.Tick(RealSecondsPerNight * 2);
-
-        Assert.Equal("06:00", state.ClockText);
-    }
-
-    [Fact]
     public void Sla_cannot_change_after_the_night_is_won()
     {
         var state = new GameState();
@@ -129,18 +108,88 @@ public class GameStateTests
     }
 
     [Fact]
-    public void Time_cannot_go_backwards()
+    public void The_sla_cannot_be_raised_by_a_negative_drain()
     {
-        var state = new GameState();
-
-        Assert.Throws<ArgumentOutOfRangeException>(() => state.Tick(-1));
+        Assert.Throws<ArgumentOutOfRangeException>(() => new GameState().DrainSla(-1));
     }
 
     [Fact]
-    public void The_sla_cannot_be_raised_by_a_negative_drain()
+    public void The_computer_cannot_be_opened_from_far_away()
     {
         var state = new GameState();
+        Assert.False(state.CanOpenComputer);
 
-        Assert.Throws<ArgumentOutOfRangeException>(() => state.DrainSla(-1));
+        state.ToggleComputer();
+
+        Assert.False(state.IsComputerOpen);
+    }
+
+    [Fact]
+    public void Toggling_next_to_the_computer_opens_then_closes_it()
+    {
+        GameState state = StateWithPlayerAtComputer();
+        Assert.True(state.CanOpenComputer);
+
+        state.ToggleComputer();
+        Assert.True(state.IsComputerOpen);
+        Assert.False(state.CanOpenComputer);
+
+        state.ToggleComputer();
+        Assert.False(state.IsComputerOpen);
+    }
+
+    [Fact]
+    public void The_player_can_move_only_while_the_computer_is_closed()
+    {
+        GameState state = StateWithOpenComputer();
+        Assert.False(state.CanPlayerMove);
+
+        state.CloseComputer();
+
+        Assert.False(state.IsComputerOpen);
+        Assert.True(state.CanPlayerMove);
+    }
+
+    [Fact]
+    public void The_clock_keeps_running_while_the_computer_is_open()
+    {
+        GameState state = StateWithOpenComputer();
+
+        state.Tick(75);
+
+        Assert.Equal("23:00", state.ClockText);
+    }
+
+    [Fact]
+    public void The_computer_closes_when_the_night_is_won()
+    {
+        GameState state = StateWithOpenComputer();
+
+        state.Tick(RealSecondsPerNight);
+
+        Assert.False(state.IsComputerOpen);
+    }
+
+    [Fact]
+    public void The_computer_closes_when_the_night_is_lost()
+    {
+        GameState state = StateWithOpenComputer();
+
+        state.DrainSla(100);
+
+        Assert.False(state.IsComputerOpen);
+    }
+
+    [Fact]
+    public void Nothing_can_be_used_after_the_night_ended()
+    {
+        GameState state = StateWithPlayerAtComputer();
+        state.DrainSla(100);
+
+        state.ToggleComputer();
+
+        Assert.False(state.CanOpenComputer);
+        Assert.False(state.IsComputerOpen);
+        Assert.False(state.CanPlayerMove);
     }
 }

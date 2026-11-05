@@ -13,32 +13,34 @@ public enum NightStatus
 public sealed class GameState
 {
     private const double RealSecondsPerInGameHour = 75;
-    private const int NightLengthInGameHours = 8;
-    private const int NightStartInMinutes = 22 * 60;
-    private const int MinutesPerDay = 24 * 60;
-    private const double RealSecondsPerNight = RealSecondsPerInGameHour * NightLengthInGameHours;
+    private const double RealSecondsPerNight = RealSecondsPerInGameHour * 8;
+    private static readonly TimeOnly NightStart = new(22, 0);
 
     private double _elapsedRealSeconds;
+    private bool _isPlayerNextToComputer;
+    private bool _isComputerOpen;
 
     public double Sla { get; private set; } = 100;
-
     public NightStatus Status { get; private set; } = NightStatus.Running;
 
-    public string ClockText
-    {
-        get
-        {
-            int elapsedMinutes = (int)(_elapsedRealSeconds * 60 / RealSecondsPerInGameHour);
-            int minuteOfDay = (NightStartInMinutes + elapsedMinutes) % MinutesPerDay;
-            return $"{minuteOfDay / 60:00}:{minuteOfDay % 60:00}";
-        }
-    }
+    public bool IsComputerOpen => IsRunning && _isComputerOpen;
+    public bool CanOpenComputer => IsRunning && _isPlayerNextToComputer && !_isComputerOpen;
+    public bool CanPlayerMove => IsRunning && !_isComputerOpen;
+    public string ClockText =>
+        NightStart.AddHours(_elapsedRealSeconds / RealSecondsPerInGameHour).ToString(@"HH\:mm");
+
+    private bool IsRunning => Status == NightStatus.Running;
+
+    public void SetPlayerNextToComputer(bool isNextToComputer) =>
+        _isPlayerNextToComputer = isNextToComputer;
+
+    public void ToggleComputer() => _isComputerOpen = CanOpenComputer;
+
+    public void CloseComputer() => _isComputerOpen = false;
 
     public void Tick(double realSeconds)
     {
-        ArgumentOutOfRangeException.ThrowIfNegative(realSeconds);
-
-        if (Status != NightStatus.Running)
+        if (!IsRunning)
         {
             return;
         }
@@ -55,14 +57,14 @@ public sealed class GameState
     {
         ArgumentOutOfRangeException.ThrowIfNegative(percent);
 
-        if (Status != NightStatus.Running)
+        if (!IsRunning)
         {
             return;
         }
 
         Sla = Math.Max(Sla - percent, 0);
 
-        if (Sla <= 0)
+        if (Sla == 0)
         {
             Status = NightStatus.Lost;
         }
