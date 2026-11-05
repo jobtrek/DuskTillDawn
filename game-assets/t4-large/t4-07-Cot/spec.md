@@ -2,7 +2,7 @@
 name: Cot
 id: t4-07
 tier: T4
-room: Control
+room: Control + Basement
 priority: V1 optional
 size_cm: 190x80x50
 voxels: 122x51x32

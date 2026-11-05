@@ -12,8 +12,9 @@ Priority: **V1** = needed for the first playable. **UP** = needed when that upgr
 | [t1-03](t1-tiny/t1-03-SprinklerHead/spec.md) | **SprinklerHead** | Basement | 6×6×10 → 8×8×13 | F | one | frame body block, frame arms rising, deflector plate, dark rim · brass thread, dark seam ring, red glass bulb | UP |
 | [t1-04](t1-tiny/t1-04-FireAlarmButton/spec.md) | **FireAlarmButton** | Basement | 10×4×10 → 13×5×13 | F | one | red front frame, dark recess, glass cover set into · yellow striker button, paper label, green status led, corner screws | V1 |
 | [t1-05](t1-tiny/t1-05-Mouse/spec.md) | **Mouse** | Control | 6×11×4 → 8×14×5 | F | one | buttons, scroll wheel · seam, cable, sensor window, grip texture | V1 |
-| [t1-06](t1-tiny/t1-06-Mug/spec.md) | **Mug** | Control | 11×8×9 → 14×10×12 | F | _Full, _Empty | handle, rim · coffee surface, logo label, base ring, chip wear | V1 |
+| [t1-06](t1-tiny/t1-06-Mug/spec.md) | **Mug** | Control + Basement | 11×8×9 → 14×10×12 | F | _Full, _Empty | handle, rim · coffee surface, logo label, base ring, chip wear | V1 |
 | [t1-07](t1-tiny/t1-07-HardDrive/spec.md) | **HardDrive** | Basement | 10×15×3 → 13×19×4 | F | _Healthy, _Failed | metal casing, label, label text lines · green pcb layer, corner screws, black connector block, gold connector pins, status led | V1 |
+| [t1-08](t1-tiny/t1-08-PhotoFrame/spec.md) | **PhotoFrame** | Basement | 12×4×15 → 15×5×19 | F | one | frame, stand · photo, pet | UP |
 
 ## T2: Small (15-60 cm)
 
@@ -22,14 +23,14 @@ Priority: **V1** = needed for the first playable. **UP** = needed when that upgr
 | [t2-01](t2-small/t2-01-Beacon/spec.md) | **Beacon** | Control + Basement | 12×12×16 → 15×15×20 | F | _Off, _On | dome, base · lens ribs, bolts, wire, bulb | V1 |
 | [t2-02](t2-small/t2-02-ExtinguisherBracket/spec.md) | **ExtinguisherBracket** | Basement | 20×10×20 → 26×13×26 | F | one | wall plate against the, strap, strap, strap, strap buckle, plate screws, white cross, white cross · red sign above the | V1 |
 | [t2-03](t2-small/t2-03-Notepad/spec.md) | **Notepad** | Control | 15×21×2 → 19×27×3 | F | one | cover, spiral · ruled lines, pen + clip, sticky tabs | V1 |
-| [t2-04](t2-small/t2-04-WallClock/spec.md) | **WallClock** | Control | 30×5×30 → 38×6×38 | F | one | frame, glass · hour ticks, hands, battery bump | V1 |
+| [t2-04](t2-small/t2-04-WallClock/spec.md) | **WallClock** | Control + Basement | 30×5×30 → 38×6×38 | F | one | frame, glass · hour ticks, hands, battery bump | V1 |
 | [t2-05](t2-small/t2-05-WallVent/spec.md) | **WallVent** | Basement | 30×5×30 → 38×6×38 | F | one | frame, frame, frame, frame · dark duct, eight louvre slats, dust, dust, corner screws set | V1 |
 | [t2-06](t2-small/t2-06-CableBundle/spec.md) | **CableBundle** | Basement | 30×20×8 → 38×26×10 | F | _Tidy, _Messy | 4 cables, connectors · cable ties, labels, kinks | V1 |
 | [t2-07](t2-small/t2-07-SpareDriveBox/spec.md) | **SpareDriveBox** | Basement | 20×30×10 → 26×38×13 | F | _Full, _Empty | lid · hinge, latch, foam, labels, drives inside | V1 |
 | [t2-08](t2-small/t2-08-WasteBin/spec.md) | **WasteBin** | Control | 25×25×30 → 32×32×38 | F | one | rim, liner · ridges, crumpled paper, label | V1 |
 | [t2-09](t2-small/t2-09-PipeCorner/spec.md) | **PipeCorner** | Basement | 40×40×8 → 51×51×10 | F | one | flanges · bolts, clamps, weld seam | V1 |
 | [t2-10](t2-small/t2-10-CleanerRobot/spec.md) | **CleanerRobot** | Roof | 30×40×15 → 38×51×19 | F | one | body, brush wheels · bumper, sensor, LED, handle | UP |
-| [t2-11](t2-small/t2-11-DeskLamp/spec.md) | **DeskLamp** | Control | 20×20×42 → 26×26×54 | F | _On, _Off | arm, shade, base · switch, hinge joints, cable, bulb | V1 |
+| [t2-11](t2-small/t2-11-DeskLamp/spec.md) | **DeskLamp** | Control + Basement | 20×20×42 → 26×26×54 | F | _On, _Off | arm, shade, base · switch, hinge joints, cable, bulb | V1 |
 | [t2-12](t2-small/t2-12-Keyboard/spec.md) | **Keyboard** | Control | 44×14×3 → 56×18×4 | F | one | case, tilt feet · individual keys, space bar, arrow cluster, cable, label | V1 |
 | [t2-13](t2-small/t2-13-RouterBox/spec.md) | **RouterBox** | Basement | 44×25×4.4 → 56×32×6 | F | _On, _Hot, _Failed | rack ear brackets, rack ear brackets · dark screw slots, eight ports, port leds above every, status led, seven vent slots, paper label | UP |
 | [t2-14](t2-small/t2-14-BatteryModule/spec.md) | **BatteryModule** | Basement | 44×45×13 → 56×58×17 | F | _Charged, _Low, _Overheating | front handles, dark grip openings, positive terminal, positive terminal, negative terminal, negative terminal · bms display, display digits, led bar segments, led bar segments, led bar segments, led bar segments, led bar segments, vent slots, vent slots, label | V1 |
@@ -39,12 +40,17 @@ Priority: **V1** = needed for the first playable. **UP** = needed when that upgr
 | [t2-18](t2-small/t2-18-Extinguisher/spec.md) | **Extinguisher** | Basement | 16×16×55 → 20×20×70 | F | one | hose, head + handle · safety pin, pressure gauge, label, nozzle, strap ring | V1 |
 | [t2-19](t2-small/t2-19-Server1U/spec.md) | **Server1U** | Basement | 45×60×4.4 → 58×77×6 | F | _On, _Hot, _Off, _Failed | bezel, rack ear left, rack ear right · vents, drive bays, activity LED, status LED, power button, screws, top vents, label | V1 |
 | [t2-20](t2-small/t2-20-InverterBox/spec.md) | **InverterBox** | Roof | 40×20×60 → 51×26×77 | F | _On, _Off, _Broken | housing, display · LEDs, heat fins, DC switch, cable glands, label | V1 |
-| [t2-21](t2-small/t2-21-Plant/spec.md) | **Plant** | Control | 30×30×60 → 38×38×77 | F | one | pot, stem · leaves (blob ok, organic), soil, rim, saucer | V1 |
+| [t2-21](t2-small/t2-21-Plant/spec.md) | **Plant** | Control + Basement | 30×30×60 → 38×38×77 | F | one | pot, stem · leaves (blob ok, organic), soil, rim, saucer | V1 |
 | [t2-22](t2-small/t2-22-RaidTower/spec.md) | **RaidTower** | Basement | 25×50×60 → 32×64×77 | F | one | front plate, dark recess, power button and power, power button and power · eight drive caddies, caddy pull handles, caddy status leds, seven horizontal vent slots, paper label top-left, side carry handles | UP |
 | [t2-23](t2-small/t2-23-AntennaDish/spec.md) | **AntennaDish** | Roof | 60×40×60 → 77×51×77 | F | one | dish, feed horn, struts · ribs, mount clamp, cable, label, bolts | V1 |
 | [t2-24](t2-small/t2-24-Laptop/spec.md) | **Laptop** | Basement | 33×23×2.5 → 42×29×3 | F | _On, _Hot, _Failed, _Off | hinges · status LED, vents, rubber feet, power port, logo plate | V1 |
 | [t2-25](t2-small/t2-25-TowerServer/spec.md) | **TowerServer** | Basement | 20×45×45 → 26×58×58 | F | _On, _Hot, _Failed, _Off | dark front panel · mesh vent, drive bays, drive bay slots, power button, status led, rear psu block, psu fan grille, rear network port, rear network port | UP |
 | [t2-26](t2-small/t2-26-PDU/spec.md) | **PDU** | Basement | 44×10×4.4 → 56×13×6 | F | _On, _Overload, _Tripped, _Off | ear left, ear right · outlets, outlet pins, breaker switch, breaker lever, status LED, power cord, label | UP |
+| [t2-27](t2-small/t2-27-HeadphonesThermos/spec.md) | **HeadphonesThermos** | Basement | 25×8.6×22 → 32×11×28 | F | one | thermos body, thermos cap, headband, ear cup left, ear cup right · thermos band | UP |
+| [t2-28](t2-small/t2-28-RetroPoster/spec.md) | **RetroPoster** | Basement | 40×2×56 → 51×3×72 | F | one | sheet, sun · horizon, title bar, pin | UP |
+| [t2-29](t2-small/t2-29-StickyNoteCluster/spec.md) | **StickyNoteCluster** | Basement | 30×1.6×16 → 38×2×20 | F | one | note yellow, note orange, note white · scribble | UP |
+| [t2-30](t2-small/t2-30-LaptopArch/spec.md) | **LaptopArch** | Basement | 33×23×3.1 → 42×29×4 | F | _On, _Hot, _Failed, _Off, _HalfOpen, _FullOpen | hinges · status LED, vents, rubber feet, power port | UP |
+| [t2-31](t2-small/t2-31-LaptopNix/spec.md) | **LaptopNix** | Basement | 33×23×3.1 → 42×29×4 | F | _On, _Hot, _Failed, _Off, _HalfOpen, _FullOpen | hinges · status LED, vents, rubber feet, power port | UP |
 
 ## T3: Medium (60 cm-1.3 m)
 
@@ -55,7 +61,7 @@ Priority: **V1** = needed for the first playable. **UP** = needed when that upgr
 | [t3-03](t3-medium/t3-03-PipeStraight/spec.md) | **PipeStraight** | Basement | 8×100×8 → 10×128×10 | F | one | flanges · bolts, clamps, flow arrow, rust patches | V1 |
 | [t3-04](t3-medium/t3-04-WallShelf/spec.md) | **WallShelf** | Control | 100×30×25 → 64×19×16 | S | one | board, brackets · screws, edge lip, wood grain | V1 |
 | [t3-05](t3-medium/t3-05-AntennaMast/spec.md) | **AntennaMast** | Roof | 30×30×100 → 38×38×128 | F | one | pole, base plate · bolts, clamp brackets, cable clips, rust | V1 |
-| [t3-06](t3-medium/t3-06-Chair/spec.md) | **Chair** | Control | 60×60×100 → 38×38×64 | S | one | wheels, star base, gas lift, seat, back, armrests, lever, stitching seam ·  | V1 |
+| [t3-06](t3-medium/t3-06-Chair/spec.md) | **Chair** | Control + Basement | 60×60×100 → 38×38×64 | S | one | wheels, star base, gas lift, seat, back, armrests, lever, stitching seam ·  | V1 |
 | [t3-07](t3-medium/t3-07-BatteryRackFrame/spec.md) | **BatteryRackFrame** | Basement | 60×80×100 → 77×102×128 | F | one | shelves, side panels · rail holes (tile), cable entries, casters, label | V1 |
 | [t3-08](t3-medium/t3-08-StairLanding/spec.md) | **StairLanding** | Between floors | 100×100×100 → 64×64×64 | S | one | platform, railing · posts, handrail (stepped), anti-slip strip, bolts | V1 |
 | [t3-09](t3-medium/t3-09-PanelMount/spec.md) | **PanelMount** | Roof | 110×60×70 → 141×77×90 | F | one | legs, rails · bolts, braces, clamps, rust, feet | V1 |
@@ -65,6 +71,8 @@ Priority: **V1** = needed for the first playable. **UP** = needed when that upgr
 | [t3-13](t3-medium/t3-13-RackFrame/spec.md) | **RackFrame** | Basement | 60×80×120 → 77×102×154 | F | _Ok, _Warn, _Failed | casters, posts, top plate, side panels, door, rail holes, vent slots, lock, label · top-of-rack LED | V1 |
 | [t3-14](t3-medium/t3-14-FlameLarge/spec.md) | **FlameLarge** | Basement | 80×80×120 → 51×51×77 | S | _A, _B | flame outer layer, flame mid layer, led_orange, flame inner layer, led_yellow · hot core, stepped tips + side licks (_A leans left, _B leans right), ember voxels | V1 |
 | [t3-15](t3-medium/t3-15-Broom/spec.md) | **Broom** | Roof | 40×6×130 → 51×8×166 | F | one | handle, head · bristle rows (tile), bolts, grip tape, wear | V1 |
+| [t3-16](t3-medium/t3-16-MiniFridgeSnacks/spec.md) | **MiniFridgeSnacks** | Basement | 50×53×85 → 32×34×54 | S | one | body, door, snack crate · handle, door seam, magnet, feet | UP |
+| [t3-17](t3-medium/t3-17-Vines/spec.md) | **Vines** | All | 22×3×120 → 28×4×154 | F | one | stem, leaf left, leaf right · bud | UP |
 
 ## T4: Large (over 1.3 m)
 
@@ -76,11 +84,13 @@ Priority: **V1** = needed for the first playable. **UP** = needed when that upgr
 | [t4-04](t4-large/t4-04-Engineer/spec.md) | **Engineer** | All | 50×30×172 → 32×19×110 | S | _Head, _Torso, _Arm, _Leg | head (blob ok, organic), hoodie · face, hair, pockets, lanyard badge, belt, shoes, hands | V1 |
 | [t4-05](t4-large/t4-05-MetalShelf/spec.md) | **MetalShelf** | Basement | 100×40×180 → 64×26×115 | S | one | shelves, bin lids, paper label, stack, stack, stack, tape strips, tape strips, smaller box, smaller box · bolts, blue bins, rust patches, rust patches | V1 |
 | [t4-06](t4-large/t4-06-StorageCabinet/spec.md) | **StorageCabinet** | Control | 90×45×180 → 58×29×115 | S | one | body, doors · handles, lock, vent slots (tile), hinge seams, feet, label | V1 |
-| [t4-07](t4-large/t4-07-Cot/spec.md) | **Cot** | Control | 190×80×50 → 122×51×32 | S | one | frame, mattress · pillow, blanket folds, stitching, legs | V1 optional |
+| [t4-07](t4-large/t4-07-Cot/spec.md) | **Cot** | Control + Basement | 190×80×50 → 122×51×32 | S | one | frame, mattress · pillow, blanket folds, stitching, legs | V1 optional |
 | [t4-08](t4-large/t4-08-ACUnit/spec.md) | **ACUnit** | Basement | 70×90×200 → 45×58×128 | S | _On, _Off, _Broken | lower doors, lower doors, lower doors, door handles, door handles, upper control panel, left door buckled outwards, left door buckled outwards, scorch mark · feet, display, display, status led, logo bar, louvre slots, brass pipe stubs, brass pipe stubs | V1 |
 | [t4-09](t4-large/t4-09-Door_Office/spec.md) | **Door_Office** | Control | 100×10×205 → 64×6×131 | S | one | slab, frame · lever handle, 3 hinges, lock plate, kick plate, panel grooves, sign | V1 |
 | [t4-10](t4-large/t4-10-Door_Steel/spec.md) | **Door_Steel** | Basement | 100×10×205 → 64×6×131 | S | one | dark steel frame · push bar, push bar, push bar, hinges, lock plate, lock plate, warning sign, warning sign, warning sign, rivets round the slab, rivets round the slab, dents and rust, dents and rust, dents and rust | V1 |
-| [t4-11](t4-large/t4-11-StairFlight/spec.md) | **StairFlight** | Between floors | 100×225×140 → 64×144×90 | S | one | treads, stringers, railing · nosing strips, anti-slip, balusters, bolts, wear | V1 |
+| [t4-11](t4-large/t4-11-StairFlight/spec.md) | **StairFlight** | Between floors | 100×225×230 → 64×144×147 | S | one | newel posts, top newels, risers · balusters x32 (metal), nosing strips (trim), anti-slip ribs (rubber), bolts (metal_dark), wear patches | V1 |
+| [t4-12](t4-large/t4-12-Rug/spec.md) | **Rug** | Basement | 180×120×3 → 115×77×2 | S | one | mat, border · centre pattern | UP |
+| [t4-13](t4-large/t4-13-StringLights/spec.md) | **StringLights** | Basement | 240×3×8 → 154×2×5 | S | one | cable · bulb | UP |
 
 ## T5: Rooms (grid S, collider on, grain 0)
 

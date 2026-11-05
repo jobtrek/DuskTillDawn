@@ -1,0 +1,7 @@
+# StringLights: cable run with ten warm bulbs hanging below it.
+[cable]
+
+[bulb]
+on = "cable.bottom"
+align = "left"
+repeat = { x = 10, pitch_x = 24 }

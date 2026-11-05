@@ -2,7 +2,7 @@
 name: WallClock
 id: t2-04
 tier: T2
-room: Control
+room: Control + Basement
 priority: V1
 size_cm: 30x5x30
 voxels: 38x6x38

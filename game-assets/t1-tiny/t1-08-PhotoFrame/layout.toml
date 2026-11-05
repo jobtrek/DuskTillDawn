@@ -1,0 +1,17 @@
+# PhotoFrame: wooden frame, photo sunk into the front, prop-stand on the back.
+[frame]
+
+[stand]
+on = "frame.back"
+size = [5, 2.3, 10]
+align = "bottom"
+
+[photo]
+on = "frame.front"
+size = [9, 0.8, 12]
+gap = -0.78
+
+[pet]
+on = "photo.front"
+size = [4, 0.8, 4]
+offset_z = -2

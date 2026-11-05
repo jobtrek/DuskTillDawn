@@ -1,0 +1,42 @@
+# StairFlight layout. Newels fix the frame (x centred, z=0, y -72..71); the raw block builds the stepped flight.
+[palette]
+wood_mid = [0.30, 0.17, 0.08]
+
+["newel posts"]
+offset_y = -109.375        # y -72..-69 (front end)
+repeat = { x = 2, pitch_x = 93.75 }   # x -32..-29 and 28..31
+
+["top newels"]
+on = "newel posts.top"
+offset_y = 218.75          # y 68..71 (back end)
+repeat = { x = 2, pitch_x = 93.75 }
+
+[[raw]]
+# 8 steps of 18 voxels deep and 11 high: stringers, risers, treads, rails, balusters, then tertiary detail
+code = """
+SIDES = ((-32, -30, -29, -31), (29, 31, 28, 30))   # stringer x0,x1 / rail x0 / baluster x0 (rail is 4 wide, baluster 2)
+def rail_top(y):
+    return min(145, 10 + (11 * (y + 72)) // 18 + 58)
+for n in range(1, 9):
+    y0 = -72 + 18 * (n - 1)
+    y1 = y0 + 17
+    zt = 11 * n - 1
+    for sx0, sx1, rx0, bx0 in SIDES:
+        box(V, sx0, sx1, y0, y1, max(0, 11 * n - 18), 11 * n + 4, 'wood_dark')
+    box(V, -29, 28, y0 + 2, y0 + 3, max(0, 11 * (n - 1) - 2), 11 * n - 3, 'paint_wall')
+    box(V, -29, 28, y0, y1, zt - 1, zt, 'wood')
+    box(V, -29, 28, y0, y0 + 1, zt - 1, zt, 'trim')
+    box(V, -27, 26, y0 + 4, y0 + 5, zt, zt, 'rubber')
+    box(V, -27, 26, y0 + 8, y0 + 9, zt, zt, 'rubber')
+    wx = -12 if n % 2 == 0 else 3
+    box(V, wx, wx + 9, y0 + 12, y0 + 15, zt, zt, 'wood_dark')
+    box(V, -32, -32, y0 + 8, y0 + 9, 11 * n - 9, 11 * n - 8, 'metal_dark')
+    box(V, 31, 31, y0 + 8, y0 + 9, 11 * n - 9, 11 * n - 8, 'metal_dark')
+    for by in (y0 + 4, y0 + 12):
+        for sx0, sx1, rx0, bx0 in SIDES:
+            box(V, bx0, bx0 + 1, by, by + 1, 11 * n + 5, rail_top(by + 1) - 3, 'metal')
+for sx0, sx1, rx0, bx0 in SIDES:
+    for y in range(-72, 72):
+        t = rail_top(y)
+        box(V, rx0, rx0 + 3, y, y, t - 2, t, 'wood')
+"""

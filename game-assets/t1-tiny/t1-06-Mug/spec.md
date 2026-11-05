@@ -2,7 +2,7 @@
 name: Mug
 id: t1-06
 tier: T1
-room: Control
+room: Control + Basement
 priority: V1
 size_cm: 11x8x9
 voxels: 14x10x12
