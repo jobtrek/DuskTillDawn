@@ -1,5 +1,5 @@
 ["side panels"]
-repeat = { x = 2, pitch_x = 157 }
+repeat = { x = 2, pitch_x = 237 }
 [top]
 on = "side panels.top"
 [drawer]
@@ -27,4 +27,4 @@ offset_y = -8
 ["wood grain"]
 on = "top.top"
 gap = -0.8
-repeat = { y = 6, pitch_y = 11 }
+repeat = { y = 6, pitch_y = 14 }
