@@ -88,7 +88,7 @@ Priority: **V1** = needed for the first playable. **UP** = needed when that upgr
 | [t4-08](t4-large/t4-08-ACUnit/spec.md) | **ACUnit** | Basement | 70×90×200 → 45×58×128 | S | _On, _Off, _Broken | lower doors, lower doors, lower doors, door handles, door handles, upper control panel, left door buckled outwards, left door buckled outwards, scorch mark · feet, display, display, status led, logo bar, louvre slots, brass pipe stubs, brass pipe stubs | V1 |
 | [t4-09](t4-large/t4-09-Door_Office/spec.md) | **Door_Office** | Control | 100×10×205 → 64×6×131 | S | one | slab, frame · lever handle, 3 hinges, lock plate, kick plate, panel grooves, sign | V1 |
 | [t4-10](t4-large/t4-10-Door_Steel/spec.md) | **Door_Steel** | Basement | 100×10×205 → 64×6×131 | S | one | dark steel frame · push bar, push bar, push bar, hinges, lock plate, lock plate, warning sign, warning sign, warning sign, rivets round the slab, rivets round the slab, dents and rust, dents and rust, dents and rust | V1 |
-| [t4-11](t4-large/t4-11-StairFlight/spec.md) | **StairFlight** | Between floors | 100×225×140 → 64×144×90 | S | one | treads, stringers, railing · nosing strips, anti-slip, balusters, bolts, wear | V1 |
+| [t4-11](t4-large/t4-11-StairFlight/spec.md) | **StairFlight** | Between floors | 100×225×230 → 64×144×147 | S | one | newel posts, top newels, risers · balusters x32 (metal), nosing strips (trim), anti-slip ribs (rubber), bolts (metal_dark), wear patches | V1 |
 | [t4-12](t4-large/t4-12-Rug/spec.md) | **Rug** | Basement | 180×120×3 → 115×77×2 | S | one | mat, border · centre pattern | UP |
 | [t4-13](t4-large/t4-13-StringLights/spec.md) | **StringLights** | Basement | 240×3×8 → 154×2×5 | S | one | cable · bulb | UP |
 
