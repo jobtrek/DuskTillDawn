@@ -1,0 +1,60 @@
+# PDU layout. Base State On; other States are overrides at the bottom.
+[case]
+
+["ear left"]
+on = "case.left"
+y = "flush-front"
+align = "bottom"
+
+["ear right"]
+on = "case.right"
+y = "flush-front"
+align = "bottom"
+
+[outlets]
+on = "case.front"
+gap = -0.78              # sunk into the front face
+offset_x = -2.34
+repeat = { x = 8, pitch_x = 3.9 }
+
+["outlet pins"]
+on = "case.front"
+gap = -0.78
+offset_x = -2.34
+repeat = { x = 8, pitch_x = 3.9 }
+
+["breaker switch"]
+on = "case.front"
+gap = -0.78
+offset_x = 14.84
+
+["breaker lever"]
+on = "breaker switch.front"
+gap = -0.78
+align = "top"            # lever up = On
+
+["status LED"]
+on = "case.front"
+gap = -0.78
+offset_x = 17.97
+offset_z = 0.78
+
+["power cord"]
+on = "case.back"
+
+[label]
+on = "case.top"
+gap = -0.78
+offset_x = -11.72
+offset_y = -0.78
+
+[states.Overload]
+"status LED" = { key = "led_orange" }
+
+[states.Tripped]
+"status LED" = { key = "led_red" }
+"breaker lever" = { key = "warning_red", offset_z = -1.56 }
+
+[states.Off]
+"status LED" = { key = "led_off" }
+"breaker lever" = { key = "trim", offset_z = -1.56 }

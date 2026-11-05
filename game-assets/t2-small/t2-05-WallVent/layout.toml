@@ -1,0 +1,50 @@
+[palette]
+dust = [0.45, 0.43, 0.38]
+
+["dark duct"]
+
+[frame]
+on = "dark duct.top"
+gap = -29.69
+y = "flush-back"
+
+["frame 2"]
+on = "dark duct.top"
+gap = -2.34
+y = "flush-back"
+
+["frame 3"]
+on = "dark duct.top"
+gap = -27.34
+y = "flush-back"
+align = "left"
+
+["frame 4"]
+on = "dark duct.top"
+gap = -27.34
+y = "flush-back"
+align = "right"
+
+["eight louvre slats"]
+on = "frame 2.bottom"
+offset_y = -0.78
+repeat = { z = 8, pitch_z = 3.12 }
+
+[dust]
+on = "eight louvre slats.top"
+gap = -21.88
+offset_x = -8.59
+repeat = { z = 4, pitch_z = 6.25 }
+
+["dust 2"]
+on = "eight louvre slats.top"
+gap = -21.88
+y = "flush-back"
+offset_x = 6.25
+repeat = { z = 4, pitch_z = 6.25 }
+
+["corner screws set"]
+on = "frame.top"
+gap = -1.56
+y = "flush-front"
+repeat = { x = 2, pitch_x = 27.34, z = 2, pitch_z = 27.34 }

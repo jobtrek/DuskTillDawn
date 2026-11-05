@@ -16,20 +16,11 @@ states:
 
 # FlameLarge
 
-## Prompt
-
-### Shape
-Build a voxel FlameLarge for the Basement room, about 80x80x120 cm (51x51x77 voxels). Main forms: 3 flame layers.
-
-### Materials
-Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.
-
-### Details
-Add the small features: hot core, stepped tips, ember voxels at the base.
-
 ## Parts (tier; cm size + colour key to fill before first build)
 
-- [2] 3 flame layers (red / orange / yellow)
-- [3] hot core
-- [3] stepped tips
-- [3] ember voxels at the base
+- [2] flame outer layer 80 x 80 x 120 cm stepped, led_red
+- [2] flame mid layer, led_orange
+- [2] flame inner layer, led_yellow
+- [3] hot core 7 x 7 x 20 cm, plastic_white
+- [3] stepped tips + side licks (_A leans left, _B leans right)
+- [3] ember voxels 8x around the base, led_yellow

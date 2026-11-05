@@ -171,8 +171,26 @@ def test_render_is_self_contained_python_and_deterministic(element):
     compile_ = __builtins__['compile'] if isinstance(__builtins__, dict) else __builtins__.compile
     compile_(text, 'build.py', 'exec')
     assert 'import bpy' in text and 'GENERATED' in text
+    assert 'def ellipse' not in text and 'def shell' not in text      # extra shapes only when a Part uses them
     assert 'box(V, ' in text and "R = build('Thing', V, C, size=FINE_SIZE, grain=0)" in text
     assert render(d, standalone=True)[0] == text
+
+
+def test_render_inlines_extra_shapes_only_when_used(element):
+    d = element(['base: 7.8 x 7.8 x 7.8 cm, a'], '[base]\nshape = "disc"\n', voxels='10x10x10')
+    text, _ = render(d)
+    assert 'def ellipse' in text and 'def shell' not in text
+    assert "'a')" in text.split('# 3. MODEL')[1]                       # disc base drawn via ellipse
+
+
+def test_render_names_each_copy_of_an_expanded_repeat(element):
+    parts = ['base: 7.8 x 7.8 x 1.6 cm, a', 'pins: 0.78 x 0.78 x 0.78 cm, b']
+    layout = '[base]\n[pins]\non = "base.top"\nrepeat = { x = 2, pitch_x = 2.34 }\n'
+    d = element(parts, layout + '[states.Hot]\n"pins#2" = { key = "c" }\n', voxels='10x10x3', states=['On', 'Hot'])
+    text, _ = render(d)
+    assert '# pins #1' in text and '# pins #2' in text
+    model = text.split('# 3. MODEL')[1]
+    assert 'ny=1' not in model and 'dz=0' not in model                  # tile defaults are not written
 
 
 def test_generated_build_py_reproduces_the_compiled_grid(element, monkeypatch):
@@ -206,3 +224,14 @@ def test_hidden_part_warns_and_compact_output(element):
     _, r = compile(d)
     assert any('fully covered' in w for w in r.warnings) or r.visible['cover'] > 0
     assert len(r.render()) <= len(r.render(full=True))
+
+
+def test_hand_written_thin_build_gets_a_standalone_copy(tmp_path):
+    from voxel_sdk.generate import render_hand_standalone
+    (tmp_path / 'build.py').write_text(
+        "# Thing (t1-01) -- hand-written model; engine loaded from the SDK checkout (thin).\n# u\n# ---- spec.md ----\n#   x\n\n"
+        "import os\ntry:\n    _here = os.path.dirname(os.path.abspath(__file__))\nexcept NameError:\n    _here = '/x'\n"
+        "exec(open(os.path.normpath(os.path.join(_here, '../engine_blender.py'))).read())\n\n"
+        "# 2. COLOUR PALETTE\nPALETTE = {}\n# 3. MODEL: Thing\nV = Grid()\n")
+    out = render_hand_standalone(tmp_path)
+    assert 'exec(open' not in out and 'VOXEL ENGINE' in out and 'def box(' in out and out.rstrip().endswith('V = Grid()')

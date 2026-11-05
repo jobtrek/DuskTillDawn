@@ -4,33 +4,25 @@ id: t4-11
 tier: T4
 room: Between floors
 priority: V1
-size_cm: 100x225x140
-voxels: 64x144x90
+size_cm: 100x225x230
+voxels: 64x144x147
 grid: S
-grain: 0
+grain: 0.08
 collider: true
 ---
 
 # StairFlight
 
-## Prompt
+Open interior wooden flight, 8 risers of 17.2 cm, climbing toward +y. Front (-y) is the bottom step.
 
-### Shape
-Build a voxel StairFlight for the Between floors room, about 100x225x140 cm (64x144x90 voxels). Main forms: treads, stringers, railing.
+## Parts (tier; cm size + colour key)
 
-### Materials
-Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.
+- [2] newel posts: 6.3 x 6.3 x 111 cm, 2 copies, wood_mid
+- [2] top newels: 6.3 x 6.3 x 119 cm, 2 copies, wood_mid
 
-### Details
-Add the small features: nosing strips, anti-slip, balusters, bolts, wear.
+## Notes
 
-## Parts (tier; cm size + colour key to fill before first build)
-
-- [2] treads
-- [2] stringers
-- [2] railing
-- [3] nosing strips
-- [3] anti-slip
-- [3] balusters
-- [3] bolts
-- [3] wear
+Built in one raw block (a diagonal repeat is not a Layout Part). Colour in brackets:
+- [1] treads 90 x 28 x 3 cm x8 (wood), stringers 4.7 cm wide, stepped (wood_dark)
+- [2] risers 3 cm x8 (paint_wall), railing both sides (wood)
+- [3] balusters x32 (metal), nosing strips (trim), anti-slip ribs (rubber), bolts (metal_dark), wear patches

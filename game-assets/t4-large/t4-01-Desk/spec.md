@@ -13,17 +13,6 @@ collider: true
 
 # Desk
 
-## Prompt
-
-### Shape
-Build a voxel Desk for the Control room, about 160x80x75 cm (102x51x48 voxels). Main forms: top, side panels, drawer.
-
-### Materials
-Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.08.
-
-### Details
-Add the small features: handles, cable grommet, edge trim, screws, wood grain.
-
 ## Parts (tier; cm size + colour key to fill before first build)
 
 - [2] side panels: 3 x 76 x 72 cm, wood_dark

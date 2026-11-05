@@ -1,0 +1,97 @@
+[build]
+metallic = ["metal", "copper"]
+
+["main case"]
+
+["front handles"]
+on = "main case.front"
+offset_x = 0.78
+offset_z = 0.78
+repeat = { x = 2, pitch_x = 32.03 }
+
+["dark grip openings"]
+on = "main case.front"
+offset_x = 0.78
+offset_z = 0.78
+repeat = { x = 2, pitch_x = 32.03 }
+
+["bms display"]
+on = "main case.front"
+align = "top"
+
+["display digits"]
+on = "main case.front"
+offset_z = 4.69
+repeat = { x = 6, pitch_x = 1.56 }
+
+["led bar segments"]
+on = "main case.front"
+offset_x = -6.25
+
+["led bar segments 2"]
+on = "main case.front"
+offset_x = -3.12
+
+["led bar segments 3"]
+on = "main case.front"
+
+["led bar segments 4"]
+on = "main case.front"
+offset_x = 3.12
+
+["led bar segments 5"]
+on = "main case.front"
+offset_x = 6.25
+
+["vent slots"]
+on = "main case.top"
+gap = -9.38
+align = "left"
+offset_y = -9.38
+repeat = { y = 4, pitch_y = 4.69 }
+
+["vent slots 2"]
+on = "main case.top"
+gap = -9.38
+align = "right"
+offset_y = -9.38
+repeat = { y = 4, pitch_y = 4.69 }
+
+[label]
+on = "main case.top"
+gap = -0.78
+offset_y = -3.12
+
+["positive terminal"]
+on = "main case.top"
+offset_x = -14.06
+offset_y = 17.19
+
+["positive terminal 2"]
+on = "positive terminal.top"
+
+["negative terminal"]
+on = "main case.top"
+offset_x = 14.84
+offset_y = 17.19
+
+["negative terminal 2"]
+on = "negative terminal.top"
+
+[states.Low]
+"display digits" = { key = "led_orange" }
+"led bar segments" = { key = "led_red" }
+"led bar segments 2" = { key = "led_off" }
+"led bar segments 3" = { key = "led_off" }
+"led bar segments 4" = { key = "led_off" }
+"led bar segments 5" = { key = "led_off" }
+
+[states.Overheating]
+"display digits" = { key = "led_red" }
+"led bar segments" = { key = "led_red" }
+"led bar segments 2" = { key = "led_red" }
+"led bar segments 3" = { key = "led_red" }
+"led bar segments 4" = { key = "led_red" }
+"led bar segments 5" = { key = "led_red" }
+"vent slots" = { key = "led_orange" }
+"vent slots 2" = { key = "led_orange" }

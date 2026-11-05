@@ -5,7 +5,7 @@ A single-player game about the only sysadmin on a solar-powered night shift, kee
 ## Language
 
 **Asset table**:
-The tables in `docs/3d-assets.md`. A generated index of every Element, rebuilt from the Specs. Never edited by hand.
+`game-assets/INDEX.md`. A generated index of every Element, rebuilt from the Specs by `voxel-sdk index`. Never edited by hand.
 _Avoid_: asset list, master list
 
 **Element**:
@@ -13,7 +13,7 @@ One thing built as its own model (a Desk, a Server1U). Each Element has its own 
 _Avoid_: object, asset, model
 
 **Spec**:
-The hand-owned `spec.md` of one Element (30 lines max). The single source of truth for that Element's size, grid, states and detail lists.
+The hand-owned `spec.md` of one Element (40 lines max). The single source of truth for that Element's size, grid, states and detail lists.
 _Avoid_: build spec, asset file, spec doc
 
 **Tier**:
@@ -51,3 +51,11 @@ _Avoid_: groove, gap
 **Footprint**:
 The shared floor area of the building (800×600 cm) that all three floors use; the StairShaft sits outside it on the +x side.
 _Avoid_: floor plan, layout
+
+**Stage**:
+One step of the server progression, 1 (single laptop) to 5 (multiple racks), unlocked by need plus money. Not to be confused with Tier, which is an Element size class.
+_Avoid_: tier (for the progression), level
+
+**Night den**:
+The small corner of the Basement near the stair door where the sysadmin's personal belongings collect. It grows over the Stages and never covers an incident cue.
+_Avoid_: cozy corner, break area

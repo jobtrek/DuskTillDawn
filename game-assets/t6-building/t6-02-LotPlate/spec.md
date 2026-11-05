@@ -13,17 +13,6 @@ collider: true
 
 # LotPlate
 
-## Prompt
-
-### Shape
-Build a voxel LotPlate for the Whole building room, about 2000x1600x10 cm (1280x1024x6 voxels). Main forms: gravel, paving slabs, paint lines, drain covers, kerb. grain 0.15.
-
-### Materials
-Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.15.
-
-### Details
-Add the small features: gravel, paving slabs, paint lines, drain covers, kerb. grain 0.15.
-
 ## Parts (tier; cm size + colour key to fill before first build)
 
 - [2/3] gravel

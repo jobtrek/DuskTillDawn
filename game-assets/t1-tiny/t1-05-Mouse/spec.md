@@ -13,17 +13,6 @@ collider: false
 
 # Mouse
 
-## Prompt
-
-### Shape
-Build a voxel Mouse for the Control room, about 6x11x4 cm (8x14x5 voxels). Main forms: buttons, scroll wheel.
-
-### Materials
-Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.
-
-### Details
-Add the small features: seam, cable, sensor window, grip texture.
-
 ## Parts (tier; cm size + colour key to fill before first build)
 
 - [2] buttons

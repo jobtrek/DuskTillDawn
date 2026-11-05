@@ -1,0 +1,22 @@
+# RetroPoster: paper sheet with a red sun, a dark horizon strip, a title bar and a pin.
+[sheet]
+
+[sun]
+on = "sheet.front"
+align = "center-x"
+offset_z = 4
+
+[horizon]
+on = "sheet.front"
+align = ["bottom"]
+offset_z = 12
+
+["title bar"]
+on = "sheet.front"
+align = "top"
+offset_z = -5
+
+[pin]
+on = "sheet.front"
+align = "top"
+offset_z = -1

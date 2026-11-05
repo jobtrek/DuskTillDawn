@@ -13,17 +13,6 @@ collider: true
 
 # StairLanding
 
-## Prompt
-
-### Shape
-Build a voxel StairLanding for the Between floors room, about 100x100x100 cm (64x64x64 voxels). Main forms: platform, railing.
-
-### Materials
-Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.
-
-### Details
-Add the small features: posts, handrail, anti-slip strip, bolts.
-
 ## Parts (tier; cm size + colour key to fill before first build)
 
 - [2] platform

@@ -2,7 +2,7 @@
 name: DeskLamp
 id: t2-11
 tier: T2
-room: Control
+room: Control + Basement
 priority: V1
 size_cm: 20x20x42
 voxels: 26x26x54
@@ -15,17 +15,6 @@ states:
 ---
 
 # DeskLamp
-
-## Prompt
-
-### Shape
-Build a voxel DeskLamp for the Control room, about 20x20x42 cm (26x26x54 voxels). Main forms: arm, shade, base.
-
-### Materials
-Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.
-
-### Details
-Add the small features: switch, hinge joints, cable, bulb.
 
 ## Parts (tier; cm size + colour key to fill before first build)
 

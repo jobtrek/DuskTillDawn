@@ -13,17 +13,6 @@ collider: false
 
 # WallShelf
 
-## Prompt
-
-### Shape
-Build a voxel WallShelf for the Control room, about 100x30x25 cm (64x19x16 voxels). Main forms: board, brackets.
-
-### Materials
-Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.08.
-
-### Details
-Add the small features: screws, edge lip, wood grain.
-
 ## Parts (tier; cm size + colour key to fill before first build)
 
 - [2] board

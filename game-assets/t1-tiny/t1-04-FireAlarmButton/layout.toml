@@ -1,0 +1,34 @@
+["red back plate against"]
+
+["red front frame"]
+on = "red back plate against.front"
+shape = "hollow"
+thickness = 1.56
+
+["dark recess"]
+on = "red back plate against.top"
+gap = -8.59
+
+["yellow striker button"]
+on = "red back plate against.front"
+
+["glass cover set into"]
+on = "red front frame.top"
+gap = -8.59
+
+["paper label"]
+on = "red front frame.top"
+gap = -1.56
+y = "flush-front"
+
+["green status led"]
+on = "red front frame.top"
+gap = -1.56
+y = "flush-front"
+offset_x = 3.91
+
+["corner screws"]
+on = "red front frame.top"
+gap = -9.38
+y = "flush-front"
+repeat = { x = 2, pitch_x = 7.81 }

@@ -1,0 +1,108 @@
+[build]
+metallic = ["metal", "copper"]
+
+[feet]
+repeat = { x = 2, pitch_x = 62.5, y = 2, pitch_y = 84.38 }
+
+["main cabinet"]
+on = "feet.top"
+
+["lower doors"]
+on = "main cabinet.top"
+gap = -193.75
+y = "flush-front"
+offset_x = -17.19
+
+["lower doors 2"]
+on = "main cabinet.top"
+gap = -193.75
+y = "flush-front"
+offset_x = 17.19
+
+["lower doors 3"]
+on = "main cabinet.top"
+gap = -193.75
+y = "flush-front"
+
+["door handles"]
+on = "main cabinet.front"
+offset_x = -4.69
+offset_z = -32.81
+
+["door handles 2"]
+on = "main cabinet.front"
+offset_x = 4.69
+offset_z = -32.81
+
+["upper control panel"]
+on = "main cabinet.top"
+gap = -75
+y = "flush-front"
+
+[display]
+on = "main cabinet.top"
+gap = -46.88
+y = "flush-front"
+
+["display 2"]
+on = "main cabinet.top"
+gap = -42.19
+y = "flush-front"
+offset_x = -1.56
+repeat = { x = 4, pitch_x = 6.25 }
+
+["status led 2x2"]
+on = "main cabinet.top"
+gap = -25
+y = "flush-front"
+offset_x = 12.5
+
+["logo bar"]
+on = "main cabinet.top"
+gap = -20.31
+y = "flush-front"
+offset_x = -3.12
+
+["louvre slots"]
+on = "main cabinet.top"
+gap = -68.75
+y = "flush-front"
+repeat = { z = 4, pitch_z = 4.69 }
+
+["brass pipe stubs"]
+on = "main cabinet.top"
+gap = -59.38
+y = "flush-back"
+repeat = { x = 2, pitch_x = 46.88 }
+
+["brass pipe stubs 2"]
+on = "main cabinet.top"
+gap = -57.81
+y = "flush-back"
+repeat = { x = 2, pitch_x = 46.88 }
+
+["left door buckled outwards"]
+states = ["Broken"]
+on = "main cabinet.front"
+offset_x = -17.19
+offset_z = -75
+
+["left door buckled outwards 2"]
+states = ["Broken"]
+on = "left door buckled outwards.top"
+gap = -42.19
+
+["scorch mark"]
+states = ["Broken"]
+on = "main cabinet.top"
+gap = -68.75
+y = "flush-front"
+offset_x = 23.44
+
+[states.Off]
+"display 2" = { key = "led_off" }
+"status led 2x2" = { key = "led_off" }
+
+[states.Broken]
+"display 2" = { key = "led_red" }
+"status led 2x2" = { key = "led_red" }

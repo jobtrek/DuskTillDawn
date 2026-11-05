@@ -1,0 +1,17 @@
+# StickyNoteCluster: three notes touching in a row, stacked staggered; one scribble line.
+["note yellow"]
+
+["note orange"]
+on = "note yellow.right"
+align = "top"
+offset_z = 3
+
+["note white"]
+on = "note orange.right"
+align = "bottom"
+offset_z = 2
+
+[scribble]
+on = "note yellow.front"
+align = "center-x"
+offset_z = 1

@@ -13,17 +13,6 @@ collider: false
 
 # WasteBin
 
-## Prompt
-
-### Shape
-Build a voxel WasteBin for the Control room, about 25x25x30 cm (32x32x38 voxels). Main forms: rim, liner.
-
-### Materials
-Use the colour keys in the Parts list, taken from `game-assets/palette.py`. Hard-edged blocks, grain 0.
-
-### Details
-Add the small features: ridges, crumpled paper, label.
-
 ## Parts (tier; cm size + colour key to fill before first build)
 
 - [2] rim

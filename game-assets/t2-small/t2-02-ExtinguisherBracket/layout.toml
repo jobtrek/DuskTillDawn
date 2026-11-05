@@ -1,0 +1,36 @@
+["wall plate against the"]
+
+[strap]
+on = "wall plate against the.front"
+align = "left"
+offset_z = -2.34
+
+["strap 2"]
+on = "wall plate against the.front"
+align = "right"
+offset_z = -2.34
+
+["strap 3"]
+on = "strap.top"
+gap = -2.34
+y = "flush-front"
+align = "left"
+
+["strap buckle"]
+on = "strap 3.front"
+
+["plate screws"]
+on = "wall plate against the.front"
+repeat = { x = 2, pitch_x = 17.97, z = 2, pitch_z = 17.97 }
+
+["red sign above the"]
+on = "wall plate against the.front"
+offset_z = 3.91
+
+["white cross"]
+on = "wall plate against the.front"
+offset_z = 3.91
+
+["white cross 2"]
+on = "wall plate against the.front"
+offset_z = 3.91

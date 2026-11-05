@@ -13,8 +13,6 @@ pieces: Floor, Parapet_Back, Parapet_Front, Parapet_Left, Parapet_Right, Chimney
 wall_cm: 12
 ---
 
-## Prompt
-Voxel roof room, 1000x800x100 cm (640x512x64 voxels), hard-edged, grain 0, colour keys from `game-assets/palette.py`. Floor z0-9, parapets z10-63, centred x/y.
 ## Parts
 - [1] floor slab: 1000 x 800 x 16 cm, chassis_dark
 - [1] parapets: 12 cm thick, up to 100 cm, concrete

@@ -1,0 +1,57 @@
+["main case"]
+
+["rack ear brackets"]
+on = "main case.left"
+y = "flush-front"
+
+["rack ear brackets 2"]
+on = "main case.right"
+y = "flush-front"
+
+["dark screw slots"]
+on = "main case.top"
+gap = -3.12
+offset_y = -7.81
+repeat = { x = 2, pitch_x = 42.97, y = 2, pitch_y = 4.69 }
+
+["eight ports"]
+on = "main case.top"
+gap = -3.91
+y = "flush-front"
+offset_x = -8.59
+repeat = { x = 8, pitch_x = 2.34 }
+
+["port leds above every"]
+on = "main case.top"
+gap = -1.56
+y = "flush-front"
+offset_x = -10.16
+repeat = { x = 4, pitch_x = 4.69 }
+
+["status led 2x2"]
+on = "main case.top"
+gap = -2.34
+y = "flush-front"
+offset_x = 17.19
+
+["seven vent slots"]
+on = "main case.top"
+gap = -0.78
+offset_x = -7.81
+offset_y = -0.78
+repeat = { x = 7, pitch_x = 2.34 }
+
+["paper label"]
+on = "main case.top"
+gap = -0.78
+offset_x = 8.59
+offset_y = -6.25
+
+[states.Hot]
+"port leds above every" = { key = "led_orange" }
+"status led 2x2" = { key = "led_orange" }
+"seven vent slots" = { key = "led_orange" }
+
+[states.Failed]
+"port leds above every" = { key = "led_off" }
+"status led 2x2" = { key = "led_red" }

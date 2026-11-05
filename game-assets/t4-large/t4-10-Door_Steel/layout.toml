@@ -1,0 +1,91 @@
+[build]
+metallic = ["metal", "metal_dark", "trim"]
+
+["dark steel frame"]
+
+["steel slab set into"]
+on = "dark steel frame.top"
+gap = -204.69
+
+["push bar"]
+on = "dark steel frame.top"
+gap = -107.81
+y = "flush-front"
+offset_x = 1.56
+
+["push bar 2"]
+on = "dark steel frame.top"
+gap = -109.38
+y = "flush-front"
+offset_x = -35.94
+
+["push bar 3"]
+on = "dark steel frame.top"
+gap = -109.38
+y = "flush-front"
+offset_x = 37.5
+
+[hinges]
+on = "dark steel frame.top"
+gap = -185.94
+y = "flush-front"
+offset_x = -45.31
+repeat = { z = 3, pitch_z = 78.12 }
+
+["lock plate"]
+on = "dark steel frame.top"
+gap = -120.31
+offset_x = 37.5
+offset_y = -1.56
+
+["lock plate 2"]
+on = "dark steel frame.top"
+gap = -114.06
+offset_x = 37.5
+offset_y = -1.56
+
+["warning sign"]
+on = "dark steel frame.top"
+gap = -64.06
+offset_y = -1.56
+
+["warning sign 2"]
+on = "dark steel frame.top"
+gap = -57.81
+offset_y = -1.56
+
+["warning sign 3"]
+on = "dark steel frame.top"
+gap = -60.94
+offset_y = -1.56
+
+["rivets round the slab"]
+on = "dark steel frame.top"
+gap = -200
+offset_y = -1.56
+repeat = { x = 6, pitch_x = 15.62, z = 2, pitch_z = 189.06 }
+
+["rivets round the slab 2"]
+on = "dark steel frame.top"
+gap = -185.94
+offset_x = 1.56
+offset_y = -1.56
+repeat = { x = 2, pitch_x = 81.25, z = 12, pitch_z = 14.06 }
+
+["dents and rust"]
+on = "dark steel frame.top"
+gap = -157.81
+offset_x = 17.19
+offset_y = -1.56
+
+["dents and rust 2"]
+on = "dark steel frame.top"
+gap = -85.94
+offset_x = -23.44
+offset_y = -1.56
+
+["dents and rust 3"]
+on = "dark steel frame.top"
+gap = -204.69
+offset_x = -28.12
+offset_y = -1.56

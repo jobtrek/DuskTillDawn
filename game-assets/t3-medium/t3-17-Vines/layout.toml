@@ -1,0 +1,26 @@
+# Vines: a thin stem with leaves alternating left and right, plus a few yellow buds.
+[palette]
+vine_stem = [0.10, 0.20, 0.06]
+leaf_green = [0.12, 0.45, 0.10]
+leaf_dark = [0.06, 0.28, 0.07]
+
+[stem]
+
+["leaf left"]
+on = "stem.left"
+align = "bottom"
+offset_z = 6
+repeat = { z = 6, pitch_z = 18 }
+
+["leaf right"]
+on = "stem.right"
+align = "bottom"
+offset_z = 15
+repeat = { z = 6, pitch_z = 18 }
+
+[bud]
+on = "stem.front"
+gap = -1.5
+align = "bottom"
+offset_z = 40
+repeat = { z = 3, pitch_z = 30 }

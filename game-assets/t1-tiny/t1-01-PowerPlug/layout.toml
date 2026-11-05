@@ -1,0 +1,31 @@
+[palette]
+cable = [0.05, 0.05, 0.07]
+
+["metal pins"]
+repeat = { x = 2, pitch_x = 2.34 }
+
+["white plastic body"]
+on = "metal pins.top"
+offset_y = 0.78
+
+["grip ridges"]
+on = "white plastic body.top"
+gap = -2.34
+repeat = { x = 2, pitch_x = 3.91 }
+
+["dark seam ring"]
+on = "white plastic body.top"
+gap = -0.78
+shape = "hollow"
+
+["paper label"]
+on = "white plastic body.top"
+gap = -2.34
+y = "flush-front"
+
+["rubber strain relief"]
+on = "white plastic body.top"
+
+["cable stub"]
+on = "rubber strain relief.top"
+y = "flush-back"
