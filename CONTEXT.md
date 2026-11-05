@@ -51,3 +51,11 @@ _Avoid_: groove, gap
 **Footprint**:
 The shared floor area of the building (800×600 cm) that all three floors use; the StairShaft sits outside it on the +x side.
 _Avoid_: floor plan, layout
+
+**Stage**:
+One step of the server progression, 1 (single laptop) to 5 (multiple racks), unlocked by need plus money. Not to be confused with Tier, which is an Element size class.
+_Avoid_: tier (for the progression), level
+
+**Night den**:
+The small corner of the Basement near the stair door where the sysadmin's personal belongings collect. It grows over the Stages and never covers an incident cue.
+_Avoid_: cozy corner, break area

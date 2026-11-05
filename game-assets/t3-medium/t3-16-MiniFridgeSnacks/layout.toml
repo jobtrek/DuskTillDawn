@@ -1,0 +1,33 @@
+# MiniFridgeSnacks: box, door on the front, handle, snack crate on top, magnet, feet.
+[body]
+
+[door]
+on = "body.front"
+size = [46, 3, 60]
+gap = -3
+align = "top"
+offset_z = -2
+
+[handle]
+on = "door.front"
+align = ["left", "center-z"]
+offset_x = 3
+
+["door seam"]
+on = "door.front"
+size = [46, 1.6, 1.6]
+gap = -1.6
+align = "top"
+
+[magnet]
+on = "door.front"
+align = ["right", "top"]
+offset_x = -5
+offset_z = -6
+
+["snack crate"]
+on = "body.top"
+
+[feet]
+on = "body.bottom"
+align = "left"

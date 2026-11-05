@@ -1,0 +1,23 @@
+# HeadphonesThermos: thermos upright on the left, headphones lying on their side to the right.
+["thermos body"]
+
+["thermos band"]
+on = "thermos body.top"
+size = [8.4, 8.4, 1.6]
+gap = -9
+
+["thermos cap"]
+on = "thermos body.top"
+
+["ear cup left"]
+on = "thermos body.right"
+align = "bottom"
+
+[headband]
+on = "ear cup left.right"
+size = [7, 3, 2]
+align = "bottom"
+
+["ear cup right"]
+on = "headband.right"
+align = "bottom"

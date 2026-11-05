@@ -1,0 +1,12 @@
+# Rug: fabric mat, darker border plate, red centre pattern. Flat decals in 1-voxel steps.
+[mat]
+
+[border]
+on = "mat.top"
+size = [170, 110, 1.6]
+gap = -1.6
+
+["centre pattern"]
+on = "border.top"
+size = [100, 60, 1.6]
+gap = -1.6

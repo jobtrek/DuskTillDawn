@@ -2,7 +2,7 @@
 name: DeskLamp
 id: t2-11
 tier: T2
-room: Control
+room: Control + Basement
 priority: V1
 size_cm: 20x20x42
 voxels: 26x26x54

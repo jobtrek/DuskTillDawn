@@ -2,7 +2,7 @@
 name: Plant
 id: t2-21
 tier: T2
-room: Control
+room: Control + Basement
 priority: V1
 size_cm: 30x30x60
 voxels: 38x38x77

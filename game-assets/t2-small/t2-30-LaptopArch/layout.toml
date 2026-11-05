@@ -1,0 +1,197 @@
+# LaptopArch layout: ThinkPad-style laptop. Base State On (closed); other States are overrides at the bottom.
+[palette]
+arch_blue = [0.009, 0.30, 0.64]
+
+[base]
+
+["rubber feet"]
+on = "base.bottom"
+offset_x = 0.78
+repeat = { x = 2, pitch_x = 29.69, y = 2, pitch_y = 18.75 }
+
+[lid]
+on = "base.top"
+
+[hinges]
+on = "base.back"
+gap = -0.78
+align = "bottom"
+size = [4.7, 0.78, 2.34]
+repeat = { x = 2, pitch_x = 17.19 }
+
+[vents]
+on = "base.left"
+gap = -0.78
+align = "top"
+repeat = { y = 6, pitch_y = 2.34 }
+
+["power port"]
+on = "base.left"
+gap = -0.78
+align = "top"
+offset_y = 7.81
+
+["status LED"]
+on = "base.front"
+gap = -0.78
+align = "top"
+offset_x = 0.78
+
+[[raw]]
+# ports on both sides and the lid decal (closed lid)
+code = """
+DECAL = ['..........................................', '..........................................', '.....................A....................', '.....................A....................', '...................AAAAA..................', '...................AAAAA..................', '...................AAAAA..................', '...................AAAAA..................', '.................AAAAAAAAA................', '.................AAAAAAAAA................', '.................AAAAAAAAA................', '................AAAAAAAAAAA...............', '................AAAAAAAAAAA...............', '................AAAAA.AAAAA...............', '..............AAAAAAA.AAAAAAA.............', '..............AAAAAAA.AAAAAAA.............', '..............AAAAA.....AAAAA.............', '..............AAAAA.....AAAAA.............', '............AAAAAAA.....AAAAAAA...........', '............AAAAA.........AAAAA...........', '............AAAAA.........AAAAA...........', '..........AAAAAA...........AAAAA..........', '..........AAAAAA...........AAAAA..........', '..........AAAA...............AAA.......rr.', '.......................................rr.', '.........................wwwwwwwwwwwwwwww.', '.........................wwwwwwwwwwwwwwww.', '..........................................']
+KEY = {'A': 'arch_blue', 'w': 'trim', 'r': 'warning_red'}
+# ports: carve the opening, paint the dark inside one voxel deeper
+gone = Grid()
+box(gone, -21, -21, -12, -10, 1, 2, 'seam')
+for y0, y1 in ((-10, -6), (-3, 1), (4, 8), (10, 11)):
+    box(gone, 20, 20, y0, y1, 1, 2, 'seam')
+carve(V, gone)
+box(V, -20, -20, -12, -10, 1, 2, 'seam')
+for y0, y1 in ((-10, -6), (-3, 1), (4, 8), (10, 11)):
+    box(V, 19, 19, y0, y1, 1, 2, 'seam')
+# lid decal: logo, wordmark strip and red dot, painted into the lid top (z = 3)
+for i, row in enumerate(DECAL):
+    for c, ch in enumerate(row):
+        if ch in KEY:
+            box(V, -21 + c, -21 + c, 13 - i, 13 - i, 3, 3, KEY[ch])
+"""
+
+[states.Hot]
+"status LED" = { key = "led_orange" }
+vents = { key = "led_orange" }
+
+[states.Failed]
+"status LED" = { key = "led_red" }
+
+[states.Off]
+"status LED" = { key = "led_off" }
+
+[states.HalfOpen]
+lid = { omit = true }
+
+[[states.HalfOpen.raw]]
+# HalfOpen: lid 45 degrees, keyboard, trackpad, terminal on the screen
+code = """
+DECAL = ['..........................................', '..........................................', '.....................A....................', '.....................A....................', '...................AAAAA..................', '...................AAAAA..................', '...................AAAAA..................', '...................AAAAA..................', '.................AAAAAAAAA................', '.................AAAAAAAAA................', '.................AAAAAAAAA................', '................AAAAAAAAAAA...............', '................AAAAAAAAAAA...............', '................AAAAA.AAAAA...............', '..............AAAAAAA.AAAAAAA.............', '..............AAAAAAA.AAAAAAA.............', '..............AAAAA.....AAAAA.............', '..............AAAAA.....AAAAA.............', '............AAAAAAA.....AAAAAAA...........', '............AAAAA.........AAAAA...........', '............AAAAA.........AAAAA...........', '..........AAAAAA...........AAAAA..........', '..........AAAAAA...........AAAAA..........', '..........AAAA...............AAA.......rr.', '.......................................rr.', '.........................wwwwwwwwwwwwwwww.', '.........................wwwwwwwwwwwwwwww.', '..........................................']
+KEY = {'A': 'arch_blue', 'w': 'trim', 'r': 'warning_red'}
+ALPHA = 45
+# clear the closed-lid decal on z = 3 (hinges at y = 13 and the LED at y = -14 stay)
+gone = Grid()
+box(gone, -21, 20, -13, 12, 3, 3, 'chassis')
+carve(V, gone)
+# keyboard: 6 rows of 13 keys, wide spacebar, red TrackPoint, three buttons, trackpad
+for row, y in enumerate((10, 7, 4, 1, -2, -5)):
+    if row < 5:
+        tile(V, -19, -18, y, y + 1, 3, 3, 'chassis', nx=13, ny=1, dx=3, dy=3)
+    else:
+        tile(V, -19, -18, y, y + 1, 3, 3, 'chassis', nx=3, ny=1, dx=3, dy=3)
+        box(V, -10, 6, y, y + 1, 3, 3, 'chassis')
+        tile(V, 8, 9, y, y + 1, 3, 3, 'chassis', nx=1, ny=1, dx=3, dy=3)
+        tile(V, 14, 15, y, y + 1, 3, 3, 'chassis', nx=2, ny=1, dx=3, dy=3)
+box(V, 0, 1, 3, 4, 3, 3, 'warning_red')
+box(V, -9, -4, -8, -7, 3, 3, 'chassis')
+box(V, -2, 1, -8, -7, 3, 3, 'chassis')
+box(V, 3, 8, -8, -7, 3, 3, 'chassis')
+box(V, -7, 6, -13, -9, 3, 3, 'metal_dark')
+box(V, 12, 13, -11, -10, 3, 3, 'trim')
+box(V, 17, 18, 12, 12, 3, 3, 'trim')
+box(V, -19, -17, -12, -11, 3, 3, 'label')
+box(V, -16, -15, -12, -11, 3, 3, 'fabric')
+# lid rotated about the back hinge: 2 voxels thick, screen and bezel inside, decal outside
+a = math.radians(ALPHA)
+dy, dz = -math.cos(a), math.sin(a)
+ny, nz = -math.sin(a), -math.cos(a)
+LINES = {3: 14, 5: 22, 7: 9, 9: 18, 11: 26, 13: 12, 15: 20, 17: 6}
+for y in range(-14, 40):
+    for z in range(3, 35):
+        u = (y - 13) * dy + (z - 3) * dz
+        w = (y - 13) * ny + (z - 3) * nz
+        if not (0.5 <= u < 28 and -1 <= w < 1):
+            continue
+        if w >= 0:
+            box(V, -21, 20, y, y, z, z, 'chassis_dark')
+            if 2 <= u < 26:
+                v = int(25 - u)
+                box(V, -19, 18, y, y, z, z, 'screen')
+                if v in LINES:
+                    box(V, -18, -18 + LINES[v], y, y, z, z, 'led_green')
+                if v == 17:
+                    box(V, -18 + LINES[v] + 2, -18 + LINES[v] + 3, y, y, z, z, 'label')
+                if v == 1:
+                    box(V, -19, 18, y, y, z, z, 'chassis')
+            elif u >= 27:
+                box(V, 0, 1, y, y, z, z, 'glass')
+        else:
+            box(V, -21, 20, y, y, z, z, 'chassis')
+            i = 27 - int(u)
+            for x in range(-21, 21):
+                ch = DECAL[i][20 - x]
+                if ch in KEY:
+                    box(V, x, x, y, y, z, z, KEY[ch])
+"""
+
+[states.FullOpen]
+lid = { omit = true }
+
+[[states.FullOpen.raw]]
+# FullOpen: lid 110 degrees, leaning back
+code = """
+DECAL = ['..........................................', '..........................................', '.....................A....................', '.....................A....................', '...................AAAAA..................', '...................AAAAA..................', '...................AAAAA..................', '...................AAAAA..................', '.................AAAAAAAAA................', '.................AAAAAAAAA................', '.................AAAAAAAAA................', '................AAAAAAAAAAA...............', '................AAAAAAAAAAA...............', '................AAAAA.AAAAA...............', '..............AAAAAAA.AAAAAAA.............', '..............AAAAAAA.AAAAAAA.............', '..............AAAAA.....AAAAA.............', '..............AAAAA.....AAAAA.............', '............AAAAAAA.....AAAAAAA...........', '............AAAAA.........AAAAA...........', '............AAAAA.........AAAAA...........', '..........AAAAAA...........AAAAA..........', '..........AAAAAA...........AAAAA..........', '..........AAAA...............AAA.......rr.', '.......................................rr.', '.........................wwwwwwwwwwwwwwww.', '.........................wwwwwwwwwwwwwwww.', '..........................................']
+KEY = {'A': 'arch_blue', 'w': 'trim', 'r': 'warning_red'}
+ALPHA = 110
+# clear the closed-lid decal on z = 3 (hinges at y = 13 and the LED at y = -14 stay)
+gone = Grid()
+box(gone, -21, 20, -13, 12, 3, 3, 'chassis')
+carve(V, gone)
+# keyboard: 6 rows of 13 keys, wide spacebar, red TrackPoint, three buttons, trackpad
+for row, y in enumerate((10, 7, 4, 1, -2, -5)):
+    if row < 5:
+        tile(V, -19, -18, y, y + 1, 3, 3, 'chassis', nx=13, ny=1, dx=3, dy=3)
+    else:
+        tile(V, -19, -18, y, y + 1, 3, 3, 'chassis', nx=3, ny=1, dx=3, dy=3)
+        box(V, -10, 6, y, y + 1, 3, 3, 'chassis')
+        tile(V, 8, 9, y, y + 1, 3, 3, 'chassis', nx=1, ny=1, dx=3, dy=3)
+        tile(V, 14, 15, y, y + 1, 3, 3, 'chassis', nx=2, ny=1, dx=3, dy=3)
+box(V, 0, 1, 3, 4, 3, 3, 'warning_red')
+box(V, -9, -4, -8, -7, 3, 3, 'chassis')
+box(V, -2, 1, -8, -7, 3, 3, 'chassis')
+box(V, 3, 8, -8, -7, 3, 3, 'chassis')
+box(V, -7, 6, -13, -9, 3, 3, 'metal_dark')
+box(V, 12, 13, -11, -10, 3, 3, 'trim')
+box(V, 17, 18, 12, 12, 3, 3, 'trim')
+box(V, -19, -17, -12, -11, 3, 3, 'label')
+box(V, -16, -15, -12, -11, 3, 3, 'fabric')
+# lid rotated about the back hinge: 2 voxels thick, screen and bezel inside, decal outside
+a = math.radians(ALPHA)
+dy, dz = -math.cos(a), math.sin(a)
+ny, nz = -math.sin(a), -math.cos(a)
+LINES = {3: 14, 5: 22, 7: 9, 9: 18, 11: 26, 13: 12, 15: 20, 17: 6}
+for y in range(-14, 40):
+    for z in range(3, 35):
+        u = (y - 13) * dy + (z - 3) * dz
+        w = (y - 13) * ny + (z - 3) * nz
+        if not (0.5 <= u < 28 and -1 <= w < 1):
+            continue
+        if w >= 0:
+            box(V, -21, 20, y, y, z, z, 'chassis_dark')
+            if 2 <= u < 26:
+                v = int(25 - u)
+                box(V, -19, 18, y, y, z, z, 'screen')
+                if v in LINES:
+                    box(V, -18, -18 + LINES[v], y, y, z, z, 'led_green')
+                if v == 17:
+                    box(V, -18 + LINES[v] + 2, -18 + LINES[v] + 3, y, y, z, z, 'label')
+                if v == 1:
+                    box(V, -19, 18, y, y, z, z, 'chassis')
+            elif u >= 27:
+                box(V, 0, 1, y, y, z, z, 'glass')
+        else:
+            box(V, -21, 20, y, y, z, z, 'chassis')
+            i = 27 - int(u)
+            for x in range(-21, 21):
+                ch = DECAL[i][20 - x]
+                if ch in KEY:
+                    box(V, x, x, y, y, z, z, KEY[ch])
+"""

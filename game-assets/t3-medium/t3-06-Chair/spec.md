@@ -2,7 +2,7 @@
 name: Chair
 id: t3-06
 tier: T3
-room: Control
+room: Control + Basement
 priority: V1
 size_cm: 60x60x100
 voxels: 38x38x64
