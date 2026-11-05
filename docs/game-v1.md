@@ -36,9 +36,9 @@ Every v1 feature must support at least one. If it doesn't, it waits.
 | **Control room** | Main computer (dashboard, mail, AI helper) | Diagnose, change settings, read warnings |
 | **Basement** | Servers, cooling, cables | Fight fires, swap drives, replug cables |
 
-- The player is one character walking in isometric voxel view.
+- The player is one character walking in isometric voxel view. The whole building is always on screen, in a cut-away view.
 - Moving between floors takes **8 seconds** (stairs). While you are away, the dashboard keeps running and incidents keep coming. This is the main pressure.
-- The player can only **fix** an incident when standing in its room. They can **see** everything from the computer.
+- The player can only **fix** an incident when standing in its room. They can **see** the state of every floor on screen, but need the computer to **diagnose** the cause.
 
 ## 5. The simulation (5 values)
 

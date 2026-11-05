@@ -29,7 +29,7 @@ Details: [game-v1.md](game-v1.md).
 - The world is built from 3D models. The player character walks in 3D space.
 - The camera uses **orthogonal projection** (no perspective), so objects keep the same size at any distance.
 - The camera angle is **fixed**. The player cannot rotate or zoom freely.
-- One room (floor) is shown at a time. Moving between floors switches the room, it does not scroll the world.
+- The whole building is shown at once in a cut-away view: the three floors are stacked and the walls facing the camera are hidden. The camera does not move when the player changes floor.
 - Everything the player must click or reach stays visible from this angle. No important prop hides behind a wall. If it does, the room layout changes, not the camera.
 
 | Camera value | Starting value | Notes |
@@ -97,3 +97,4 @@ To settle in the contract meeting. Team rules are in [team-rules.md](team-rules.
 | 5 | Roles (Dev 1/2/3, product owner, first scrum master) | Assign by interest |
 | 6 | Audience and client | Confirm with the client |
 | 7 | Isometric vertical angle (30° or about 35°) | Pick in the grey-box |
+| 8 | How to keep props visible when the floor above hides part of a room | Test in the grey-box: room layout first, then spacing the floors or fading the floor above |
