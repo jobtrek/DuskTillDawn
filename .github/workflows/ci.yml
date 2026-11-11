@@ -22,5 +22,7 @@ jobs:
         run: dotnet restore DuskTillDawn.sln
       - name: Build
         run: dotnet build DuskTillDawn.sln --no-restore
+      - name: Test game rules
+        run: dotnet test DuskTillDawn.sln --no-build
       - name: Check formatting
         run: dotnet format DuskTillDawn.sln --no-restore --verify-no-changes

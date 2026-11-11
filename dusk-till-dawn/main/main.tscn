@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://kw03ujxya1yi" path="res://levels/basement/L1StripLightOn001.cs" id="5_7mycd"]
 [ext_resource type="PackedScene" uid="uid://cx8q5h3il4j2d" path="res://levels/roof/roof.blend" id="5_272bh"]
 [ext_resource type="PackedScene" uid="uid://60wbj0yob4r5" path="res://Company.blend" id="7_4dugh"]
+[ext_resource type="Script" path="res://Hud.cs" id="99_hud"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_player"]
 radius = 0.3
@@ -1548,6 +1549,34 @@ transform = Transform3D(1, 0, 0, 0, 0.52145004, 0.8532818, 0, -0.8532818, 0.5214
 
 [node name="SolarPanel_Dirty2" parent="Company" index="490" unique_id=1582012959]
 transform = Transform3D(1, 0, 0, 0, 0.52145004, 0.8532818, 0, -0.8532818, 0.52145004, 16.0835, 6.1504, -3.3126)
+
+[node name="Hud" type="CanvasLayer" parent="."]
+script = ExtResource("99_hud")
+
+[node name="ClockLabel" type="Label" parent="Hud"]
+offset_left = 24.0
+offset_top = 16.0
+offset_right = 164.0
+offset_bottom = 64.0
+theme_override_font_sizes/font_size = 32
+
+[node name="SlaLabel" type="Label" parent="Hud"]
+offset_left = 24.0
+offset_top = 64.0
+offset_right = 264.0
+offset_bottom = 104.0
+theme_override_font_sizes/font_size = 24
+
+[node name="EndLabel" type="Label" parent="Hud"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 40
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [editable path="Basement_Levels"]
 [editable path="roof"]
