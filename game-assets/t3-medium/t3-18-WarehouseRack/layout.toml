@@ -1,0 +1,48 @@
+[build]
+metallic = ["metal_dark", "steel_post", "steel_beam", "steel_deck", "steel_dark"]
+
+[palette]
+steel_post = [0.62, 0.64, 0.68]
+steel_beam = [0.42, 0.44, 0.48]
+steel_deck = [0.52, 0.54, 0.57]
+steel_dark = [0.28, 0.29, 0.32]
+
+["foot plates"]
+repeat = { x = 2, pitch_x = 112, y = 2, pitch_y = 52 }
+
+[posts]
+on = "foot plates.top"
+repeat = { x = 2, pitch_x = 112, y = 2, pitch_y = 52 }
+
+["front beams"]
+on = "posts.front"
+gap = -3.2
+align = "bottom"
+offset_z = 12
+repeat = { z = 3, pitch_z = 55 }
+
+["back beams"]
+on = "posts.back"
+gap = -3.2
+align = "bottom"
+offset_z = 12
+repeat = { z = 3, pitch_z = 55 }
+
+[decks]
+on = "front beams.back"
+align = "top"
+repeat = { z = 3, pitch_z = 55 }
+
+["side ties"]
+on = "posts.right"
+gap = -4.7
+align = ["top", "center-y"]
+
+["side ties 2"]
+on = "posts.left"
+gap = -4.7
+align = ["top", "center-y"]
+
+["load labels"]
+on = "front beams.front"
+repeat = { z = 3, pitch_z = 55 }

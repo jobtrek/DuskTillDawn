@@ -1,0 +1,1583 @@
+[gd_scene format=3 uid="uid://dfav5v0m55k08"]
+
+[ext_resource type="Script" uid="uid://b0l1qmxexlxd4" path="res://main/Main.cs" id="1_main"]
+[ext_resource type="Script" uid="uid://cvacxd3l2bouw" path="res://player/Player.cs" id="2_player"]
+[ext_resource type="PackedScene" uid="uid://d3fs1xbndietu" path="res://levels/basement/Basement_Levels.blend" id="3_lquwl"]
+[ext_resource type="Script" uid="uid://b2q56jir26r56" path="res://levels/basement/L1StripLightOn.cs" id="4_7mycd"]
+[ext_resource type="Script" uid="uid://kw03ujxya1yi" path="res://levels/basement/L1StripLightOn001.cs" id="5_7mycd"]
+[ext_resource type="PackedScene" uid="uid://cx8q5h3il4j2d" path="res://levels/roof/roof.blend" id="5_272bh"]
+[ext_resource type="PackedScene" uid="uid://60wbj0yob4r5" path="res://Company.blend" id="7_4dugh"]
+[ext_resource type="Script" path="res://Hud.cs" id="99_hud"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_player"]
+radius = 0.3
+height = 1.8
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_player"]
+radius = 0.3
+height = 1.8
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kfbq2"]
+albedo_color = Color(1, 0.95, 0.85, 1)
+emission_enabled = true
+emission = Color(1, 0.95, 0.85, 1)
+emission_energy_multiplier = 4.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4dugh"]
+albedo_color = Color(1, 0.95, 0.85, 1)
+emission_enabled = true
+emission = Color(1, 0.95, 0.85, 1)
+emission_energy_multiplier = 4.0
+
+[node name="Main" type="Node3D" unique_id=942546274]
+script = ExtResource("1_main")
+
+[node name="Room" type="Node3D" parent="." unique_id=1976607163]
+
+[node name="Floor" type="CSGBox3D" parent="Room" unique_id=477825025]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+use_collision = true
+size = Vector3(8, 0.2, 6)
+
+[node name="WallBackZ" type="CSGBox3D" parent="Room" unique_id=244014201]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, -3.1)
+use_collision = true
+size = Vector3(8, 2.5, 0.2)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=709862064]
+transform = Transform3D(0.866025, -0.383022, 0.321394, 0, 0.642788, 0.766044, -0.5, -0.663414, 0.55667, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Player" type="CharacterBody3D" parent="." unique_id=628655475]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.91, 0)
+script = ExtResource("2_player")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player" unique_id=530395664]
+mesh = SubResource("CapsuleMesh_player")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player" unique_id=559333472]
+shape = SubResource("CapsuleShape3D_player")
+
+[node name="Basement_Levels" parent="." unique_id=221633021 instance=ExtResource("3_lquwl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.697668, 8.888379, 2.1734142)
+
+[node name="ACUnit_Broken" parent="Basement_Levels" index="0" unique_id=1630064698]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1640644, -9.920237, -3.921875)
+
+[node name="ACUnit_Off" parent="Basement_Levels" index="1" unique_id=1673130772]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.927187, -8.235257, -3.921875)
+
+[node name="ACUnit_On" parent="Basement_Levels" index="2" unique_id=2027126443]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.6903133, -10.317036, -3.921875)
+
+[node name="BatteryModule_Charged" parent="Basement_Levels" index="3" unique_id=83970950]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.721876, -10.317036, -0.94921875)
+
+[node name="BatteryModule_Low" parent="Basement_Levels" index="4" unique_id=323723650]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.2193737, -10.317036, -0.94921875)
+
+[node name="BatteryModule_Overheating" parent="Basement_Levels" index="5" unique_id=1330995084]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.716875, -10.317036, -0.94921875)
+
+[node name="BatteryRackFrame" parent="Basement_Levels" index="6" unique_id=1606553156]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.62890816, -8.235257, -2.3515625)
+
+[node name="BatteryRackFrame_001" parent="Basement_Levels" index="7" unique_id=1334696281]
+transform = Transform3D(-0.99914134, 0, 0.04143116, 0, 1, 0, -0.04143116, 0, -0.99914134, -0.6820202, -10.180595, -5.7355638)
+
+[node name="BatteryRackFrame_002" parent="Basement_Levels" index="8" unique_id=1606150806]
+transform = Transform3D(-0.99893916, 0, 0.04604889, 0, 1, 0, -0.04604889, 0, -0.99893916, 0.80142784, -10.164298, -5.747205)
+
+[node name="Beacon_Off" parent="Basement_Levels" index="9" unique_id=68144841]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05859375, -8.235257, -0.94921875)
+
+[node name="Beacon_On" parent="Basement_Levels" index="10" unique_id=1701171427]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.23578072, -8.235257, -0.94921875)
+
+[node name="CableBundle_Messy" parent="Basement_Levels" index="11" unique_id=609182736]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.692812, -8.235257, -0.94921875)
+
+[node name="CableBundle_Tidy" parent="Basement_Levels" index="12" unique_id=986583970]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.0496883, -8.235257, -0.94921875)
+
+[node name="CableTray" parent="Basement_Levels" index="13" unique_id=214955825]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.0443745, -10.317036, -2.3515625)
+
+[node name="Chair" parent="Basement_Levels" index="14" unique_id=1012949596]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2437496, -10.317036, 5)
+
+[node name="ComputerTower" parent="Basement_Levels" index="15" unique_id=319041756]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.685938, -10.317036, 5)
+
+[node name="Cot" parent="Basement_Levels" index="16" unique_id=351787767]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.4296894, -10.317036, 5)
+
+[node name="Cot_den" parent="Basement_Levels" index="17" unique_id=359071066]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6000004, -10.197036, -10.855)
+
+[node name="Desk" parent="Basement_Levels" index="18" unique_id=722579294]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7968769, -11.065534, 5)
+
+[node name="DeskLamp_Off" parent="Basement_Levels" index="19" unique_id=1567859809]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.042971, -10.317036, 5)
+
+[node name="DeskLamp_On" parent="Basement_Levels" index="20" unique_id=1648946866]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.447657, -10.317036, 5)
+
+[node name="Door_Steel" parent="Basement_Levels" index="21" unique_id=2098363673]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.791876, -10.317036, -3.921875)
+
+[node name="Extinguisher" parent="Basement_Levels" index="22" unique_id=413803470]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.167498, -10.317036, -0.94921875)
+
+[node name="ExtinguisherBracket" parent="Basement_Levels" index="23" unique_id=2124388893]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.64593697, -8.235257, -0.94921875)
+
+[node name="FireAlarmButton" parent="Basement_Levels" index="24" unique_id=2026150165]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.66015816, -8.235257, -0.07421875)
+
+[node name="FlameLarge_A" parent="Basement_Levels" index="25" unique_id=1575857179]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.015936, -10.317036, -2.3515625)
+
+[node name="FlameLarge_B" parent="Basement_Levels" index="26" unique_id=100452828]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.8728123, -10.317036, -2.3515625)
+
+[node name="FlameSmall_A" parent="Basement_Levels" index="27" unique_id=2092956610]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.3340626, -10.317036, -0.94921875)
+
+[node name="FlameSmall_B" parent="Basement_Levels" index="28" unique_id=1862727073]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.690939, -10.317036, -0.94921875)
+
+[node name="HardDrive_Failed" parent="Basement_Levels" index="29" unique_id=303227996]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0117207, -8.235257, -0.07421875)
+
+[node name="HardDrive_Healthy" parent="Basement_Levels" index="30" unique_id=1940371440]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1732807, -8.235257, -0.07421875)
+
+[node name="HeadphonesThermos" parent="Basement_Levels" index="31" unique_id=926401804]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.000002, -9.697036, -10.855)
+
+[node name="Keyboard" parent="Basement_Levels" index="32" unique_id=2025871068]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.0515614, -10.317036, 5)
+
+[node name="L1_Beacon_Off" parent="Basement_Levels" index="33" unique_id=1260077588]
+transform = Transform3D(-0.025248647, 0, 0.9996812, 0, 1, 0, -0.9996812, 0, -0.025248647, -3.7655468, -8.648955, -7.588154)
+
+[node name="L1_Chair" parent="Basement_Levels" index="34" unique_id=2015332337]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -2.4500008, -10.192036, -9.85)
+
+[node name="L1_Desk" parent="Basement_Levels" index="35" unique_id=496838434]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4500008, -10.192036, -10.8)
+
+[node name="L1_DeskLamp" parent="Basement_Levels" index="36" unique_id=385507229]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.0699997, -9.442036, -11.02)
+
+[node name="L1_Door_Steel" parent="Basement_Levels" index="37" unique_id=1717689681]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 4.0199986, -10.192036, -10.415626)
+
+[node name="L1_Extinguisher" parent="Basement_Levels" index="38" unique_id=848011028]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8999996, -10.192036, -11.083625)
+
+[node name="L1_ExtinguisherBracket" parent="Basement_Levels" index="39" unique_id=762527315]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8999996, -9.8920355, -11.204625)
+
+[node name="L1_FireAlarmButton" parent="Basement_Levels" index="40" unique_id=1563810914]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8999996, -8.967035, -11.235625)
+
+[node name="L1_HardDrive_Healthy" parent="Basement_Levels" index="41" unique_id=616122652]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6000004, -7.836527, -8.645624)
+
+[node name="L1_Laptop_Desk" parent="Basement_Levels" index="42" unique_id=1196794792]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5499992, -9.442036, -10.75)
+
+[node name="L1_Laptop_On" parent="Basement_Levels" index="43" unique_id=291404876]
+transform = Transform3D(-0.38530898, 0, 0.9227876, 0, 1, 0, -0.9227876, 0, -0.38530898, -3.765253, -9.7245245, -7.5765266)
+
+[node name="L1_MetalShelf" parent="Basement_Levels" index="44" unique_id=1093941782]
+transform = Transform3D(-0.025248647, 0, 0.9996812, 0, 1, 0, -0.9996812, 0, -0.025248647, -3.7655468, -10.192036, -7.588154)
+
+[node name="L1_Mouse" parent="Basement_Levels" index="45" unique_id=245090063]
+transform = Transform3D(-0.9999881, 0, -0.004859516, 0, 1, 0, 0.004859516, 0, -0.9999881, -1.9500008, -9.442036, -10.7)
+
+[node name="L1_Mug" parent="Basement_Levels" index="46" unique_id=867704462]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7800007, -9.442036, -10.8)
+
+[node name="L1_Notepad" parent="Basement_Levels" index="47" unique_id=1108719872]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.1499996, -9.442036, -10.75)
+
+[node name="L1_PipeStraight" parent="Basement_Levels" index="48" unique_id=1064196562]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8899994, -8.067036, -6.315625)
+
+[node name="L1_PipeStraight_001" parent="Basement_Levels" index="49" unique_id=1400269064]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8899994, -8.067036, -7.315625)
+
+[node name="L1_PipeStraight_002" parent="Basement_Levels" index="50" unique_id=600848812]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8899994, -8.067036, -8.315625)
+
+[node name="L1_PipeStraight_003" parent="Basement_Levels" index="51" unique_id=2048230557]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8899994, -8.067036, -9.315625)
+
+[node name="L1_PipeStraight_004" parent="Basement_Levels" index="52" unique_id=1099543355]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.8899994, -8.067036, -10.315625)
+
+[node name="L1_Plant" parent="Basement_Levels" index="53" unique_id=956046109]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.4499989, -10.192036, -5.8)
+
+[node name="L1_PowerPlug" parent="Basement_Levels" index="54" unique_id=1167826873]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1000004, -9.8920355, -11.235625)
+
+[node name="L1_SpareDriveBox_Full" parent="Basement_Levels" index="55" unique_id=1483604573]
+transform = Transform3D(-0.025248647, 0, 0.9996812, 0, 1, 0, -0.9996812, 0, -0.025248647, -3.772812, -9.042708, -7.875847)
+
+[node name="L1_SprinklerHead" parent="Basement_Levels" index="56" unique_id=829012214]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -7.9350357, -6.815625)
+
+[node name="L1_SprinklerHead_001" parent="Basement_Levels" index="57" unique_id=1306653995]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -7.9350357, -9.315625)
+
+[node name="L1_StairFlight" parent="Basement_Levels" index="58" unique_id=539069123]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 4.7078114, -10.192036, -8.719161)
+
+[node name="L1_StripLight_On" parent="Basement_Levels" index="59" unique_id=1730389403]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, -7.821252, -8.315625)
+material_override = SubResource("StandardMaterial3D_kfbq2")
+script = ExtResource("4_7mycd")
+
+[node name="Camera3D" type="Camera3D" parent="Basement_Levels/L1_StripLight_On" index="0" unique_id=1029201245]
+transform = Transform3D(0.7071055, -0.40826076, 0.57734305, 0, 0.81648487, 0.5773668, -0.7071081, -0.40825927, 0.57734096, 12.9, 11.2, 14.2)
+projection = 1
+size = 14.0
+far = 200.0
+
+[node name="L1_StripLight_On_001" parent="Basement_Levels" index="60" unique_id=1159469072]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5000019, -7.8950357, -8.315625)
+material_override = SubResource("StandardMaterial3D_4dugh")
+script = ExtResource("5_7mycd")
+
+[node name="L1_WallClock" parent="Basement_Levels" index="61" unique_id=1439562720]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4500008, -8.917036, -11.176562)
+
+[node name="L1_WallVent" parent="Basement_Levels" index="62" unique_id=339810011]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8999996, -8.617036, -11.231626)
+
+[node name="L1_WasteBin" parent="Basement_Levels" index="63" unique_id=1159439707]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5499992, -10.192036, -10.92)
+
+[node name="L1_Window" parent="Basement_Levels" index="64" unique_id=1838112910]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -3.9453125, -9.367036, -9.7)
+
+[node name="L2_Beacon_Off" parent="Basement_Levels" index="65" unique_id=2047789659]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.4, -8.395036, -8.645624)
+
+[node name="L2_CableBundle_Messy" parent="Basement_Levels" index="66" unique_id=2086775899]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.500002, -10.192036, -7.82)
+
+[node name="L2_CableBundle_Messy_001" parent="Basement_Levels" index="67" unique_id=154661319]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.6, -10.192036, -7.82)
+
+[node name="L2_Chair" parent="Basement_Levels" index="68" unique_id=1182946805]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.296877, -10.192036, -7.35)
+
+[node name="L2_Desk_A" parent="Basement_Levels" index="69" unique_id=911923934]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.500002, -10.192036, -6.4)
+
+[node name="L2_Desk_B" parent="Basement_Levels" index="70" unique_id=1919283405]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.093752, -10.192036, -6.4)
+
+[node name="L2_Door_Steel" parent="Basement_Levels" index="71" unique_id=1877401093]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 14.019999, -10.192036, -10.415626)
+
+[node name="L2_Extinguisher" parent="Basement_Levels" index="72" unique_id=1531867871]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.1, -10.192036, -11.083625)
+
+[node name="L2_ExtinguisherBracket" parent="Basement_Levels" index="73" unique_id=845226221]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.1, -9.8920355, -11.204625)
+
+[node name="L2_FireAlarmButton" parent="Basement_Levels" index="74" unique_id=779239794]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.1, -8.967035, -11.235625)
+
+[node name="L2_HardDrive_Failed" parent="Basement_Levels" index="75" unique_id=1387970193]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.9, -10.192036, -10.915626)
+
+[node name="L2_Laptop_Failed" parent="Basement_Levels" index="76" unique_id=628548715]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.500002, -9.848036, -8.645624)
+
+[node name="L2_Laptop_Hot" parent="Basement_Levels" index="77" unique_id=1379334580]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.4, -9.161036, -8.645624)
+
+[node name="L2_Laptop_Off" parent="Basement_Levels" index="78" unique_id=1638831459]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.500002, -9.161036, -8.645624)
+
+[node name="L2_Laptop_On" parent="Basement_Levels" index="79" unique_id=974343933]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.4, -9.848036, -8.645624)
+
+[node name="L2_Laptop_On_001" parent="Basement_Levels" index="80" unique_id=1626189129]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.199999, -8.817036, -8.645624)
+
+[node name="L2_Laptop_Table_Failed" parent="Basement_Levels" index="81" unique_id=1103021431]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 8.896875, -9.442036, -6.4)
+
+[node name="L2_Laptop_Table_Hot" parent="Basement_Levels" index="82" unique_id=64119392]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 8.296877, -9.442036, -6.4)
+
+[node name="L2_Laptop_Table_Off" parent="Basement_Levels" index="83" unique_id=1035959555]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 9.496874, -9.442036, -6.4)
+
+[node name="L2_Laptop_Table_On" parent="Basement_Levels" index="84" unique_id=128423352]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 7.096876, -9.442036, -6.4)
+
+[node name="L2_Laptop_Table_On2" parent="Basement_Levels" index="85" unique_id=738685094]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 7.6968746, -9.442036, -6.4)
+
+[node name="L2_MetalShelf" parent="Basement_Levels" index="86" unique_id=1348480949]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.4, -10.192036, -8.645624)
+
+[node name="L2_MetalShelf_001" parent="Basement_Levels" index="87" unique_id=1566246118]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.500002, -10.192036, -8.645624)
+
+[node name="L2_Notepad" parent="Basement_Levels" index="88" unique_id=242838662]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.996874, -9.442036, -6.4)
+
+[node name="L2_PipeStraight" parent="Basement_Levels" index="89" unique_id=436971994]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.1099987, -8.067036, -6.315625)
+
+[node name="L2_PipeStraight_001" parent="Basement_Levels" index="90" unique_id=1810632919]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.1099987, -8.067036, -7.315625)
+
+[node name="L2_PipeStraight_002" parent="Basement_Levels" index="91" unique_id=2069870855]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.1099987, -8.067036, -8.315625)
+
+[node name="L2_PipeStraight_003" parent="Basement_Levels" index="92" unique_id=1057171106]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.1099987, -8.067036, -9.315625)
+
+[node name="L2_PipeStraight_004" parent="Basement_Levels" index="93" unique_id=1489586988]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.1099987, -8.067036, -10.315625)
+
+[node name="L2_PowerPlug" parent="Basement_Levels" index="94" unique_id=1456890088]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.9, -9.8920355, -11.235625)
+
+[node name="L2_Room_Basement_Ceiling" parent="Basement_Levels" index="95" unique_id=2061049486]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.000002, -7.8326607, -8.315625)
+
+[node name="L2_Room_Basement_Floor" parent="Basement_Levels" index="96" unique_id=27140784]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.000002, -10.317036, -8.315625)
+
+[node name="L2_Room_Basement_Wall_Back" parent="Basement_Levels" index="97" unique_id=1085790459]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.000002, -10.192036, -11.346875)
+
+[node name="L2_Room_Basement_Wall_Front" parent="Basement_Levels" index="98" unique_id=803160345]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.000002, -10.192036, -5.2765627)
+
+[node name="L2_Room_Basement_Wall_Left" parent="Basement_Levels" index="99" unique_id=1924115104]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.968752, -10.192036, -8.315625)
+
+[node name="L2_Room_Basement_Wall_Right" parent="Basement_Levels" index="100" unique_id=275983809]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.023439, -10.192036, -8.315625)
+
+[node name="L2_SpareDriveBox_Full" parent="Basement_Levels" index="101" unique_id=455631419]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.500002, -10.192036, -10.915626)
+
+[node name="L2_SprinklerHead" parent="Basement_Levels" index="102" unique_id=348302482]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.000002, -7.9350357, -6.815625)
+
+[node name="L2_SprinklerHead_001" parent="Basement_Levels" index="103" unique_id=603706346]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.000002, -7.9350357, -9.315625)
+
+[node name="L2_StairFlight" parent="Basement_Levels" index="104" unique_id=1919825669]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 14.707811, -10.192036, -8.621748)
+
+[node name="L2_StripLight_On" parent="Basement_Levels" index="105" unique_id=1757023022]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.500002, -7.8950357, -8.315625)
+
+[node name="L2_StripLight_On_001" parent="Basement_Levels" index="106" unique_id=250371824]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.500002, -7.8950357, -8.315625)
+
+[node name="L2_WallVent" parent="Basement_Levels" index="107" unique_id=728611679]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.9, -8.617036, -11.231626)
+
+[node name="L2_WasteBin" parent="Basement_Levels" index="108" unique_id=48523340]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.500002, -10.192036, -7.4)
+
+[node name="L2_Window" parent="Basement_Levels" index="109" unique_id=1510656281]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 6.0546894, -9.367036, -9.7)
+
+[node name="L3_Beacon_Off" parent="Basement_Levels" index="110" unique_id=1725284097]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.1, -8.395036, -11.045625)
+
+[node name="L3_CableBundle_Tidy" parent="Basement_Levels" index="111" unique_id=1904170996]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.699999, -10.192036, -9.915626)
+
+[node name="L3_CableTray" parent="Basement_Levels" index="112" unique_id=1202773768]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.9, -7.9350357, -10.315625)
+
+[node name="L3_Chair" parent="Basement_Levels" index="113" unique_id=1226163635]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 18.1, -10.192036, -7)
+
+[node name="L3_ComputerTower" parent="Basement_Levels" index="114" unique_id=834707619]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.15, -10.192036, -8)
+
+[node name="L3_Desk" parent="Basement_Levels" index="115" unique_id=926051013]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.1, -10.192036, -8)
+
+[node name="L3_Door_Steel" parent="Basement_Levels" index="116" unique_id=339091325]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 24.019999, -10.192036, -10.415626)
+
+[node name="L3_Extinguisher" parent="Basement_Levels" index="117" unique_id=433284053]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.1, -10.192036, -11.083625)
+
+[node name="L3_ExtinguisherBracket" parent="Basement_Levels" index="118" unique_id=1338590692]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.1, -9.8920355, -11.204625)
+
+[node name="L3_FireAlarmButton" parent="Basement_Levels" index="119" unique_id=1370034287]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.1, -8.967035, -11.235625)
+
+[node name="L3_Keyboard" parent="Basement_Levels" index="120" unique_id=921471412]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.1, -9.442036, -7.92)
+
+[node name="L3_Laptop_Off" parent="Basement_Levels" index="121" unique_id=1918502168]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.1, -9.848036, -11.045625)
+
+[node name="L3_MetalShelf" parent="Basement_Levels" index="122" unique_id=1746831674]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.1, -10.192036, -11.045625)
+
+[node name="L3_Monitor" parent="Basement_Levels" index="123" unique_id=102955397]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.1, -9.442036, -8.3)
+
+[node name="L3_Mouse" parent="Basement_Levels" index="124" unique_id=1750017790]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.6, -9.442036, -7.92)
+
+[node name="L3_Mug" parent="Basement_Levels" index="125" unique_id=1592275526]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.449999, -9.442036, -8)
+
+[node name="L3_PipeStraight" parent="Basement_Levels" index="126" unique_id=1910078175]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.110003, -8.067036, -6.315625)
+
+[node name="L3_PipeStraight_001" parent="Basement_Levels" index="127" unique_id=1439098932]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.110003, -8.067036, -7.315625)
+
+[node name="L3_PipeStraight_002" parent="Basement_Levels" index="128" unique_id=1713107861]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.110003, -8.067036, -8.315625)
+
+[node name="L3_PipeStraight_003" parent="Basement_Levels" index="129" unique_id=1418599117]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.110003, -8.067036, -9.315625)
+
+[node name="L3_PipeStraight_004" parent="Basement_Levels" index="130" unique_id=388283209]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.110003, -8.067036, -10.315625)
+
+[node name="L3_PowerPlug" parent="Basement_Levels" index="131" unique_id=1880258005]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.9, -9.8920355, -11.235625)
+
+[node name="L3_RaidTower" parent="Basement_Levels" index="132" unique_id=1379205989]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.6, -10.192036, -10.715625)
+
+[node name="L3_Room_Basement_Ceiling" parent="Basement_Levels" index="133" unique_id=1557146349]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.000002, -7.8326607, -8.315625)
+
+[node name="L3_Room_Basement_Floor" parent="Basement_Levels" index="134" unique_id=635535700]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.000002, -10.317036, -8.315625)
+
+[node name="L3_Room_Basement_Wall_Back" parent="Basement_Levels" index="135" unique_id=2089787088]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.000002, -10.192036, -11.346875)
+
+[node name="L3_Room_Basement_Wall_Front" parent="Basement_Levels" index="136" unique_id=1279822977]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.000002, -10.192036, -5.2765627)
+
+[node name="L3_Room_Basement_Wall_Left" parent="Basement_Levels" index="137" unique_id=518598164]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.968752, -10.192036, -8.315625)
+
+[node name="L3_Room_Basement_Wall_Right" parent="Basement_Levels" index="138" unique_id=1690482349]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.02344, -10.192036, -8.315625)
+
+[node name="L3_RouterBox_On" parent="Basement_Levels" index="139" unique_id=2059913555]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.1, -9.161036, -11.045625)
+
+[node name="L3_SpareDriveBox_Empty" parent="Basement_Levels" index="140" unique_id=493213043]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.799997, -8.817036, -11.045625)
+
+[node name="L3_SprinklerHead" parent="Basement_Levels" index="141" unique_id=62473321]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.000002, -7.9350357, -6.815625)
+
+[node name="L3_SprinklerHead_001" parent="Basement_Levels" index="142" unique_id=1544183791]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.000002, -7.9350357, -9.315625)
+
+[node name="L3_StairFlight" parent="Basement_Levels" index="143" unique_id=891165376]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 24.707811, -10.192036, -8.610765)
+
+[node name="L3_StorageCabinet" parent="Basement_Levels" index="144" unique_id=1719175781]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.15, -10.192036, -10.965625)
+
+[node name="L3_StripLight_On" parent="Basement_Levels" index="145" unique_id=582531128]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.500002, -7.8950357, -8.315625)
+
+[node name="L3_StripLight_On_001" parent="Basement_Levels" index="146" unique_id=1748302707]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.500002, -7.8950357, -8.315625)
+
+[node name="L3_TowerServer_Failed" parent="Basement_Levels" index="147" unique_id=1365129436]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.1, -10.192036, -10.715625)
+
+[node name="L3_TowerServer_Hot" parent="Basement_Levels" index="148" unique_id=1891110553]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.799997, -10.192036, -10.715625)
+
+[node name="L3_TowerServer_On" parent="Basement_Levels" index="149" unique_id=879413368]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.199999, -10.192036, -10.715625)
+
+[node name="L3_TowerServer_On_001" parent="Basement_Levels" index="150" unique_id=1771068962]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.500002, -10.192036, -10.715625)
+
+[node name="L3_WallVent" parent="Basement_Levels" index="151" unique_id=557119104]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.9, -8.617036, -11.231626)
+
+[node name="L3_Window" parent="Basement_Levels" index="152" unique_id=473212964]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 16.05469, -9.367036, -9.7)
+
+[node name="L4_ACUnit_On" parent="Basement_Levels" index="153" unique_id=43020539]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 26.520998, -10.192036, -7.315625)
+
+[node name="L4_BatteryModule_Charged" parent="Basement_Levels" index="154" unique_id=1777250854]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33, -10.098036, -6.515625)
+
+[node name="L4_BatteryModule_Charged_001" parent="Basement_Levels" index="155" unique_id=1311632621]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33, -9.926036, -6.515625)
+
+[node name="L4_BatteryModule_Low" parent="Basement_Levels" index="156" unique_id=58243701]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33, -9.754036, -6.515625)
+
+[node name="L4_BatteryRackFrame" parent="Basement_Levels" index="157" unique_id=2005940079]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33, -10.192036, -6.515625)
+
+[node name="L4_Beacon_On" parent="Basement_Levels" index="158" unique_id=1949731230]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.1, -8.395036, -11.045625)
+
+[node name="L4_CableTray" parent="Basement_Levels" index="159" unique_id=720151717]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 30.6, -7.9350357, -10.765625)
+
+[node name="L4_Chair" parent="Basement_Levels" index="160" unique_id=1138970403]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 30.000002, -10.192036, -7.45)
+
+[node name="L4_ControlDesk" parent="Basement_Levels" index="161" unique_id=358264208]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.000002, -10.192036, -8.5)
+
+[node name="L4_Cot" parent="Basement_Levels" index="162" unique_id=2130129587]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.35, -10.192036, -5.9)
+
+[node name="L4_Door_Steel" parent="Basement_Levels" index="163" unique_id=186647585]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 34.019997, -10.192036, -10.415626)
+
+[node name="L4_Extinguisher" parent="Basement_Levels" index="164" unique_id=1104673805]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.1, -10.192036, -11.083625)
+
+[node name="L4_ExtinguisherBracket" parent="Basement_Levels" index="165" unique_id=658717072]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.1, -9.8920355, -11.204625)
+
+[node name="L4_FireAlarmButton" parent="Basement_Levels" index="166" unique_id=597982211]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.1, -8.967035, -11.235625)
+
+[node name="L4_HardDrive_Healthy" parent="Basement_Levels" index="167" unique_id=1015948993]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.9, -9.161036, -11.045625)
+
+[node name="L4_Keyboard" parent="Basement_Levels" index="168" unique_id=382586074]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.000002, -9.442036, -8.3)
+
+[node name="L4_Laptop_Off" parent="Basement_Levels" index="169" unique_id=463758632]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.1, -9.848036, -11.045625)
+
+[node name="L4_MetalShelf" parent="Basement_Levels" index="170" unique_id=1781838936]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.1, -10.192036, -11.045625)
+
+[node name="L4_Monitor_A" parent="Basement_Levels" index="171" unique_id=871612686]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.72, -9.442036, -8.6)
+
+[node name="L4_Monitor_B" parent="Basement_Levels" index="172" unique_id=1273196920]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.28, -9.442036, -8.6)
+
+[node name="L4_PDU_On" parent="Basement_Levels" index="173" unique_id=2061541745]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.6, -10.130035, -10.765625)
+
+[node name="L4_PipeStraight" parent="Basement_Levels" index="174" unique_id=2023162576]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.110003, -8.067036, -6.315625)
+
+[node name="L4_PipeStraight_001" parent="Basement_Levels" index="175" unique_id=430495429]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.110003, -8.067036, -7.315625)
+
+[node name="L4_PipeStraight_002" parent="Basement_Levels" index="176" unique_id=377065148]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.110003, -8.067036, -8.315625)
+
+[node name="L4_PipeStraight_003" parent="Basement_Levels" index="177" unique_id=1586131157]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.110003, -8.067036, -9.315625)
+
+[node name="L4_PipeStraight_004" parent="Basement_Levels" index="178" unique_id=2134267327]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.110003, -8.067036, -10.315625)
+
+[node name="L4_PowerPlug" parent="Basement_Levels" index="179" unique_id=2014161608]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.9, -9.8920355, -11.235625)
+
+[node name="L4_RackFrame_Ok" parent="Basement_Levels" index="180" unique_id=1421047952]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.6, -10.192036, -10.765625)
+
+[node name="L4_Room_Basement_Ceiling" parent="Basement_Levels" index="181" unique_id=632909602]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.000002, -7.8326607, -8.315625)
+
+[node name="L4_Room_Basement_Floor" parent="Basement_Levels" index="182" unique_id=609343731]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.000002, -10.317036, -8.315625)
+
+[node name="L4_Room_Basement_Wall_Back" parent="Basement_Levels" index="183" unique_id=63426019]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.000002, -10.192036, -11.346875)
+
+[node name="L4_Room_Basement_Wall_Front" parent="Basement_Levels" index="184" unique_id=1273193654]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.000002, -10.192036, -5.2765627)
+
+[node name="L4_Room_Basement_Wall_Left" parent="Basement_Levels" index="185" unique_id=1713808783]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.968752, -10.192036, -8.315625)
+
+[node name="L4_Room_Basement_Wall_Right" parent="Basement_Levels" index="186" unique_id=1883995090]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.023438, -10.192036, -8.315625)
+
+[node name="L4_RouterBox_On" parent="Basement_Levels" index="187" unique_id=14500077]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.6, -9.801736, -10.765625)
+
+[node name="L4_Server1U_Hot" parent="Basement_Levels" index="188" unique_id=1553870755]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.6, -9.942435, -10.765625)
+
+[node name="L4_Server1U_On" parent="Basement_Levels" index="189" unique_id=973527619]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.6, -10.083136, -10.765625)
+
+[node name="L4_Server1U_On_001" parent="Basement_Levels" index="190" unique_id=178615579]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.6, -10.036236, -10.765625)
+
+[node name="L4_Server1U_On_002" parent="Basement_Levels" index="191" unique_id=554622273]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.6, -9.989336, -10.765625)
+
+[node name="L4_Server1U_On_003" parent="Basement_Levels" index="192" unique_id=1194563655]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.6, -9.895535, -10.765625)
+
+[node name="L4_Server1U_On_004" parent="Basement_Levels" index="193" unique_id=261153194]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.6, -9.848636, -10.765625)
+
+[node name="L4_SpareDriveBox_Full" parent="Basement_Levels" index="194" unique_id=2057549761]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.199999, -9.161036, -11.045625)
+
+[node name="L4_SprinklerHead" parent="Basement_Levels" index="195" unique_id=612838852]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.000002, -7.9350357, -6.815625)
+
+[node name="L4_SprinklerHead_001" parent="Basement_Levels" index="196" unique_id=1620704873]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.000002, -7.9350357, -9.315625)
+
+[node name="L4_StairFlight" parent="Basement_Levels" index="197" unique_id=920787000]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 34.70781, -10.192036, -8.654629)
+
+[node name="L4_StorageCabinet" parent="Basement_Levels" index="198" unique_id=1272211369]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.15, -10.192036, -10.965625)
+
+[node name="L4_StripLight_On" parent="Basement_Levels" index="199" unique_id=1444592119]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.500002, -7.8950357, -8.315625)
+
+[node name="L4_StripLight_On_001" parent="Basement_Levels" index="200" unique_id=79708932]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.500002, -7.8950357, -8.315625)
+
+[node name="L4_SuppressionTank" parent="Basement_Levels" index="201" unique_id=590455002]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.250002, -10.192036, -11.065625)
+
+[node name="L4_WallClock" parent="Basement_Levels" index="202" unique_id=304248702]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.9, -8.817036, -11.176562)
+
+[node name="L4_WallVent" parent="Basement_Levels" index="203" unique_id=141335158]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.9, -8.617036, -11.231626)
+
+[node name="L4_Window" parent="Basement_Levels" index="204" unique_id=1280359364]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 26.05469, -9.367036, -9.7)
+
+[node name="L5_ACUnit_Broken" parent="Basement_Levels" index="205" unique_id=526598944]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 36.520996, -10.192036, -8.115625)
+
+[node name="L5_ACUnit_On" parent="Basement_Levels" index="206" unique_id=237445037]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 36.520996, -10.192036, -6.515625)
+
+[node name="L5_ACUnit_On_001" parent="Basement_Levels" index="207" unique_id=1210012154]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 36.520996, -10.192036, -7.315625)
+
+[node name="L5_BatteryModule_Charged" parent="Basement_Levels" index="208" unique_id=200474961]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43, -10.098036, -6.515625)
+
+[node name="L5_BatteryModule_Charged_001" parent="Basement_Levels" index="209" unique_id=1799527939]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43, -9.926036, -6.515625)
+
+[node name="L5_BatteryModule_Charged_002" parent="Basement_Levels" index="210" unique_id=1502461139]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43, -9.754036, -6.515625)
+
+[node name="L5_BatteryRackFrame" parent="Basement_Levels" index="211" unique_id=1010037589]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43, -10.192036, -6.515625)
+
+[node name="L5_Beacon_Off" parent="Basement_Levels" index="212" unique_id=1660069989]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.1, -8.395036, -11.045625)
+
+[node name="L5_Beacon_On" parent="Basement_Levels" index="213" unique_id=1439010928]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.4, -8.989036, -10.765625)
+
+[node name="L5_CableTray" parent="Basement_Levels" index="214" unique_id=1050559550]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 40.4, -7.9350357, -10.765625)
+
+[node name="L5_CableTray_001" parent="Basement_Levels" index="215" unique_id=1238701444]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 41.6, -7.9350357, -10.765625)
+
+[node name="L5_CableTray_002" parent="Basement_Levels" index="216" unique_id=848321089]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 40.4, -7.9350357, -9.015625)
+
+[node name="L5_CableTray_003" parent="Basement_Levels" index="217" unique_id=2016506307]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 41.6, -7.9350357, -9.015625)
+
+[node name="L5_Chair_A" parent="Basement_Levels" index="218" unique_id=1781133208]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 38.799995, -10.192036, -6.85)
+
+[node name="L5_Chair_B" parent="Basement_Levels" index="219" unique_id=2117522946]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 40.9, -10.192036, -6.85)
+
+[node name="L5_ControlDesk_A" parent="Basement_Levels" index="220" unique_id=1172013009]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.799995, -10.192036, -7.7)
+
+[node name="L5_ControlDesk_B" parent="Basement_Levels" index="221" unique_id=1977375898]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.9, -10.192036, -7.7)
+
+[node name="L5_Cot" parent="Basement_Levels" index="222" unique_id=1601451465]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.1, -10.192036, -5.85)
+
+[node name="L5_Door_Steel" parent="Basement_Levels" index="223" unique_id=170284859]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 44.019997, -10.192036, -10.415626)
+
+[node name="L5_Extinguisher" parent="Basement_Levels" index="224" unique_id=781958458]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.1, -10.192036, -11.083625)
+
+[node name="L5_ExtinguisherBracket" parent="Basement_Levels" index="225" unique_id=1541250330]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.1, -9.8920355, -11.204625)
+
+[node name="L5_FireAlarmButton" parent="Basement_Levels" index="226" unique_id=1717675833]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.1, -8.967035, -11.235625)
+
+[node name="L5_HardDrive_Healthy" parent="Basement_Levels" index="227" unique_id=1824063290]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.9, -9.161036, -11.045625)
+
+[node name="L5_Laptop_Off" parent="Basement_Levels" index="228" unique_id=1769442622]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.1, -9.848036, -11.045625)
+
+[node name="L5_MetalShelf" parent="Basement_Levels" index="229" unique_id=1780917447]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.1, -10.192036, -11.045625)
+
+[node name="L5_Monitor_A1" parent="Basement_Levels" index="230" unique_id=1486413948]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.519997, -9.442036, -8)
+
+[node name="L5_Monitor_A2" parent="Basement_Levels" index="231" unique_id=1067405750]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.08, -9.442036, -8)
+
+[node name="L5_Monitor_B1" parent="Basement_Levels" index="232" unique_id=1267496406]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.619995, -9.442036, -8)
+
+[node name="L5_Monitor_B2" parent="Basement_Levels" index="233" unique_id=313877675]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.18, -9.442036, -8)
+
+[node name="L5_PDU_On" parent="Basement_Levels" index="234" unique_id=1190123761]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.799995, -10.130035, -10.765625)
+
+[node name="L5_PDU_On_001" parent="Basement_Levels" index="235" unique_id=1343228227]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.449997, -10.130035, -10.765625)
+
+[node name="L5_PDU_On_002" parent="Basement_Levels" index="236" unique_id=1434120148]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.75, -10.130035, -10.765625)
+
+[node name="L5_PDU_On_003" parent="Basement_Levels" index="237" unique_id=1949568678]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.799995, -10.130035, -9.015625)
+
+[node name="L5_PDU_On_004" parent="Basement_Levels" index="238" unique_id=116419138]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.449997, -10.130035, -9.015625)
+
+[node name="L5_PDU_On_005" parent="Basement_Levels" index="239" unique_id=743795812]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.1, -10.130035, -9.015625)
+
+[node name="L5_PDU_On_006" parent="Basement_Levels" index="240" unique_id=1749017651]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.4, -10.130035, -9.015625)
+
+[node name="L5_PDU_Overload" parent="Basement_Levels" index="241" unique_id=1380057350]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.1, -10.130035, -10.765625)
+
+[node name="L5_PDU_Overload_001" parent="Basement_Levels" index="242" unique_id=1890401468]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.75, -10.130035, -9.015625)
+
+[node name="L5_PDU_Tripped" parent="Basement_Levels" index="243" unique_id=676465913]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.4, -10.130035, -10.765625)
+
+[node name="L5_PipeStraight" parent="Basement_Levels" index="244" unique_id=2049111636]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.11, -8.067036, -6.315625)
+
+[node name="L5_PipeStraight_001" parent="Basement_Levels" index="245" unique_id=1045204198]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.11, -8.067036, -7.315625)
+
+[node name="L5_PipeStraight_002" parent="Basement_Levels" index="246" unique_id=1060258124]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.11, -8.067036, -8.315625)
+
+[node name="L5_PipeStraight_003" parent="Basement_Levels" index="247" unique_id=731798536]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.11, -8.067036, -9.315625)
+
+[node name="L5_PipeStraight_004" parent="Basement_Levels" index="248" unique_id=1403833826]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.11, -8.067036, -10.315625)
+
+[node name="L5_Plant" parent="Basement_Levels" index="249" unique_id=365147672]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.6, -10.192036, -5.7)
+
+[node name="L5_PowerPlug" parent="Basement_Levels" index="250" unique_id=1092843775]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.9, -9.8920355, -11.235625)
+
+[node name="L5_RackFrame_Failed" parent="Basement_Levels" index="251" unique_id=2023108657]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.4, -10.192036, -10.765625)
+
+[node name="L5_RackFrame_Ok" parent="Basement_Levels" index="252" unique_id=1869018191]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.799995, -10.192036, -10.765625)
+
+[node name="L5_RackFrame_Ok_001" parent="Basement_Levels" index="253" unique_id=367595667]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.449997, -10.192036, -10.765625)
+
+[node name="L5_RackFrame_Ok_002" parent="Basement_Levels" index="254" unique_id=578917934]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.75, -10.192036, -10.765625)
+
+[node name="L5_RackFrame_Ok_003" parent="Basement_Levels" index="255" unique_id=1054603556]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.799995, -10.192036, -9.015625)
+
+[node name="L5_RackFrame_Ok_004" parent="Basement_Levels" index="256" unique_id=1539045655]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.449997, -10.192036, -9.015625)
+
+[node name="L5_RackFrame_Ok_005" parent="Basement_Levels" index="257" unique_id=502948925]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.1, -10.192036, -9.015625)
+
+[node name="L5_RackFrame_Ok_006" parent="Basement_Levels" index="258" unique_id=639452128]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.4, -10.192036, -9.015625)
+
+[node name="L5_RackFrame_Warn" parent="Basement_Levels" index="259" unique_id=503801856]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.1, -10.192036, -10.765625)
+
+[node name="L5_RackFrame_Warn_001" parent="Basement_Levels" index="260" unique_id=1157469527]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.75, -10.192036, -9.015625)
+
+[node name="L5_Room_Basement_Ceiling" parent="Basement_Levels" index="261" unique_id=1736535230]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, -7.8326607, -8.315625)
+
+[node name="L5_Room_Basement_Floor" parent="Basement_Levels" index="262" unique_id=2056711342]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, -10.317036, -8.315625)
+
+[node name="L5_Room_Basement_Wall_Back" parent="Basement_Levels" index="263" unique_id=575669917]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, -10.192036, -11.346875)
+
+[node name="L5_Room_Basement_Wall_Front" parent="Basement_Levels" index="264" unique_id=237266262]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, -10.192036, -5.2765627)
+
+[node name="L5_Room_Basement_Wall_Left" parent="Basement_Levels" index="265" unique_id=1264067033]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 35.96875, -10.192036, -8.315625)
+
+[node name="L5_Room_Basement_Wall_Right" parent="Basement_Levels" index="266" unique_id=1692581932]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.023438, -10.192036, -8.315625)
+
+[node name="L5_RouterBox_On" parent="Basement_Levels" index="267" unique_id=1659704831]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.799995, -9.707935, -10.765625)
+
+[node name="L5_RouterBox_On_001" parent="Basement_Levels" index="268" unique_id=2053984559]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.449997, -9.707935, -10.765625)
+
+[node name="L5_RouterBox_On_002" parent="Basement_Levels" index="269" unique_id=863947181]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.75, -9.707935, -10.765625)
+
+[node name="L5_RouterBox_On_003" parent="Basement_Levels" index="270" unique_id=70177155]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.799995, -9.707935, -9.015625)
+
+[node name="L5_RouterBox_On_004" parent="Basement_Levels" index="271" unique_id=1937746354]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.449997, -9.707935, -9.015625)
+
+[node name="L5_RouterBox_On_005" parent="Basement_Levels" index="272" unique_id=1884479905]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.1, -9.707935, -9.015625)
+
+[node name="L5_RouterBox_On_006" parent="Basement_Levels" index="273" unique_id=970229365]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.4, -9.707935, -9.015625)
+
+[node name="L5_Server1U_Failed" parent="Basement_Levels" index="274" unique_id=333332758]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.4, -10.036236, -10.765625)
+
+[node name="L5_Server1U_Failed_001" parent="Basement_Levels" index="275" unique_id=1685703124]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.4, -9.895535, -10.765625)
+
+[node name="L5_Server1U_Hot" parent="Basement_Levels" index="276" unique_id=222128191]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.1, -9.989336, -10.765625)
+
+[node name="L5_Server1U_Hot_001" parent="Basement_Levels" index="277" unique_id=1288239128]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.1, -9.895535, -10.765625)
+
+[node name="L5_Server1U_Hot_002" parent="Basement_Levels" index="278" unique_id=74686062]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.75, -9.989336, -9.015625)
+
+[node name="L5_Server1U_Hot_003" parent="Basement_Levels" index="279" unique_id=875255066]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.75, -9.895535, -9.015625)
+
+[node name="L5_Server1U_Off" parent="Basement_Levels" index="280" unique_id=38322311]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.4, -9.989336, -10.765625)
+
+[node name="L5_Server1U_Off_001" parent="Basement_Levels" index="281" unique_id=911081399]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.4, -9.848636, -10.765625)
+
+[node name="L5_Server1U_On" parent="Basement_Levels" index="282" unique_id=1565080345]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.799995, -10.083136, -10.765625)
+
+[node name="L5_Server1U_On_001" parent="Basement_Levels" index="283" unique_id=1815604362]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.799995, -10.036236, -10.765625)
+
+[node name="L5_Server1U_On_002" parent="Basement_Levels" index="284" unique_id=1380376882]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.799995, -9.989336, -10.765625)
+
+[node name="L5_Server1U_On_003" parent="Basement_Levels" index="285" unique_id=499650136]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.799995, -9.942435, -10.765625)
+
+[node name="L5_Server1U_On_004" parent="Basement_Levels" index="286" unique_id=1599232348]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.799995, -9.895535, -10.765625)
+
+[node name="L5_Server1U_On_005" parent="Basement_Levels" index="287" unique_id=1496923023]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.799995, -9.848636, -10.765625)
+
+[node name="L5_Server1U_On_006" parent="Basement_Levels" index="288" unique_id=1609417638]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.799995, -9.801736, -10.765625)
+
+[node name="L5_Server1U_On_007" parent="Basement_Levels" index="289" unique_id=1241144878]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.799995, -9.754836, -10.765625)
+
+[node name="L5_Server1U_On_008" parent="Basement_Levels" index="290" unique_id=319412084]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.449997, -10.083136, -10.765625)
+
+[node name="L5_Server1U_On_009" parent="Basement_Levels" index="291" unique_id=1053203870]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.449997, -10.036236, -10.765625)
+
+[node name="L5_Server1U_On_010" parent="Basement_Levels" index="292" unique_id=1842189273]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.449997, -9.989336, -10.765625)
+
+[node name="L5_Server1U_On_011" parent="Basement_Levels" index="293" unique_id=2133233390]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.449997, -9.942435, -10.765625)
+
+[node name="L5_Server1U_On_012" parent="Basement_Levels" index="294" unique_id=447427930]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.449997, -9.895535, -10.765625)
+
+[node name="L5_Server1U_On_013" parent="Basement_Levels" index="295" unique_id=1706346987]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.449997, -9.848636, -10.765625)
+
+[node name="L5_Server1U_On_014" parent="Basement_Levels" index="296" unique_id=1286565455]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.449997, -9.801736, -10.765625)
+
+[node name="L5_Server1U_On_015" parent="Basement_Levels" index="297" unique_id=1940529764]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.449997, -9.754836, -10.765625)
+
+[node name="L5_Server1U_On_016" parent="Basement_Levels" index="298" unique_id=1360037586]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.1, -10.083136, -10.765625)
+
+[node name="L5_Server1U_On_017" parent="Basement_Levels" index="299" unique_id=636148676]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.1, -10.036236, -10.765625)
+
+[node name="L5_Server1U_On_018" parent="Basement_Levels" index="300" unique_id=1808535099]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.1, -9.942435, -10.765625)
+
+[node name="L5_Server1U_On_019" parent="Basement_Levels" index="301" unique_id=1272242759]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.1, -9.848636, -10.765625)
+
+[node name="L5_Server1U_On_020" parent="Basement_Levels" index="302" unique_id=91945264]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.1, -9.801736, -10.765625)
+
+[node name="L5_Server1U_On_021" parent="Basement_Levels" index="303" unique_id=747024269]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.1, -9.754836, -10.765625)
+
+[node name="L5_Server1U_On_022" parent="Basement_Levels" index="304" unique_id=2059430418]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.75, -10.083136, -10.765625)
+
+[node name="L5_Server1U_On_023" parent="Basement_Levels" index="305" unique_id=1965348473]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.75, -10.036236, -10.765625)
+
+[node name="L5_Server1U_On_024" parent="Basement_Levels" index="306" unique_id=1458886240]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.75, -9.989336, -10.765625)
+
+[node name="L5_Server1U_On_025" parent="Basement_Levels" index="307" unique_id=1274551999]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.75, -9.942435, -10.765625)
+
+[node name="L5_Server1U_On_026" parent="Basement_Levels" index="308" unique_id=2141143108]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.75, -9.895535, -10.765625)
+
+[node name="L5_Server1U_On_027" parent="Basement_Levels" index="309" unique_id=514049473]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.75, -9.848636, -10.765625)
+
+[node name="L5_Server1U_On_028" parent="Basement_Levels" index="310" unique_id=1592075029]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.75, -9.801736, -10.765625)
+
+[node name="L5_Server1U_On_029" parent="Basement_Levels" index="311" unique_id=127581974]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.75, -9.754836, -10.765625)
+
+[node name="L5_Server1U_On_030" parent="Basement_Levels" index="312" unique_id=1155016803]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.4, -10.083136, -10.765625)
+
+[node name="L5_Server1U_On_031" parent="Basement_Levels" index="313" unique_id=457836475]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.4, -9.942435, -10.765625)
+
+[node name="L5_Server1U_On_032" parent="Basement_Levels" index="314" unique_id=1324443925]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.4, -9.801736, -10.765625)
+
+[node name="L5_Server1U_On_033" parent="Basement_Levels" index="315" unique_id=1530723391]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.4, -9.754836, -10.765625)
+
+[node name="L5_Server1U_On_034" parent="Basement_Levels" index="316" unique_id=1240033902]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.799995, -10.083136, -9.015625)
+
+[node name="L5_Server1U_On_035" parent="Basement_Levels" index="317" unique_id=224128164]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.799995, -10.036236, -9.015625)
+
+[node name="L5_Server1U_On_036" parent="Basement_Levels" index="318" unique_id=69332121]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.799995, -9.989336, -9.015625)
+
+[node name="L5_Server1U_On_037" parent="Basement_Levels" index="319" unique_id=1140783318]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.799995, -9.942435, -9.015625)
+
+[node name="L5_Server1U_On_038" parent="Basement_Levels" index="320" unique_id=360052761]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.799995, -9.895535, -9.015625)
+
+[node name="L5_Server1U_On_039" parent="Basement_Levels" index="321" unique_id=115868719]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.799995, -9.848636, -9.015625)
+
+[node name="L5_Server1U_On_040" parent="Basement_Levels" index="322" unique_id=1798791985]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.799995, -9.801736, -9.015625)
+
+[node name="L5_Server1U_On_041" parent="Basement_Levels" index="323" unique_id=529490087]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.799995, -9.754836, -9.015625)
+
+[node name="L5_Server1U_On_042" parent="Basement_Levels" index="324" unique_id=396831095]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.449997, -10.083136, -9.015625)
+
+[node name="L5_Server1U_On_043" parent="Basement_Levels" index="325" unique_id=1490676542]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.449997, -10.036236, -9.015625)
+
+[node name="L5_Server1U_On_044" parent="Basement_Levels" index="326" unique_id=1557421929]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.449997, -9.989336, -9.015625)
+
+[node name="L5_Server1U_On_045" parent="Basement_Levels" index="327" unique_id=1738259310]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.449997, -9.942435, -9.015625)
+
+[node name="L5_Server1U_On_046" parent="Basement_Levels" index="328" unique_id=1132459793]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.449997, -9.895535, -9.015625)
+
+[node name="L5_Server1U_On_047" parent="Basement_Levels" index="329" unique_id=434057697]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.449997, -9.848636, -9.015625)
+
+[node name="L5_Server1U_On_048" parent="Basement_Levels" index="330" unique_id=801313709]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.449997, -9.801736, -9.015625)
+
+[node name="L5_Server1U_On_049" parent="Basement_Levels" index="331" unique_id=1356028617]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.449997, -9.754836, -9.015625)
+
+[node name="L5_Server1U_On_050" parent="Basement_Levels" index="332" unique_id=595724528]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.1, -10.083136, -9.015625)
+
+[node name="L5_Server1U_On_051" parent="Basement_Levels" index="333" unique_id=978882288]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.1, -10.036236, -9.015625)
+
+[node name="L5_Server1U_On_052" parent="Basement_Levels" index="334" unique_id=2144527121]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.1, -9.989336, -9.015625)
+
+[node name="L5_Server1U_On_053" parent="Basement_Levels" index="335" unique_id=71816012]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.1, -9.942435, -9.015625)
+
+[node name="L5_Server1U_On_054" parent="Basement_Levels" index="336" unique_id=293000622]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.1, -9.895535, -9.015625)
+
+[node name="L5_Server1U_On_055" parent="Basement_Levels" index="337" unique_id=1126107125]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.1, -9.848636, -9.015625)
+
+[node name="L5_Server1U_On_056" parent="Basement_Levels" index="338" unique_id=1296758717]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.1, -9.801736, -9.015625)
+
+[node name="L5_Server1U_On_057" parent="Basement_Levels" index="339" unique_id=730614006]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.1, -9.754836, -9.015625)
+
+[node name="L5_Server1U_On_058" parent="Basement_Levels" index="340" unique_id=1326085688]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.75, -10.083136, -9.015625)
+
+[node name="L5_Server1U_On_059" parent="Basement_Levels" index="341" unique_id=1833809614]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.75, -10.036236, -9.015625)
+
+[node name="L5_Server1U_On_060" parent="Basement_Levels" index="342" unique_id=1151134280]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.75, -9.942435, -9.015625)
+
+[node name="L5_Server1U_On_061" parent="Basement_Levels" index="343" unique_id=1814597109]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.75, -9.848636, -9.015625)
+
+[node name="L5_Server1U_On_062" parent="Basement_Levels" index="344" unique_id=2086309061]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.75, -9.801736, -9.015625)
+
+[node name="L5_Server1U_On_063" parent="Basement_Levels" index="345" unique_id=469768837]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.75, -9.754836, -9.015625)
+
+[node name="L5_Server1U_On_064" parent="Basement_Levels" index="346" unique_id=366284052]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.4, -10.083136, -9.015625)
+
+[node name="L5_Server1U_On_065" parent="Basement_Levels" index="347" unique_id=142989221]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.4, -10.036236, -9.015625)
+
+[node name="L5_Server1U_On_066" parent="Basement_Levels" index="348" unique_id=1489980821]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.4, -9.989336, -9.015625)
+
+[node name="L5_Server1U_On_067" parent="Basement_Levels" index="349" unique_id=1488545220]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.4, -9.942435, -9.015625)
+
+[node name="L5_Server1U_On_068" parent="Basement_Levels" index="350" unique_id=935814231]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.4, -9.895535, -9.015625)
+
+[node name="L5_Server1U_On_069" parent="Basement_Levels" index="351" unique_id=57573429]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.4, -9.848636, -9.015625)
+
+[node name="L5_Server1U_On_070" parent="Basement_Levels" index="352" unique_id=1979823076]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.4, -9.801736, -9.015625)
+
+[node name="L5_Server1U_On_071" parent="Basement_Levels" index="353" unique_id=1234463744]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.4, -9.754836, -9.015625)
+
+[node name="L5_SpareDriveBox_Full" parent="Basement_Levels" index="354" unique_id=2018020101]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.199997, -9.161036, -11.045625)
+
+[node name="L5_SprinklerHead" parent="Basement_Levels" index="355" unique_id=1422875240]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, -7.9350357, -6.815625)
+
+[node name="L5_SprinklerHead_001" parent="Basement_Levels" index="356" unique_id=542455646]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, -7.9350357, -9.315625)
+
+[node name="L5_StairFlight" parent="Basement_Levels" index="357" unique_id=1051400722]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 44.70781, -10.192036, -8.707477)
+
+[node name="L5_StorageCabinet_A" parent="Basement_Levels" index="358" unique_id=1919290025]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.15, -10.192036, -10.965625)
+
+[node name="L5_StorageCabinet_B" parent="Basement_Levels" index="359" unique_id=1080123547]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 43.65, -10.192036, -7.85)
+
+[node name="L5_StripLight_On" parent="Basement_Levels" index="360" unique_id=1352183043]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.5, -7.8950357, -8.315625)
+
+[node name="L5_StripLight_On_001" parent="Basement_Levels" index="361" unique_id=2012715187]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.5, -7.8950357, -8.315625)
+
+[node name="L5_SuppressionTank" parent="Basement_Levels" index="362" unique_id=1672288167]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.25, -10.192036, -11.065625)
+
+[node name="L5_SuppressionTank_001" parent="Basement_Levels" index="363" unique_id=2095953215]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 43.6, -10.192036, -5.815625)
+
+[node name="L5_WallClock" parent="Basement_Levels" index="364" unique_id=140297145]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.9, -8.817036, -11.176562)
+
+[node name="L5_WallVent" parent="Basement_Levels" index="365" unique_id=1600978392]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.9, -8.617036, -11.231626)
+
+[node name="L5_Window" parent="Basement_Levels" index="366" unique_id=1170653241]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 36.054688, -9.367036, -9.7)
+
+[node name="Laptop_Failed" parent="Basement_Levels" index="367" unique_id=978621785]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.402185, -10.317036, -0.94921875)
+
+[node name="Laptop_Hot" parent="Basement_Levels" index="368" unique_id=655668232]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.790312, -10.317036, -0.94921875)
+
+[node name="Laptop_Off" parent="Basement_Levels" index="369" unique_id=1733045891]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.178438, -10.317036, -0.94921875)
+
+[node name="Laptop_On" parent="Basement_Levels" index="370" unique_id=2081518449]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.566561, -10.317036, -0.94921875)
+
+[node name="LaptopArch_Failed" parent="Basement_Levels" index="371" unique_id=1465919116]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.680002, -10.317036, -0.95000005)
+
+[node name="LaptopArch_FullOpen" parent="Basement_Levels" index="372" unique_id=610784085]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.85, -10.317036, -0.95000005)
+
+[node name="LaptopArch_HalfOpen" parent="Basement_Levels" index="373" unique_id=99425801]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.460001, -10.317036, -0.95000005)
+
+[node name="LaptopArch_Hot" parent="Basement_Levels" index="374" unique_id=756116889]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.290003, -10.317036, -0.95000005)
+
+[node name="LaptopArch_Off" parent="Basement_Levels" index="375" unique_id=2026504953]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.070002, -10.317036, -0.95000005)
+
+[node name="LaptopArch_On" parent="Basement_Levels" index="376" unique_id=769789279]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.9, -10.317036, -0.95000005)
+
+[node name="LaptopNix_Failed" parent="Basement_Levels" index="377" unique_id=1591563267]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.019999, -10.317036, -0.95000005)
+
+[node name="LaptopNix_FullOpen" parent="Basement_Levels" index="378" unique_id=1149700832]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.19, -10.317036, -0.95000005)
+
+[node name="LaptopNix_HalfOpen" parent="Basement_Levels" index="379" unique_id=1932754434]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.799997, -10.317036, -0.95000005)
+
+[node name="LaptopNix_Hot" parent="Basement_Levels" index="380" unique_id=2088761148]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.63, -10.317036, -0.95000005)
+
+[node name="LaptopNix_Off" parent="Basement_Levels" index="381" unique_id=1816568374]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.409998, -10.317036, -0.95000005)
+
+[node name="LaptopNix_On" parent="Basement_Levels" index="382" unique_id=1761667712]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.24, -10.317036, -0.95000005)
+
+[node name="Light" parent="Basement_Levels" index="383" unique_id=1340085815]
+transform = Transform3D(-0.29086468, -0.77110094, 0.56639314, -0.055189036, 0.6045247, 0.79467237, -0.9551711, 0.19988343, -0.2183912, 4.0762463, -4.4131737, -1.005454)
+
+[node name="MetalShelf" parent="Basement_Levels" index="384" unique_id=1143842771]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0625019, -8.235257, -3.921875)
+
+[node name="MiniFridgeSnacks" parent="Basement_Levels" index="385" unique_id=965398727]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.8500004, -10.197036, -10.99)
+
+[node name="Monitor" parent="Basement_Levels" index="386" unique_id=1976594692]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.1632824, -10.317036, 5)
+
+[node name="Mouse" parent="Basement_Levels" index="387" unique_id=99393669]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.720312, -10.317036, 5)
+
+[node name="Mug_Empty" parent="Basement_Levels" index="388" unique_id=835469511]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.346876, -10.317036, 5)
+
+[node name="Mug_Full" parent="Basement_Levels" index="389" unique_id=1001897002]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.8375, -10.317036, 5)
+
+[node name="Notepad" parent="Basement_Levels" index="390" unique_id=1592488784]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.87578, -10.317036, 5)
+
+[node name="PDU_Off" parent="Basement_Levels" index="391" unique_id=319299904]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.441874, -10.317036, -0.94921875)
+
+[node name="PDU_On" parent="Basement_Levels" index="392" unique_id=1484705332]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.939375, -10.317036, -0.94921875)
+
+[node name="PDU_Overload" parent="Basement_Levels" index="393" unique_id=1723697465]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.436876, -10.317036, -0.94921875)
+
+[node name="PDU_Tripped" parent="Basement_Levels" index="394" unique_id=1566566258]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.934374, -10.317036, -0.94921875)
+
+[node name="PhotoFrame" parent="Basement_Levels" index="395" unique_id=1918028708]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.8500004, -9.337035, -10.99)
+
+[node name="PipeCorner" parent="Basement_Levels" index="396" unique_id=1495288842]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.3674984, -8.235257, -0.94921875)
+
+[node name="PipeStraight" parent="Basement_Levels" index="397" unique_id=1809075837]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0390625, -8.235257, -2.3515625)
+
+[node name="Plant" parent="Basement_Levels" index="398" unique_id=1833254488]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.689062, -10.317036, 5)
+
+[node name="Plant_den" parent="Basement_Levels" index="399" unique_id=277906169]
+transform = Transform3D(0.8408614, 0, 0.5412506, 0, 1, 0, -0.5412506, 0, 0.8408614, -3.0052853, -9.445937, -10.619267)
+
+[node name="PowerPlug" parent="Basement_Levels" index="400" unique_id=311342544]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0234375, -8.235257, -0.07421875)
+
+[node name="RackFrame_Failed" parent="Basement_Levels" index="401" unique_id=1581783676]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.743593, -10.317036, -2.3515625)
+
+[node name="RackFrame_Ok" parent="Basement_Levels" index="402" unique_id=383175361]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.405157, -10.317036, -2.3515625)
+
+[node name="RackFrame_Warn" parent="Basement_Levels" index="403" unique_id=322037020]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.066717, -10.317036, -2.3515625)
+
+[node name="RaidTower" parent="Basement_Levels" index="404" unique_id=732282744]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.863123, -10.317036, -0.94921875)
+
+[node name="RetroPoster" parent="Basement_Levels" index="405" unique_id=588484404]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0000019, -9.0170355, -11.245)
+
+[node name="Room_Basement_Ceiling" parent="Basement_Levels" index="406" unique_id=1758536983]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -7.8326607, -8.315625)
+
+[node name="Room_Basement_Floor" parent="Basement_Levels" index="407" unique_id=1358509326]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10.317036, -8.315625)
+
+[node name="Room_Basement_Wall_Back" parent="Basement_Levels" index="408" unique_id=1026377815]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10.192036, -11.346875)
+
+[node name="Room_Basement_Wall_Back_001" parent="Basement_Levels" index="409" unique_id=881892304]
+transform = Transform3D(-0.9999987, -4.006626e-05, 0.0016426671, -5.0556184e-05, 0.9999796, -0.006386365, -0.0016423777, -0.0063864393, -0.9999783, -15.152187, -6.339443, -5.2806845)
+
+[node name="Room_Basement_Wall_Front" parent="Basement_Levels" index="410" unique_id=1190071253]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.014080048, -10.186882, -5.2765627)
+
+[node name="Room_Basement_Wall_Left" parent="Basement_Levels" index="411" unique_id=1115383397]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.03125, -10.192036, -8.315625)
+
+[node name="Room_Basement_Wall_Right" parent="Basement_Levels" index="412" unique_id=2018172629]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.0234394, -10.192036, -8.315625)
+
+[node name="RouterBox_Failed" parent="Basement_Levels" index="413" unique_id=1309230760]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.0393734, -10.317036, -0.94921875)
+
+[node name="RouterBox_Hot" parent="Basement_Levels" index="414" unique_id=905032104]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.536875, -10.317036, -0.94921875)
+
+[node name="RouterBox_On" parent="Basement_Levels" index="415" unique_id=1084684902]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.034376, -10.317036, -0.94921875)
+
+[node name="Rug" parent="Basement_Levels" index="416" unique_id=1005299856]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6000004, -10.197036, -10.45)
+
+[node name="Server1U_Failed" parent="Basement_Levels" index="417" unique_id=992575241]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.722185, -10.317036, -0.94921875)
+
+[node name="Server1U_Hot" parent="Basement_Levels" index="418" unique_id=1515296819]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.2353115, -10.317036, -0.94921875)
+
+[node name="Server1U_Off" parent="Basement_Levels" index="419" unique_id=1716243753]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.748438, -10.317036, -0.94921875)
+
+[node name="Server1U_On" parent="Basement_Levels" index="420" unique_id=1214676218]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.26156, -10.317036, -0.94921875)
+
+[node name="SpareDriveBox_Empty" parent="Basement_Levels" index="421" unique_id=1278539735]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5496883, -8.235257, -0.94921875)
+
+[node name="SpareDriveBox_Full" parent="Basement_Levels" index="422" unique_id=1473435020]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.812811, -8.235257, -0.94921875)
+
+[node name="SprinklerHead" parent="Basement_Levels" index="423" unique_id=1621012566]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3281269, -8.235257, -0.07421875)
+
+[node name="StairFlight" parent="Basement_Levels" index="424" unique_id=671683030]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.695314, -10.317036, 5)
+
+[node name="StairFlight_Interior" parent="Basement_Levels" index="425" unique_id=118004191]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.6, -10.317036, 5)
+
+[node name="StickyNoteCluster" parent="Basement_Levels" index="426" unique_id=192940713]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.8500004, -8.917036, -11.245)
+
+[node name="StorageCabinet" parent="Basement_Levels" index="427" unique_id=2093270850]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.623438, -10.317036, 5)
+
+[node name="StringLights" parent="Basement_Levels" index="428" unique_id=1840767794]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6000004, -8.317036, -11.235)
+
+[node name="StripLight_Off" parent="Basement_Levels" index="429" unique_id=1790965789]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7812519, -8.235257, -2.3515625)
+
+[node name="StripLight_On" parent="Basement_Levels" index="430" unique_id=1728273119]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0443745, -8.235257, -2.3515625)
+
+[node name="SuppressionTank" parent="Basement_Levels" index="431" unique_id=778278785]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15625, -8.235257, -3.921875)
+
+[node name="TowerServer_Failed" parent="Basement_Levels" index="432" unique_id=1636235658]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.082186, -10.317036, -0.94921875)
+
+[node name="TowerServer_Hot" parent="Basement_Levels" index="433" unique_id=2045385746]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.345312, -10.317036, -0.94921875)
+
+[node name="TowerServer_Off" parent="Basement_Levels" index="434" unique_id=988643338]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.6084385, -10.317036, -0.94921875)
+
+[node name="TowerServer_On" parent="Basement_Levels" index="435" unique_id=1860611796]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.871561, -10.317036, -0.94921875)
+
+[node name="Vines" parent="Basement_Levels" index="436" unique_id=255183902]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -8.235257, 0)
+
+[node name="Vines_left_0" parent="Basement_Levels" index="437" unique_id=161945919]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -4.1450005, -10.197036, -6.2)
+
+[node name="Vines_left_1" parent="Basement_Levels" index="438" unique_id=402835649]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -4.1450005, -10.117036, -8)
+
+[node name="Vines_left_2" parent="Basement_Levels" index="439" unique_id=2141392790]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -4.1450005, -10.037036, -9.8)
+
+[node name="WallClock" parent="Basement_Levels" index="440" unique_id=1359887753]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.035936, -10.317036, 5)
+
+[node name="WallVent" parent="Basement_Levels" index="441" unique_id=115502847]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.145937, -8.235257, -0.94921875)
+
+[node name="WasteBin" parent="Basement_Levels" index="442" unique_id=760188643]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.362501, -10.317036, 5)
+
+[node name="Window" parent="Basement_Levels" index="443" unique_id=356080853]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.204687, -10.317036, 5)
+
+[node name="roof" parent="." unique_id=1427439808 instance=ExtResource("5_272bh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.836636, -0.03139186, 16.092726)
+
+[node name="PanelMount" parent="roof" index="7" unique_id=1803112336]
+transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 2, 1.4014, 0.2184, 1.6478)
+
+[node name="PanelMount_1" parent="roof" index="8" unique_id=1046413348]
+transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 2, 2.7014, 0.2184, 1.6478)
+
+[node name="PanelMount_2" parent="roof" index="9" unique_id=164891416]
+transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 2, 4.0014, 0.2184, 1.6478)
+
+[node name="PanelMount_3" parent="roof" index="10" unique_id=705203690]
+transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 2, 1.4014, 0.2184, -0.3522)
+
+[node name="PanelMount_4" parent="roof" index="11" unique_id=277310726]
+transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 2, 2.7014, 0.2184, -0.3522)
+
+[node name="PanelMount_5" parent="roof" index="12" unique_id=1283467364]
+transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 2, 4.0014, 0.2184, -0.3522)
+
+[node name="PanelMount_006" parent="roof" index="13" unique_id=115632285]
+transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 2, -1.1986, 0.2184, 1.6478)
+
+[node name="PanelMount_008" parent="roof" index="14" unique_id=1524310248]
+transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 2, 0.1014, 0.2184, 1.6478)
+
+[node name="PanelMount_009" parent="roof" index="15" unique_id=741806965]
+transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 2, 0.1014, 0.2184, -0.3522)
+
+[node name="PanelMount_010" parent="roof" index="16" unique_id=646972045]
+transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 2, -1.1986, 0.2184, -0.3522)
+
+[node name="PanelMount_011" parent="roof" index="17" unique_id=890355450]
+transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 2, -2.4986, 0.2184, 1.6478)
+
+[node name="RoofHatchLid" parent="roof" index="19" unique_id=519351590]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.4606, 0.6724, -0.4127)
+
+[node name="SolarPanel_Clean" parent="roof" index="26" unique_id=109347866]
+transform = Transform3D(1, 0, 0, 0, 0.52145004, 0.8532818, 0, -0.8532818, 0.52145004, 1.3774, 0.8224, 2.9993)
+
+[node name="SolarPanel_Clean_1" parent="roof" index="27" unique_id=1529876580]
+transform = Transform3D(1, 0, 0, 0, 0.52145004, 0.8532818, 0, -0.8532818, 0.52145004, 2.6774, 0.8224, 2.9993)
+
+[node name="SolarPanel_Clean_2" parent="roof" index="28" unique_id=951931270]
+transform = Transform3D(1, 0, 0, 0, 0.52145004, 0.8532818, 0, -0.8532818, 0.52145004, 3.9774, 0.8224, 2.9993)
+
+[node name="SolarPanel_Clean_3" parent="roof" index="29" unique_id=61192982]
+transform = Transform3D(1, 0, 0, 0, 0.52145004, 0.8532818, 0, -0.8532818, 0.52145004, 3.9774, 0.8224, 0.9993)
+
+[node name="SolarPanel_Clean_004" parent="roof" index="30" unique_id=187692032]
+transform = Transform3D(1, 0, 0, 0, 0.52145004, 0.8532818, 0, -0.8532818, 0.52145004, 0.0774, 0.8224, 2.9993)
+
+[node name="SolarPanel_Damaged" parent="roof" index="31" unique_id=1406225648]
+transform = Transform3D(1, 0, 0, 0, 0.52145004, 0.8532818, 0, -0.8532818, 0.52145004, 2.6774, 0.8224, 0.9993)
+
+[node name="SolarPanel_Damaged_001" parent="roof" index="32" unique_id=869190656]
+transform = Transform3D(1, 0, 0, 0, 0.52145004, 0.8532818, 0, -0.8532818, 0.52145004, -1.2226, 0.8224, 2.9993)
+
+[node name="SolarPanel_Damaged_003" parent="roof" index="33" unique_id=2032764899]
+transform = Transform3D(1, 0, 0, 0, 0.52145004, 0.8532818, 0, -0.8532818, 0.52145004, 0.0774, 0.8224, 0.9993)
+
+[node name="SolarPanel_Damaged_004" parent="roof" index="34" unique_id=44119330]
+transform = Transform3D(1, 0, 0, 0, 0.52145004, 0.8532818, 0, -0.8532818, 0.52145004, -1.2226, 0.8224, 0.9993)
+
+[node name="SolarPanel_Dirty" parent="roof" index="35" unique_id=2118580457]
+transform = Transform3D(1, 0, 0, 0, 0.52145004, 0.8532818, 0, -0.8532818, 0.52145004, 1.3774, 0.8224, 0.9993)
+
+[node name="SolarPanel_Dirty2" parent="roof" index="36" unique_id=1380882862]
+transform = Transform3D(1, 0, 0, 0, 0.52145004, 0.8532818, 0, -0.8532818, 0.52145004, -2.5226, 0.8224, 2.9993)
+
+[node name="Company" parent="." unique_id=2023365733 instance=ExtResource("7_4dugh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75.00761, 3.2568398, 26.048067)
+
+[node name="Door_Steel" parent="Company" index="40" unique_id=758178925]
+transform = Transform3D(3.1391647e-07, 0, 1, 0, 1, 0, -1, 0, 3.1391647e-07, 22.1924, 0.08, -5.0181)
+
+[node name="PanelMount" parent="Company" index="423" unique_id=248347728]
+transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 2, 19.321, 5.5464, -4.6641)
+
+[node name="PanelMount_1" parent="Company" index="424" unique_id=1982489833]
+transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 2, 20.3935, 5.5464, -4.6641)
+
+[node name="PanelMount_2" parent="Company" index="425" unique_id=1282781505]
+transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 2, 21.466, 5.5464, -4.6641)
+
+[node name="PanelMount_3" parent="Company" index="426" unique_id=1751939568]
+transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 2, 19.321, 5.5464, -6.2266)
+
+[node name="PanelMount_4" parent="Company" index="427" unique_id=1334209739]
+transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 2, 20.3935, 5.5464, -6.2266)
+
+[node name="PanelMount_5" parent="Company" index="428" unique_id=1346394175]
+transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 2, 21.466, 5.5464, -6.2266)
+
+[node name="PanelMount_006" parent="Company" index="429" unique_id=99021187]
+transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 2, 17.176, 5.5464, -4.6641)
+
+[node name="PanelMount_008" parent="Company" index="430" unique_id=449894004]
+transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 2, 18.2485, 5.5464, -4.6641)
+
+[node name="PanelMount_009" parent="Company" index="431" unique_id=1394464366]
+transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 2, 18.2485, 5.5464, -6.2266)
+
+[node name="PanelMount_010" parent="Company" index="432" unique_id=481251930]
+transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 2, 17.176, 5.5464, -6.2266)
+
+[node name="PanelMount_011" parent="Company" index="433" unique_id=1246724402]
+transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 2, 16.1035, 5.5464, -4.6641)
+
+[node name="RoofHatchLid" parent="Company" index="452" unique_id=55368627]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.30931, 6, -5.978474)
+
+[node name="SolarPanel_Clean" parent="Company" index="480" unique_id=419617153]
+transform = Transform3D(1, 0, 0, 0, 0.52145004, 0.8532818, 0, -0.8532818, 0.52145004, 19.301, 6.1504, -3.3126)
+
+[node name="SolarPanel_Clean_1" parent="Company" index="481" unique_id=1428907008]
+transform = Transform3D(1, 0, 0, 0, 0.52145004, 0.8532818, 0, -0.8532818, 0.52145004, 20.3735, 6.1504, -3.3126)
+
+[node name="SolarPanel_Clean_2" parent="Company" index="482" unique_id=1779828955]
+transform = Transform3D(1, 0, 0, 0, 0.52145004, 0.8532818, 0, -0.8532818, 0.52145004, 21.446, 6.1504, -3.3126)
+
+[node name="SolarPanel_Clean_3" parent="Company" index="483" unique_id=1764011963]
+transform = Transform3D(1, 0, 0, 0, 0.52145004, 0.8532818, 0, -0.8532818, 0.52145004, 21.446, 6.1504, -4.8751)
+
+[node name="SolarPanel_Clean_004" parent="Company" index="484" unique_id=601564399]
+transform = Transform3D(1, 0, 0, 0, 0.52145004, 0.8532818, 0, -0.8532818, 0.52145004, 18.2285, 6.1504, -3.3126)
+
+[node name="SolarPanel_Damaged" parent="Company" index="485" unique_id=2018840843]
+transform = Transform3D(1, 0, 0, 0, 0.52145004, 0.8532818, 0, -0.8532818, 0.52145004, 20.3735, 6.1504, -4.8751)
+
+[node name="SolarPanel_Damaged_001" parent="Company" index="486" unique_id=1171816840]
+transform = Transform3D(1, 0, 0, 0, 0.52145004, 0.8532818, 0, -0.8532818, 0.52145004, 17.156, 6.1504, -3.3126)
+
+[node name="SolarPanel_Damaged_003" parent="Company" index="487" unique_id=1855691531]
+transform = Transform3D(1, 0, 0, 0, 0.52145004, 0.8532818, 0, -0.8532818, 0.52145004, 18.2285, 6.1504, -4.8751)
+
+[node name="SolarPanel_Damaged_004" parent="Company" index="488" unique_id=1689156652]
+transform = Transform3D(1, 0, 0, 0, 0.52145004, 0.8532818, 0, -0.8532818, 0.52145004, 17.156, 6.1504, -4.8751)
+
+[node name="SolarPanel_Dirty" parent="Company" index="489" unique_id=1225521181]
+transform = Transform3D(1, 0, 0, 0, 0.52145004, 0.8532818, 0, -0.8532818, 0.52145004, 19.301, 6.1504, -4.8751)
+
+[node name="SolarPanel_Dirty2" parent="Company" index="490" unique_id=1582012959]
+transform = Transform3D(1, 0, 0, 0, 0.52145004, 0.8532818, 0, -0.8532818, 0.52145004, 16.0835, 6.1504, -3.3126)
+
+[node name="Hud" type="CanvasLayer" parent="."]
+script = ExtResource("99_hud")
+
+[node name="ClockLabel" type="Label" parent="Hud"]
+offset_left = 24.0
+offset_top = 16.0
+offset_right = 164.0
+offset_bottom = 64.0
+theme_override_font_sizes/font_size = 32
+
+[node name="SlaLabel" type="Label" parent="Hud"]
+offset_left = 24.0
+offset_top = 64.0
+offset_right = 264.0
+offset_bottom = 104.0
+theme_override_font_sizes/font_size = 24
+
+[node name="EndLabel" type="Label" parent="Hud"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 40
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[editable path="Basement_Levels"]
+[editable path="roof"]
+[editable path="Company"]
