@@ -6,6 +6,10 @@ export_presets.cfg
 *.translation
 /builds/
 
+# .NET
+bin/
+obj/
+
 # Python
 .venv/
 __pycache__/
