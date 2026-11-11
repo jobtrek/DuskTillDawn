@@ -10,6 +10,23 @@ public partial class Main : Node3D
     {
         _hud = GetNode<Hud>("Hud");
         _hud.ShowState(_state);
+        AddMissingStairCollision(this);
+    }
+
+    // The imported buildings ship without collision on some "Stairs_*" meshes.
+    private static void AddMissingStairCollision(Node node)
+    {
+        foreach (Node child in node.GetChildren())
+        {
+            if (child is MeshInstance3D { Mesh: not null } mesh
+                && mesh.Name.ToString().StartsWith("Stairs_")
+                && mesh.GetNodeOrNull<StaticBody3D>("StaticBody3D") == null)
+            {
+                mesh.CreateConvexCollision(); // hull of a staircase = a smooth ramp
+            }
+
+            AddMissingStairCollision(child);
+        }
     }
 
     public override void _Process(double delta)
