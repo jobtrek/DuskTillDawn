@@ -39,7 +39,32 @@ flowchart TD
     Defi -->|"peut être"| F["FauxEmail"]
 ```
 
-## 3. Les idées orientées objet utilisées
+## 3. Les états d'un défi (machine à états)
+
+Un défi est toujours dans **un seul état**. À chaque tick, la partie fait avancer ses défis.
+
+```mermaid
+%%{init: {"flowchart": {"curve": "linear"}}}%%
+flowchart TD
+    Attente["<b>En attente</b><br/>Le défi est prêt, pas encore lancé"]
+    Cours["<b>En cours</b><br/>Alerte sur le tableau de bord<br/>Le chrono tourne"]
+    Reussi["<b>Réussi</b><br/>Le joueur gagne les points"]
+    Rate["<b>Raté</b><br/>Le serveur tombe en panne"]
+
+    Attente -->|"la partie lance le défi"| Cours
+    Cours -->|"un joueur fait la bonne action"| Reussi
+    Cours -->|"le chrono arrive à 0"| Rate
+```
+
+| État | Ce qui se passe à chaque tick |
+|---|---|
+| En attente | Rien |
+| En cours | Le temps restant baisse. S'il arrive à 0, le défi passe à « Raté ». |
+| Réussi / Raté | Rien. C'est fini, le défi ne change plus. |
+
+En mode à deux, c'est le même défi : le premier joueur qui fait la bonne action le fait passer à « Réussi ».
+
+## 4. Les idées orientées objet utilisées
 
 | Idée | Où dans le diagramme |
 |---|---|
@@ -49,7 +74,3 @@ flowchart TD
 | **Encapsulation** | Les points d'un joueur changent seulement par une méthode, jamais directement. |
 | **Composition** | Une `Partie` contient ses joueurs et ses serveurs. Si la partie s'arrête, ils disparaissent avec elle. |
 | **Séparation** | `TableauDeBord` lit la partie mais ne la modifie jamais (règle du [contrat](../contract.md)). |
-
-## À décider ensemble
-
-- Noms en français ou en anglais dans le code ? Le code actuel est en anglais (`GameState`).
