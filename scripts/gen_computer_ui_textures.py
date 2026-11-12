@@ -119,35 +119,46 @@ def icons() -> None:
 BAYER4 = [[0, 8, 2, 10], [12, 4, 14, 6], [3, 11, 1, 9], [15, 7, 13, 5]]
 
 
+def _in_lambda(px: float, py: float) -> bool:
+    """One snowflake lambda in its local frame: long bar along +x (outside is +y) plus a short branch."""
+    inner, width, length, branch, branch_x = 5.0, 4.5, 16.0, 9.0, 4.0
+    # Long bar, stopped where the next lambda's bar crosses it, end cut at 60 degrees.
+    if inner <= py <= inner + width and -px * 0.866 + py * 0.5 <= inner - 0.6 and px - (py - inner) * 0.577 <= length:
+        return True
+    # Short branch leaving the bar's outer edge at 60 degrees.
+    ox, oy = px - branch_x, py - (inner + width)
+    across = -ox * 0.866 + oy * 0.5
+    return 0 <= oy <= branch * 0.866 and -width <= across <= 0 and ox * 0.5 + oy * 0.866 >= 0
+
+
 def wallpaper() -> None:
-    """160x90 Debian-style desktop: dithered navy-to-blue sky, soft bands, red pixel swirl."""
+    """160x90 NixOS-style desktop: dithered dark slate-blue sky and a pixel snowflake (six lambdas)."""
     w, h = 160, 90
-    shades = [hex_rgba(c) for c in ("07142b", "0b1f42", "10305f", "17437f", "1f579c", "2a6bb4")]
+    shades = [hex_rgba(c) for c in ("0d1117", "131a26", "1a2436", "213049", "2a3d5c", "34496b")]
     px = [[CLEAR] * w for _ in range(h)]
     for y in range(h):
         for x in range(w):
             # Diagonal gradient plus a gentle wave, quantised with ordered dithering.
-            t = (y / h) * 0.75 + (x / w) * 0.25 + 0.08 * math.sin(x / 13 + y / 22)
+            t = (y / h) * 0.6 + (x / w) * 0.35 + 0.06 * math.sin(x / 15 + y / 19)
             v = max(0.0, min(0.999, t)) * (len(shades) - 1)
             i = int(v)
             if v - i > BAYER4[y % 4][x % 4] / 16 and i + 1 < len(shades):
                 i += 1
             px[y][x] = shades[i]
 
-    # Debian-red swirl (Archimedean spiral), thicker toward the outside.
-    red, dark_red = hex_rgba("d70751"), hex_rgba("8f0436")
-    cx, cy = 112, 46
-    theta = 0.6
-    while theta < 4.6 * math.pi:
-        r = 2.2 * theta
-        x, y = cx + r * math.cos(theta), cy + r * math.sin(theta)
-        thick = 1 if theta < 2 * math.pi else 2
-        for dx in range(-thick, thick + 1):
-            for dy in range(-thick, thick + 1):
-                if dx * dx + dy * dy <= thick * thick:
-                    px[int(y + dy)][int(x + dx)] = red
-        px[int(y) + thick][int(x) + 1] = dark_red
-        theta += 0.04
+    # Snowflake: six interlocking lambdas around a hexagonal hole, alternating NixOS blues.
+    dark, light = hex_rgba("5277c3"), hex_rgba("7ebae4")
+    cx, cy, scale = 112, 45, 1.35
+    for y in range(h):
+        for x in range(w):
+            dx, dy = (x + 0.5 - cx) / scale, (y + 0.5 - cy) / scale
+            for k in range(6):
+                a = math.radians(60 * k)
+                lx = dx * math.cos(a) + dy * math.sin(a)
+                ly = -dx * math.sin(a) + dy * math.cos(a)
+                if _in_lambda(lx, ly):
+                    px[y][x] = dark if k % 2 else light
+                    break
 
     write_png(OUT / "wallpaper.png", px)
 

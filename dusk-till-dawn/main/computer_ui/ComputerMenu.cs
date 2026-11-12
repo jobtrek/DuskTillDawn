@@ -2,7 +2,7 @@ using System;
 using Godot;
 
 /// <summary>
-/// Pixel-art Debian desktop shown on the desk computer.
+/// Pixel-art NixOS desktop shown on the desk computer.
 /// Every time it becomes visible it plays a "raise the map" animation:
 /// the framed screen rises from the bottom, straightens, and the voxel blocks clear.
 ///

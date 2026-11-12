@@ -88,7 +88,7 @@ offset_bottom = -10.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_font_sizes/font_size = 13
-text = "debian 12  ·  bookworm"
+text = "NixOS  ·  GNOME"
 horizontal_alignment = 2
 
 [node name="TopBar" type="ColorRect" parent="Map/Screen"]

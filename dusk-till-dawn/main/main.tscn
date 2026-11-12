@@ -1702,6 +1702,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.534584, -0.54339695, -8.15
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Company/Desk" index="1" unique_id=377321988]
 transform = Transform3D(2.369577, 0, 0, 0, 1, 0, 0, 0, 1.34266, 0, 0.22317123, 0)
+visible = false
 mesh = SubResource("BoxMesh_3s6sg")
 script = ExtResource("8_bsumw")
 
