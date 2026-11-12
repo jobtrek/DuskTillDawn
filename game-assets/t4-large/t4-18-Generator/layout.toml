@@ -1,0 +1,99 @@
+[build]
+metallic = ["metal", "metal_dark", "trim", "chassis"]
+
+["skid base"]
+
+[housing]
+on = "skid base.top"
+
+["control panel"]
+on = "housing.front"
+gap = -6.25
+align = "left"
+offset_x = 12.5
+offset_z = 5
+
+["panel screen"]
+on = "control panel.front"
+gap = -1.56
+offset_z = 12
+
+[gauges]
+on = "control panel.front"
+gap = -1.56
+offset_z = -6
+repeat = { x = 2, pitch_x = 21.88 }
+
+["start button"]
+on = "control panel.front"
+gap = -1.56
+offset_x = -18
+offset_z = -21
+
+["stop button"]
+on = "control panel.front"
+gap = -1.56
+offset_x = 18
+offset_z = -21
+
+["light base"]
+on = "control panel.top"
+align = "left"
+offset_x = 9.38
+
+["status light"]
+on = "light base.top"
+
+[muffler]
+on = "housing.top"
+align = "right"
+y = "flush-back"
+offset_x = -12.5
+offset_y = -12.5
+
+["exhaust stack"]
+on = "muffler.top"
+
+["stack bands"]
+on = "exhaust stack.top"
+gap = -50
+repeat = { z = 2, pitch_z = 25 }
+
+["rain cap"]
+on = "exhaust stack.top"
+
+["lifting eyes"]
+on = "housing.top"
+repeat = { x = 2, pitch_x = 100, y = 2, pitch_y = 60 }
+
+["terminal box"]
+on = "housing.back"
+gap = -6.25
+
+["hazard label"]
+on = "housing.back"
+gap = -1.56
+align = "right"
+offset_x = -12.5
+offset_z = 10
+
+["left louvre panel"]
+on = "housing.left"
+gap = -1.56
+
+["left louvre slats"]
+on = "left louvre panel.left"
+gap = -1.56
+repeat = { z = 7, pitch_z = 6.25 }
+
+["right louvre panel"]
+on = "housing.right"
+gap = -1.56
+
+["right louvre slats"]
+on = "right louvre panel.right"
+gap = -1.56
+repeat = { z = 7, pitch_z = 6.25 }
+
+[states.On]
+"status light" = { key = "led_green" }

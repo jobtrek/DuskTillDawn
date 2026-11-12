@@ -1,0 +1,133 @@
+[build]
+metallic = ["metal", "metal_dark", "trim"]
+
+[plinth]
+
+["cabinet body"]
+on = "plinth.top"
+
+["cabinet roof"]
+on = "cabinet body.top"
+
+["door panel"]
+on = "cabinet body.front"
+gap = -1.56
+
+["status screen"]
+on = "door panel.front"
+gap = -1.56
+offset_z = 55
+
+["selector base"]
+on = "door panel.front"
+gap = -1.56
+offset_z = -45
+
+["selector knob"]
+on = "selector base.front"
+gap = -4.69
+
+["solar label"]
+on = "door panel.front"
+gap = -1.56
+offset_x = -12.5
+offset_z = 30
+
+["solar lamp"]
+on = "door panel.front"
+gap = -1.56
+offset_x = 10
+offset_z = 30
+
+["solar mark"]
+on = "solar label.front"
+gap = -3.12
+
+["battery label"]
+on = "door panel.front"
+gap = -1.56
+offset_x = -12.5
+offset_z = 15
+
+["battery lamp"]
+on = "door panel.front"
+gap = -1.56
+offset_x = 10
+offset_z = 15
+
+["battery mark"]
+on = "battery label.front"
+gap = -3.12
+
+["grid label"]
+on = "door panel.front"
+gap = -1.56
+offset_x = -12.5
+offset_z = 0
+
+["grid lamp"]
+on = "door panel.front"
+gap = -1.56
+offset_x = 10
+offset_z = 0
+
+["grid mark"]
+on = "grid label.front"
+gap = -3.12
+
+["generator label"]
+on = "door panel.front"
+gap = -1.56
+offset_x = -12.5
+offset_z = -15
+
+["generator lamp"]
+on = "door panel.front"
+gap = -1.56
+offset_x = 10
+offset_z = -15
+
+["generator mark"]
+on = "generator label.front"
+gap = -3.12
+
+["selector pointer"]
+on = "selector knob.front"
+gap = -3.12
+offset_x = -5
+offset_z = -3
+
+["door handle"]
+on = "door panel.front"
+gap = -1.56
+align = "right"
+offset_x = -6.25
+offset_z = -40
+
+[hinges]
+on = "door panel.front"
+gap = -1.56
+align = "left"
+repeat = { z = 3, pitch_z = 50 }
+
+["warning sticker"]
+on = "door panel.front"
+gap = -1.56
+align = "right"
+offset_x = -2
+offset_z = 55
+
+[states.Solar]
+"solar lamp" = { key = "led_yellow" }
+"grid lamp" = { key = "led_off" }
+"selector pointer" = { offset_x = -5, offset_z = 3 }
+
+[states.Battery]
+"battery lamp" = { key = "led_green" }
+"grid lamp" = { key = "led_off" }
+"selector pointer" = { offset_x = 5, offset_z = 3 }
+
+[states.Generator]
+"generator lamp" = { key = "led_red" }
+"grid lamp" = { key = "led_off" }
+"selector pointer" = { offset_x = 5, offset_z = -3 }

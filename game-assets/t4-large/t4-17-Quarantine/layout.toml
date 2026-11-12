@@ -1,0 +1,90 @@
+[build]
+metallic = ["metal", "metal_dark"]
+
+[palette]
+cardboard = [0.50, 0.34, 0.17]
+cardboard_dark = [0.36, 0.22, 0.10]
+
+["cage floor"]
+
+["front posts"]
+on = "cage floor.top"
+y = "flush-front"
+repeat = { x = 3, pitch_x = 96.875 }
+
+["side posts"]
+on = "cage floor.top"
+align = "right"
+repeat = { y = 3, pitch_y = 96.875 }
+
+["front top rail"]
+on = "front posts.top"
+gap = -6.25
+
+["side top rail"]
+on = "side posts.top"
+gap = -6.25
+
+["front bars"]
+on = "cage floor.top"
+y = "flush-front"
+offset_y = 1.56
+repeat = { x = 24, pitch_x = 7.81 }
+
+["side bars"]
+on = "cage floor.top"
+align = "right"
+offset_x = -1.56
+repeat = { y = 24, pitch_y = 7.81 }
+
+["gate frame"]
+on = "cage floor.top"
+y = "flush-front"
+offset_x = 46
+shape = "hollow"
+thickness = 4.69
+open = ["front", "back"]
+
+["suspicious boxes"]
+on = "cage floor.top"
+align = "left"
+y = "flush-back"
+offset_x = 12.5
+offset_y = -12.5
+repeat = { x = 2, pitch_x = 40.62 }
+
+["red tape"]
+on = "suspicious boxes.top"
+gap = -3.12
+repeat = { x = 2, pitch_x = 40.62 }
+
+["top suspicious box"]
+on = "suspicious boxes.top"
+
+["floor border"]
+on = "cage floor.top"
+gap = -3.12
+shape = "hollow"
+thickness = 6.25
+open = ["top", "bottom"]
+
+["padlock"]
+on = "gate frame.front"
+align = "left"
+gap = -1.56
+offset_z = -20
+
+["quarantine sign"]
+on = "front top rail.front"
+gap = -3.12
+offset_x = -50
+offset_z = -18.75
+
+["sign text"]
+on = "quarantine sign.front"
+gap = -3.12
+
+[beacon]
+on = "front top rail.top"
+align = "right"
+offset_x = -6.25

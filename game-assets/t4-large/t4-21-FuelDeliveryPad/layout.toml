@@ -1,0 +1,95 @@
+[build]
+metallic = ["metal", "copper", "chassis"]
+
+["pad slab"]
+
+["fill pedestal"]
+on = "pad slab.top"
+align = "left"
+y = "flush-back"
+offset_x = 25
+offset_y = -460
+
+["bay border"]
+on = "pad slab.top"
+gap = -3.12
+shape = "hollow"
+thickness = 6.25
+open = ["top", "bottom"]
+
+["wheel stop"]
+on = "pad slab.top"
+y = "flush-back"
+offset_y = -62.5
+
+[bollards]
+on = "pad slab.top"
+repeat = { x = 2, pitch_x = 425, y = 2, pitch_y = 912.5 }
+
+["fill door"]
+on = "fill pedestal.front"
+gap = -1.56
+offset_z = 15
+
+["spill kit"]
+on = "pad slab.top"
+align = "right"
+y = "flush-back"
+offset_x = -25
+offset_y = -250
+
+["bollard bands"]
+on = "bollards.top"
+gap = -37.5
+repeat = { x = 2, pitch_x = 425, y = 2, pitch_y = 912.5 }
+
+["fill coupling"]
+on = "fill door.front"
+gap = -1.56
+
+["coupling cap"]
+on = "fill coupling.front"
+
+["fill label"]
+on = "fill pedestal.front"
+gap = -1.56
+offset_z = 38
+
+["fill label mark"]
+on = "fill label.front"
+gap = -3.12
+
+["emergency stop"]
+on = "fill pedestal.front"
+gap = -1.56
+offset_z = -30
+
+["grounding lug"]
+on = "fill pedestal.left"
+gap = -1.56
+offset_z = -10
+
+["drain grate"]
+on = "pad slab.top"
+gap = -3.12
+y = "flush-front"
+offset_y = 200
+
+["grate slats"]
+on = "drain grate.top"
+gap = -3.12
+repeat = { x = 7, pitch_x = 9.38 }
+
+["stop line"]
+on = "pad slab.top"
+gap = -3.12
+y = "flush-front"
+offset_y = 100
+
+["kit cross h"]
+on = "spill kit.front"
+gap = -3.12
+
+["kit cross v"]
+on = "spill kit.front"
+gap = -3.12

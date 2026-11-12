@@ -1,0 +1,113 @@
+[build]
+metallic = ["metal", "metal_dark", "trim"]
+
+[palette]
+fuel = [0.90, 0.55, 0.05]
+
+["containment bund"]
+shape = "hollow"
+thickness = 6.25
+open = ["top"]
+
+["tank legs"]
+on = "containment bund.top"
+gap = -6.25
+repeat = { x = 2, pitch_x = 100, y = 2, pitch_y = 50 }
+
+["tank body"]
+on = "tank legs.top"
+
+["tank top step"]
+on = "tank body.top"
+
+["fill neck"]
+on = "tank top step.top"
+align = "right"
+offset_x = -12.5
+
+["vent pipe"]
+on = "tank top step.top"
+align = "left"
+offset_x = 12.5
+
+["gauge housing"]
+on = "tank body.front"
+gap = -3.12
+align = "right"
+offset_x = -12.5
+
+["gauge glass"]
+on = "gauge housing.front"
+gap = -1.56
+offset_z = -6.25
+
+["gauge fuel"]
+on = "gauge glass.front"
+gap = -3.12
+align = "bottom"
+
+["dial gauge"]
+on = "tank body.front"
+gap = -1.56
+align = "left"
+offset_x = 12.5
+offset_z = 12
+
+["fill cap"]
+on = "fill neck.top"
+
+["vent hood"]
+on = "vent pipe.top"
+
+["gauge ticks"]
+on = "gauge housing.front"
+gap = -1.56
+offset_x = -5.47
+offset_z = -6.25
+repeat = { z = 5, pitch_z = 12.5 }
+
+["gauge label"]
+on = "gauge housing.front"
+gap = -1.56
+offset_z = 28
+
+["dial pointer"]
+on = "dial gauge.front"
+gap = -3.12
+offset_z = 2
+
+["drain valve"]
+on = "tank body.front"
+gap = -1.56
+align = ["left", "bottom"]
+offset_x = 25
+offset_z = 6.25
+
+["valve handwheel"]
+on = "drain valve.front"
+
+["label plate"]
+on = "tank body.front"
+gap = -1.56
+offset_z = 25
+
+["label text"]
+on = "label plate.front"
+gap = -3.12
+
+["hazard diamond"]
+on = "tank body.front"
+gap = -1.56
+offset_z = -15
+
+["hazard mark"]
+on = "hazard diamond.front"
+gap = -3.12
+
+[states.Full]
+"gauge fuel" = { size = [6.25, 3.12, 46.88] }
+"dial pointer" = { offset_x = 4 }
+
+[states.Low]
+"gauge fuel" = { size = [6.25, 3.12, 10] }
+"dial pointer" = { offset_x = -4 }

@@ -1,0 +1,41 @@
+[build]
+metallic = ["trim"]
+
+["sign board"]
+
+[header]
+on = "sign board.front"
+gap = -1.56
+align = "top"
+
+["hazard triangle"]
+on = "sign board.front"
+gap = -1.56
+offset_z = -3
+
+["header text"]
+on = "header.front"
+gap = -3.12
+
+["flame icon"]
+on = "hazard triangle.front"
+gap = -3.12
+
+["text lines"]
+on = "sign board.front"
+gap = -3.12
+align = "bottom"
+offset_z = 4.7
+repeat = { z = 2, pitch_z = 6.25 }
+
+[border]
+on = "sign board.front"
+gap = -3.12
+shape = "hollow"
+thickness = 3.12
+open = ["front", "back"]
+
+[bolts]
+on = "sign board.front"
+gap = -1.56
+repeat = { x = 2, pitch_x = 28.12, z = 2, pitch_z = 40.6 }

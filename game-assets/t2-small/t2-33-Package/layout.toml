@@ -1,0 +1,25 @@
+[palette]
+cardboard = [0.50, 0.34, 0.17]
+cardboard_dark = [0.36, 0.22, 0.10]
+
+[box]
+
+[tape]
+on = "box.top"
+gap = -1.56
+
+[label]
+on = "box.front"
+gap = -1.56
+align = "left"
+offset_x = 3.12
+
+["label text"]
+on = "label.front"
+gap = -3.12
+
+["fragile mark"]
+on = "box.front"
+gap = -1.56
+align = "right"
+offset_x = -3.12
