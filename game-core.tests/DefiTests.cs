@@ -91,49 +91,75 @@ public class DefiTests
     }
 
     [Fact]
-    public void Reparer_un_defi_en_cours_le_reussit()
+    public void Reparer_un_defi_en_cours_le_reussit_et_donne_ses_points()
     {
         var defi = new DefiDeTest();
+        var joueur = new Joueur("Bilal");
         defi.Lancer();
         defi.Tick(20);
 
-        defi.Reparer();
+        defi.Reparer(joueur);
 
         Assert.Equal(EtatDefi.Reussi, defi.Etat);
         Assert.Equal(40, defi.TempsRestant);
+        Assert.Equal(100, joueur.Points);
     }
 
     [Fact]
     public void Reparer_un_defi_en_attente_ne_fait_rien()
     {
         var defi = new DefiDeTest();
+        var joueur = new Joueur("Bilal");
 
-        defi.Reparer();
+        defi.Reparer(joueur);
 
         Assert.Equal(EtatDefi.EnAttente, defi.Etat);
+        Assert.Equal(0, joueur.Points);
     }
 
     [Fact]
-    public void Reparer_un_defi_rate_ne_fait_rien()
+    public void Un_defi_rate_ne_donne_aucun_point()
     {
         var defi = new DefiDeTest();
+        var joueur = new Joueur("Bilal");
         defi.Lancer();
         defi.Tick(60);
 
-        defi.Reparer();
+        defi.Reparer(joueur);
 
         Assert.Equal(EtatDefi.Rate, defi.Etat);
+        Assert.Equal(0, joueur.Points);
     }
 
     [Fact]
-    public void Un_defi_reussi_ne_bouge_plus()
+    public void Un_defi_reussi_ne_donne_ses_points_qu_une_fois()
     {
         var defi = new DefiDeTest();
+        var joueur = new Joueur("Bilal");
         defi.Lancer();
-        defi.Reparer();
+        defi.Reparer(joueur);
+
+        defi.Reparer(joueur);
         defi.Tick(60);
+
         Assert.Equal(EtatDefi.Reussi, defi.Etat);
         Assert.Equal(60, defi.TempsRestant);
+        Assert.Equal(100, joueur.Points);
+    }
+
+    [Fact]
+    public void Seul_le_premier_joueur_qui_repare_gagne_les_points()
+    {
+        var defi = new DefiDeTest();
+        var premier = new Joueur("Bilal");
+        var deuxieme = new Joueur("Thomas");
+        defi.Lancer();
+
+        defi.Reparer(premier);
+        defi.Reparer(deuxieme);
+
+        Assert.Equal(100, premier.Points);
+        Assert.Equal(0, deuxieme.Points);
     }
 
     [Fact]

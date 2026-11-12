@@ -59,11 +59,13 @@ public abstract class Defi
         }
     }
 
-    public void Reparer()
+    public void Reparer(Joueur joueur)
     {
-        if (Etat == EtatDefi.EnCours)
+        if (Etat != EtatDefi.EnCours)
         {
-            Etat = EtatDefi.Reussi;
+            return;
         }
+        Etat = EtatDefi.Reussi;
+        joueur.GagnerPoints(Points);
     }
 }
