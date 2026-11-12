@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://d37222qi5l642" path="res://main/DetectPlayer.cs" id="10_0i4oc"]
 [ext_resource type="PackedScene" path="res://assets/Exterior.blend" id="98_ext"]
 [ext_resource type="Script" uid="uid://b1w4cc0wdqr1r" path="res://main/Hud.cs" id="99_hud"]
+[ext_resource type="PackedScene" path="res://main/computer_ui/computer_menu.tscn" id="11_cmenu"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_v0o3d"]
 size = Vector2(300, 300)
@@ -1724,19 +1725,14 @@ uppercase = true
 
 [node name="Menu" type="Control" parent="Company/Desk/MeshInstance3D" unique_id=393041213]
 layout_mode = 3
-anchors_preset = 0
-offset_left = 6.0
-offset_top = 140.0
-offset_right = 46.0
-offset_bottom = 180.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Label" type="Label" parent="Company/Desk/MeshInstance3D/Menu" unique_id=258908085]
-layout_mode = 0
-offset_left = 434.0
-offset_top = 137.0
-offset_right = 474.0
-offset_bottom = 160.0
-text = "YAY YOU CLICKED THE BUTTON 3"
+[node name="ComputerMenu" parent="Company/Desk/MeshInstance3D/Menu" instance=ExtResource("11_cmenu")]
+layout_mode = 1
 
 [node name="Area3D" type="Area3D" parent="Company/Desk/MeshInstance3D" unique_id=1538860056]
 
