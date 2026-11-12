@@ -51,6 +51,9 @@ Priority: **V1** = needed for the first playable. **UP** = needed when that upgr
 | [t2-29](t2-small/t2-29-StickyNoteCluster/spec.md) | **StickyNoteCluster** | Basement | 30×1.6×16 → 38×2×20 | F | one | note yellow, note orange, note white · scribble | UP |
 | [t2-30](t2-small/t2-30-LaptopArch/spec.md) | **LaptopArch** | Basement | 33×23×3.1 → 42×29×4 | F | _On, _Hot, _Failed, _Off, _HalfOpen, _FullOpen | hinges · status LED, vents, rubber feet, power port | UP |
 | [t2-31](t2-small/t2-31-LaptopNix/spec.md) | **LaptopNix** | Basement | 33×23×3.1 → 42×29×4 | F | _On, _Hot, _Failed, _Off, _HalfOpen, _FullOpen | hinges · status LED, vents, rubber feet, power port | UP |
+| [t2-32](t2-small/t2-32-Scanner/spec.md) | **Scanner** | Basement | 50×39.06×46.88 → 64×50×60 | F | one | turntable, scan head, control panel · lens, laser emitter, start button, stop button, warning sticker, base label | V1 |
+| [t2-33](t2-small/t2-33-Package/spec.md) | **Package** | Basement | 40.62×31.25×25 → 26×20×16 | S | one | tape · label, label text, fragile mark | V1 |
+| [t2-34](t2-small/t2-34-WarningSign/spec.md) | **WarningSign** | Generator | 37.5×4.69×50 → 24×3×32 | S | one | header, hazard triangle · header text, flame icon, text lines, border, bolts | V1 |
 
 ## T3: Medium (60 cm-1.3 m)
 
@@ -73,6 +76,7 @@ Priority: **V1** = needed for the first playable. **UP** = needed when that upgr
 | [t3-15](t3-medium/t3-15-Broom/spec.md) | **Broom** | Roof | 40×6×130 → 51×8×166 | F | one | handle, head · bristle rows (tile), bolts, grip tape, wear | V1 |
 | [t3-16](t3-medium/t3-16-MiniFridgeSnacks/spec.md) | **MiniFridgeSnacks** | Basement | 50×53×85 → 32×34×54 | S | one | body, door, snack crate · handle, door seam, magnet, feet | UP |
 | [t3-17](t3-medium/t3-17-Vines/spec.md) | **Vines** | All | 22×3×120 → 28×4×154 | F | one | stem, leaf left, leaf right · bud | UP |
+| [t3-18](t3-medium/t3-18-InspectionBench/spec.md) | **InspectionBench** | Basement | 175×75×140.62 → 112×48×90 | S | one | drawer unit, pegboard, mat, light bar · drawer handle, hooks, outlet panel, power led, alarm led, label plate, label mark | V1 |
 | [t3-18](t3-medium/t3-18-WarehouseRack/spec.md) | **WarehouseRack** | Basement | 120×60×180 → 77×38×115 | S | one | decks · side ties, side ties, load labels | UP |
 
 ## T4: Large (over 1.3 m)
@@ -92,6 +96,17 @@ Priority: **V1** = needed for the first playable. **UP** = needed when that upgr
 | [t4-11](t4-large/t4-11-StairFlight/spec.md) | **StairFlight** | Between floors | 100×225×230 → 64×144×147 | S | one | newel posts, top newels, risers · balusters x32 (metal), nosing strips (trim), anti-slip ribs (rubber), bolts (metal_dark), wear patches | V1 |
 | [t4-12](t4-large/t4-12-Rug/spec.md) | **Rug** | Basement | 180×120×3 → 115×77×2 | S | one | mat, border · centre pattern | UP |
 | [t4-13](t4-large/t4-13-StringLights/spec.md) | **StringLights** | Basement | 240×3×8 → 154×2×5 | S | one | cable · bulb | UP |
+| [t4-14](t4-large/t4-14-RollUpDoor/spec.md) | **RollUpDoor** | Basement | 437.5×125×375 → 280×80×240 | S | _Open, _Closed | drum housing, left rail, right rail, bumpers, roll up door, door bottom bar · raised bar, slat grooves, floor stripe, light box, red light, green light, number plate, number mark | V1 |
+| [t4-15](t4-large/t4-15-Truck/spec.md) | **Truck** | Basement | 250×621.88×287.5 → 160×398×184 | S | one | rear door, door bottom bar, boxes lower, boxes upper, windshield, left window, right window, front bumper, rear bumper, fuel tank, left rims, right rims · rear sill, door slats, door handle, box tape, box labels, grille, headlights, left mirror, right mirror, left tail light, right tail light, number plate, left stripe, right stripe | V1 |
+| [t4-16](t4-large/t4-16-Shelf/spec.md) | **Shelf** | Dock | 150×50×203.12 → 96×32×130 | S | one | post caps, back rails · shelf tags, edge stripe | V1 |
+| [t4-17](t4-large/t4-17-Quarantine/spec.md) | **Quarantine** | Dock | 200×200×229.69 → 128×128×147 | S | one | front bars, side bars, gate frame, suspicious boxes, top suspicious box · floor border, padlock, quarantine sign, sign text, beacon, red tape | V1 |
+| [t4-18](t4-large/t4-18-Generator/spec.md) | **Generator** | Dock | 200×100×218.75 → 128×64×140 | S | _Off, _On | control panel, panel screen, gauges, left louvre panel, right louvre panel, terminal box, rain cap · start button, stop button, light base, status light, stack bands, lifting eyes, left louvre slats, right louvre slats, hazard label | V1 |
+| [t4-19](t4-large/t4-19-FuelTank/spec.md) | **FuelTank** | Generator | 150×87.5×143.75 → 96×56×92 | S | _Half, _Full, _Low | tank top step, fill neck, vent pipe, gauge housing, gauge glass, gauge fuel, dial gauge · fill cap, vent hood, gauge ticks, gauge label, dial pointer, drain valve, valve handwheel, label plate, label text, hazard diamond, hazard mark | V1 |
+| [t4-20](t4-large/t4-20-TransferSwitchCabinet/spec.md) | **TransferSwitchCabinet** | Generator | 87.5×37.5×181.25 → 56×24×116 | S | _Grid, _Solar, _Battery, _Generator | door panel, status screen, selector base, selector knob, solar label, solar lamp, battery label, battery lamp, grid label, grid lamp, generator label, generator lamp · solar mark, battery mark, grid mark, generator mark, selector pointer, door handle, hinges, warning sticker | V1 |
+| [t4-21](t4-large/t4-21-FuelDeliveryPad/spec.md) | **FuelDeliveryPad** | Generator | 450×950×112.5 → 288×608×72 | S | one | bay border, wheel stop, bollards, fill door, spill kit · bollard bands, fill coupling, coupling cap, fill label, fill label mark, emergency stop, grounding lug, drain grate, grate slats, stop line, kit cross h, kit cross v | V1 |
+| [t4-22](t4-large/t4-22-YardFence/spec.md) | **YardFence** | Generator | 125×6.25×218.75 → 80×4×140 | S | one | top rail, bottom rail · wire bars, barbed strands | V1 |
+| [t4-23](t4-large/t4-23-YardGate/spec.md) | **YardGate** | Generator | 500×15.62×243.75 → 320×10×156 | S | one | left leaf frame, right leaf frame, left leaf bars, right leaf bars · left post cap, right post cap, left hinges, right hinges, gate latch, gate padlock | V1 |
+| [t4-24](t4-large/t4-24-TankerTruck/spec.md) | **TankerTruck** | Generator | 246.88×875×306.25 → 158×560×196 | S | one | tank bands, manhole base, pump cabinet, hose locker, meter box, exhaust stacks, windshield, left window, right window, front bumper, rear bumper · manhole lid, cabinet doors, cabinet handles, locker door, meter dial, meter screen, exhaust caps, grille, headlights, left mirror, right mirror, beacon bar, tail lights, number plate, left hazard plate, left plate mark, right hazard plate, right plate mark, left stripe, right stripe | V1 |
 
 ## T5: Rooms (grid S, collider on, grain 0)
 
@@ -101,6 +116,7 @@ Priority: **V1** = needed for the first playable. **UP** = needed when that upgr
 | [t5-02](t5-rooms/t5-02-Room_Basement/spec.md) | **Room_Basement** | Basement | 800×600×240 → 512×384×154 | Floor, Wall_Back, Wall_Front, Wall_Left, Wall_Right, Ceiling | floor drain, concrete seams, pipe brackets, conduit, wall stains damp patches, stair door hole in `Room_Basement_Wall_Right`, painted lines | V1 |
 | [t5-03](t5-rooms/t5-03-Room_Roof/spec.md) | **Room_Roof** | Roof | 1000×800×100 → 640×512×64 | Floor, Parapet_Back, Parapet_Front, Parapet_Left, Parapet_Right, Chimney |  | V1 |
 | [t5-04](t5-rooms/t5-04-StairShaft/spec.md) | **StairShaft** | Between floors | 150×350×280 → 96×224×179 | one | walls, door holes (into each floor's `Wall_Right`), light fixture mounts, wall trim | V1 |
+| [t5-05](t5-rooms/t5-05-Dock/spec.md) | **Dock** | Dock | 650×900×375 → 416×576×240 | one |  | V1 |
 
 ## T6: Building (grid S, collider on, grain 0)
 
@@ -108,3 +124,4 @@ Priority: **V1** = needed for the first playable. **UP** = needed when that upgr
 |---|---|---|---|---|---|---|
 | [t6-01](t6-building/t6-01-BuildingExterior/spec.md) | **BuildingExterior** | Whole building | 1000×700×400 → 640×448×256 | one | windows (tile), entrance door, wall panels, downpipes, outdoor AC, roof edge (matches the `Room_Roof` parapets), signage | V1 |
 | [t6-02](t6-building/t6-02-LotPlate/spec.md) | **LotPlate** | Whole building | 2000×1600×10 → 1280×1024×6 | one | gravel, paving slabs, paint lines, drain covers, kerb. grain | V1 |
+| [t6-03](t6-building/t6-03-GeneratorBuilding/spec.md) | **GeneratorBuilding** | Generator | 650×550×300 → 416×352×192 | one |  | V1 |

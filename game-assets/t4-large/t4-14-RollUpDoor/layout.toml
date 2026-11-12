@@ -1,0 +1,79 @@
+[build]
+metallic = ["metal", "metal_dark", "trim"]
+
+["dock floor"]
+
+["left pier"]
+on = "dock floor.top"
+align = "left"
+
+["right pier"]
+on = "dock floor.top"
+align = "right"
+
+[lintel]
+on = "left pier.right"
+align = "top"
+
+["drum housing"]
+on = "lintel.front"
+
+["left rail"]
+on = "left pier.front"
+align = ["right", "bottom"]
+
+["right rail"]
+on = "right pier.front"
+align = ["left", "bottom"]
+
+[bumpers]
+on = "dock floor.front"
+align = "bottom"
+repeat = { x = 2, pitch_x = 387.5 }
+
+["roll up door"]
+on = "dock floor.top"
+y = "flush-front"
+offset_y = 18.75
+states = ["Closed"]
+
+["door bottom bar"]
+on = "roll up door.front"
+align = "bottom"
+gap = -3.12
+states = ["Closed"]
+
+["slat grooves"]
+on = "roll up door.front"
+gap = -1.56
+repeat = { z = 39, pitch_z = 7.81 }
+states = ["Closed"]
+
+["raised bar"]
+on = "lintel.bottom"
+y = "flush-front"
+offset_y = 18.75
+states = ["Open"]
+
+["floor stripe"]
+on = "dock floor.top"
+y = "flush-front"
+
+["light box"]
+on = "right pier.front"
+offset_z = -80
+
+["red light"]
+on = "light box.front"
+offset_z = 6
+
+["green light"]
+on = "light box.front"
+offset_z = -6
+
+["number plate"]
+on = "left pier.front"
+offset_z = -80
+
+["number mark"]
+on = "number plate.front"

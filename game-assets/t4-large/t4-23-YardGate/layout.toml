@@ -1,0 +1,57 @@
+[build]
+metallic = ["metal", "metal_dark", "trim"]
+
+["left gate post"]
+
+["right gate post"]
+on = "left gate post.right"
+gap = 468.75
+
+["left leaf frame"]
+on = "left gate post.right"
+align = "bottom"
+offset_z = 12.5
+shape = "hollow"
+thickness = 6.25
+open = ["front", "back"]
+
+["right leaf frame"]
+on = "right gate post.left"
+align = "bottom"
+offset_z = 12.5
+shape = "hollow"
+thickness = 6.25
+open = ["front", "back"]
+
+["left leaf bars"]
+on = "left leaf frame.front"
+gap = -4.69
+repeat = { x = 29, pitch_x = 7.81 }
+
+["right leaf bars"]
+on = "right leaf frame.front"
+gap = -4.69
+repeat = { x = 29, pitch_x = 7.81 }
+
+["left post cap"]
+on = "left gate post.top"
+
+["right post cap"]
+on = "right gate post.top"
+
+["left hinges"]
+on = "left gate post.right"
+gap = -4.69
+repeat = { z = 3, pitch_z = 75 }
+
+["right hinges"]
+on = "right gate post.left"
+gap = -4.69
+repeat = { z = 3, pitch_z = 75 }
+
+["gate latch"]
+on = "left leaf frame.right"
+gap = -3.12
+
+["gate padlock"]
+on = "gate latch.front"

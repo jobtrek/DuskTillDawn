@@ -1,0 +1,29 @@
+[build]
+metallic = ["metal", "metal_dark", "trim"]
+
+[posts]
+repeat = { x = 2, pitch_x = 145.31, y = 2, pitch_y = 45.31 }
+
+[boards]
+on = "posts.top"
+gap = -180
+repeat = { z = 5, pitch_z = 40 }
+
+["post caps"]
+on = "posts.top"
+repeat = { x = 2, pitch_x = 145.31, y = 2, pitch_y = 45.31 }
+
+["back rails"]
+on = "posts.back"
+gap = -3.12
+repeat = { z = 2, pitch_z = 120 }
+
+["shelf tags"]
+on = "boards.front"
+gap = -1.56
+repeat = { x = 3, pitch_x = 50, z = 5, pitch_z = 40 }
+
+["edge stripe"]
+on = "boards.front"
+gap = -3.12
+align = "bottom"

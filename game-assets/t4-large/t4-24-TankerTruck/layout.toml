@@ -1,0 +1,194 @@
+[build]
+metallic = ["metal", "metal_dark", "trim", "chassis", "tank_a", "tank_b", "tank_c"]
+
+[palette]
+tank_a = [0.60, 0.61, 0.64]
+tank_b = [0.50, 0.51, 0.54]
+tank_c = [0.68, 0.69, 0.72]
+adr_orange = [0.90, 0.40, 0.02]
+
+["front wheels"]
+repeat = { x = 2, pitch_x = 212.5 }
+
+["rear wheels a"]
+on = "front wheels.back"
+gap = 485
+repeat = { x = 2, pitch_x = 212.5 }
+
+["rear wheels b"]
+on = "rear wheels a.back"
+gap = 50
+repeat = { x = 2, pitch_x = 212.5 }
+
+["chassis frame"]
+on = "front wheels.top"
+gap = -12.5
+y = "flush-front"
+offset_y = -50
+
+[cab]
+on = "chassis frame.top"
+y = "flush-front"
+
+["tank keel"]
+on = "chassis frame.top"
+y = "flush-back"
+offset_y = -30
+
+["tank lower"]
+on = "tank keel.top"
+
+["tank middle"]
+on = "tank lower.top"
+
+["tank upper"]
+on = "tank middle.top"
+
+["tank crown"]
+on = "tank upper.top"
+
+["tank bands"]
+on = "tank middle.top"
+gap = -100
+repeat = { y = 4, pitch_y = 150 }
+
+["manhole base"]
+on = "tank crown.top"
+repeat = { y = 3, pitch_y = 175 }
+
+["pump cabinet"]
+on = "tank middle.back"
+
+["hose locker"]
+on = "chassis frame.left"
+
+["meter box"]
+on = "chassis frame.right"
+offset_y = 20
+
+["exhaust stacks"]
+on = "chassis frame.top"
+y = "flush-front"
+offset_y = 205
+repeat = { x = 2, pitch_x = 190 }
+
+[windshield]
+on = "cab.front"
+gap = -1.56
+offset_z = 35
+
+["left window"]
+on = "cab.left"
+gap = -1.56
+offset_z = 35
+
+["right window"]
+on = "cab.right"
+gap = -1.56
+offset_z = 35
+
+["front bumper"]
+on = "cab.front"
+align = "bottom"
+offset_z = -12.5
+
+["rear bumper"]
+on = "chassis frame.back"
+align = "bottom"
+
+["manhole lid"]
+on = "manhole base.top"
+repeat = { y = 3, pitch_y = 175 }
+
+["cabinet doors"]
+on = "pump cabinet.back"
+gap = -1.56
+repeat = { x = 2, pitch_x = 93.75 }
+
+["cabinet handles"]
+on = "pump cabinet.back"
+gap = -1.56
+repeat = { x = 2, pitch_x = 12.5 }
+
+["locker door"]
+on = "hose locker.left"
+gap = -1.56
+
+["meter dial"]
+on = "meter box.right"
+gap = -1.56
+offset_y = -12
+offset_z = 12
+
+["meter screen"]
+on = "meter box.right"
+gap = -1.56
+offset_y = 8
+offset_z = -14
+
+["exhaust caps"]
+on = "exhaust stacks.top"
+repeat = { x = 2, pitch_x = 190 }
+
+[grille]
+on = "cab.front"
+gap = -1.56
+offset_z = -30
+
+[headlights]
+on = "cab.front"
+gap = -1.56
+offset_z = -35
+repeat = { x = 2, pitch_x = 150 }
+
+["left mirror"]
+on = "cab.left"
+y = "flush-front"
+offset_y = 15
+offset_z = 25
+
+["right mirror"]
+on = "cab.right"
+y = "flush-front"
+offset_y = 15
+offset_z = 25
+
+["beacon bar"]
+on = "cab.top"
+y = "flush-front"
+offset_y = 20
+
+["tail lights"]
+on = "rear bumper.back"
+gap = -1.56
+repeat = { x = 2, pitch_x = 187.5 }
+
+["number plate"]
+on = "rear bumper.back"
+gap = -1.56
+
+["left hazard plate"]
+on = "tank middle.left"
+gap = -1.56
+
+["left plate mark"]
+on = "left hazard plate.left"
+gap = -3.12
+
+["right hazard plate"]
+on = "tank middle.right"
+gap = -1.56
+
+["right plate mark"]
+on = "right hazard plate.right"
+gap = -3.12
+
+["left stripe"]
+on = "tank middle.left"
+gap = -3.12
+offset_z = -25
+
+["right stripe"]
+on = "tank middle.right"
+gap = -3.12
+offset_z = -25

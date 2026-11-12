@@ -1,0 +1,86 @@
+[build]
+metallic = ["metal", "metal_dark", "trim"]
+collider = true
+
+[palette]
+cardboard = [0.50, 0.34, 0.17]
+
+["dock floor"]
+
+["left wall"]
+on = "dock floor.top"
+align = "left"
+
+["right wall"]
+on = "dock floor.top"
+align = "right"
+
+["back wall"]
+on = "dock floor.top"
+y = "flush-back"
+
+["front wall left"]
+on = "dock floor.top"
+align = "left"
+y = "flush-front"
+offset_x = 12.5
+
+["front wall right"]
+on = "dock floor.top"
+align = "right"
+y = "flush-front"
+offset_x = -12.5
+
+["ceiling beams"]
+on = "left wall.top"
+align = "left"
+repeat = { y = 5, pitch_y = 200 }
+
+["pipe run"]
+on = "left wall.right"
+offset_z = 90
+
+["pipe brackets"]
+on = "left wall.right"
+offset_z = 90
+repeat = { y = 9, pitch_y = 90 }
+
+["wall lamps"]
+on = "back wall.front"
+offset_z = 80
+repeat = { x = 3, pitch_x = 150 }
+
+["lamp cages"]
+on = "wall lamps.front"
+repeat = { x = 3, pitch_x = 150 }
+
+[pallet]
+on = "dock floor.top"
+y = "flush-back"
+offset_x = -50
+offset_y = -12.5
+
+["pallet boxes"]
+on = "pallet.top"
+repeat = { x = 2, pitch_x = 46.88, y = 2, pitch_y = 46.88 }
+
+["lane lines"]
+on = "dock floor.top"
+gap = -3.12
+repeat = { x = 2, pitch_x = 280 }
+y = "flush-front"
+
+["bench zone"]
+on = "dock floor.top"
+gap = -3.12
+shape = "hollow"
+thickness = 3.12
+open = ["top", "bottom"]
+align = "right"
+y = "flush-back"
+offset_x = -75
+offset_y = -12.5
+
+["wall skirting"]
+on = "back wall.front"
+align = "bottom"

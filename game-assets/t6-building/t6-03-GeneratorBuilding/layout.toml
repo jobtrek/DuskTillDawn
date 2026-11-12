@@ -1,0 +1,74 @@
+[build]
+metallic = ["metal_dark", "chassis"]
+
+["floor slab"]
+
+["left wall"]
+on = "floor slab.top"
+align = "left"
+
+["right wall"]
+on = "floor slab.top"
+align = "right"
+
+["back wall"]
+on = "floor slab.top"
+y = "flush-back"
+
+["front wall left"]
+on = "floor slab.top"
+align = "left"
+y = "flush-front"
+offset_x = 12.5
+
+["front wall right"]
+on = "floor slab.top"
+align = "right"
+y = "flush-front"
+offset_x = -12.5
+
+["door lintel"]
+on = "front wall left.right"
+align = "top"
+
+["roof beams"]
+on = "left wall.top"
+align = "left"
+repeat = { y = 5, pitch_y = 125 }
+
+["intake louvre"]
+on = "back wall.front"
+gap = -1.56
+offset_x = 150
+offset_z = 40
+
+["louvre slats"]
+on = "intake louvre.front"
+gap = -1.56
+repeat = { z = 6, pitch_z = 6.25 }
+
+["generator zone"]
+on = "floor slab.top"
+gap = -3.12
+shape = "hollow"
+thickness = 3.12
+open = ["top", "bottom"]
+y = "flush-back"
+offset_y = -25
+
+["wall lamps"]
+on = "back wall.front"
+offset_z = 100
+repeat = { x = 4, pitch_x = 150 }
+
+["wall skirting"]
+on = "back wall.front"
+align = "bottom"
+
+["danger sign"]
+on = "front wall right.front"
+gap = -1.56
+
+["danger mark"]
+on = "danger sign.front"
+gap = -3.12

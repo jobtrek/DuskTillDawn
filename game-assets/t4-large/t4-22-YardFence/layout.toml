@@ -1,0 +1,25 @@
+[build]
+metallic = ["metal", "trim"]
+
+["fence post"]
+
+["top rail"]
+on = "fence post.right"
+align = "top"
+offset_z = -18.75
+
+["bottom rail"]
+on = "fence post.right"
+align = "bottom"
+offset_z = 10
+
+["wire bars"]
+on = "fence post.right"
+align = "bottom"
+offset_z = 5
+repeat = { x = 16, pitch_x = 7.5 }
+
+["barbed strands"]
+on = "fence post.right"
+align = "top"
+repeat = { z = 3, pitch_z = 6.25 }

@@ -1,0 +1,62 @@
+[build]
+metallic = ["metal", "metal_dark", "trim"]
+
+[feet]
+repeat = { x = 2, pitch_x = 165.62, y = 2, pitch_y = 65.62 }
+
+[legs]
+on = "feet.top"
+repeat = { x = 2, pitch_x = 168.75, y = 2, pitch_y = 68.75 }
+
+["bench top"]
+on = "legs.top"
+
+["lower shelf"]
+on = "legs.top"
+gap = -65.63
+
+["drawer unit"]
+on = "bench top.bottom"
+align = "right"
+offset_x = -6.25
+
+[pegboard]
+on = "bench top.top"
+y = "flush-back"
+
+[mat]
+on = "bench top.top"
+gap = -3.12
+
+["light bar"]
+on = "pegboard.front"
+align = "top"
+
+["drawer handle"]
+on = "drawer unit.front"
+gap = -1.56
+
+[hooks]
+on = "pegboard.front"
+repeat = { x = 5, pitch_x = 25, z = 2, pitch_z = 15.62 }
+
+["outlet panel"]
+on = "pegboard.front"
+align = "right"
+offset_x = -6.25
+
+["power led"]
+on = "outlet panel.front"
+offset_x = -6.25
+
+["alarm led"]
+on = "outlet panel.front"
+offset_x = 6.25
+
+["label plate"]
+on = "pegboard.front"
+align = "left"
+offset_x = 6.25
+
+["label mark"]
+on = "label plate.front"

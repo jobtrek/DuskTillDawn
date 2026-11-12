@@ -1,0 +1,163 @@
+[build]
+metallic = ["metal", "metal_dark", "trim"]
+
+[palette]
+cardboard = [0.50, 0.34, 0.17]
+cardboard_dark = [0.36, 0.22, 0.10]
+
+[wheels]
+repeat = { x = 2, pitch_x = 212.5, y = 2, pitch_y = 350 }
+
+["chassis frame"]
+on = "wheels.top"
+gap = -12.5
+
+["cargo floor"]
+on = "chassis frame.top"
+y = "flush-back"
+
+[cab]
+on = "chassis frame.top"
+y = "flush-front"
+
+["cargo front wall"]
+on = "cargo floor.top"
+y = "flush-front"
+
+["left wall"]
+on = "cargo floor.top"
+align = "left"
+
+["right wall"]
+on = "cargo floor.top"
+align = "right"
+
+["cargo roof"]
+on = "left wall.top"
+align = "left"
+
+["rear door"]
+on = "left wall.right"
+y = "flush-back"
+align = "top"
+
+["door bottom bar"]
+on = "rear door.bottom"
+
+["rear sill"]
+on = "cargo floor.top"
+y = "flush-back"
+
+["boxes lower"]
+on = "cargo floor.top"
+y = "flush-back"
+offset_y = -12.5
+repeat = { x = 4, pitch_x = 56.25, y = 3, pitch_y = 56.25 }
+
+["box tape"]
+on = "boxes lower.top"
+gap = -3.12
+repeat = { x = 4, pitch_x = 56.25, y = 3, pitch_y = 56.25 }
+
+["boxes upper"]
+on = "boxes lower.top"
+repeat = { x = 3, pitch_x = 62.5, y = 2, pitch_y = 56.25 }
+
+[windshield]
+on = "cab.front"
+gap = -1.56
+offset_z = 35
+
+["left window"]
+on = "cab.left"
+gap = -1.56
+offset_z = 35
+
+["right window"]
+on = "cab.right"
+gap = -1.56
+offset_z = 35
+
+["front bumper"]
+on = "cab.front"
+align = "bottom"
+offset_z = -12.5
+
+["rear bumper"]
+on = "cargo floor.back"
+align = "bottom"
+offset_z = -12.5
+
+["fuel tank"]
+on = "chassis frame.left"
+
+["left rims"]
+on = "wheels.left"
+gap = -1.56
+repeat = { y = 2, pitch_y = 350 }
+
+["right rims"]
+on = "wheels.right"
+gap = -1.56
+repeat = { y = 2, pitch_y = 350 }
+
+["box labels"]
+on = "boxes lower.back"
+gap = -1.56
+repeat = { x = 4, pitch_x = 56.25 }
+
+[grille]
+on = "cab.front"
+gap = -1.56
+offset_z = -30
+
+[headlights]
+on = "cab.front"
+gap = -1.56
+offset_z = -35
+repeat = { x = 2, pitch_x = 150 }
+
+["left mirror"]
+on = "cab.left"
+y = "flush-front"
+offset_y = 15
+offset_z = 25
+
+["right mirror"]
+on = "cab.right"
+y = "flush-front"
+offset_y = 15
+offset_z = 25
+
+["number plate"]
+on = "rear bumper.back"
+gap = -1.56
+
+["door slats"]
+on = "rear door.back"
+gap = -1.56
+repeat = { z = 11, pitch_z = 7.81 }
+
+["door handle"]
+on = "door bottom bar.back"
+gap = -1.56
+
+["left tail light"]
+on = "left wall.back"
+gap = -1.56
+offset_z = -60
+
+["right tail light"]
+on = "right wall.back"
+gap = -1.56
+offset_z = -60
+
+["left stripe"]
+on = "left wall.left"
+gap = -3.12
+offset_z = 20
+
+["right stripe"]
+on = "right wall.right"
+gap = -3.12
+offset_z = 20

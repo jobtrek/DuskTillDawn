@@ -1,0 +1,57 @@
+[build]
+metallic = ["metal"]
+
+[feet]
+repeat = { x = 2, pitch_x = 43.75, y = 2, pitch_y = 32.81 }
+
+[base]
+on = "feet.top"
+
+[column]
+on = "base.top"
+y = "flush-back"
+
+[arm]
+on = "column.top"
+gap = -7.81
+y = "flush-back"
+
+[turntable]
+on = "base.top"
+shape = "disc"
+offset_y = -2.34
+
+["scan head"]
+on = "arm.bottom"
+y = "flush-front"
+
+["control panel"]
+on = "column.front"
+gap = -0.78
+offset_z = -8
+
+[lens]
+on = "scan head.bottom"
+
+["laser emitter"]
+on = "scan head.front"
+gap = -0.78
+
+["start button"]
+on = "control panel.front"
+gap = -0.78
+offset_z = 4
+
+["stop button"]
+on = "control panel.front"
+gap = -0.78
+offset_z = -4
+
+["warning sticker"]
+on = "column.left"
+gap = -0.78
+offset_z = 5
+
+["base label"]
+on = "base.front"
+gap = -0.78
