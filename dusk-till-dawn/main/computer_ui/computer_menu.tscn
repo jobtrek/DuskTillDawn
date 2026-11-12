@@ -1,0 +1,225 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://main/computer_ui/ComputerMenu.cs" id="1_menu"]
+[ext_resource type="Script" path="res://main/computer_ui/BlockReveal.cs" id="2_reveal"]
+[ext_resource type="Texture2D" path="res://main/computer_ui/textures/frame.png" id="3_frame"]
+[ext_resource type="Texture2D" path="res://main/computer_ui/textures/wallpaper.png" id="4_wall"]
+[ext_resource type="Texture2D" path="res://main/computer_ui/textures/icon_mail.png" id="5_mail"]
+[ext_resource type="Texture2D" path="res://main/computer_ui/textures/icon_monitoring.png" id="6_mon"]
+[ext_resource type="Texture2D" path="res://main/computer_ui/textures/icon_chat.png" id="7_chat"]
+
+[node name="ComputerMenu" type="Control"]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_menu")
+
+[node name="Backdrop" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6)
+
+[node name="Map" type="Control" parent="."]
+layout_mode = 1
+anchor_left = 0.12
+anchor_top = 0.08
+anchor_right = 0.88
+anchor_bottom = 0.92
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Frame" type="NinePatchRect" parent="Map"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_frame")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+
+[node name="Screen" type="Control" parent="Map"]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Wallpaper" type="TextureRect" parent="Map/Screen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_wall")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="Watermark" type="Label" parent="Map/Screen"]
+modulate = Color(1, 1, 1, 0.55)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -260.0
+offset_top = -34.0
+offset_right = -12.0
+offset_bottom = -10.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 13
+text = "NixOS  ·  GNOME"
+horizontal_alignment = 2
+
+[node name="TopBar" type="ColorRect" parent="Map/Screen"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 26.0
+grow_horizontal = 2
+color = Color(0.06, 0.06, 0.08, 1)
+
+[node name="Activities" type="Label" parent="Map/Screen/TopBar"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_right = 92.0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 13
+text = "Activities"
+vertical_alignment = 1
+
+[node name="Clock" type="Label" parent="Map/Screen/TopBar"]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_right = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 13
+text = "00:00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Tray" type="Label" parent="Map/Screen/TopBar"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -110.0
+offset_right = -12.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 13
+text = "EN    100%"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Icons" type="VBoxContainer" parent="Map/Screen"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 42.0
+offset_right = 126.0
+offset_bottom = 400.0
+theme_override_constants/separation = 14
+
+[node name="MailApp" type="VBoxContainer" parent="Map/Screen/Icons"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Button" type="TextureButton" parent="Map/Screen/Icons/MailApp"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+tooltip_text = "Mail"
+texture_normal = ExtResource("5_mail")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Map/Screen/Icons/MailApp"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.85)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 14
+text = "Mail"
+horizontal_alignment = 1
+
+[node name="MonitoringApp" type="VBoxContainer" parent="Map/Screen/Icons"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Button" type="TextureButton" parent="Map/Screen/Icons/MonitoringApp"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+tooltip_text = "Monitoring"
+texture_normal = ExtResource("6_mon")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Map/Screen/Icons/MonitoringApp"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.85)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 14
+text = "Monitoring"
+horizontal_alignment = 1
+
+[node name="HelpApp" type="VBoxContainer" parent="Map/Screen/Icons"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Button" type="TextureButton" parent="Map/Screen/Icons/HelpApp"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+tooltip_text = "ChatGPT (help)"
+texture_normal = ExtResource("7_chat")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Map/Screen/Icons/HelpApp"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.85)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 14
+text = "ChatGPT"
+horizontal_alignment = 1
+
+[node name="BlockReveal" type="Control" parent="Map/Screen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("2_reveal")

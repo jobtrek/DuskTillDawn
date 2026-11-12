@@ -2,8 +2,9 @@ using Godot;
 
 public partial class DetectPlayerNearComputer : MeshInstance3D
 {
-    private Control _control;
-    private Control _control2;
+    // Assigned in _Ready(), not the constructor, so tell the compiler they won't be null.
+    private Control _control = null!;
+    private Control _control2 = null!;
     private bool _playerInRange;
 
     /* so if the player walks near the zone then it should display the press e to open the computer, then the user needs to clicks 'E' 
@@ -32,14 +33,17 @@ public partial class DetectPlayerNearComputer : MeshInstance3D
         InputMap.ActionAddEvent("open_menu", new InputEventKey { PhysicalKeycode = Key.E });
     }
 
+    // The Area3D also overlaps static bodies (floor, desk) at startup; only the player counts.
     private void OnBodyEntered(Node3D body)
     {
+        if (body is not CharacterBody3D) return;
         _playerInRange = true;
         _control.Show();
     }
 
     private void OnBodyExited(Node3D body)
     {
+        if (body is not CharacterBody3D) return;
         _playerInRange = false;
         _control.Hide();
         _control2.Hide();
@@ -47,7 +51,7 @@ public partial class DetectPlayerNearComputer : MeshInstance3D
 
     public override void _Process(double delta)
     {
-        if (Input.IsActionJustPressed("open_menu"))
+        if (_playerInRange && Input.IsActionJustPressed("open_menu"))
         {
             _control2.Show();
             _control.Hide();
