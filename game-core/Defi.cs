@@ -1,5 +1,3 @@
-using System;
-
 namespace DuskTillDawn.Core;
 
 public enum EtatDefi
@@ -19,6 +17,8 @@ public enum Salle
 
 public abstract class Defi
 {
+    private const double MargeArrondi = 1e-9;
+
     protected Defi(string alerte, Salle salle, int points, double dureeSecondes)
     {
         Alerte = alerte;
@@ -50,10 +50,11 @@ public abstract class Defi
             return;
         }
 
-        TempsRestant = Math.Max(TempsRestant - secondes, 0);
+        TempsRestant -= secondes;
 
-        if (TempsRestant == 0)
+        if (TempsRestant <= MargeArrondi)
         {
+            TempsRestant = 0;
             Etat = EtatDefi.Rate;
         }
     }

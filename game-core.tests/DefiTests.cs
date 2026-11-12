@@ -96,7 +96,7 @@ public class DefiTests
         var defi = new DefiDeTest();
         defi.Lancer();
         defi.Tick(20);
-        
+
         defi.Reparer();
 
         Assert.Equal(EtatDefi.Reussi, defi.Etat);
@@ -134,5 +134,20 @@ public class DefiTests
         defi.Tick(60);
         Assert.Equal(EtatDefi.Reussi, defi.Etat);
         Assert.Equal(60, defi.TempsRestant);
+    }
+
+    [Fact]
+    public void Beaucoup_de_petits_ticks_font_comme_un_gros_tick()
+    {
+        var defi = new DefiDeTest();
+        defi.Lancer();
+
+        for (var i = 0; i < 60 * 60; i++)
+        {
+            defi.Tick(1.0 / 60.0);
+        }
+
+        Assert.Equal(0, defi.TempsRestant);
+        Assert.Equal(EtatDefi.Rate, defi.Etat);
     }
 }
