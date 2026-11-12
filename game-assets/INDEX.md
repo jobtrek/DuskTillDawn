@@ -77,12 +77,13 @@ Priority: **V1** = needed for the first playable. **UP** = needed when that upgr
 | [t3-16](t3-medium/t3-16-MiniFridgeSnacks/spec.md) | **MiniFridgeSnacks** | Basement | 50×53×85 → 32×34×54 | S | one | body, door, snack crate · handle, door seam, magnet, feet | UP |
 | [t3-17](t3-medium/t3-17-Vines/spec.md) | **Vines** | All | 22×3×120 → 28×4×154 | F | one | stem, leaf left, leaf right · bud | UP |
 | [t3-18](t3-medium/t3-18-InspectionBench/spec.md) | **InspectionBench** | Basement | 175×75×140.62 → 112×48×90 | S | one | drawer unit, pegboard, mat, light bar · drawer handle, hooks, outlet panel, power led, alarm led, label plate, label mark | V1 |
+| [t3-18](t3-medium/t3-18-WarehouseRack/spec.md) | **WarehouseRack** | Basement | 120×60×180 → 77×38×115 | S | one | decks · side ties, side ties, load labels | UP |
 
 ## T4: Large (over 1.3 m)
 
 | ID | Element | Room | Size cm → voxels (W×D×H) | Grid | States / pieces (separate models) | Secondary · tertiary detail | Pri |
 |---|---|---|---|---|---|---|---|
-| [t4-01](t4-large/t4-01-Desk/spec.md) | **Desk** | Control | 160×80×75 → 102×51×48 | S | one | side panels, top, drawer, handles, cable grommet, edge trim, screws, wood grain ·  | V1 |
+| [t4-01](t4-large/t4-01-Desk/spec.md) | **Desk** | Control | 240×100×75 → 154×64×48 | S | one | side panels, top, drawer, handles, cable grommet, edge trim, screws, wood grain ·  | V1 |
 | [t4-02](t4-large/t4-02-SolarPanel/spec.md) | **SolarPanel** | Roof | 100×4×165 → 128×5×211 | F | _Clean, _Dirty, _Damaged | frame, glass · 60 cells (tile), busbars, junction box, corner keys, label | V1 |
 | [t4-03](t4-large/t4-03-SuppressionTank/spec.md) | **SuppressionTank** | Basement | 30×30×170 → 19×19×109 | S | one | valve neck + head · pressure gauge, hose, bands, wall bracket plates | UP |
 | [t4-04](t4-large/t4-04-Engineer/spec.md) | **Engineer** | All | 50×30×172 → 32×19×110 | S | _Head, _Torso, _Arm, _Leg | head (blob ok, organic), hoodie · face, hair, pockets, lanyard badge, belt, shoes, hands | V1 |
