@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://b0l1qmxexlxd4" path="res://main/Main.cs" id="1_main"]
 [ext_resource type="Script" uid="uid://cvacxd3l2bouw" path="res://player/Player.cs" id="2_player"]
 [ext_resource type="Script" uid="uid://b5w6vfe5pj33j" path="res://main/Movement.cs" id="3_67ri8"]
+[ext_resource type="Shader" path="res://main/sky/sky.gdshader" id="sky_shader"]
 [ext_resource type="PackedScene" uid="uid://d3fs1xbndietu" path="res://levels/basement/Basement_Levels.blend" id="3_lquwl"]
 [ext_resource type="Script" uid="uid://b2q56jir26r56" path="res://levels/basement/L1StripLightOn.cs" id="4_7mycd"]
 [ext_resource type="PackedScene" uid="uid://cx8q5h3il4j2d" path="res://levels/roof/roof.blend" id="5_272bh"]
@@ -187,6 +188,28 @@ size = Vector3(0.87, 0.2, 0.4)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_3s6sg"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sky"]
+shader = ExtResource("sky_shader")
+shader_parameter/sky_top_color = Color(0.16, 0.45, 0.95, 1)
+shader_parameter/sky_horizon_color = Color(0.58, 0.8, 1, 1)
+
+[sub_resource type="Sky" id="Sky_world"]
+sky_material = SubResource("ShaderMaterial_sky")
+
+[sub_resource type="Environment" id="Environment_world"]
+background_mode = 2
+sky = SubResource("Sky_world")
+ambient_light_source = 3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_moon"]
+shading_mode = 0
+albedo_color = Color(0.86, 0.9, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_moon"]
+material = SubResource("StandardMaterial3D_moon")
+radius = 0.5
+height = 1.0
+
 [node name="Main" type="Node3D" unique_id=942546274]
 script = ExtResource("1_main")
 
@@ -204,8 +227,22 @@ shape = SubResource("ConcavePolygonShape3D_grrlh")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Room/MeshInstance3D" unique_id=336109852]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=709862064]
-transform = Transform3D(0.866025, -0.383022, 0.321394, 0, 0.642788, 0.766044, -0.5, -0.663414, 0.55667, 0, 0, 0)
 shadow_enabled = true
+
+[node name="MoonLight3D" type="DirectionalLight3D" parent="."]
+light_color = Color(0.45, 0.55, 1, 1)
+light_energy = 0.25
+shadow_enabled = true
+
+[node name="Moon" type="Node3D" parent="."]
+visible = false
+
+[node name="Mesh" type="MeshInstance3D" parent="Moon"]
+cast_shadow = 0
+mesh = SubResource("SphereMesh_moon")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_world")
 
 [node name="Player" type="CharacterBody3D" parent="." unique_id=628655475]
 transform = Transform3D(1, 0, 0, 0, 0.5345375, 0, 0, 0, 1, 83.87202, 0.22459394, 16.888489)
