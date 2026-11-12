@@ -1,6 +1,6 @@
 using Godot;
 using System;
-
+using DuskTillDawn.Main.MailUi;
 public partial class Button : Godot.Button
 {
     // Called when the node enters the scene tree for the first time.
@@ -17,6 +17,6 @@ public partial class Button : Godot.Button
 
     private void OnPressed()
     {
-        GD.Print("Hello world");
+        new Database().GenerateDatabase();
     }
 }

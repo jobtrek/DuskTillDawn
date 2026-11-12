@@ -1,0 +1,193 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://main/mail_ui/MailApp.cs" id="1_mail"]
+[ext_resource type="Script" path="res://main/computer_ui/BlockReveal.cs" id="2_reveal"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_window"]
+bg_color = Color(0.06, 0.06, 0.08, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.32, 0.47, 0.75, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_close"]
+bg_color = Color(0.75, 0.25, 0.25, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_report"]
+bg_color = Color(0.32, 0.47, 0.75, 1)
+content_margin_left = 12.0
+content_margin_top = 4.0
+content_margin_right = 12.0
+content_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_report_off"]
+bg_color = Color(0.2, 0.22, 0.28, 1)
+content_margin_left = 12.0
+content_margin_top = 4.0
+content_margin_right = 12.0
+content_margin_bottom = 4.0
+
+[node name="MailApp" type="Control"]
+texture_filter = 1
+layout_mode = 3
+anchor_left = 0.13
+anchor_top = 0.09
+anchor_right = 0.97
+anchor_bottom = 0.95
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mail")
+
+[node name="Window" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_window")
+
+[node name="TitleBar" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 26.0
+grow_horizontal = 2
+color = Color(0.32, 0.47, 0.75, 1)
+
+[node name="Title" type="Label" parent="TitleBar"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_right = 110.0
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.85)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 14
+text = "Mail"
+vertical_alignment = 1
+
+[node name="Close" type="Button" parent="TitleBar"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -26.0
+grow_horizontal = 0
+grow_vertical = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_close")
+theme_override_styles/hover = SubResource("StyleBoxFlat_close")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_close")
+text = "X"
+
+[node name="Body" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = 26.0
+offset_right = -2.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="Inbox" type="ScrollContainer" parent="Body"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 4.0
+horizontal_scroll_mode = 0
+
+[node name="Rows" type="VBoxContainer" parent="Body/Inbox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+
+[node name="Divider" type="ColorRect" parent="Body"]
+custom_minimum_size = Vector2(2, 0)
+layout_mode = 2
+color = Color(0.32, 0.47, 0.75, 0.5)
+
+[node name="Reader" type="MarginContainer" parent="Body"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 6.0
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 12
+
+[node name="Empty" type="Label" parent="Body/Reader"]
+modulate = Color(1, 1, 1, 0.55)
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "Select a mail"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Mail" type="VBoxContainer" parent="Body/Reader"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="From" type="Label" parent="Body/Reader/Mail"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "From: "
+
+[node name="Subject" type="Label" parent="Body/Reader/Mail"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+autowrap_mode = 3
+
+[node name="Date" type="Label" parent="Body/Reader/Mail"]
+modulate = Color(1, 1, 1, 0.55)
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+
+[node name="Separator" type="ColorRect" parent="Body/Reader/Mail"]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+color = Color(1, 1, 1, 0.12)
+
+[node name="BodyText" type="Label" parent="Body/Reader/Mail"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 14
+autowrap_mode = 3
+
+[node name="Footer" type="HBoxContainer" parent="Body/Reader/Mail"]
+layout_mode = 2
+
+[node name="Result" type="Label" parent="Body/Reader/Mail/Footer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 14
+vertical_alignment = 1
+
+[node name="Report" type="Button" parent="Body/Reader/Mail/Footer"]
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_report")
+theme_override_styles/hover = SubResource("StyleBoxFlat_report")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_report")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_report_off")
+text = "Report phishing"
+
+[node name="BlockReveal" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("2_reveal")
+Columns = 16

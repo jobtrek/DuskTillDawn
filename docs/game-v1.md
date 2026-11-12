@@ -149,7 +149,7 @@ Survive night 5 and you win the run.
 
 - Points per solved incident (see data file) plus **+200** for surviving the night plus **+1 per SLA %** left.
 - Shop opens between nights. Items are the counter-upgrades from the table in section 8.
-- Rule: a counter-upgrade removes or shortens its incident, but **never removes the lesson**. Example: after buying auto-renewal, the TLS incident can no longer happen, and the mail explains why.
+- Rule: a counter-upgrade removes or shortens its incident, but **never removes the lesson**. Example: after buying auto-renewal, the TLS incident can no longer happen, and the shop explains why.
 - Price range: 300 to 1500 points. Expect about 700 points per night, so the player can afford 1–2 upgrades per night.
 - Upgrades persist for the rest of the run. Losing resets everything.
 
@@ -159,12 +159,13 @@ Same rules, but the spawn rate keeps rising every hour of play and nights never 
 
 ## 10. The computer
 
-Three apps. All must be readable in under 2 seconds.
+Four apps. All must be readable in under 2 seconds. Specs: [specs/](specs/).
 
 | App | v1 content |
 |---|---|
 | **Dashboard** | 5 graphs (Power, Heat, Traffic, Disk, SLA) with warning colors |
-| **Mail** | Warnings for each incident, tech news (flavor + hints), phishing mails |
+| **Mail** | Warnings for each incident, tech news (flavor + hints), phishing mails. "Report phishing" on every mail. |
+| **Admin console** | Fix actions for incidents #1–#4 (certificates, firewall, packages, updates) |
 | **AI helper** | Our own character (not a real brand). Gives a hint when the player has been stuck for 60 s. Never solves it for them. |
 
 ## 11. Parked ideas (not in v1)
