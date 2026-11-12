@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://60wbj0yob4r5" path="res://assets/Company.blend" id="7_4dugh"]
 [ext_resource type="Script" uid="uid://bvbrlasve5j6w" path="res://main/Button.cs" id="9_grrlh"]
 [ext_resource type="Script" uid="uid://d37222qi5l642" path="res://main/DetectPlayer.cs" id="10_0i4oc"]
+[ext_resource type="PackedScene" path="res://assets/Exterior.blend" id="98_ext"]
 [ext_resource type="Script" uid="uid://b1w4cc0wdqr1r" path="res://main/Hud.cs" id="99_hud"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_v0o3d"]
@@ -2061,6 +2062,8 @@ shape = SubResource("BoxShape3D_roofholeFront")
 [node name="Shape_RampTip" type="CollisionShape3D" parent="Company/Room_Roof_Floor_StairHole" unique_id=1377654506]
 transform = Transform3D(1, 0, 0, 0, 0.6799, -0.7333, 0, 0.7333, 0.6799, -3.7796, 2.2575, -7.4214)
 shape = SubResource("BoxShape3D_rooframpTip")
+
+[node name="Exterior" parent="." instance=ExtResource("98_ext")]
 
 [node name="Hud" type="CanvasLayer" parent="." unique_id=1702548748]
 script = ExtResource("99_hud")

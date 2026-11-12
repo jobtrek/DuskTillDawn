@@ -8,7 +8,7 @@ All numbers are **starting values**. Put them in data files and tune them in Fri
 
 ## 1. Pitch
 
-You are the only sysadmin on the night shift. Servers run on solar power. Things break, some by accident, some because someone is attacking you. Keep the company alive until 06:00.
+You are the only sysadmin on the night shift. Servers run on solar power. Things break, some by accident, some because someone is attacking you. Keep the company alive until 08:00.
 
 **v1 = single player, 3 floors, 5 nights, 8 incidents, one upgrade shop.**
 
@@ -25,7 +25,7 @@ Every v1 feature must support at least one. If it doesn't, it waits.
 | Loop | Scale | What happens |
 |---|---|---|
 | **Core** | ~1 minute | Alert → diagnose on the computer → walk to the right floor → fix |
-| **Night** | ~10 min | Survive from 22:00 to 06:00 (in-game) with the SLA above zero |
+| **Night** | ~10 min | Survive from 20:00 to 08:00 (in-game) with the SLA above zero |
 | **Meta** | across nights | Points → shop upgrades → harder next night |
 
 ## 4. The building
@@ -69,11 +69,13 @@ These three are enough to teach "everything is connected". More cascades come la
 - Each active incident drains SLA every in-game minute (rate is in the incident's data file, see section 8).
 - Servers fully down: **extra −1 % per in-game minute**.
 - **Lose the game:** SLA reaches 0 %. The company goes bankrupt.
-- **Win a night:** reach 06:00 with SLA above 0 %.
+- **Win a night:** reach 08:00 with SLA above 0 %.
 
 ### Time
 
-- A night runs 22:00 → 06:00. One in-game hour = **75 real seconds** (night = 10 min).
+- The game starts at 20:00. A night runs 20:00 → 08:00. One in-game hour = **50 real seconds** (night = 10 min).
+- After 08:00 the day runs 08:00 → 20:00 (10 min). A full 24 h = **20 real minutes**.
+- At 08:00 the screen shows "You survived the night" for a few seconds. At the next 20:00 it shows "Day 1 survived" and the game stops. The SLA is frozen during the day.
 - The player can speed up ×2 while nothing is wrong.
 - Night report shows: SLA left, incidents solved, incidents failed, points earned.
 
