@@ -1,8 +1,16 @@
 # Dawn to Dusk
 
-A single-player game about the only sysadmin on a solar-powered night shift, keeping a three-floor building alive until 06:00. This glossary covers the 3D asset pipeline.
+A single-player game about the only sysadmin on a solar-powered night shift, keeping a three-floor building alive from 20:00 until 08:00. This glossary covers the game's core terms and the 3D asset pipeline.
 
 ## Language
+
+**Incident**:
+Something that goes wrong during a night and that the player must fix (an expired certificate, a phishing mail, a failing drive). It moves through Warning, Active, Escalated and Resolved.
+_Avoid_: défi, challenge, problem, panne
+
+**Mail**:
+A message in the computer's Mail app. Three kinds: a Warning mail (early sign of an Incident), a News mail (tech news, flavour and hints) and a Phishing mail (a fake that the player must report). The inbox empties at the start of each night.
+_Avoid_: email, e-mail, message
 
 **Asset table**:
 `game-assets/INDEX.md`. A generated index of every Element, rebuilt from the Specs by `voxel-sdk index`. Never edited by hand.
