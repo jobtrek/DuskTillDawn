@@ -43,5 +43,50 @@ public class DefiTests
 
         Assert.Equal(EtatDefi.EnCours, defi.Etat);
     }
-    
+    [Fact]
+    public void Le_temps_ne_baisse_pas_tant_que_le_defi_est_en_attente()
+    {
+        var defi = new DefiDeTest();
+
+        defi.Tick(10);
+
+        Assert.Equal(60, defi.TempsRestant);
+        Assert.Equal(EtatDefi.EnAttente, defi.Etat);
+    }
+
+    [Fact]
+    public void Le_temps_baisse_quand_le_defi_est_en_cours()
+    {
+        var defi = new DefiDeTest();
+        defi.Lancer();
+
+        defi.Tick(10);
+
+        Assert.Equal(50, defi.TempsRestant);
+        Assert.Equal(EtatDefi.EnCours, defi.Etat);
+    }
+
+    [Theory]
+    [InlineData(60)]
+    [InlineData(90)]
+    public void Le_defi_est_rate_quand_le_temps_arrive_a_zero(double secondes)
+    {
+        var defi = new DefiDeTest();
+        defi.Lancer();
+
+        defi.Tick(secondes);
+
+        Assert.Equal(0, defi.TempsRestant);
+        Assert.Equal(EtatDefi.Rate, defi.Etat);
+    }
+
+    [Fact]
+    public void Un_defi_rate_ne_peut_pas_etre_relance()
+    {
+        var defi = new DefiDeTest();
+        defi.Lancer();
+        defi.Tick(60);
+        defi.Lancer();
+        Assert.Equal(EtatDefi.Rate, defi.Etat);
+    }
 }

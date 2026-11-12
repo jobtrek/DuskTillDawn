@@ -42,4 +42,19 @@ public abstract class Defi
             Etat = EtatDefi.EnCours;
         }
     }
+
+    public void Tick(double secondes)
+    {
+        if (Etat != EtatDefi.EnCours)
+        {
+            return;
+        }
+
+        TempsRestant = Math.Max(TempsRestant - secondes, 0);
+
+        if (TempsRestant == 0)
+        {
+            Etat = EtatDefi.Rate;
+        }
+    }
 }
