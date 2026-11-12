@@ -8,6 +8,7 @@ public partial class DetectPlayer : MeshInstance3D
 	private Control _control;
 	public override void _Ready()
 	{
+		// the equivilent of getElementById in JS.
 		var _area3d = GetNode<Area3D>("Area3D");
 		_control = GetNode<Control>("Control");
 		_control.Hide();
