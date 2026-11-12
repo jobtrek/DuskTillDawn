@@ -89,4 +89,50 @@ public class DefiTests
         defi.Lancer();
         Assert.Equal(EtatDefi.Rate, defi.Etat);
     }
+
+    [Fact]
+    public void Reparer_un_defi_en_cours_le_reussit()
+    {
+        var defi = new DefiDeTest();
+        defi.Lancer();
+        defi.Tick(20);
+        
+        defi.Reparer();
+
+        Assert.Equal(EtatDefi.Reussi, defi.Etat);
+        Assert.Equal(40, defi.TempsRestant);
+    }
+
+    [Fact]
+    public void Reparer_un_defi_en_attente_ne_fait_rien()
+    {
+        var defi = new DefiDeTest();
+
+        defi.Reparer();
+
+        Assert.Equal(EtatDefi.EnAttente, defi.Etat);
+    }
+
+    [Fact]
+    public void Reparer_un_defi_rate_ne_fait_rien()
+    {
+        var defi = new DefiDeTest();
+        defi.Lancer();
+        defi.Tick(60);
+
+        defi.Reparer();
+
+        Assert.Equal(EtatDefi.Rate, defi.Etat);
+    }
+
+    [Fact]
+    public void Un_defi_reussi_ne_bouge_plus()
+    {
+        var defi = new DefiDeTest();
+        defi.Lancer();
+        defi.Reparer();
+        defi.Tick(60);
+        Assert.Equal(EtatDefi.Reussi, defi.Etat);
+        Assert.Equal(60, defi.TempsRestant);
+    }
 }

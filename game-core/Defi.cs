@@ -57,4 +57,12 @@ public abstract class Defi
             Etat = EtatDefi.Rate;
         }
     }
+
+    public void Reparer()
+    {
+        if (Etat == EtatDefi.EnCours)
+        {
+            Etat = EtatDefi.Reussi;
+        }
+    }
 }
