@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" path="res://main/computer_ui/textures/icon_mail.png" id="5_mail"]
 [ext_resource type="Texture2D" path="res://main/computer_ui/textures/icon_monitoring.png" id="6_mon"]
 [ext_resource type="Texture2D" path="res://main/computer_ui/textures/icon_chat.png" id="7_chat"]
+[ext_resource type="PackedScene" path="res://main/mail_ui/mail_app.tscn" id="8_mailapp"]
+[ext_resource type="Script" path="res://main/mail_ui/MailController.cs" id="9_mailctl"]
 
 [node name="ComputerMenu" type="Control"]
 texture_filter = 1
@@ -214,6 +216,10 @@ theme_override_font_sizes/font_size = 14
 text = "ChatGPT"
 horizontal_alignment = 1
 
+[node name="MailApp" parent="Map/Screen" instance=ExtResource("8_mailapp")]
+visible = false
+layout_mode = 1
+
 [node name="BlockReveal" type="Control" parent="Map/Screen"]
 layout_mode = 1
 anchors_preset = 15
@@ -223,3 +229,6 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("2_reveal")
+
+[node name="MailController" type="Node" parent="."]
+script = ExtResource("9_mailctl")
