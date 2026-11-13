@@ -23,6 +23,13 @@ public sealed class GameState
     private double _elapsedRealSeconds;
 
     public double Sla { get; private set; } = 100;
+    public double Heat { get; private set; } = 20;
+
+    public double Traffic { get; private set; } = 40;
+    public double Disk { get; private set; } = 0;
+    public double Power { get; private set; } = 100f;
+
+
     public int Points { get; private set; } = 1000;
 
     /// <summary>The night (20:00 to 08:00): Running, then Won at 08:00 or Lost when the SLA hits 0.</summary>

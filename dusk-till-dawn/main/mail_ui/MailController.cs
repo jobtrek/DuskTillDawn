@@ -27,6 +27,8 @@ public partial class MailController : Node
         _app.Hide();
 
         menu.MailPressed += OpenMail;
+        // Only one app window at a time: the monitoring window sits in the same spot.
+        menu.MonitoringPressed += () => _app.Hide();
         // Player walked away from the computer: close the mail window too.
         menu.VisibilityChanged += () =>
         {
