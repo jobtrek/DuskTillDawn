@@ -25,9 +25,9 @@ public sealed class GameState
     public double Sla { get; private set; } = 100;
     public double Heat { get; private set; } = 20;
 
-    public double Traffic { get; private set;} = 40;
-    public double Disk {get; private set; } = 0;
-    public double Power {get; private set; } = 100f;
+    public double Traffic { get; private set; } = 40;
+    public double Disk { get; private set; } = 0;
+    public double Power { get; private set; } = 100f;
 
 
     public int Points { get; private set; } = 1000;
