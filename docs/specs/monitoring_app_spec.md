@@ -62,5 +62,5 @@ The app has no actions in v1. It only shows state.
 
 1. Orange thresholds for Power, Traffic, Disk, SLA are not in game-v1. Proposal: put them in a data file and tune in playtests.
 2. How much history does the line graph show? Proposal: last 2 in-game hours.
-3. [tableau-de-bord.md](../player-flow/tableau-de-bord.md) shows points, "Pannes 1/3" and a server list. game-v1 uses SLA only. Which one is right? One of the two docs should be deleted or updated.
-4. Is the dashboard only on the computer, or also a small HUD in the corner? (Open question already in tableau-de-bord.md.)
+3. [dashboard.md](../player-flow/dashboard.md) shows points, "Failures 1/3" and a server list. game-v1 uses SLA only. Which one is right? One of the two docs should be deleted or updated.
+4. Is the dashboard only on the computer, or also a small HUD in the corner? (Open question already in dashboard.md.)
