@@ -19,7 +19,7 @@ Skill: `/create-ui` runs both the build and the review flow.
 
 The UI is part of the voxel world. It is chunky, pixel-crisp, framed like a physical object, and it appears with a short, bouncy motion and blocks popping away. Every component should feel like it belongs to the same game, even when it has a different purpose.
 
-## Ten rules
+## Eleven rules
 
 1. **Crisp pixel art**: tiny textures scaled up, `texture_filter = 1` (Nearest) on the root. ([look](gui/look.md))
 2. **Voxel material**: a pixel-art frame around the content, like a physical block. ([look](gui/look.md))
@@ -31,5 +31,6 @@ The UI is part of the voxel world. It is chunky, pixel-crisp, framed like a phys
 8. **Anchors**: size panels in percent of the screen. ([structure](gui/structure.md))
 9. **Decor ignores input**: overlays set `mouse_filter = Ignore`. ([structure](gui/structure.md))
 10. **UI emits, the game decides**: signals out; the trigger shows and hides. ([structure](gui/structure.md))
+11. **Coexist**: never overlap, out-stack, steal input from, or contradict UI that can be on screen at the same time. ([structure](gui/structure.md#coexist-with-the-other-ui))
 
-The OS desktop look (wallpaper, top bar, app icons) belongs only to the desk computer. Other components keep the ten rules, not the desktop.
+The OS desktop look (wallpaper, top bar, app icons) belongs only to the desk computer. Other components keep the eleven rules, not the desktop.

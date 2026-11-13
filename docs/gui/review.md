@@ -24,10 +24,11 @@ Part of the [GUI guide](../agents_gui_guide.md). Read the component's `.tscn`, i
 12. Overlays (reveal, glows, vignettes) have `mouse_filter = Ignore`.
 13. Actions leave the component only as `[Signal]`s; the component never hides itself or touches game state.
 14. Shared pieces (`BlockReveal`, `frame.png`, `PlayOpen`, `SetHover`) are referenced, not copied. A second user of a piece still living in `computer_ui/` is a fail: move it to `main/ui/`.
+15. Coexists with the other UI ([structure.md](structure.md#coexist-with-the-other-ui)): every component that can be visible at the same time is named, and space, stacking, input and meaning each pass against it.
 
 ## Code
 
-15. C# conventions from [new-component.md](new-component.md#c-conventions) hold.
+16. C# conventions from [new-component.md](new-component.md#c-conventions) hold.
 
 ## Report
 

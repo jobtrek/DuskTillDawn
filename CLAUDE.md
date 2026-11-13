@@ -19,6 +19,7 @@ Glossary for the 3D asset pipeline (Element, Spec, Part, Layout, Grid, Seam): `C
 - Short, bouncy open animation; small hover zoom on anything clickable.
 - Size with anchors (percent of screen), not fixed pixels.
 - The UI only emits signals; other scripts decide what happens.
+- Never overlap, out-stack, steal input from, or contradict other UI that can be on screen at the same time.
 - The OS desktop look is only for the computer, not for other UI.
 
 ## Voxel SDK (`game-assets/sdk/`)
