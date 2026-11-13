@@ -1,4 +1,6 @@
 using Godot;
+using DuskTillDawn.Core;
+
 
 namespace DuskTillDawn.Main.MailUi;
 
@@ -9,11 +11,17 @@ namespace DuskTillDawn.Main.MailUi;
 public partial class MailController : Node
 {
     private readonly Database _db = new();
+    private const int WrongReportPenalty = 25;
+
     private bool _seeded;
     private MailApp _app = null!;
+    private GameState _state = null!;
 
     public override void _Ready()
     {
+        // global:: because "Main" alone resolves to the DuskTillDawn.Main namespace here.
+        _state = ((global::Main)GetTree().CurrentScene).State;
+
         var menu = GetParent<ComputerMenu>();
         _app = menu.GetNode<MailApp>("Map/Screen/MailApp");
         _app.Hide();
@@ -36,6 +44,10 @@ public partial class MailController : Node
         _app.ReportPressed += id =>
         {
             bool correct = _db.ReportPhishing(id);
+            if (!correct)
+            {
+                _state.LosePoints(WrongReportPenalty);
+            }
             _app.ShowReportResult(id, correct);
             Refresh();
         };
