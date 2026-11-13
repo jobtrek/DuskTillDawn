@@ -11,7 +11,7 @@ Glossary for the 3D asset pipeline (Element, Spec, Part, Layout, Grid, Seam): `C
 
 ## In-game UI (GUI)
 
-**Before you create or change any in-game UI (menu, HUD, prompt, popup, dialog), read `docs/agents_gui_guide.md`.** All UI shares one look; the desk computer (`dusk-till-dawn/main/computer_ui/`) is one example of it. Short version:
+**Before you create or change any in-game UI (menu, HUD, prompt, popup, dialog), read `docs/agents_gui_guide.md`** (index; rules split under `docs/gui/`), or run the `create-ui` skill. All UI shares one look; the desk computer (`dusk-till-dawn/main/computer_ui/`) is one example of it. Short version:
 
 - Tiny pixel-art textures, scaled up with Nearest filter (crisp, never blurry).
 - Panels look like blocky objects: pixel frame around the content, blocks that pop away on open.

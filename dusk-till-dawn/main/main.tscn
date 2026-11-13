@@ -12,7 +12,7 @@
 [ext_resource type="Script" uid="uid://bvbrlasve5j6w" path="res://main/Button.cs" id="9_grrlh"]
 [ext_resource type="PackedScene" path="res://main/computer_ui/computer_menu.tscn" id="11_cmenu"]
 [ext_resource type="PackedScene" uid="uid://b3u8k7nh0kgqx" path="res://assets/Exterior.blend" id="98_ext"]
-[ext_resource type="Script" uid="uid://b1w4cc0wdqr1r" path="res://main/Hud.cs" id="99_hud"]
+[ext_resource type="PackedScene" path="res://main/hud_ui/hud.tscn" id="99_hud"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_v0o3d"]
 size = Vector2(300, 300)
@@ -22,14 +22,14 @@ data = PackedVector3Array(150, 0, 150, -150, 0, 150, 150, 0, -150, -150, 0, 150,
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_player"]
 radius = 0.25
-height = 1.012488
+height = 1.6
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3s6sg"]
-height = 1.280249
+height = 2.0
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_player"]
 radius = 0.25
-height = 0.801806
+height = 1.6
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fwcvl"]
 albedo_color = Color(1, 0.95, 0.85, 1)
@@ -131,7 +131,7 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_b76nu")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_73k8k"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5xyti"]
 albedo_color = Color(1, 0.95, 0.85, 1)
 emission_enabled = true
 emission = Color(1, 0.95, 0.85, 1)
@@ -250,7 +250,7 @@ wall_min_slide_angle = 0.0
 script = ExtResource("2_player")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Player" unique_id=530395664]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.026101, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
 mesh = SubResource("CapsuleMesh_player")
 script = ExtResource("3_67ri8")
 
@@ -260,10 +260,11 @@ script = ExtResource("3_67ri8")
 shape = SubResource("CapsuleShape3D_3s6sg")
 
 [node name="Camera3D" type="Camera3D" parent="Player" unique_id=2108636782]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.226636, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05, 0)
 current = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player" unique_id=559333472]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
 shape = SubResource("CapsuleShape3D_player")
 
 [node name="Basement_Levels" parent="." unique_id=221633021 instance=ExtResource("3_lquwl")]
@@ -459,7 +460,7 @@ script = ExtResource("4_7mycd")
 
 [node name="L1_StripLight_On_001" parent="Basement_Levels" index="60" unique_id=1159469072]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5000019, -7.8950357, -8.315625)
-material_override = SubResource("StandardMaterial3D_73k8k")
+material_override = SubResource("StandardMaterial3D_5xyti")
 script = ExtResource("4_7mycd")
 
 [node name="L1_WallClock" parent="Basement_Levels" index="61" unique_id=1439562720]
@@ -2158,34 +2159,7 @@ shape = SubResource("BoxShape3D_rooframpTip")
 
 [node name="Exterior" parent="." unique_id=835197837 instance=ExtResource("98_ext")]
 
-[node name="Hud" type="CanvasLayer" parent="." unique_id=1702548748]
-script = ExtResource("99_hud")
-
-[node name="ClockLabel" type="Label" parent="Hud" unique_id=2062843854]
-offset_left = -1.0
-offset_top = 47.0
-offset_right = 172.0
-offset_bottom = 95.0
-theme_override_font_sizes/font_size = 32
-text = "hello world"
-
-[node name="SlaLabel" type="Label" parent="Hud" unique_id=233726642]
-offset_left = 118.0
-offset_top = 1.0
-offset_right = 358.0
-offset_bottom = 41.0
-theme_override_font_sizes/font_size = 24
-
-[node name="EndLabel" type="Label" parent="Hud" unique_id=1341646777]
-visible = false
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 40
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="Hud" parent="." unique_id=1702548748 instance=ExtResource("99_hud")]
 
 [node name="Node" type="Node" parent="." unique_id=749536896]
 

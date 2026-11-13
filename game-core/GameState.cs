@@ -23,6 +23,7 @@ public sealed class GameState
     private double _elapsedRealSeconds;
 
     public double Sla { get; private set; } = 100;
+    public int Points { get; private set; } = 1000;
 
     /// <summary>The night (20:00 to 08:00): Running, then Won at 08:00 or Lost when the SLA hits 0.</summary>
     public NightStatus Status { get; private set; } = NightStatus.Running;
@@ -67,6 +68,12 @@ public sealed class GameState
         {
             DaySurvived = true;
         }
+    }
+
+    public void LosePoints(int points)
+    {
+        ArgumentOutOfRangeException.ThrowIfNegative(points);
+        Points -= points;
     }
 
     public void DrainSla(double percent)

@@ -6,6 +6,8 @@ public partial class Main : Node3D
 {
     private readonly GameState _state = new();
     private Hud _hud = null!;
+
+    public GameState State => _state;
     private const double SunFadeDegrees = 10;
     private const double SunMinElevationDegrees = 5;
     private const double ShadowFadeDegrees = 10;

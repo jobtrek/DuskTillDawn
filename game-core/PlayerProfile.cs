@@ -1,6 +1,8 @@
 using System;
 using System.Drawing;
 
+// earthquake, thunderstorm, heavy rain, sandstorm. 
+
 namespace DuskTillDawn.Core;
 
 public sealed class PlayerProfile(string name)
