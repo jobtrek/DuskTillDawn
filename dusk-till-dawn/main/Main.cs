@@ -47,6 +47,7 @@ public partial class Main : Node3D
 
     public override void _Ready()
     {
+        _clockSpeed = ReadClockSpeed();
         _hud = GetNode<Hud>("Hud");
         _sun = GetNode<DirectionalLight3D>("DirectionalLight3D");
         _sunEnergy = _sun.LightEnergy;
@@ -82,9 +83,33 @@ public partial class Main : Node3D
         }
     }
 
+    // Debug only: `-- --clock-speed=20` runs the in-game clock (sky, sun, moon) 20x faster.
+    // The player and physics keep their normal speed.
+    private double _clockSpeed = 1;
+
+    private static double ReadClockSpeed()
+    {
+        if (!OS.IsDebugBuild())
+        {
+            return 1;
+        }
+
+        foreach (string arg in OS.GetCmdlineUserArgs())
+        {
+            if (arg.StartsWith("--clock-speed=")
+                && double.TryParse(arg["--clock-speed=".Length..], System.Globalization.CultureInfo.InvariantCulture, out double speed)
+                && speed > 0)
+            {
+                return speed;
+            }
+        }
+
+        return 1;
+    }
+
     public override void _Process(double delta)
     {
-        _state.Tick(delta);
+        _state.Tick(delta * _clockSpeed);
         UpdateSun();
         UpdateMoon();
         ShowStateAndPauseIfGameEnded();
