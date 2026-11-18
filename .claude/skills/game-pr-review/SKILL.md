@@ -35,15 +35,61 @@ Done when every changed file has been checked against all three lists. A **confl
 
 One finding = one comment, pinned to the exact line it's about. Body format, nothing else:
 
-```
+~~~
 **<Short title>**
 
 **Conflicts:** `<other/file.md:line>`
 
 <One or two plain sentences: what is wrong and what to do.>
+
+<details>
+<summary>Prompt for an agent</summary>
+
+```text
+In `<file>:<line>`, <what to change>.
+<Why, in a few words>.
+Done when <checkable condition>.
 ```
 
-Keep the empty line between each part: GitHub joins lines with no gap into one paragraph. The `Conflicts` line appears only when the issue contradicts another file. Skip nits a linter catches; report real issues only. Zero findings is a valid result.
+</details>
+
+<details>
+<summary>Code to fix it yourself</summary>
+
+```<lang>
+// <file>
+<the fixed code, only the lines that change plus 1-2 lines of context>
+```
+
+</details>
+~~~
+
+- Keep the empty line between each part, also around `<summary>` and the code fences: GitHub joins lines with no gap into one paragraph and won't render markdown inside `<details>` without it.
+- The `Conflicts` line appears only when the issue contradicts another file.
+- One sentence per line in every prompt: a code block never wraps, so one long line scrolls off screen.
+- The prompt is self-contained: an agent with no other context can apply it from the file path, line and done condition alone.
+- The code block appears only when the fix is under 20 lines in one file. Bigger or multi-file fixes get the prompt only.
+- The snippet must be correct code at the PR head: read the surrounding file before writing it.
+
+Skip nits a linter catches; report real issues only. Zero findings is a valid result.
+
+The review `body` (the global comment) holds PR-level findings (title, `Conflicts`, description only: no per-finding `<details>`), then ends with every prompt combined, numbered in the same order as the findings:
+
+~~~
+<details>
+<summary>Prompt to fix all issues</summary>
+
+```text
+Fix these issues in PR #<N>:
+
+1. <prompt of finding 1, line 1>
+   <line 2, indented 3 spaces>
+   Done when <condition>.
+2. <prompt of finding 2>
+```
+
+</details>
+~~~
 
 ## 4. Confirm, then post
 
