@@ -9,6 +9,7 @@ Paths from the repo root. `dtd/` = `dusk-till-dawn/`. Open these first, search o
 | Incidents (code name Challenge) | `game-core/Challenge.cs`; rules in `docs/player-flow/challenges.md` |
 | Incident spawn rate and order | `game-core/ChallengeSpawner.cs` |
 | Player name, points, room | `game-core/PlayerProfile.cs` |
+| Points rule (fast bonus, failure penalty) | `game-core/PointsRule.cs`; rule in `docs/player-flow/challenges.md` |
 | Game modes (solo, duo), end of game, winner | `game-core/Game.cs`, `SoloGame.cs`, `DuoGame.cs` |
 | Sun, moon, sky colours | `game-core/SunPosition.cs`, `MoonPosition.cs`; visuals in `dtd/main/Main.cs`, `dtd/main/sky/sky.gdshader` |
 | Mail content (seed mails, categories) | `dtd/main/mail_ui/DataStructure.cs` |
