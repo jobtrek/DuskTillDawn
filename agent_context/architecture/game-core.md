@@ -7,6 +7,7 @@ game state and rules so they run and test without the engine.
 |---|---|
 | `GameState.cs` | The single game state: clock, SLA, Heat, Traffic, Disk, Power, Points, `NightStatus`. `Tick(realSeconds)` advances time |
 | `Challenge.cs` | Abstract Incident (legacy name; the domain term is Incident): alert, `Room`, points, duration, Pending → Running → Succeeded/Failed |
+| `ChallengeSpawner.cs` | Launches a challenge every interval (default 20 s), kinds in turn, driven by `Tick`; stops when the game is finished |
 | `PlayerProfile.cs` | Name, points, room |
 | `Game.cs` | Abstract game: players, challenges, failures. `Tick` moves the challenges; each mode says when it is lost or finished |
 | `SoloGame.cs` | One player; lost after 3 failed challenges |
