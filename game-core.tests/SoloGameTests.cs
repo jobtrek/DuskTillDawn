@@ -6,7 +6,13 @@ public class SoloGameTests
 {
     private const double ChallengeDuration = 60;
 
-    private sealed class TestChallenge() : Challenge("Test alert", Room.Servers, points: 100, durationSeconds: ChallengeDuration);
+    private sealed class TestChallenge() : Challenge("Test alert", Room.Servers, points: 100, durationSeconds: ChallengeDuration)
+    {
+        protected override bool IsRightAction(PlayerAction action)
+        {
+            return action == PlayerAction.ReplaceDisk;
+        }
+    }
 
     private static SoloGame NewGame()
     {
@@ -88,7 +94,7 @@ public class SoloGameTests
         var challenge = new TestChallenge();
         game.Launch(challenge);
 
-        challenge.Repair(game.Players[0]);
+        challenge.Repair(game.Players[0], PlayerAction.ReplaceDisk);
         game.Tick(ChallengeDuration);
 
         Assert.Equal(0, game.Failures);

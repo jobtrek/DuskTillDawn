@@ -15,6 +15,12 @@ public enum Room
     Servers,
 }
 
+public enum PlayerAction
+{
+    EnableTrafficFilter,
+    ReplaceDisk,
+}
+
 public abstract class Challenge
 {
     private const double RoundingMargin = 1e-9;
@@ -62,13 +68,16 @@ public abstract class Challenge
         }
     }
 
-    public void Repair(PlayerProfile player)
+    public void Repair(PlayerProfile player, PlayerAction action)
     {
-        if (State != ChallengeState.Running)
+        if (State != ChallengeState.Running || !IsRightAction(action))
         {
             return;
         }
         State = ChallengeState.Succeeded;
         player.EarnPoints(Points);
     }
+
+    /// <summary>Each challenge decides which action fixes it.</summary>
+    protected abstract bool IsRightAction(PlayerAction action);
 }
