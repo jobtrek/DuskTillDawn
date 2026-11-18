@@ -17,13 +17,18 @@ public partial class MailController : Node
     private int _shownCount;
     private MailApp _app = null!;
     private GameState _state = null!;
+    private ComputerMenu _menu = null!;
+    private Hud _hud = null!;
 
     public override void _Ready()
     {
         // global:: because "Main" alone resolves to the DuskTillDawn.Main namespace here.
-        _state = ((global::Main)GetTree().CurrentScene).State;
+        var main = (global::Main)GetTree().CurrentScene;
+        _state = main.State;
+        _hud = main.GetNode<Hud>("Hud");
 
         var menu = GetParent<ComputerMenu>();
+        _menu = menu;
         _app = menu.GetNode<MailApp>("Map/Screen/MailApp");
         _app.Hide();
 
@@ -36,6 +41,11 @@ public partial class MailController : Node
             if (!menu.IsVisibleInTree())
             {
                 _app.Hide();
+            }
+            else
+            {
+                // At the desk the inbox itself shows the new mail; the toast would sit on top of the screen.
+                _hud.HideMailToast();
             }
         };
 
@@ -74,9 +84,17 @@ public partial class MailController : Node
         }
 
         _db.SetTime(Database.ShiftStart.AddMinutes(_state.MinutesSinceNightStart));
-        if (_db.CountAllEmails() != _shownCount)
+        // Reports call Refresh right away, so any difference here is mail that just arrived.
+        int arrived = _db.CountAllEmails() - _shownCount;
+        if (arrived == 0)
         {
-            Refresh();
+            return;
+        }
+
+        Refresh();
+        if (arrived > 0 && !_menu.IsVisibleInTree())
+        {
+            _hud.ShowMailToast(arrived);
         }
     }
 
