@@ -8,6 +8,7 @@ Hard rules. CI enforces some of them; the rest are on you.
 - **Always use braces** `{}` on `if`, `else`, `for`, `foreach`, `while`, even for one line.
 - Code must pass `dotnet format --verify-no-changes` (`.editorconfig`).
 - Follow the C# coding conventions (Microsoft) and Godot best practices.
+- When writing comments do not include ///<summary>x</summary>, and when writing comments make sure it explain the domain and not what the code does (unless very complex logic or if the user asked you too.) if none of the above is applicable don't write any comments.
 
 ## Where code goes
 
