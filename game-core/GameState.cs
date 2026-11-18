@@ -57,7 +57,6 @@ public sealed class GameState
     public double HourOfDay =>
         (NightStartInMinutes / 60.0 + _elapsedRealSeconds / RealSecondsPerInGameHour) % DayLengthInGameHours;
 
-    /// <summary>In-game minutes since 20:00.</summary>
     public double MinutesSinceNightStart => _elapsedRealSeconds * 60 / RealSecondsPerInGameHour;
 
     public Inbox Inbox { get; } = new();

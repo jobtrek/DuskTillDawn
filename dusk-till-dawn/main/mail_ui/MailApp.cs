@@ -101,7 +101,6 @@ public partial class MailApp : Control
         }
     }
 
-    /// <summary>Shows the unread and total number of mails next to the window title.</summary>
     public void SetCount(int total, int unread)
     {
         _title.Text = $"Mail ({unread} unread / {total})";

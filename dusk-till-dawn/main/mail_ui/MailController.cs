@@ -4,10 +4,6 @@ using Godot;
 
 namespace DuskTillDawn.Main.MailUi;
 
-/// <summary>
-/// Glue between the desk computer, the mail window and the <see cref="Inbox"/> in game-core.
-/// Lives as a child of ComputerMenu: opens the mail window on MailPressed and answers its signals.
-/// </summary>
 public partial class MailController : Node
 {
     private MailApp _app = null!;

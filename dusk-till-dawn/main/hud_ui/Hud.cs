@@ -108,10 +108,7 @@ public partial class Hud : CanvasLayer
         ShowBanner(EndMessage(state));
     }
 
-    /// <summary>
-    /// Tells the player mail came in, wherever they are in the building.
-    /// Only the count, never sender or subject: the player has to go to the computer to judge it.
-    /// </summary>
+    // Only the count, never sender or subject: the player has to go to the computer to judge a mail.
     public void ShowMailToast(int newMails)
     {
         bool showing = _mailToast.Visible;
