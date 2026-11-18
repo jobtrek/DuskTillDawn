@@ -7,6 +7,7 @@ game state and rules so they run and test without the engine.
 |---|---|
 | `GameState.cs` | The single game state: clock, SLA, Heat, Traffic, Disk, Power, Points, `NightStatus`. `Tick(realSeconds)` advances time |
 | `Challenge.cs` | Abstract Incident (legacy name; the domain term is Incident): alert, `Room`, points, duration, Pending → Running → Succeeded/Failed |
+| `SecurityAttack.cs`, `BrokenDisk.cs`, `OverheatingServer.cs`, `Fire.cs`, `UnpluggedCable.cs`, `PhishingEmail.cs` | The six challenges: each one sets its alert, room, points and the `PlayerAction` that fixes it |
 | `PlayerProfile.cs` | Name, points, room |
 | `SunPosition.cs`, `MoonPosition.cs` | Sky positions from the hour of day |
 
