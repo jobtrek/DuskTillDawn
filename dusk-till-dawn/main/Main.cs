@@ -9,6 +9,7 @@ public partial class Main : Node3D
 
     // Challenges and failures (issue #35). The game uses the GameState player, so there is one points source.
     private readonly SoloGame _game;
+    private readonly ChallengeSpawner _spawner;
     private Dashboard? _dashboard;
     private Control? _computerMenu;
     private int _debugChallengeCount;
@@ -20,6 +21,7 @@ public partial class Main : Node3D
     {
         _state = new GameState();
         _game = new SoloGame(_state.Player);
+        _spawner = new ChallengeSpawner(_game, () => new BrokenDisk(), () => new SecurityAttack());
     }
 
     private const string MailSchedulePath = "res://main/mail_ui/emails.json";
@@ -66,8 +68,6 @@ public partial class Main : Node3D
         _hud = GetNode<Hud>("Hud");
         _dashboard = GetNodeOrNull<Dashboard>("Dashboard");
         _computerMenu = GetNodeOrNull<Control>("Company/Desk/MeshInstance3D/Menu/ComputerMenu");
-        // One challenge at start until the game launches them on its own (#54).
-        LaunchDebugChallenge();
         _state.Inbox.LoadSchedule(FileAccess.GetFileAsString(MailSchedulePath));
         _sun = GetNode<DirectionalLight3D>("DirectionalLight3D");
         _sunEnergy = _sun.LightEnergy;
@@ -131,6 +131,10 @@ public partial class Main : Node3D
     {
         _state.Tick(delta * _clockSpeed);
         _game.Tick(delta * _clockSpeed);
+        if (!NightEnded())
+        {
+            _spawner.Tick(delta * _clockSpeed);
+        }
         UpdateSun();
         UpdateMoon();
         ShowStateAndPauseIfGameEnded();
@@ -288,6 +292,11 @@ public partial class Main : Node3D
     private void ShowStateAndPauseIfGameEnded()
     {
         _hud.ShowState(_state);
-        GetTree().Paused = _state.Status == NightStatus.Lost || _state.DaySurvived || _game.IsLost;
+        GetTree().Paused = NightEnded();
+    }
+
+    private bool NightEnded()
+    {
+        return _state.Status == NightStatus.Lost || _state.DaySurvived || _game.IsLost;
     }
 }
