@@ -49,18 +49,15 @@ public class Database
 
     private Dictionary<Categories, List<Email>> byCategory = new();
 
-    /// <summary>The shift starts at 20:00, same as the game clock.</summary>
+    // shift starts at 8 o clock
     public static readonly DateTime ShiftStart = new(2026, 11, 12, 20, 0, 0);
 
-    /// <summary>Authored mail times count from 22:00.</summary>
     private static readonly DateTime FirstMailTime = new(2026, 11, 12, 22, 0, 0);
 
-    /// <summary>Each mail lands up to this many minutes before or after its authored time.</summary>
     private const int ArrivalJitterMinutes = 10;
 
     private static readonly Random _rng = new();
 
-    /// <summary>Current in-game time. Only mails dated at or before it are in the inbox.</summary>
     private DateTime _now = ShiftStart;
 
     public static int generateUniqueId()
