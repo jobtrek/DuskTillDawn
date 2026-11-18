@@ -13,6 +13,7 @@ public partial class MailController : Node
     private MailApp _app = null!;
     private GameState _state = null!;
     private Hud _hud = null!;
+    private ComputerMenu _menu = null!;
 
     public override void _Ready()
     {
@@ -22,6 +23,7 @@ public partial class MailController : Node
         _hud = main.GetNode<Hud>("Hud");
 
         var menu = GetParent<ComputerMenu>();
+        _menu = menu;
         _app = menu.GetNode<MailApp>("Map/Screen/MailApp");
         _app.Hide();
 
@@ -79,5 +81,6 @@ public partial class MailController : Node
         var inbox = _state.Inbox;
         _app.SetMails(inbox.Mails.Reverse());
         _app.SetCount(inbox.Mails.Count, inbox.UnreadCount);
+        _menu.SetMailUnread(inbox.UnreadCount);
     }
 }
