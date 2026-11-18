@@ -2,7 +2,14 @@ namespace DuskTillDawn.Core.Tests;
 
 public class ChallengeTests
 {
-    private sealed class TestChallenge() : Challenge("Test alert", Room.Servers, points: 100, durationSeconds: 60);
+    private sealed class TestChallenge() : Challenge("Test alert", Room.Servers, points: 100, durationSeconds: 60)
+    {
+        protected override bool IsRightAction(PlayerAction action)
+        {
+            return action == PlayerAction.ReplaceDisk;
+        }
+    }
+
     [Fact]
     public void New_challenge_is_pending_with_full_time()
     {
@@ -98,7 +105,7 @@ public class ChallengeTests
         challenge.Start();
         challenge.Tick(20);
 
-        challenge.Repair(player);
+        challenge.Repair(player, PlayerAction.ReplaceDisk);
 
         Assert.Equal(ChallengeState.Succeeded, challenge.State);
         Assert.Equal(40, challenge.TimeRemaining);
@@ -111,7 +118,7 @@ public class ChallengeTests
         var challenge = new TestChallenge();
         var player = new PlayerProfile("Bilal");
 
-        challenge.Repair(player);
+        challenge.Repair(player, PlayerAction.ReplaceDisk);
 
         Assert.Equal(ChallengeState.Pending, challenge.State);
         Assert.Equal(0, player.Points);
@@ -125,7 +132,7 @@ public class ChallengeTests
         challenge.Start();
         challenge.Tick(60);
 
-        challenge.Repair(player);
+        challenge.Repair(player, PlayerAction.ReplaceDisk);
 
         Assert.Equal(ChallengeState.Failed, challenge.State);
         Assert.Equal(0, player.Points);
@@ -137,9 +144,9 @@ public class ChallengeTests
         var challenge = new TestChallenge();
         var player = new PlayerProfile("Bilal");
         challenge.Start();
-        challenge.Repair(player);
+        challenge.Repair(player, PlayerAction.ReplaceDisk);
 
-        challenge.Repair(player);
+        challenge.Repair(player, PlayerAction.ReplaceDisk);
         challenge.Tick(60);
 
         Assert.Equal(ChallengeState.Succeeded, challenge.State);
@@ -155,8 +162,8 @@ public class ChallengeTests
         var second = new PlayerProfile("Thomas");
         challenge.Start();
 
-        challenge.Repair(first);
-        challenge.Repair(second);
+        challenge.Repair(first, PlayerAction.ReplaceDisk);
+        challenge.Repair(second, PlayerAction.ReplaceDisk);
 
         Assert.Equal(100, first.Points);
         Assert.Equal(0, second.Points);
