@@ -1,0 +1,37 @@
+# GUI guide
+
+The look and feel of every in-game 2D UI in DuskTillDawn: menus, HUD, prompts, popups, dialogs, inventories, app screens.
+
+Read this page first. Open only the file your task needs.
+
+| Task | Read |
+|---|---|
+| Build a new UI component | [new-component.md](new-component.md) |
+| Check an existing UI against the style | [review.md](review.md) |
+| Textures, frame, colours, text | [look.md](look.md) |
+| Open animation, block reveal, hover | [motion.md](motion.md) |
+| Node tree, anchors, input, signals | [structure.md](structure.md) |
+| Sharing the screen with other UI | [coexist.md](coexist.md) |
+| See the style applied (the desk computer) | [computer-example.md](computer-example.md) |
+
+Skill: `/create-ui` runs both the build and the review flow.
+
+## Core idea
+
+The UI is part of the voxel world. It is chunky, pixel-crisp, framed like a physical object, and it appears with a short, bouncy motion and blocks popping away. Every component should feel like it belongs to the same game, even when it has a different purpose.
+
+## Eleven rules
+
+1. **Crisp pixel art**: tiny textures scaled up, `texture_filter = 1` (Nearest) on the root. ([look](look.md))
+2. **Voxel material**: a pixel-art frame around the content, like a physical block. ([look](look.md))
+3. **Blocks reveal**: every panel bigger than a small prompt opens with `BlockReveal`. ([motion](motion.md))
+4. **Bouncy open**: rise from below with a `Back` ease, under 0.5s. ([motion](motion.md))
+5. **Hover zoom**: anything clickable scales to ~1.12 and brightens. ([motion](motion.md))
+6. **Dark calm base**: near-black navy, white text, accents from the content. ([look](look.md))
+7. **Readable text**: sizes 13 and 14, 2px black shadow on pictures and the 3D world. ([look](look.md))
+8. **Anchors**: size panels in percent of the screen. ([structure](structure.md))
+9. **Decor ignores input**: overlays set `mouse_filter = Ignore`. ([structure](structure.md))
+10. **UI emits, the game decides**: signals out; the trigger shows and hides. ([structure](structure.md))
+11. **Coexist**: never overlap, out-stack, steal input from, or contradict UI that can be on screen at the same time. ([coexist](coexist.md))
+
+The OS desktop look (wallpaper, top bar, app icons) belongs only to the desk computer. Other components keep the eleven rules, not the desktop.

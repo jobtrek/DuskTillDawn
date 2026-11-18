@@ -1,6 +1,6 @@
 # Admin console app (computer)
 
-A 4th app on the desk computer, next to Mail, Monitoring and the AI helper. It holds the **fix actions** for the computer Incidents. Fix steps come from [game-v1.md](../game-v1.md) §8. Look and feel: [agents_gui_guide.md](../agents_gui_guide.md).
+A 4th app on the desk computer, next to Mail, Monitoring and the AI helper. It holds the **fix actions** for the computer Incidents. Fix steps come from [game-v1.md](../game-v1.md) §8. Look and feel: [GUI guide](../../agent_context/gui/README.md).
 
 Needs a 4th desktop icon (16×16 pixel art) and a new `AdminPressed` signal on `ComputerMenu`.
 

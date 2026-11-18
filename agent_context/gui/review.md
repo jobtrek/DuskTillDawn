@@ -1,6 +1,6 @@
 # Review an existing UI component
 
-Part of the [GUI guide](../agents_gui_guide.md). Read the component's `.tscn`, its scripts, and its `textures/` folder, then apply every check below. Done when each check has a verdict: **pass**, **fail** (with `file:line` and the fix), or **n/a** (with the reason, e.g. "small element, no reveal").
+Part of the [GUI guide](README.md). Read the component's `.tscn`, its scripts, and its `textures/` folder, then apply every check below. Done when each check has a verdict: **pass**, **fail** (with `file:line` and the fix), or **n/a** (with the reason, e.g. "small element, no reveal").
 
 ## Look ([look.md](look.md))
 
@@ -24,7 +24,7 @@ Part of the [GUI guide](../agents_gui_guide.md). Read the component's `.tscn`, i
 12. Overlays (reveal, glows, vignettes) have `mouse_filter = Ignore`.
 13. Actions leave the component only as `[Signal]`s; the component never hides itself or touches game state.
 14. Shared pieces (`BlockReveal`, `frame.png`, `PlayOpen`, `SetHover`) are referenced, not copied. A second user of a piece still living in `computer_ui/` is a fail: move it to `main/ui/`.
-15. Coexists with the other UI ([structure.md](structure.md#coexist-with-the-other-ui)): every component that can be visible at the same time is named, and space, stacking, input and meaning each pass against it.
+15. Coexists with the other UI ([coexist.md](coexist.md)): every component that can be visible at the same time is named, and space, stacking, input and meaning each pass against it.
 
 ## Code
 

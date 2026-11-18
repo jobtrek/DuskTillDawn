@@ -1,4 +1,4 @@
-"""Spec rules a machine can check (the old 3d-assets.md rules). Human rules: agent-guide/build-rules.md."""
+"""Spec rules a machine can check (the old 3d-assets.md rules). Human rules: agent_context/assets/build-rules.md."""
 from pathlib import Path
 
 from .spec import load_spec
