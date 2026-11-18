@@ -1,5 +1,7 @@
 # Class diagram (object-oriented)
 
+> **Superseded by [game-v1.md](../game-v1.md)** (2026-11-13). This describes the old Challenge model (6 challenges, lose after 3 failures, 2-player race). v1 uses Incidents (§7–8), loses at SLA 0 and is single player. Kept for history; do not build from it.
+
 The classes to write in C#. They come from the [game diagram](game-states.md), the [list of challenges](challenges.md) and the [dashboard](dashboard.md).
 
 Read it top to bottom: "The dashboard reads the game", "A game contains players", etc.

@@ -1,5 +1,7 @@
 # Dashboard screen (mockup)
 
+> **Superseded by [game-v1.md](../game-v1.md)** (2026-11-13). This describes the old Challenge model (6 challenges, lose after 3 failures, 2-player race). v1 uses Incidents (§7–8), loses at SLA 0 and is single player. Kept for history; do not build from it.
+
 What the player sees on the computer in the control room. The alerts come from the [list of challenges](challenges.md).
 
 ## 1. One player

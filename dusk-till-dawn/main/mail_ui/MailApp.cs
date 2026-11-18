@@ -1,6 +1,6 @@
 using System.Collections.Generic;
+using DuskTillDawn.Core;
 using Godot;
-using static DuskTillDawn.Main.MailUi.Database;
 
 namespace DuskTillDawn.Main.MailUi;
 
@@ -39,7 +39,7 @@ public partial class MailApp : Control
     private FontVariation _bold = null!;
     private Tween? _openTween;
 
-    private Email? _selected;
+    private Mail? _selected;
     // Mail id → was the report right? Kept by the UI so the button stays disabled.
     private readonly Dictionary<int, bool> _reports = new();
 
@@ -86,7 +86,7 @@ public partial class MailApp : Control
     }
 
     /// <summary>Rebuilds the inbox. Mails should already be sorted newest first.</summary>
-    public void SetMails(IEnumerable<Email> mails)
+    public void SetMails(IEnumerable<Mail> mails)
     {
         foreach (var child in _rows.GetChildren())
         {
@@ -109,7 +109,7 @@ public partial class MailApp : Control
         }
     }
 
-    private Godot.Button MakeRow(Email mail)
+    private Godot.Button MakeRow(Mail mail)
     {
         bool selected = _selected?.Id == mail.Id;
         var fill = selected ? RowSelected : RowNormal;
@@ -133,11 +133,11 @@ public partial class MailApp : Control
         line.OffsetLeft = 8;
         line.OffsetRight = -8;
 
-        line.AddChild(MakeLabel(mail.Read ? "" : "●", 12, 14));
-        line.AddChild(MakeLabel(mail.Sender, 13, 120));
+        line.AddChild(MakeLabel(mail.IsRead ? "" : "●", 12, 14));
+        line.AddChild(MakeLabel(mail.From, 13, 120));
         var subject = MakeLabel(mail.Subject, 13, 0);
         subject.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-        if (!mail.Read)
+        if (!mail.IsRead)
         {
             subject.AddThemeFontOverride("font", _bold);
         }
@@ -170,7 +170,7 @@ public partial class MailApp : Control
         return new StyleBoxFlat { BgColor = color };
     }
 
-    private void Select(Email mail)
+    private void Select(Mail mail)
     {
         _selected = mail;
         ShowReader(mail);
@@ -178,7 +178,7 @@ public partial class MailApp : Control
         EmitSignal(SignalName.MailOpened, mail.Id);
     }
 
-    private void ShowReader(Email? mail)
+    private void ShowReader(Mail? mail)
     {
         _empty.Visible = mail == null;
         _reader.Visible = mail != null;
@@ -187,7 +187,7 @@ public partial class MailApp : Control
             return;
         }
 
-        _from.Text = $"From: {mail.Sender}";
+        _from.Text = $"From: {mail.From}";
         _subject.Text = mail.Subject;
         _date.Text = mail.Date.ToString("HH:mm");
         _body.Text = mail.Body;

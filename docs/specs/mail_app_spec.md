@@ -7,8 +7,9 @@ Opens from the `MailPressed` signal on the desk computer. Content rules come fro
 - Show the **Warning mail** for each Incident (early sign, cheapest moment to fix).
 - Show **News mails** (tech news, flavour and hints).
 - Let the player **report a Phishing mail** (Incident #8).
+- Hold the **fix actions** for Incidents #1–#4 on their Warning mail (there is no Admin console in v1).
 
-Must be readable in under 2 seconds. Fix actions for other Incidents live in the Admin console, not here.
+Must be readable in under 2 seconds.
 
 ## Layout
 
@@ -44,7 +45,18 @@ A window inside `Map/Screen`, above `Icons`, below `BlockReveal`.
 | New Mail | Unread count on the desktop Mail icon + a "New mail" HUD toast wherever the player is. No content in the toast. |
 | Inbox life | Empties at the start of each night. Mails stay for the whole night. |
 
-Points (100 base, −25 wrong report) live in the Incident data file, so they can be tuned in playtests.
+## Fix actions (Incidents #1–#4)
+
+The Warning mail of these Incidents shows its fix buttons under the body, one step at a time. A later step is greyed until the earlier one is done.
+
+| Incident | Buttons |
+|---|---|
+| #1 Expired TLS certificate | Renew → Reload web server |
+| #2 DDoS | Enable traffic filtering |
+| #3 Vulnerable dependency | Update package → Restart app |
+| #4 Bad update | Roll back → Reboot servers |
+
+Points (100 base, −25 wrong report) will live in the Incident data file. Until it exists, only the −25 wrong-report penalty is built (a constant in `MailController`); the +100 phishing reward and the +50 % Warning bonus are not built yet.
 
 ## Data (read from `GameState`)
 
@@ -64,4 +76,5 @@ Listens to `MailReceived` to add new rows while open.
 |---|---|
 | `MailOpened(int id)` | Player selects a Mail. Game marks it read. |
 | `ReportPressed(int id)` | Player presses "Report phishing". Game decides if it was right and tells the app the result. |
+| `ActionPressed(int id, string action)` | Player presses a fix button. The game advances or resolves the Incident. |
 | `CloseRequested()` | [X] or Escape. |

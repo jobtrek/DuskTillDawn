@@ -1,4 +1,4 @@
-# Dawn to Dusk: game v1
+# Dusk Till Dawn: game v1
 
 The first playable version. It takes the ideas from [ideas/](ideas/) and cuts them down to what we can build and playtest first. Everything not listed here is in [section 11: parked](#11-parked-ideas-not-in-v1).
 
@@ -36,9 +36,9 @@ Every v1 feature must support at least one. If it doesn't, it waits.
 | **Control room** | Main computer (dashboard, mail, AI helper) | Diagnose, change settings, read warnings |
 | **Basement** | Servers, cooling, cables | Fight fires, swap drives, replug cables |
 
-- The player is one character walking in isometric voxel view. The whole building is always on screen, in a cut-away view.
+- The player walks the voxel building in first person (see [contract.md](contract.md#21-what-3d--first-person-means-for-us)).
 - Moving between floors takes **8 seconds** (stairs). While you are away, the dashboard keeps running and incidents keep coming. This is the main pressure.
-- The player can only **fix** an incident when standing in its room. They can **see** the state of every floor on screen, but need the computer to **diagnose** the cause.
+- The player can only **fix** an incident when standing in its room. They need the computer to **see** the other floors and **diagnose** the cause.
 
 ## 5. The simulation (5 values)
 
@@ -75,7 +75,8 @@ These three are enough to teach "everything is connected". More cascades come la
 
 - The game starts at 20:00. A night runs 20:00 → 08:00. One in-game hour = **50 real seconds** (night = 10 min).
 - After 08:00 the day runs 08:00 → 20:00 (10 min). A full 24 h = **20 real minutes**.
-- At 08:00 the screen shows "You survived the night" for a few seconds. At the next 20:00 it shows "Day 1 survived" and the game stops. The SLA is frozen during the day.
+- At 08:00 the screen shows "You survived the night" for a few seconds. The SLA is frozen during the day.
+- **Current build only:** the shop does not exist yet, so at the next 20:00 the screen shows "Day 1 survived" and the game stops. The v1 target is the 5-night run in section 9.
 - The player can speed up ×2 while nothing is wrong.
 - Night report shows: SLA left, incidents solved, incidents failed, points earned.
 
@@ -100,14 +101,14 @@ Dormant → Warning → Active → Escalated → Resolved
 
 ## 8. The 8 incidents for v1
 
-One per row. Each gets a spec file in `docs/design/incidents/` and a data file in `data/incidents/`.
+One per row. Each will get a data file holding the fields below (folder not created yet; until then, values are constants in `game-core/`).
 
 | # | Incident | Floor | Real event it teaches | Fix (player actions) | Counter-upgrade |
 |---|---|---|---|---|---|
-| 1 | **Expired TLS certificate** | Control room | Forgotten renewals | Open cert manager → renew → reload web server | Auto-renewal |
-| 2 | **DDoS** | Control room | Cloudflare attacks | Enable traffic filtering | CDN shield |
-| 3 | **Vulnerable dependency** | Control room | Log4Shell | Read mail → update package → restart app | Vulnerability scanner |
-| 4 | **Bad update** | Control room | CrowdStrike | Roll back the update → reboot servers | Staged rollouts |
+| 1 | **Expired TLS certificate** | Control room | Forgotten renewals | Read warning mail → Renew → Reload web server | Auto-renewal |
+| 2 | **DDoS** | Control room | Cloudflare attacks | Read warning mail → Enable traffic filtering | CDN shield |
+| 3 | **Vulnerable dependency** | Control room | Log4Shell | Read mail → Update package → Restart app | Vulnerability scanner |
+| 4 | **Bad update** | Control room | CrowdStrike | Read warning mail → Roll back → Reboot servers | Staged rollouts |
 | 5 | **Dirty solar panels** | Roof | Snow / dust | Walk up → sweep panels (hold button) | Self-cleaning panels |
 | 6 | **Cooling failure → fire** | Basement | OVHcloud fire | Restart AC. If fire started: use extinguisher | Second AC / sprinklers |
 | 7 | **Failing hard drive** | Basement | Drive failures | Find red drive → swap with spare | RAID |
@@ -159,13 +160,12 @@ Same rules, but the spawn rate keeps rising every hour of play and nights never 
 
 ## 10. The computer
 
-Four apps. All must be readable in under 2 seconds. Specs: [specs/](specs/).
+Three apps. All must be readable in under 2 seconds. Specs: [specs/](specs/).
 
 | App | v1 content |
 |---|---|
-| **Dashboard** | 5 graphs (Power, Heat, Traffic, Disk, SLA) with warning colors |
-| **Mail** | Warnings for each incident, tech news (flavor + hints), phishing mails. "Report phishing" on every mail. |
-| **Admin console** | Fix actions for incidents #1–#4 (certificates, firewall, packages, updates) |
+| **Dashboard** (Monitoring app) | 5 graphs (Power, Heat, Traffic, Disk, SLA) with warning colors |
+| **Mail** | Warnings for each incident, tech news (flavor + hints), phishing mails. "Report phishing" on every mail. The warning mail of incidents #1–#4 holds their fix action buttons. |
 | **AI helper** | Our own character (not a real brand). Gives a hint when the player has been stuck for 60 s. Never solves it for them. |
 
 ## 11. Parked ideas (not in v1)
@@ -185,6 +185,8 @@ Kept in [ideas/](ideas/), in rough order of when to bring them back.
 | **Bigger companies / more levels** | Needs the base game balanced first | M4 |
 | **Tablet, drone, golf cart, flashlight** | Only matter once outdoors exists | with outdoors |
 | **Sleep / day cycle with night interrupts** | Replaced by the shop screen | M3 |
+| **Server progression** (laptop → racks, coins, [ideas/server-progression.md](ideas/server-progression.md)) | A second meta loop; v1 uses the shop | not set |
+| **Admin console app** | Fix actions moved into Mail for v1 | not set |
 
 **Open question from the original idea notes:** the last line, "2 player mechanic, one attacks and one attacks", looks like a typo. If one player is meant to *play the attacker* (a versus mode), that is a totally different game and needs its own design. Not in v1.
 

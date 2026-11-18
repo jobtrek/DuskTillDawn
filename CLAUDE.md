@@ -37,5 +37,11 @@ Turns an Element's `spec.md` + `layout.toml` into a validated voxel model and a 
 - States: overrides under `[states.<Name>]` in the Layout (README "States"); `check <dir> --state <Name>` previews one. Pieces (`pieces:`) still need hand-written builds (see the `blender-voxel-py` skill).
 - Examples: `t2-small/t2-17-Monitor` (one model), `t2-small/t2-26-PDU` and `t2-small/t2-19-Server1U` (States), `t1-tiny/t1-06-Mug` (round shapes).
 
+## Docs are the contract
+
+- Before implementing a feature, check it against `docs/contract.md`, `docs/game-v1.md`, the relevant `docs/specs/` file and `CONTEXT.md`.
+- If the request or your change contradicts any doc rule, say so explicitly, in bold, before writing code: **⚠️ THIS CONTRADICTS THE DOC: `<file>:<line>` says "<rule>", this change does "<X>".** Then ask whether to update the doc or change the plan. Never implement it silently.
+- Audit all docs against each other and the code: `/docs-coherence`.
+
 ## Coding practices
 - when writing for loops or while or any kind of statement, please use {} even if it's just 1 line.

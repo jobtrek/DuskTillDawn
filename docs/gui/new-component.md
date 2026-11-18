@@ -18,7 +18,7 @@ Part of the [GUI guide](../agents_gui_guide.md).
 
 | Piece | Where | Use for |
 |---|---|---|
-| `BlockReveal.cs` | `main/computer_ui/` | The block-clearing reveal |
+| `BlockReveal.cs` | `main/ui/` | The block-clearing reveal |
 | `PlayOpen()` | `main/computer_ui/ComputerMenu.cs` | Open animation |
 | `SetHover()` | `main/computer_ui/ComputerMenu.cs` | Hover zoom on buttons |
 | `frame.png` | `main/computer_ui/textures/` | Default panel frame (NinePatch) |

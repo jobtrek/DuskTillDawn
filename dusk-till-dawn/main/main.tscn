@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://b0l1qmxexlxd4" path="res://main/Main.cs" id="1_main"]
 [ext_resource type="Script" uid="uid://cvacxd3l2bouw" path="res://player/Player.cs" id="2_player"]
 [ext_resource type="Script" uid="uid://b5w6vfe5pj33j" path="res://main/Movement.cs" id="3_67ri8"]
-[ext_resource type="Shader" path="res://main/sky/sky.gdshader" id="sky_shader"]
 [ext_resource type="PackedScene" uid="uid://d3fs1xbndietu" path="res://levels/basement/Basement_Levels.blend" id="3_lquwl"]
 [ext_resource type="Script" uid="uid://b2q56jir26r56" path="res://levels/basement/L1StripLightOn.cs" id="4_7mycd"]
 [ext_resource type="PackedScene" uid="uid://cx8q5h3il4j2d" path="res://levels/roof/roof.blend" id="5_272bh"]
@@ -13,6 +12,7 @@
 [ext_resource type="PackedScene" path="res://main/computer_ui/computer_menu.tscn" id="11_cmenu"]
 [ext_resource type="PackedScene" uid="uid://b3u8k7nh0kgqx" path="res://assets/Exterior.blend" id="98_ext"]
 [ext_resource type="PackedScene" path="res://main/hud_ui/hud.tscn" id="99_hud"]
+[ext_resource type="Shader" uid="uid://dak754rs84iae" path="res://main/sky/sky.gdshader" id="sky_shader"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_v0o3d"]
 size = Vector2(300, 300)
@@ -20,22 +20,50 @@ size = Vector2(300, 300)
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_grrlh"]
 data = PackedVector3Array(150, 0, 150, -150, 0, 150, 150, 0, -150, -150, 0, 150, -150, 0, -150, 150, 0, -150)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_moon"]
+shading_mode = 0
+albedo_color = Color(0.86, 0.9, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_moon"]
+material = SubResource("StandardMaterial3D_moon")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sky"]
+shader = ExtResource("sky_shader")
+shader_parameter/sky_top_color = Color(0.16, 0.45, 0.95, 1)
+shader_parameter/sky_horizon_color = Color(0.58, 0.8, 1, 1)
+shader_parameter/sky_curve = 0.15
+shader_parameter/ground_horizon_color = Color(0.65, 0.67, 0.7, 1)
+shader_parameter/ground_bottom_color = Color(0.2, 0.17, 0.13, 1)
+shader_parameter/sun_direction = Vector3(0, 1, 0)
+shader_parameter/sun_color = Color(1, 1, 1, 1)
+shader_parameter/sun_visibility = 1.0
+shader_parameter/sun_size_degrees = 2.0
+shader_parameter/sun_disk_energy = 4.0
+shader_parameter/sun_halo_size_degrees = 10.0
+shader_parameter/sun_halo_strength = 0.6
+shader_parameter/star_visibility = 0.0
+shader_parameter/star_density = 0.006
+shader_parameter/star_grid = 300.0
+shader_parameter/star_brightness = 1.2
+
+[sub_resource type="Sky" id="Sky_world"]
+sky_material = SubResource("ShaderMaterial_sky")
+
+[sub_resource type="Environment" id="Environment_world"]
+background_mode = 2
+sky = SubResource("Sky_world")
+ambient_light_source = 3
+glow_enabled = true
+
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_player"]
 radius = 0.25
 height = 1.6
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3s6sg"]
-height = 2.0
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_player"]
 radius = 0.25
 height = 1.6
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fwcvl"]
-albedo_color = Color(1, 0.95, 0.85, 1)
-emission_enabled = true
-emission = Color(1, 0.95, 0.85, 1)
-emission_energy_multiplier = 4.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_na0o7"]
 albedo_color = Color(1, 0.95, 0.85, 1)
@@ -43,7 +71,13 @@ emission_enabled = true
 emission = Color(1, 0.95, 0.85, 1)
 emission_energy_multiplier = 4.0
 
-[sub_resource type="Image" id="Image_73k8k"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_73k8k"]
+albedo_color = Color(1, 0.95, 0.85, 1)
+emission_enabled = true
+emission = Color(1, 0.95, 0.85, 1)
+emission_energy_multiplier = 4.0
+
+[sub_resource type="Image" id="Image_5xyti"]
 data = {
 "data": PackedByteArray("//naxMXIRUVLgYSJs7W4ODg4"),
 "format": "RGB8",
@@ -54,7 +88,7 @@ data = {
 
 [sub_resource type="ImageTexture" id="ImageTexture_fc8wp"]
 resource_name = "StripLight_On_palette"
-image = SubResource("Image_73k8k")
+image = SubResource("Image_5xyti")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nagd8"]
 resource_name = "StripLight_On_palette"
@@ -131,7 +165,7 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_b76nu")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5xyti"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n3o0a"]
 albedo_color = Color(1, 0.95, 0.85, 1)
 emission_enabled = true
 emission = Color(1, 0.95, 0.85, 1)
@@ -188,28 +222,6 @@ size = Vector3(0.87, 0.2, 0.4)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_3s6sg"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_sky"]
-shader = ExtResource("sky_shader")
-shader_parameter/sky_top_color = Color(0.16, 0.45, 0.95, 1)
-shader_parameter/sky_horizon_color = Color(0.58, 0.8, 1, 1)
-
-[sub_resource type="Sky" id="Sky_world"]
-sky_material = SubResource("ShaderMaterial_sky")
-
-[sub_resource type="Environment" id="Environment_world"]
-background_mode = 2
-sky = SubResource("Sky_world")
-ambient_light_source = 3
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_moon"]
-shading_mode = 0
-albedo_color = Color(0.86, 0.9, 1, 1)
-
-[sub_resource type="SphereMesh" id="SphereMesh_moon"]
-material = SubResource("StandardMaterial3D_moon")
-radius = 0.5
-height = 1.0
-
 [node name="Main" type="Node3D" unique_id=942546274]
 script = ExtResource("1_main")
 
@@ -229,19 +241,19 @@ shape = SubResource("ConcavePolygonShape3D_grrlh")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=709862064]
 shadow_enabled = true
 
-[node name="MoonLight3D" type="DirectionalLight3D" parent="."]
+[node name="MoonLight3D" type="DirectionalLight3D" parent="." unique_id=1452234576]
 light_color = Color(0.45, 0.55, 1, 1)
 light_energy = 0.25
 shadow_enabled = true
 
-[node name="Moon" type="Node3D" parent="."]
+[node name="Moon" type="Node3D" parent="." unique_id=760431784]
 visible = false
 
-[node name="Mesh" type="MeshInstance3D" parent="Moon"]
+[node name="Mesh" type="MeshInstance3D" parent="Moon" unique_id=2098876600]
 cast_shadow = 0
 mesh = SubResource("SphereMesh_moon")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1458477081]
 environment = SubResource("Environment_world")
 
 [node name="Player" type="CharacterBody3D" parent="." unique_id=628655475]
@@ -449,18 +461,18 @@ transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 4.70
 
 [node name="L1_StripLight_On" parent="Basement_Levels" index="59" unique_id=1730389403]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.984688, -5.150882, 18.34343)
-material_override = SubResource("StandardMaterial3D_fwcvl")
+material_override = SubResource("StandardMaterial3D_na0o7")
 script = ExtResource("4_7mycd")
 
 [node name="L1_StripLight_On" type="MeshInstance3D" parent="Basement_Levels/L1_StripLight_On" index="0" unique_id=2004690977]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.520298, -7.821251, -8.31476)
-material_override = SubResource("StandardMaterial3D_na0o7")
+material_override = SubResource("StandardMaterial3D_73k8k")
 mesh = SubResource("ArrayMesh_ur2w8")
 script = ExtResource("4_7mycd")
 
 [node name="L1_StripLight_On_001" parent="Basement_Levels" index="60" unique_id=1159469072]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5000019, -7.8950357, -8.315625)
-material_override = SubResource("StandardMaterial3D_5xyti")
+material_override = SubResource("StandardMaterial3D_n3o0a")
 script = ExtResource("4_7mycd")
 
 [node name="L1_WallClock" parent="Basement_Levels" index="61" unique_id=1439562720]

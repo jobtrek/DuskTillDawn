@@ -1,4 +1,6 @@
-# Server Progression — Mini Spec
+# Idea: server progression
+
+Parked, milestone not set. v1 uses the shop between nights instead ([game-v1.md](../game-v1.md#11-parked-ideas-not-in-v1)).
 
 Players grow their setup from one laptop to a multi-rack server room. Each stage is unlocked by a need, not just money.
 

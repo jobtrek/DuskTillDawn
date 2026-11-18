@@ -5,12 +5,11 @@ using DuskTillDawn.Core;
 namespace DuskTillDawn.Main.MailUi;
 
 /// <summary>
-/// Glue between the desk computer, the mail window and the mail <see cref="Database"/>.
+/// Glue between the desk computer, the mail window and the <see cref="Inbox"/> in <see cref="GameState"/>.
 /// Lives as a child of ComputerMenu: opens the mail window on MailPressed and answers its signals.
 /// </summary>
 public partial class MailController : Node
 {
-    private readonly Database _db = new();
     private const int WrongReportPenalty = 25;
 
     private bool _seeded;
@@ -40,16 +39,17 @@ public partial class MailController : Node
 
         _app.MailOpened += id =>
         {
-            _db.MarkRead(id);
+            _state.Inbox.MarkRead(id);
             Refresh();
         };
         _app.ReportPressed += id =>
         {
-            bool correct = _db.ReportPhishing(id);
-            if (!correct)
+            bool? result = _state.Inbox.Report(id);
+            if (result == false)
             {
                 _state.LosePoints(WrongReportPenalty);
             }
+            bool correct = result == true;
             _app.ShowReportResult(id, correct);
             Refresh();
         };
@@ -60,7 +60,7 @@ public partial class MailController : Node
     {
         if (!_seeded)
         {
-            _db.GenerateDatabase();
+            _state.Inbox.GenerateDatabase();
             _seeded = true;
         }
         Refresh();
@@ -69,6 +69,6 @@ public partial class MailController : Node
 
     private void Refresh()
     {
-        _app.SetMails(_db.GetAllEmails());
+        _app.SetMails(_state.Inbox.GetAllMails());
     }
 }

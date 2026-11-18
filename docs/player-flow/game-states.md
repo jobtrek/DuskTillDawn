@@ -1,5 +1,7 @@
 # Game diagram
 
+> **Superseded by [game-v1.md](../game-v1.md)** (2026-11-13). This describes the old Challenge model (6 challenges, lose after 3 failures, 2-player race). v1 uses Incidents (§7–8), loses at SLA 0 and is single player. Kept for history; do not build from it.
+
 Every possibility in a game: keep going, win or lose.
 
 ## 1. One player

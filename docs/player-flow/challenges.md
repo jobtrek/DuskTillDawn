@@ -1,5 +1,7 @@
 # Challenges and player actions
 
+> **Superseded by [game-v1.md](../game-v1.md)** (2026-11-13). This describes the old Challenge model (6 challenges, lose after 3 failures, 2-player race). v1 uses Incidents (§7–8), loses at SLA 0 and is single player. Kept for history; do not build from it.
+
 Completes the [game diagram](game-states.md). The challenges come from [incidents.md](../ideas/incidents.md), simplified.
 
 ## 1. What each player can do (use cases)

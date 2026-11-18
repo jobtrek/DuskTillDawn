@@ -1,7 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://main/monitor_ui/MonitorApp.cs" id="1_monitor"]
-[ext_resource type="Script" path="res://main/computer_ui/BlockReveal.cs" id="2_reveal"]
+[ext_resource type="Script" path="res://main/ui/BlockReveal.cs" id="2_reveal"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_window"]
 bg_color = Color(0.06, 0.06, 0.08, 1)

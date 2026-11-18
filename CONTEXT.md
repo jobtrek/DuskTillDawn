@@ -1,4 +1,4 @@
-# Dawn to Dusk
+# Dusk Till Dawn
 
 A single-player game about the only sysadmin on a solar-powered night shift, keeping a three-floor building alive from 20:00 until 08:00. This glossary covers the game's core terms and the 3D asset pipeline.
 
@@ -61,9 +61,9 @@ The shared floor area of the building (800×600 cm) that all three floors use; t
 _Avoid_: floor plan, layout
 
 **Stage**:
-One step of the server progression, 1 (single laptop) to 5 (multiple racks), unlocked by need plus money. Not to be confused with Tier, which is an Element size class.
+One step of the server progression, 1 (single laptop) to 5 (multiple racks), unlocked by need plus money. Parked idea, not in v1 ([docs/ideas/server-progression.md](docs/ideas/server-progression.md)). Not to be confused with Tier, which is an Element size class.
 _Avoid_: tier (for the progression), level
 
 **Night den**:
-The small corner of the Basement near the stair door where the sysadmin's personal belongings collect. It grows over the Stages and never covers an incident cue.
+The small corner of the Basement near the stair door where the sysadmin's personal belongings collect. It grows over the Stages (not in v1) and never covers an incident cue.
 _Avoid_: cozy corner, break area

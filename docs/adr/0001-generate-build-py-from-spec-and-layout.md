@@ -1,5 +1,11 @@
 # Generate build.py from Spec + Layout via an out-of-Blender SDK
 
+Status: **accepted, amended** (2026-11-13). Since this was written:
+- The Spec cap is 40 lines, not 30 (`game-assets/agent-guide/build-rules.md`).
+- `build_index.py` is gone; the index check is `uv run voxel-sdk index --check`.
+- States are supported in the Layout (`[states.<Name>]`), no longer hand-authored.
+- `voxel-sdk build` writes a thin `build.py` by default; `--standalone` inlines the engine.
+
 Each Element's `build.py` is about 570 lines of bundled voxel engine plus 20 to 55 lines of hand-written `box`/`tile` calls with voxel coordinates computed by the agent. Across the ~65 Elements this is over 25k lines, and the agent loses context and makes placement errors in the coordinate math. We will add a pure-Python SDK (`game-assets/sdk/`, uv-managed) that takes the Spec (Parts, sizes, colour keys) plus a per-Element `layout.toml` (relative placement of Parts), validates it outside Blender, and generates the self-contained `build.py`.
 
 ## Considered options

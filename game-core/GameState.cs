@@ -32,6 +32,8 @@ public sealed class GameState
 
     public int Points { get; private set; } = 1000;
 
+    public Inbox Inbox { get; } = new();
+
     /// <summary>The night (20:00 to 08:00): Running, then Won at 08:00 or Lost when the SLA hits 0.</summary>
     public NightStatus Status { get; private set; } = NightStatus.Running;
 

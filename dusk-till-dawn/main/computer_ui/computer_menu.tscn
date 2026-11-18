@@ -1,7 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://main/computer_ui/ComputerMenu.cs" id="1_menu"]
-[ext_resource type="Script" path="res://main/computer_ui/BlockReveal.cs" id="2_reveal"]
+[ext_resource type="Script" path="res://main/ui/BlockReveal.cs" id="2_reveal"]
 [ext_resource type="Texture2D" path="res://main/computer_ui/textures/frame.png" id="3_frame"]
 [ext_resource type="Texture2D" path="res://main/computer_ui/textures/wallpaper.png" id="4_wall"]
 [ext_resource type="Texture2D" path="res://main/computer_ui/textures/icon_mail.png" id="5_mail"]

@@ -3,7 +3,7 @@
 ## Requirements
 
 - Godot 4.7.2 (.NET build)
-- .NET SDK 10.0.403
+- .NET SDK 10.0.403 or newer (projects target `net8.0` with `RollForward`; no `global.json` pins the SDK)
 - Git LFS
 
 ## Docs

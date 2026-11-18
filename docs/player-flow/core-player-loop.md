@@ -13,8 +13,8 @@ flowchart TD
     Mode -.->|"Co-op (M3)"| Start
     Mode -.->|"Infinite mode (M2)"| Endless["Endless night<br/>incidents keep speeding up"]
 
-    Start --> Play["Play from 22:00 to 06:00<br/>(10 real minutes)"]
-    Play --> Sla{"SLA at 0 %<br/>before 06:00?"}
+    Start --> Play["Play from 20:00 to 08:00<br/>(10 real minutes)"]
+    Play --> Sla{"SLA at 0 %<br/>before 08:00?"}
     Sla -->|"Yes"| Lost["LOSE: company bankrupt<br/>everything resets"]
     Sla -->|"No"| Report["Night report<br/>SLA, incidents, points"]
     Report --> Last{"Was it night 5?"}
@@ -30,7 +30,7 @@ flowchart TD
 
 ## 2. The building
 
-One player, three floors, all on screen in a cut-away view. The player diagnoses on the computer, but can only fix an incident in its room.
+One player, three floors, walked in first person. The player diagnoses on the computer, but can only fix an incident in its room.
 
 ```mermaid
 flowchart TB

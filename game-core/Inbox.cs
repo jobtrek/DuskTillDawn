@@ -3,21 +3,21 @@ Okay so for the email, there are multiple ways to do this. I need to firts gener
 
 for example the data structure for en email will be 
 
-var byCategory = new Dictionary<Category, List<Email>>();
+var byCategory = new Dictionary<Category, List<Mail>>();
 
 where the key is the category and then there's the list of emails, and each email has an id.
 
 then when I am querying I can just list all the emails that don't contain the Categories 'Phishing' for example.
 
 
-The id is for when a user marks an email Phishing then it deletes, it's a way unique way to detect the email.
+The id is for when a user reports a mail as Phishing: the mail is marked reported (it stays in the inbox), it's a unique way to detect the mail.
 the categories are for generating the email.
 
 
 methods to create:
 
 - generates & provides all the emails to the node. then display it
-- queries for deleting and marking an email that is Phishing
+- queries for reporting a mail as Phishing
 - Found
 - Not Found. 
 
@@ -25,28 +25,25 @@ methods to create:
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Numerics;
-using Godot;
-namespace DuskTillDawn.Main.MailUi;
 
-public class Database
+namespace DuskTillDawn.Core;
+
+public enum MailKind
 {
-    public record Email(bool Read, int Id, string Sender, string Subject, string Body, DateTime Date);
+    Warning,
+    News,
+    Phishing,
+}
+
+public sealed record Mail(bool IsRead, int Id, string From, string Subject, string Body, DateTime Date, bool IsReported = false);
+
+/// <summary>The Mail app's inbox. Owned by <see cref="GameState"/> (contract §3.1).</summary>
+public sealed class Inbox
+{
     private static int _nextId = 0;
 
-    public enum Categories
-    {
-        Warning,
-        Technews,
-        Incident,
-        Phishing
-
-    }
-
-
-    private Dictionary<Categories, List<Email>> byCategory = new();
+    private Dictionary<MailKind, List<Mail>> byCategory = new();
 
     public static int generateUniqueId()
     {
@@ -54,20 +51,20 @@ public class Database
 
     }
 
-    public Dictionary<Categories, List<Email>> GenerateDatabase()
+    public Dictionary<MailKind, List<Mail>> GenerateDatabase()
     {
         byCategory = SeedDatabase();
         return byCategory;
     }
 
 
-    private Dictionary<Categories, List<Email>> SeedDatabase()
+    private Dictionary<MailKind, List<Mail>> SeedDatabase()
     {
-        var night = new DateTime(2026, 11, 12, 22, 0, 0);
+        var night = new DateTime(2026, 11, 12, 20, 0, 0);
 
-        byCategory = new Dictionary<Categories, List<Email>>
+        byCategory = new Dictionary<MailKind, List<Mail>>
         {
-            [Categories.Warning] = new List<Email>
+            [MailKind.Warning] = new List<Mail>
             {
                 new(false, generateUniqueId(), "IT Security", "Disk almost full on DB-01",
                     "DB-01 is at 92% disk usage. Clear old logs before it hits 100% and the database stops.",
@@ -99,8 +96,38 @@ public class Database
                 new(false, generateUniqueId(), "IT Security", "Antivirus definitions out of date",
                     "12 workstations have not updated their antivirus in 7 days. Push the update from the admin console.",
                     night.AddMinutes(400)),
+                new(false, generateUniqueId(), "Admin Team", "Mail server down",
+                    "Customers cannot send mail. MAIL-01 is not responding. Restart it from the admin console.",
+                    night.AddMinutes(30)),
+                new(false, generateUniqueId(), "Admin Team", "Backup job failed",
+                    "Last night's backup did not finish. Run it again before morning.",
+                    night.AddMinutes(60)),
+                new(false, generateUniqueId(), "Admin Team", "Website is down",
+                    "The shop shows 'Error 502'. WEB-01 stopped answering. Restart the web service.",
+                    night.AddMinutes(100)),
+                new(false, generateUniqueId(), "Helpdesk", "Printer queue stuck on floor 2",
+                    "The morning shift can't print. Clear the print queue on PRINT-02.",
+                    night.AddMinutes(140)),
+                new(false, generateUniqueId(), "Admin Team", "Database is full",
+                    "DB-01 hit 100% disk. Orders are failing. Free space now, then restart the database.",
+                    night.AddMinutes(185)),
+                new(false, generateUniqueId(), "Admin Team", "VPN is down",
+                    "Remote staff cannot connect. VPN-01 is not answering. Restart the VPN service.",
+                    night.AddMinutes(230)),
+                new(false, generateUniqueId(), "Helpdesk", "User locked out",
+                    "Sarah from Accounting is locked out after too many wrong passwords. Unlock her account.",
+                    night.AddMinutes(280)),
+                new(false, generateUniqueId(), "Admin Team", "Network switch offline",
+                    "Floor 3 has no network. SW-03 lost power. Check the PDU in rack C.",
+                    night.AddMinutes(340)),
+                new(false, generateUniqueId(), "Admin Team", "Server overheating",
+                    "APP-02 shut down at 85°C. Fix the cooling, then power it back on.",
+                    night.AddMinutes(390)),
+                new(false, generateUniqueId(), "Admin Team", "DNS not resolving",
+                    "Nobody can reach internal sites by name. DNS-01 crashed. Restart the DNS service.",
+                    night.AddMinutes(450)),
             },
-            [Categories.Technews] = new List<Email>
+            [MailKind.News] = new List<Mail>
             {
                 new(false, generateUniqueId(), "Tech News", "Log4Shell: patch now",
                     "A critical flaw in Log4j lets attackers run code on your servers. Update to the latest version.",
@@ -133,40 +160,7 @@ public class Database
                     "Watch the SMART reallocated sector count. If it keeps rising, the disk is dying.",
                     night.AddMinutes(430)),
             },
-            [Categories.Incident] = new List<Email>
-            {
-                new(false, generateUniqueId(), "Admin Team", "Mail server down",
-                    "Customers cannot send mail. MAIL-01 is not responding. Restart it from the admin console.",
-                    night.AddMinutes(30)),
-                new(false, generateUniqueId(), "Admin Team", "Backup job failed",
-                    "Last night's backup did not finish. Run it again before morning.",
-                    night.AddMinutes(60)),
-                new(false, generateUniqueId(), "Admin Team", "Website is down",
-                    "The shop shows 'Error 502'. WEB-01 stopped answering. Restart the web service.",
-                    night.AddMinutes(100)),
-                new(false, generateUniqueId(), "Helpdesk", "Printer queue stuck on floor 2",
-                    "The morning shift can't print. Clear the print queue on PRINT-02.",
-                    night.AddMinutes(140)),
-                new(false, generateUniqueId(), "Admin Team", "Database is full",
-                    "DB-01 hit 100% disk. Orders are failing. Free space now, then restart the database.",
-                    night.AddMinutes(185)),
-                new(false, generateUniqueId(), "Admin Team", "VPN is down",
-                    "Remote staff cannot connect. VPN-01 is not answering. Restart the VPN service.",
-                    night.AddMinutes(230)),
-                new(false, generateUniqueId(), "Helpdesk", "User locked out",
-                    "Sarah from Accounting is locked out after too many wrong passwords. Unlock her account.",
-                    night.AddMinutes(280)),
-                new(false, generateUniqueId(), "Admin Team", "Network switch offline",
-                    "Floor 3 has no network. SW-03 lost power. Check the PDU in rack C.",
-                    night.AddMinutes(340)),
-                new(false, generateUniqueId(), "Admin Team", "Server overheating",
-                    "APP-02 shut down at 85°C. Fix the cooling, then power it back on.",
-                    night.AddMinutes(390)),
-                new(false, generateUniqueId(), "Admin Team", "DNS not resolving",
-                    "Nobody can reach internal sites by name. DNS-01 crashed. Restart the DNS service.",
-                    night.AddMinutes(450)),
-            },
-            [Categories.Phishing] = new List<Email>
+            [MailKind.Phishing] = new List<Mail>
             {
                 new(false, generateUniqueId(), "IT Securty", "Reset your password NOW",
                     "Your account will be deleted in 1 hour. Click here and enter your password to keep it.",
@@ -208,39 +202,49 @@ public class Database
 
 
     // for this query I need a way so make it progressive and random
-    public List<Email> GetAllEmails()
+    public List<Mail> GetAllMails()
     {
         return byCategory.Values
-            .SelectMany(emails => emails)
-            .OrderByDescending(email => email.Date)
+            .SelectMany(mails => mails)
+            .OrderByDescending(mail => mail.Date)
             .ToList();
     }
 
-    public Email? GetEmail(int id)
+    public Mail? GetMail(int id)
     {
         return byCategory.Values
-            .SelectMany(emails => emails)
-            .FirstOrDefault(email => email.Id == id);
+            .SelectMany(mails => mails)
+            .FirstOrDefault(mail => mail.Id == id);
     }
-    public bool ReportPhishing(int id)
-    {
-        if (!byCategory.TryGetValue(Categories.Phishing, out var phishing))
-        {
-            return false;
-        }
 
-        int removed = phishing.RemoveAll(email => email.Id == id);
-        return removed > 0;
+    /// <summary>Marks the mail reported. True if it was Phishing, false if not, null if missing or already reported.</summary>
+    public bool? Report(int id)
+    {
+        foreach (var (kind, mails) in byCategory)
+        {
+            int index = mails.FindIndex(mail => mail.Id == id);
+            if (index < 0)
+            {
+                continue;
+            }
+            if (mails[index].IsReported)
+            {
+                return null;
+            }
+            mails[index] = mails[index] with { IsReported = true };
+            return kind == MailKind.Phishing;
+        }
+        return null;
     }
 
     public void MarkRead(int id)
     {
-        foreach (var emails in byCategory.Values)
+        foreach (var mails in byCategory.Values)
         {
-            int index = emails.FindIndex(email => email.Id == id);
+            int index = mails.FindIndex(mail => mail.Id == id);
             if (index >= 0)
             {
-                emails[index] = emails[index] with { Read = true };
+                mails[index] = mails[index] with { IsRead = true };
                 return;
             }
         }
@@ -249,9 +253,7 @@ public class Database
     public int UnReadCount()
     {
         return byCategory.Values
-            .SelectMany(emails => emails)
-            .Count(email => !email.Read);
+            .SelectMany(mails => mails)
+            .Count(mail => !mail.IsRead);
     }
-
-
 }
