@@ -22,6 +22,9 @@ public partial class Hud : CanvasLayer
     [Export] public Texture2D SunIcon = null!;
     [Export] public Texture2D MoonIcon = null!;
 
+    // Set while the player sits at the desk computer, where the inbox already shows new mail.
+    public bool MailToastMuted { get; set; }
+
     private static readonly Color LossTint = new(1f, 0.45f, 0.4f);
     private static readonly Color GainTint = new(0.5f, 1f, 0.55f);
     private static readonly Color Flash = new(1.6f, 1.6f, 1.6f);
@@ -42,6 +45,7 @@ public partial class Hud : CanvasLayer
     private Tween? _toastTween;
     // Mails the current toast is announcing; a second arrival while it shows adds up instead of hiding the first.
     private int _toastMails;
+    private GameState _state = null!;
     private bool? _isNight;
     private double _sla = double.NaN;
     private int? _points;
@@ -65,6 +69,22 @@ public partial class Hud : CanvasLayer
         _banner.Resized += () => _banner.PivotOffset = _banner.Size / 2f;
         _mailToast.Resized += () => _mailToast.PivotOffset = _mailToast.Size / 2f;
         PlayAppear();
+
+        _state = ((Main)GetTree().CurrentScene).State;
+        _state.MailReceived += OnMailReceived;
+    }
+
+    public override void _ExitTree()
+    {
+        _state.MailReceived -= OnMailReceived;
+    }
+
+    private void OnMailReceived(Mail mail)
+    {
+        if (!MailToastMuted)
+        {
+            ShowMailToast(1);
+        }
     }
 
     public override void _Process(double delta)

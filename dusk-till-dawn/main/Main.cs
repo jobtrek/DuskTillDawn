@@ -21,6 +21,8 @@ public partial class Main : Node3D
         _state = new GameState();
         _game = new SoloGame(_state.Player);
     }
+
+    private const string MailSchedulePath = "res://main/mail_ui/emails.json";
     private const double SunFadeDegrees = 10;
     private const double SunMinElevationDegrees = 5;
     private const double ShadowFadeDegrees = 10;
@@ -66,6 +68,7 @@ public partial class Main : Node3D
         _computerMenu = GetNodeOrNull<Control>("Company/Desk/MeshInstance3D/Menu/ComputerMenu");
         // One challenge at start until the game launches them on its own (#54).
         LaunchDebugChallenge();
+        _state.Inbox.LoadSchedule(FileAccess.GetFileAsString(MailSchedulePath));
         _sun = GetNode<DirectionalLight3D>("DirectionalLight3D");
         _sunEnergy = _sun.LightEnergy;
         _moon = GetNode<DirectionalLight3D>("MoonLight3D");

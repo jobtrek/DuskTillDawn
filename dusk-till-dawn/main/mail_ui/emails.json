@@ -1,247 +1,245 @@
 {
   "Warning": [
     {
-      "Sender": "IT Security",
+      "From": "IT Security",
       "Subject": "Disk almost full on DB-01",
       "Body": "DB-01 is at 92% disk usage. Clear old logs before it hits 100% and the database stops.",
       "MinutesAfterFirstMail": 5
     },
     {
-      "Sender": "Monitoring",
+      "From": "Monitoring",
       "Subject": "High CPU on WEB-02",
       "Body": "WEB-02 has been above 90% CPU for 10 minutes. Check for a runaway process.",
       "MinutesAfterFirstMail": 20
     },
     {
-      "Sender": "Monitoring",
-      "Subject": "Memory leak suspected on APP-03",
-      "Body": "APP-03 RAM usage grows 2% every 10 minutes. Restart the service before it runs out of memory.",
-      "MinutesAfterFirstMail": 70
-    },
-    {
-      "Sender": "IT Security",
-      "Subject": "SSL certificate expires in 3 days",
-      "Body": "The certificate for shop.dusk-corp.local expires on Sunday. Renew it or customers will see a security error.",
-      "MinutesAfterFirstMail": 95
-    },
-    {
-      "Sender": "Monitoring",
-      "Subject": "Packet loss on SW-CORE-01",
-      "Body": "The core switch shows 4% packet loss on port 12. Check the cable or the port.",
-      "MinutesAfterFirstMail": 130
-    },
-    {
-      "Sender": "Monitoring",
-      "Subject": "UPS battery at 60%",
-      "Body": "The UPS in rack B switched to battery after a power dip. If power does not return, servers shut down in 25 minutes.",
-      "MinutesAfterFirstMail": 170
-    },
-    {
-      "Sender": "IT Security",
-      "Subject": "5 failed logins on admin account",
-      "Body": "Someone tried to log in as 'admin' 5 times from 10.0.4.77. Check if it was a colleague or lock the account.",
-      "MinutesAfterFirstMail": 210
-    },
-    {
-      "Sender": "Monitoring",
-      "Subject": "Server room temperature rising",
-      "Body": "Server room is at 29°C. One cooling unit may have stopped. Check the AC before servers overheat.",
-      "MinutesAfterFirstMail": 265
-    },
-    {
-      "Sender": "Monitoring",
-      "Subject": "Slow response on DB-01",
-      "Body": "Queries on DB-01 take 4 seconds instead of 0.2. Look for a locked table or a heavy query.",
-      "MinutesAfterFirstMail": 320
-    },
-    {
-      "Sender": "IT Security",
-      "Subject": "Antivirus definitions out of date",
-      "Body": "12 workstations have not updated their antivirus in 7 days. Push the update from the admin console.",
-      "MinutesAfterFirstMail": 400
-    }
-  ],
-  "Technews": [
-    {
-      "Sender": "Tech News",
-      "Subject": "Log4Shell: patch now",
-      "Body": "A critical flaw in Log4j lets attackers run code on your servers. Update to the latest version.",
-      "MinutesAfterFirstMail": 2
-    },
-    {
-      "Sender": "Tech News",
-      "Subject": "Why backups fail when you need them",
-      "Body": "Most teams never test a restore. Schedule one this week.",
-      "MinutesAfterFirstMail": 45
-    },
-    {
-      "Sender": "Tech News",
-      "Subject": "How to spot a phishing mail",
-      "Body": "Check the sender address letter by letter. Real IT teams never ask for your password by mail.",
-      "MinutesAfterFirstMail": 80
-    },
-    {
-      "Sender": "Tech News",
-      "Subject": "Ransomware hits 3 hospitals",
-      "Body": "Attackers got in through an unpatched VPN. All three had no offline backup.",
-      "MinutesAfterFirstMail": 115
-    },
-    {
-      "Sender": "Tech News",
-      "Subject": "The 3-2-1 backup rule",
-      "Body": "3 copies of your data, on 2 different media, 1 of them off-site. Simple and still the best.",
-      "MinutesAfterFirstMail": 155
-    },
-    {
-      "Sender": "Tech News",
-      "Subject": "Why your server room needs a thermometer",
-      "Body": "Most hardware failures in small companies start with heat. A 10 € sensor can save a server.",
-      "MinutesAfterFirstMail": 200
-    },
-    {
-      "Sender": "Tech News",
-      "Subject": "MFA blocks 99% of account attacks",
-      "Body": "Turning on two-factor login is the cheapest security upgrade you can make.",
-      "MinutesAfterFirstMail": 250
-    },
-    {
-      "Sender": "Tech News",
-      "Subject": "CEO fraud costs companies millions",
-      "Body": "Scammers pose as the boss and ask for urgent payments or gift cards. Always call to check.",
-      "MinutesAfterFirstMail": 300
-    },
-    {
-      "Sender": "Tech News",
-      "Subject": "Night shift tips for sysadmins",
-      "Body": "Drink water, check alerts every 15 minutes, and write down everything you change.",
-      "MinutesAfterFirstMail": 360
-    },
-    {
-      "Sender": "Tech News",
-      "Subject": "Old disks: when to replace them",
-      "Body": "Watch the SMART reallocated sector count. If it keeps rising, the disk is dying.",
-      "MinutesAfterFirstMail": 430
-    }
-  ],
-  "Incident": [
-    {
-      "Sender": "Admin Team",
+      "From": "Admin Team",
       "Subject": "Mail server down",
       "Body": "Customers cannot send mail. MAIL-01 is not responding. Restart it from the admin console.",
       "MinutesAfterFirstMail": 30
     },
     {
-      "Sender": "Admin Team",
+      "From": "Admin Team",
       "Subject": "Backup job failed",
       "Body": "Last night's backup did not finish. Run it again before morning.",
       "MinutesAfterFirstMail": 60
     },
     {
-      "Sender": "Admin Team",
+      "From": "Monitoring",
+      "Subject": "Memory leak suspected on APP-03",
+      "Body": "APP-03 RAM usage grows 2% every 10 minutes. Restart the service before it runs out of memory.",
+      "MinutesAfterFirstMail": 70
+    },
+    {
+      "From": "IT Security",
+      "Subject": "SSL certificate expires in 3 days",
+      "Body": "The certificate for shop.dusk-corp.local expires on Sunday. Renew it or customers will see a security error.",
+      "MinutesAfterFirstMail": 95
+    },
+    {
+      "From": "Admin Team",
       "Subject": "Website is down",
       "Body": "The shop shows 'Error 502'. WEB-01 stopped answering. Restart the web service.",
       "MinutesAfterFirstMail": 100
     },
     {
-      "Sender": "Helpdesk",
+      "From": "Monitoring",
+      "Subject": "Packet loss on SW-CORE-01",
+      "Body": "The core switch shows 4% packet loss on port 12. Check the cable or the port.",
+      "MinutesAfterFirstMail": 130
+    },
+    {
+      "From": "Helpdesk",
       "Subject": "Printer queue stuck on floor 2",
       "Body": "The morning shift can't print. Clear the print queue on PRINT-02.",
       "MinutesAfterFirstMail": 140
     },
     {
-      "Sender": "Admin Team",
+      "From": "Monitoring",
+      "Subject": "UPS battery at 60%",
+      "Body": "The UPS in rack B switched to battery after a power dip. If power does not return, servers shut down in 25 minutes.",
+      "MinutesAfterFirstMail": 170
+    },
+    {
+      "From": "Admin Team",
       "Subject": "Database is full",
       "Body": "DB-01 hit 100% disk. Orders are failing. Free space now, then restart the database.",
       "MinutesAfterFirstMail": 185
     },
     {
-      "Sender": "Admin Team",
+      "From": "IT Security",
+      "Subject": "5 failed logins on admin account",
+      "Body": "Someone tried to log in as 'admin' 5 times from 10.0.4.77. Check if it was a colleague or lock the account.",
+      "MinutesAfterFirstMail": 210
+    },
+    {
+      "From": "Admin Team",
       "Subject": "VPN is down",
       "Body": "Remote staff cannot connect. VPN-01 is not answering. Restart the VPN service.",
       "MinutesAfterFirstMail": 230
     },
     {
-      "Sender": "Helpdesk",
+      "From": "Monitoring",
+      "Subject": "Server room temperature rising",
+      "Body": "Server room is at 29°C. One cooling unit may have stopped. Check the AC before servers overheat.",
+      "MinutesAfterFirstMail": 265
+    },
+    {
+      "From": "Helpdesk",
       "Subject": "User locked out",
       "Body": "Sarah from Accounting is locked out after too many wrong passwords. Unlock her account.",
       "MinutesAfterFirstMail": 280
     },
     {
-      "Sender": "Admin Team",
+      "From": "Monitoring",
+      "Subject": "Slow response on DB-01",
+      "Body": "Queries on DB-01 take 4 seconds instead of 0.2. Look for a locked table or a heavy query.",
+      "MinutesAfterFirstMail": 320
+    },
+    {
+      "From": "Admin Team",
       "Subject": "Network switch offline",
       "Body": "Floor 3 has no network. SW-03 lost power. Check the PDU in rack C.",
       "MinutesAfterFirstMail": 340
     },
     {
-      "Sender": "Admin Team",
+      "From": "Admin Team",
       "Subject": "Server overheating",
       "Body": "APP-02 shut down at 85°C. Fix the cooling, then power it back on.",
       "MinutesAfterFirstMail": 390
     },
     {
-      "Sender": "Admin Team",
+      "From": "IT Security",
+      "Subject": "Antivirus definitions out of date",
+      "Body": "12 workstations have not updated their antivirus in 7 days. Push the update from the admin console.",
+      "MinutesAfterFirstMail": 400
+    },
+    {
+      "From": "Admin Team",
       "Subject": "DNS not resolving",
       "Body": "Nobody can reach internal sites by name. DNS-01 crashed. Restart the DNS service.",
       "MinutesAfterFirstMail": 450
     }
   ],
+  "News": [
+    {
+      "From": "Tech News",
+      "Subject": "Log4Shell: patch now",
+      "Body": "A critical flaw in Log4j lets attackers run code on your servers. Update to the latest version.",
+      "MinutesAfterFirstMail": 2
+    },
+    {
+      "From": "Tech News",
+      "Subject": "Why backups fail when you need them",
+      "Body": "Most teams never test a restore. Schedule one this week.",
+      "MinutesAfterFirstMail": 45
+    },
+    {
+      "From": "Tech News",
+      "Subject": "How to spot a phishing mail",
+      "Body": "Check the sender address letter by letter. Real IT teams never ask for your password by mail.",
+      "MinutesAfterFirstMail": 80
+    },
+    {
+      "From": "Tech News",
+      "Subject": "Ransomware hits 3 hospitals",
+      "Body": "Attackers got in through an unpatched VPN. All three had no offline backup.",
+      "MinutesAfterFirstMail": 115
+    },
+    {
+      "From": "Tech News",
+      "Subject": "The 3-2-1 backup rule",
+      "Body": "3 copies of your data, on 2 different media, 1 of them off-site. Simple and still the best.",
+      "MinutesAfterFirstMail": 155
+    },
+    {
+      "From": "Tech News",
+      "Subject": "Why your server room needs a thermometer",
+      "Body": "Most hardware failures in small companies start with heat. A 10 € sensor can save a server.",
+      "MinutesAfterFirstMail": 200
+    },
+    {
+      "From": "Tech News",
+      "Subject": "MFA blocks 99% of account attacks",
+      "Body": "Turning on two-factor login is the cheapest security upgrade you can make.",
+      "MinutesAfterFirstMail": 250
+    },
+    {
+      "From": "Tech News",
+      "Subject": "CEO fraud costs companies millions",
+      "Body": "Scammers pose as the boss and ask for urgent payments or gift cards. Always call to check.",
+      "MinutesAfterFirstMail": 300
+    },
+    {
+      "From": "Tech News",
+      "Subject": "Night shift tips for sysadmins",
+      "Body": "Drink water, check alerts every 15 minutes, and write down everything you change.",
+      "MinutesAfterFirstMail": 360
+    },
+    {
+      "From": "Tech News",
+      "Subject": "Old disks: when to replace them",
+      "Body": "Watch the SMART reallocated sector count. If it keeps rising, the disk is dying.",
+      "MinutesAfterFirstMail": 430
+    }
+  ],
   "Phishing": [
     {
-      "Sender": "IT Securty",
+      "From": "IT Securty",
       "Subject": "Reset your password NOW",
       "Body": "Your account will be deleted in 1 hour. Click here and enter your password to keep it.",
       "MinutesAfterFirstMail": 15
     },
     {
-      "Sender": "CEO (personal)",
+      "From": "CEO (personal)",
       "Subject": "Urgent gift cards",
       "Body": "I'm in a meeting. Buy 5 gift cards and send me the codes. Don't tell anyone.",
       "MinutesAfterFirstMail": 50
     },
     {
-      "Sender": "Micros0ft Support",
+      "From": "Micros0ft Support",
       "Subject": "Your license has expired",
       "Body": "Your Office license expired. Pay 49.99 € in the next 2 hours at micros0ft-renew.com or lose all files.",
       "MinutesAfterFirstMail": 90
     },
     {
-      "Sender": "HR Departement",
+      "From": "HR Departement",
       "Subject": "Salary update for 2027",
       "Body": "Your new salary is ready. Open the attached file salary_2027.pdf.exe and enable macros to view it.",
       "MinutesAfterFirstMail": 125
     },
     {
-      "Sender": "DHL Express",
+      "From": "DHL Express",
       "Subject": "Your parcel is waiting",
       "Body": "We could not deliver your parcel. Pay 1.99 € customs fee here to get it delivered tomorrow.",
       "MinutesAfterFirstMail": 160
     },
     {
-      "Sender": "Admin Teamm",
+      "From": "Admin Teamm",
       "Subject": "Mailbox full",
       "Body": "Your mailbox is 99% full. Log in here with your username and password to get 50 GB free.",
       "MinutesAfterFirstMail": 220
     },
     {
-      "Sender": "Bank Security",
+      "From": "Bank Security",
       "Subject": "Suspicious payment blocked",
       "Body": "We blocked a payment of 2,450 €. Confirm your card number and PIN to unblock your account.",
       "MinutesAfterFirstMail": 275
     },
     {
-      "Sender": "CEO (personal)",
+      "From": "CEO (personal)",
       "Subject": "Wire transfer today",
       "Body": "Send 18,000 € to the account below before 8am. It's for a secret deal, don't call me, I'm on a plane.",
       "MinutesAfterFirstMail": 330
     },
     {
-      "Sender": "IT-Helpdesk",
+      "From": "IT-Helpdesk",
       "Subject": "New VPN client required",
       "Body": "Install the new VPN client from vpn-update.ru today or you will lose remote access.",
       "MinutesAfterFirstMail": 380
     },
     {
-      "Sender": "Lottery Team",
+      "From": "Lottery Team",
       "Subject": "You won 1,000,000 €!",
       "Body": "Congratulations! Send your name, address and bank details to claim your prize.",
       "MinutesAfterFirstMail": 440

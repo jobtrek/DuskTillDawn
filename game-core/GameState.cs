@@ -20,6 +20,8 @@ public sealed class GameState
     private const double RealSecondsPerNight = RealSecondsPerInGameHour * NightLengthInGameHours;
     private const double RealSecondsPerDay = RealSecondsPerInGameHour * DayLengthInGameHours;
 
+    private const int WrongReportPenalty = 25;
+
     private double _elapsedRealSeconds;
 
     public double Sla { get; private set; } = 100;
@@ -58,10 +60,9 @@ public sealed class GameState
     /// <summary>In-game minutes since 20:00.</summary>
     public double MinutesSinceNightStart => _elapsedRealSeconds * 60 / RealSecondsPerInGameHour;
 
-    /// <summary>Raised once, on the first Tick of the night (20:00). The mail app delivers its inbox on it.</summary>
-    public event Action? NightStarted;
+    public Inbox Inbox { get; } = new();
 
-    private bool _nightStartRaised;
+    public event Action<Mail>? MailReceived;
 
     public string ClockText
     {
@@ -82,13 +83,12 @@ public sealed class GameState
             return;
         }
 
-        if (!_nightStartRaised)
-        {
-            _nightStartRaised = true;
-            NightStarted?.Invoke();
-        }
-
         _elapsedRealSeconds = Math.Min(_elapsedRealSeconds + realSeconds, RealSecondsPerDay);
+
+        foreach (Mail mail in Inbox.DeliverDue(MinutesSinceNightStart))
+        {
+            MailReceived?.Invoke(mail);
+        }
 
         if (_elapsedRealSeconds >= RealSecondsPerNight)
         {
@@ -99,6 +99,19 @@ public sealed class GameState
         {
             DaySurvived = true;
         }
+    }
+
+    // Returns whether the mail really was Phishing. A wrong report costs points only the first time.
+    public bool ReportPhishing(int mailId)
+    {
+        Mail mail = Inbox.Get(mailId);
+        bool isPhishing = mail.Kind == MailKind.Phishing;
+        if (!isPhishing && !mail.IsReported)
+        {
+            LosePoints(WrongReportPenalty);
+        }
+        Inbox.MarkReported(mail);
+        return isPhishing;
     }
 
     public void LosePoints(int points)

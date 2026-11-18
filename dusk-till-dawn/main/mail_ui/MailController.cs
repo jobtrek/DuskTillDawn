@@ -1,23 +1,17 @@
-using Godot;
+using System.Linq;
 using DuskTillDawn.Core;
-
+using Godot;
 
 namespace DuskTillDawn.Main.MailUi;
 
 /// <summary>
-/// Glue between the desk computer, the mail window and the mail <see cref="Database"/>.
+/// Glue between the desk computer, the mail window and the <see cref="Inbox"/> in game-core.
 /// Lives as a child of ComputerMenu: opens the mail window on MailPressed and answers its signals.
 /// </summary>
 public partial class MailController : Node
 {
-    private readonly Database _db = new();
-    private const int WrongReportPenalty = 25;
-
-    private bool _seeded;
-    private int _shownCount;
     private MailApp _app = null!;
     private GameState _state = null!;
-    private ComputerMenu _menu = null!;
     private Hud _hud = null!;
 
     public override void _Ready()
@@ -28,85 +22,49 @@ public partial class MailController : Node
         _hud = main.GetNode<Hud>("Hud");
 
         var menu = GetParent<ComputerMenu>();
-        _menu = menu;
         _app = menu.GetNode<MailApp>("Map/Screen/MailApp");
         _app.Hide();
 
         menu.MailPressed += OpenMail;
         // Only one app window at a time: the monitoring window sits in the same spot.
         menu.MonitoringPressed += () => _app.Hide();
-        // Player walked away from the computer: close the mail window too.
         menu.VisibilityChanged += () =>
         {
-            if (!menu.IsVisibleInTree())
+            bool atDesk = menu.IsVisibleInTree();
+            // At the desk the inbox itself shows the new mail; the toast would sit on top of the screen.
+            _hud.MailToastMuted = atDesk;
+            if (atDesk)
             {
-                _app.Hide();
+                _hud.HideMailToast();
             }
             else
             {
-                // At the desk the inbox itself shows the new mail; the toast would sit on top of the screen.
-                _hud.HideMailToast();
+                _app.Hide();
             }
         };
 
         _app.MailOpened += id =>
         {
-            _db.MarkRead(id);
+            _state.Inbox.MarkRead(id);
             Refresh();
         };
         _app.ReportPressed += id =>
         {
-            bool correct = _db.ReportPhishing(id);
-            if (!correct)
-            {
-                _state.LosePoints(WrongReportPenalty);
-            }
-            _app.ShowReportResult(id, correct);
+            _app.ShowReportResult(id, _state.ReportPhishing(id));
             Refresh();
         };
         _app.CloseRequested += () => _app.Hide();
 
-        // Mails arrive when the night starts (20:00), not when the player first opens the app.
-        _state.NightStarted += DeliverMails;
+        _state.MailReceived += OnMailReceived;
     }
 
     public override void _ExitTree()
     {
-        _state.NightStarted -= DeliverMails;
+        _state.MailReceived -= OnMailReceived;
     }
 
-    /// <summary>Each frame: move the inbox clock forward and redraw when new mails have arrived.</summary>
-    public override void _Process(double delta)
+    private void OnMailReceived(Mail mail)
     {
-        if (!_seeded)
-        {
-            return;
-        }
-
-        _db.SetTime(Database.ShiftStart.AddMinutes(_state.MinutesSinceNightStart));
-        // Reports call Refresh right away, so any difference here is mail that just arrived.
-        int arrived = _db.CountAllEmails() - _shownCount;
-        if (arrived == 0)
-        {
-            return;
-        }
-
-        Refresh();
-        if (arrived > 0 && !_menu.IsVisibleInTree())
-        {
-            _hud.ShowMailToast(arrived);
-        }
-    }
-
-    private void DeliverMails()
-    {
-        if (_seeded)
-        {
-            return;
-        }
-        // Mails get their (randomised) times now; they show up one by one as the clock passes them.
-        _db.GenerateDatabase();
-        _seeded = true;
         Refresh();
     }
 
@@ -118,8 +76,8 @@ public partial class MailController : Node
 
     private void Refresh()
     {
-        _shownCount = _db.CountAllEmails();
-        _app.SetMails(_db.GetAllEmails());
-        _app.SetCount(_shownCount, _db.UnReadCount());
+        var inbox = _state.Inbox;
+        _app.SetMails(inbox.Mails.Reverse());
+        _app.SetCount(inbox.Mails.Count, inbox.UnreadCount);
     }
 }
