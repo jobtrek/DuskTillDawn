@@ -3,7 +3,7 @@ using DuskTillDawn.Core;
 using Godot;
 
 /// <summary>
-/// Small HUD panel (top right): failures out of 3 and every running challenge with its room and timer.
+/// Small HUD panel (top right): points, failures out of 3 and every running challenge with its room and timer.
 /// Main calls ShowGame every frame. The dashboard only reads the game; it never changes it.
 /// </summary>
 public partial class Dashboard : CanvasLayer
@@ -14,21 +14,25 @@ public partial class Dashboard : CanvasLayer
     [Export] public float PopDuration = 0.25f;
 
     private static readonly Color LossTint = new(1f, 0.45f, 0.4f);
+    private static readonly Color GainTint = new(0.5f, 1f, 0.55f);
     private static readonly Color Faded = new(1f, 1f, 1f, 0.55f);
 
     private Control _panel = null!;
+    private Label _pointsValue = null!;
     private Label _failuresValue = null!;
     private Label _emptyLabel = null!;
     private VBoxContainer _alertList = null!;
 
     private readonly List<AlertRow> _rows = new();
+    private int? _points;
     private int _failures = -1;
     private bool? _lost;
-    private Tween? _popTween;
+    private readonly Dictionary<Control, Tween> _popTweens = new();
 
     public override void _Ready()
     {
         _panel = GetNode<Control>("%Panel");
+        _pointsValue = GetNode<Label>("%PointsValue");
         _failuresValue = GetNode<Label>("%FailuresValue");
         _emptyLabel = GetNode<Label>("%EmptyLabel");
         _alertList = GetNode<VBoxContainer>("%AlertList");
@@ -37,8 +41,25 @@ public partial class Dashboard : CanvasLayer
 
     public void ShowGame(SoloGame game)
     {
+        ShowPoints(game.Players[0].Points);
         ShowFailures(game.Failures, game.IsLost);
         ShowAlerts(game.Challenges);
+    }
+
+    private void ShowPoints(int points)
+    {
+        if (points == _points)
+        {
+            return;
+        }
+
+        int? previous = _points;
+        _points = points;
+        _pointsValue.Text = points.ToString();
+        if (previous != null)
+        {
+            Pop(_pointsValue, points < previous ? LossTint : GainTint);
+        }
     }
 
     private void ShowFailures(int failures, bool lost)
@@ -57,7 +78,7 @@ public partial class Dashboard : CanvasLayer
 
         if (!firstShow && increased)
         {
-            Pop(_failuresValue);
+            Pop(_failuresValue, LossTint);
         }
     }
 
@@ -104,18 +125,23 @@ public partial class Dashboard : CanvasLayer
         tween.TweenProperty(_panel, "modulate", Colors.White, AppearDuration * 0.6f);
     }
 
-    // Quick red scale pop when a failure is added.
-    private void Pop(Control item)
+    // Quick scale pop with a tint that fades back to white (green for a gain, red for a loss).
+    private void Pop(Control item, Color tint)
     {
-        _popTween?.Kill();
+        if (_popTweens.TryGetValue(item, out Tween? previous))
+        {
+            previous.Kill();
+        }
+
         item.PivotOffset = item.Size / 2f;
         item.Scale = Vector2.One * 1.3f;
-        item.Modulate = LossTint;
+        item.Modulate = tint;
 
-        _popTween = item.CreateTween().SetParallel();
-        _popTween.TweenProperty(item, "scale", Vector2.One, PopDuration)
+        Tween tween = item.CreateTween().SetParallel();
+        tween.TweenProperty(item, "scale", Vector2.One, PopDuration)
             .SetTrans(Tween.TransitionType.Back).SetEase(Tween.EaseType.Out);
-        _popTween.TweenProperty(item, "modulate", Colors.White, PopDuration);
+        tween.TweenProperty(item, "modulate", Colors.White, PopDuration);
+        _popTweens[item] = tween;
     }
 
     private static string RoomName(Room room)

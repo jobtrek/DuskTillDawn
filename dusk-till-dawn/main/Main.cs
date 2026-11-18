@@ -4,17 +4,23 @@ using Godot;
 
 public partial class Main : Node3D
 {
-    private readonly GameState _state = new();
+    private readonly GameState _state;
     private Hud _hud = null!;
 
-    // Challenges and failures (issue #35). The dashboard is optional until it is placed in main.tscn.
-    private readonly SoloGame _game = new(new PlayerProfile("Player"));
+    // Challenges and failures (issue #35). The game uses the GameState player, so there is one points source.
+    private readonly SoloGame _game;
     private Dashboard? _dashboard;
     private Control? _computerMenu;
     private int _debugChallengeCount;
 
     public GameState State => _state;
     public SoloGame Game => _game;
+
+    public Main()
+    {
+        _state = new GameState();
+        _game = new SoloGame(_state.Player);
+    }
     private const double SunFadeDegrees = 10;
     private const double SunMinElevationDegrees = 5;
     private const double ShadowFadeDegrees = 10;
@@ -121,7 +127,7 @@ public partial class Main : Node3D
     public override void _Process(double delta)
     {
         _state.Tick(delta * _clockSpeed);
-        _game.Tick(delta);
+        _game.Tick(delta * _clockSpeed);
         UpdateSun();
         UpdateMoon();
         ShowStateAndPauseIfGameEnded();
@@ -279,6 +285,6 @@ public partial class Main : Node3D
     private void ShowStateAndPauseIfGameEnded()
     {
         _hud.ShowState(_state);
-        GetTree().Paused = _state.Status == NightStatus.Lost || _state.DaySurvived;
+        GetTree().Paused = _state.Status == NightStatus.Lost || _state.DaySurvived || _game.IsLost;
     }
 }
