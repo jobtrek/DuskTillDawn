@@ -24,4 +24,4 @@ per topic. Open only the file your task needs. Glossary: `CONTEXT.md`.
 | Where do I change X? | `agent_context/architecture/where-to-change.md` |
 | Find where code lives | `agent_context/architecture/overview.md` |
 
-Docs and code that disagree: tell the user at once (`agent_context/rules/ai-usage.md`).
+Keep docs in sync with code, and flag docs that disagree with it (`agent_context/rules/ai-usage.md`).

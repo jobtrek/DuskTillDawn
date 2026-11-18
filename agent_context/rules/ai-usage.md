@@ -29,9 +29,12 @@ The team must understand everything an agent produces.
 
 Build only v1 (`docs/game-v1.md`). `docs/ideas/` is parked: do not build it.
 
-## Docs and code that disagree
+## Keep docs in sync
 
-1. Tell the user right away: both claims with `file:line`, and which one you think wins.
-2. Do not record it in a new file and do not silently pick one.
-3. Suggest a full audit with `/docs-coherence`
-   (`~/.claude/skills/docs-coherence/SKILL.md` explains the method).
+1. New or moved feature, file, folder, system or term: in the same change, update every
+   map that names it (`where-to-change.md`, `overview.md`, `README.md`, `CONTEXT.md`).
+2. A file would pass 40 lines: split the topic into a new file, index it in `README.md`.
+3. Human-owned `docs/` files are stale: tell the user, never edit them.
+4. Docs and code disagree: tell the user right away, both claims with `file:line` and which
+   wins. Never silently pick one or record it in a new file. Suggest `/docs-coherence`
+   for a full audit (`~/.claude/skills/docs-coherence/SKILL.md` explains the method).
