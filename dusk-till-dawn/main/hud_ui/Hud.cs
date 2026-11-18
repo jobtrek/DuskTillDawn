@@ -17,8 +17,13 @@ public partial class Hud : CanvasLayer
     [Export] public float AppearDuration = 0.4f;
     [Export] public float PopDuration = 0.25f;
     [Export] public float BannerDuration = 0.35f;
+    [Export] public float ToastSeconds = 3f;
+    [Export] public float ToastFadeDuration = 0.4f;
     [Export] public Texture2D SunIcon = null!;
     [Export] public Texture2D MoonIcon = null!;
+
+    // Set while the player sits at the desk computer, where the inbox already shows new mail.
+    public bool MailToastMuted { get; set; }
 
     private static readonly Color LossTint = new(1f, 0.45f, 0.4f);
     private static readonly Color GainTint = new(0.5f, 1f, 0.55f);
@@ -32,9 +37,15 @@ public partial class Hud : CanvasLayer
     private Label _pointsValue = null!;
     private Control _banner = null!;
     private Label _bannerLabel = null!;
+    private Control _mailToast = null!;
+    private Label _mailToastLabel = null!;
 
     private readonly Dictionary<CanvasItem, Tween> _popTweens = new();
     private Tween? _bannerTween;
+    private Tween? _toastTween;
+    // Mails the current toast is announcing; a second arrival while it shows adds up instead of hiding the first.
+    private int _toastMails;
+    private GameState _state = null!;
     private bool? _isNight;
     private double _sla = double.NaN;
     private int? _points;
@@ -52,9 +63,28 @@ public partial class Hud : CanvasLayer
         _pointsValue = GetNode<Label>("%PointsValue");
         _banner = GetNode<Control>("%Banner");
         _bannerLabel = GetNode<Label>("%BannerLabel");
+        _mailToast = GetNode<Control>("%MailToast");
+        _mailToastLabel = GetNode<Label>("%MailToastLabel");
 
         _banner.Resized += () => _banner.PivotOffset = _banner.Size / 2f;
+        _mailToast.Resized += () => _mailToast.PivotOffset = _mailToast.Size / 2f;
         PlayAppear();
+
+        _state = ((Main)GetTree().CurrentScene).State;
+        _state.MailReceived += OnMailReceived;
+    }
+
+    public override void _ExitTree()
+    {
+        _state.MailReceived -= OnMailReceived;
+    }
+
+    private void OnMailReceived(Mail mail)
+    {
+        if (!MailToastMuted)
+        {
+            ShowMailToast(1);
+        }
     }
 
     public override void _Process(double delta)
@@ -76,6 +106,39 @@ public partial class Hud : CanvasLayer
         ShowSla(state.Sla);
         ShowPoints(state.Points);
         ShowBanner(EndMessage(state));
+    }
+
+    // Only the count, never sender or subject: the player has to go to the computer to judge a mail.
+    public void ShowMailToast(int newMails)
+    {
+        bool showing = _mailToast.Visible;
+        _toastMails = showing ? _toastMails + newMails : newMails;
+        _mailToastLabel.Text = _toastMails == 1 ? "New mail" : $"{_toastMails} new mails";
+
+        _toastTween?.Kill();
+        _mailToast.Visible = true;
+        _mailToast.PivotOffset = _mailToast.Size / 2f;
+        // Already on screen: a small bump, so the new count gets noticed without a full re-entry.
+        _mailToast.Scale = Vector2.One * (showing ? 1.15f : 0.6f);
+        if (!showing)
+        {
+            _mailToast.Modulate = Colors.Transparent;
+        }
+
+        _toastTween = CreateTween().SetParallel();
+        _toastTween.TweenProperty(_mailToast, "scale", Vector2.One, PopDuration)
+            .SetTrans(Tween.TransitionType.Back).SetEase(Tween.EaseType.Out);
+        _toastTween.TweenProperty(_mailToast, "modulate", Colors.White, PopDuration * 0.6f);
+        _toastTween.Chain().TweenInterval(ToastSeconds);
+        _toastTween.Chain().TweenProperty(_mailToast, "modulate", Colors.Transparent, ToastFadeDuration);
+        _toastTween.Chain().TweenCallback(Callable.From(HideMailToast));
+    }
+
+    public void HideMailToast()
+    {
+        _toastTween?.Kill();
+        _mailToast.Visible = false;
+        _toastMails = 0;
     }
 
     private void ShowClock(GameState state)

@@ -21,6 +21,8 @@ public partial class ComputerMenu : Control
     private ColorRect _backdrop = null!;
     private BlockReveal _reveal = null!;
     private Label _clock = null!;
+    private PanelContainer _mailBadge = null!;
+    private Label _mailBadgeLabel = null!;
     private Tween? _openTween;
 
     public override void _Ready()
@@ -33,6 +35,7 @@ public partial class ComputerMenu : Control
         WireIcon("Map/Screen/Icons/MailApp", () => EmitSignal(SignalName.MailPressed));
         WireIcon("Map/Screen/Icons/MonitoringApp", () => EmitSignal(SignalName.MonitoringPressed));
         WireIcon("Map/Screen/Icons/HelpApp", () => EmitSignal(SignalName.HelpPressed));
+        BuildMailBadge(GetNode<TextureButton>("Map/Screen/Icons/MailApp/Button"));
 
         // Rotate/scale around the bottom-centre, like lifting a map into view.
         _map.Resized += () => _map.PivotOffset = new Vector2(_map.Size.X / 2f, _map.Size.Y);
@@ -47,6 +50,44 @@ public partial class ComputerMenu : Control
     {
         if (IsVisibleInTree())
             _clock.Text = Time.GetTimeStringFromSystem()[..5];
+    }
+
+    // The player sees unread mail from the desktop, before opening the Mail app.
+    public void SetMailUnread(int count)
+    {
+        _mailBadge.Visible = count > 0;
+        _mailBadgeLabel.Text = count > 99 ? "99+" : count.ToString();
+    }
+
+    private void BuildMailBadge(TextureButton icon)
+    {
+        _mailBadge = new PanelContainer { MouseFilter = MouseFilterEnum.Ignore, Visible = false };
+        _mailBadge.AddThemeStyleboxOverride("panel", new StyleBoxFlat
+        {
+            BgColor = new Color(0.85f, 0.2f, 0.2f),
+            BorderColor = new Color(0.06f, 0.06f, 0.08f),
+            BorderWidthLeft = 2,
+            BorderWidthTop = 2,
+            BorderWidthRight = 2,
+            BorderWidthBottom = 2,
+            ContentMarginLeft = 4,
+            ContentMarginRight = 4,
+        });
+
+        _mailBadgeLabel = new Label
+        {
+            HorizontalAlignment = HorizontalAlignment.Center,
+            MouseFilter = MouseFilterEnum.Ignore,
+        };
+        _mailBadgeLabel.AddThemeFontSizeOverride("font_size", 13);
+        _mailBadgeLabel.AddThemeColorOverride("font_shadow_color", new Color(0, 0, 0, 0.85f));
+        _mailBadgeLabel.AddThemeConstantOverride("shadow_offset_x", 2);
+        _mailBadgeLabel.AddThemeConstantOverride("shadow_offset_y", 2);
+        _mailBadge.AddChild(_mailBadgeLabel);
+
+        icon.AddChild(_mailBadge);
+        _mailBadge.SetAnchorsPreset(LayoutPreset.TopRight);
+        _mailBadge.GrowHorizontal = GrowDirection.Begin;
     }
 
     private void WireIcon(string path, Action onPressed)
