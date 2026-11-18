@@ -30,7 +30,17 @@ public sealed class GameState
     public double Power { get; private set; } = 100f;
 
 
-    public int Points { get; private set; } = 1000;
+    private const int StartingPoints = 1000;
+
+    public GameState()
+    {
+        Player.EarnPoints(StartingPoints);
+    }
+
+    /// <summary>The one player and the one points source: the HUD, the mail and the challenges all use it.</summary>
+    public PlayerProfile Player { get; } = new("Player");
+
+    public int Points => Player.Points;
 
     /// <summary>The night (20:00 to 08:00): Running, then Won at 08:00 or Lost when the SLA hits 0.</summary>
     public NightStatus Status { get; private set; } = NightStatus.Running;
@@ -79,8 +89,7 @@ public sealed class GameState
 
     public void LosePoints(int points)
     {
-        ArgumentOutOfRangeException.ThrowIfNegative(points);
-        Points -= points;
+        Player.LosePoints(points);
     }
 
     public void DrainSla(double percent)

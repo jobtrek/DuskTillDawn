@@ -1,6 +1,6 @@
 # Dashboard screen (mockup)
 
-What the player sees on the computer in the control room. The alerts come from the [list of challenges](challenges.md).
+Always on screen, top right, under the 3D view. It hides while the desk computer is open, so it never covers it. The alerts come from the [list of challenges](challenges.md).
 
 ## 1. One player
 
@@ -47,6 +47,7 @@ Same screen, but the top shows both players' scores, and the alert says it is a 
 └──────────────────────────────────────────────────────────┘
 ```
 
-## To decide
+## Decided
 
-- Is the dashboard only on the computer, or also always visible on screen (top right)?
+- The dashboard is always visible on screen (top right), not only on the computer. Main hides it while the desk computer is open.
+- Points come from one source (`GameState.Player`), so the dashboard and the HUD always show the same number.

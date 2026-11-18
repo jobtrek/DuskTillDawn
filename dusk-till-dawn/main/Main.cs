@@ -4,10 +4,23 @@ using Godot;
 
 public partial class Main : Node3D
 {
-    private readonly GameState _state = new();
+    private readonly GameState _state;
     private Hud _hud = null!;
 
+    // Challenges and failures (issue #35). The game uses the GameState player, so there is one points source.
+    private readonly SoloGame _game;
+    private Dashboard? _dashboard;
+    private Control? _computerMenu;
+    private int _debugChallengeCount;
+
     public GameState State => _state;
+    public SoloGame Game => _game;
+
+    public Main()
+    {
+        _state = new GameState();
+        _game = new SoloGame(_state.Player);
+    }
     private const double SunFadeDegrees = 10;
     private const double SunMinElevationDegrees = 5;
     private const double ShadowFadeDegrees = 10;
@@ -49,6 +62,10 @@ public partial class Main : Node3D
     {
         _clockSpeed = ReadClockSpeed();
         _hud = GetNode<Hud>("Hud");
+        _dashboard = GetNodeOrNull<Dashboard>("Dashboard");
+        _computerMenu = GetNodeOrNull<Control>("Company/Desk/MeshInstance3D/Menu/ComputerMenu");
+        // One challenge at start until the game launches them on its own (#54).
+        LaunchDebugChallenge();
         _sun = GetNode<DirectionalLight3D>("DirectionalLight3D");
         _sunEnergy = _sun.LightEnergy;
         _moon = GetNode<DirectionalLight3D>("MoonLight3D");
@@ -110,9 +127,43 @@ public partial class Main : Node3D
     public override void _Process(double delta)
     {
         _state.Tick(delta * _clockSpeed);
+        _game.Tick(delta * _clockSpeed);
         UpdateSun();
         UpdateMoon();
         ShowStateAndPauseIfGameEnded();
+        ShowDashboard();
+    }
+
+    // Main decides when the dashboard is visible: hidden while the desk computer covers the screen.
+    private void ShowDashboard()
+    {
+        if (_dashboard == null)
+        {
+            return;
+        }
+
+        _dashboard.Visible = _computerMenu == null || !_computerMenu.IsVisibleInTree();
+        _dashboard.ShowGame(_game);
+    }
+
+    private void LaunchDebugChallenge()
+    {
+        Challenge challenge = _debugChallengeCount % 2 == 0 ? new BrokenDisk() : new SecurityAttack();
+        _debugChallengeCount++;
+        _game.Launch(challenge);
+    }
+
+    // Debug only: tries every action on every challenge, as if the player fixed them all.
+    private void RepairAllChallenges()
+    {
+        PlayerProfile player = _game.Players[0];
+        foreach (Challenge challenge in _game.Challenges)
+        {
+            foreach (PlayerAction action in System.Enum.GetValues<PlayerAction>())
+            {
+                challenge.Repair(player, action);
+            }
+        }
     }
 
     private void UpdateSun()
@@ -211,7 +262,15 @@ public partial class Main : Node3D
             return;
         }
 
-        if (key.Keycode == Key.F9)
+        if (key.Keycode == Key.F6)
+        {
+            LaunchDebugChallenge();
+        }
+        else if (key.Keycode == Key.F7)
+        {
+            RepairAllChallenges();
+        }
+        else if (key.Keycode == Key.F9)
         {
             _state.DrainSla(_state.Sla);
         }
@@ -226,6 +285,6 @@ public partial class Main : Node3D
     private void ShowStateAndPauseIfGameEnded()
     {
         _hud.ShowState(_state);
-        GetTree().Paused = _state.Status == NightStatus.Lost || _state.DaySurvived;
+        GetTree().Paused = _state.Status == NightStatus.Lost || _state.DaySurvived || _game.IsLost;
     }
 }
