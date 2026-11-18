@@ -16,6 +16,7 @@ Paths from the repo root. `dtd/` = `dusk-till-dawn/`. Open these first, search o
 | Monitoring (Dashboard) window / its logic | `dtd/main/monitor_ui/MonitorApp.cs` / `MonitoringController.cs` |
 | Desk computer menu, app icons, signals | `dtd/main/computer_ui/ComputerMenu.cs`, `computer_menu.tscn` |
 | When the computer opens (player nearby) | `dtd/main/DetectPlayerNearComputer.cs` |
+| Replace the broken disk (server room rack, E key) | `dtd/main/disk_repair/DiskRepairSpot.cs`; prompt: `dtd/main/prompt_ui/` |
 | Block-pop open animation | `dtd/main/computer_ui/BlockReveal.cs` |
 | HUD: clock, SLA bar, points, banner | `dtd/main/hud_ui/Hud.cs`, `SlaBar.cs`, `hud.tscn` |
 | UI pixel textures | `scripts/gen_computer_ui_textures.py` → `dtd/main/computer_ui/textures/` (HUD: `dtd/main/hud_ui/textures/`) |
