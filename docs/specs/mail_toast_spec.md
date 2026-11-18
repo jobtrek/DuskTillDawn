@@ -1,6 +1,6 @@
 # New mail toast
 
-How a new Mail reaches the player wherever they are. Part of issue #46. Mail rules: [mail_app_spec.md](mail_app_spec.md). Look and motion: [agents_gui_guide.md](../agents_gui_guide.md).
+How a new Mail reaches the player wherever they are. Part of issue #46. Mail rules: [mail_app_spec.md](mail_app_spec.md). Look and motion: [GUI guide](../../agent_context/gui/README.md).
 
 ## Flow
 
@@ -45,7 +45,7 @@ public event Action<Mail>? MailReceived;
 | Rule | Value |
 |---|---|
 | Text | "New mail". No sender, no subject ([mail_app_spec.md](mail_app_spec.md) "New Mail" rule). |
-| Show | Pop with a quick scale, no backdrop ([motion.md](../gui/motion.md)). |
+| Show | Pop with a quick scale, no backdrop ([motion.md](../../agent_context/gui/motion.md)). |
 | Stay | 3 s (starting value, tune in playtests). |
 | Second Mail while showing | Restart the 3 s timer, text becomes "2 new mails". |
 | Hide | Fade out. |
