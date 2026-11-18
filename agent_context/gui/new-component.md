@@ -1,12 +1,12 @@
 # Build a new UI component
 
-Part of the [GUI guide](../agents_gui_guide.md).
+Part of the [GUI guide](README.md).
 
 ## Steps
 
 1. **Decide the kind.** Full panel (menu, dialog, window, inventory, app screen) or small element (prompt, toast, HUD counter). Small elements skip step 6's reveal.
 2. **Root.** A `Control`, full rect, `texture_filter = 1`.
-3. **Neighbours.** List the existing UI that can be on screen with this one and plan its place, layer and input around them ([structure.md](structure.md#coexist-with-the-other-ui)).
+3. **Neighbours.** List the existing UI that can be on screen with this one and plan its place, layer and input around them ([coexist.md](coexist.md)).
 4. **Tree.** Build the standard panel structure from [structure.md](structure.md), sized with anchors.
 5. **Textures.** Reuse `frame.png`. Draw anything new at tiny pixel sizes ([look.md](look.md)) into the component's `textures/` folder.
 6. **Motion.** Add the `PlayOpen()` animation with `BlockReveal`, and `SetHover()` on every button ([motion.md](motion.md)).

@@ -9,5 +9,6 @@
 ## Docs
 
 - Game contract: `docs/contract.md`. First version: `docs/game-v1.md`.
-- 3D assets: `CONTEXT.md` (glossary), `game-assets/agent-guide/README.md`, `game-assets/INDEX.md`.
+- Agent rules and project maps: `agent_context/README.md`.
+- 3D assets: `CONTEXT.md` (glossary), `agent_context/assets/README.md`, `game-assets/INDEX.md`.
 - Useful: [NVIDIA SimReady assets](https://huggingface.co/spaces/nvidia/simready-central)

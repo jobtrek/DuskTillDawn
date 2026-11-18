@@ -113,4 +113,12 @@ public class ChallengeSpawnerTests
 
         Assert.Throws<ArgumentException>(() => new ChallengeSpawner(game, Interval));
     }
+
+    [Fact]
+    public void Without_an_interval_the_spawner_uses_the_default_one()
+    {
+        var spawner = new ChallengeSpawner(new SoloGame(new PlayerProfile("Bilal")), () => new BrokenDisk());
+
+        Assert.Equal(ChallengeSpawner.DefaultIntervalSeconds, spawner.IntervalSeconds);
+    }
 }

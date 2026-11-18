@@ -1,0 +1,123 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://main/dashboard_ui/Dashboard.cs" id="1_dash"]
+[ext_resource type="Texture2D" path="res://main/hud_ui/textures/hud_frame.png" id="2_frame"]
+
+[sub_resource type="Theme" id="Theme_dash"]
+default_font_size = 13
+Label/colors/font_color = Color(1, 1, 1, 1)
+Label/colors/font_shadow_color = Color(0, 0, 0, 0.85)
+Label/constants/shadow_offset_x = 2
+Label/constants/shadow_offset_y = 2
+
+[node name="Dashboard" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_dash")
+
+[node name="Root" type="Control" parent="."]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = SubResource("Theme_dash")
+
+[node name="Panel" type="Control" parent="Root"]
+unique_name_in_owner = true
+layout_mode = 1
+anchor_left = 0.66
+anchor_top = 0.012
+anchor_right = 0.988
+anchor_bottom = 0.3
+mouse_filter = 2
+
+[node name="Fill" type="ColorRect" parent="Root/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+mouse_filter = 2
+color = Color(0.06, 0.06, 0.08, 0.92)
+
+[node name="Frame" type="NinePatchRect" parent="Root/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+texture = ExtResource("2_frame")
+draw_center = false
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+
+[node name="Content" type="VBoxContainer" parent="Root/Panel"]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 12.0
+offset_right = -16.0
+offset_bottom = -12.0
+mouse_filter = 2
+theme_override_constants/separation = 6
+
+[node name="Header" type="HBoxContainer" parent="Root/Panel/Content"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="PointsCaption" type="Label" parent="Root/Panel/Content/Header"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.55)
+text = "Points"
+
+[node name="PointsValue" type="Label" parent="Root/Panel/Content/Header"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "0"
+
+[node name="FailuresCaption" type="Label" parent="Root/Panel/Content/Header"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.55)
+text = "Failures"
+
+[node name="FailuresValue" type="Label" parent="Root/Panel/Content/Header"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "0 / 3"
+
+[node name="Divider" type="ColorRect" parent="Root/Panel/Content"]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.54, 0.38, 0.21, 0.6)
+
+[node name="AlertsCaption" type="Label" parent="Root/Panel/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.55)
+text = "Alerts"
+
+[node name="AlertList" type="VBoxContainer" parent="Root/Panel/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="EmptyLabel" type="Label" parent="Root/Panel/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.55)
+text = "No alert, all good"

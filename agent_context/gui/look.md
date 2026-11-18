@@ -1,6 +1,6 @@
 # Look: textures, frame, colours, text
 
-Part of the [GUI guide](../agents_gui_guide.md).
+Part of the [GUI guide](README.md).
 
 ## Pixel art, always crisp
 

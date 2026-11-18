@@ -2,10 +2,7 @@ using System;
 
 namespace DuskTillDawn.Core;
 
-/// <summary>
-/// Launches a new challenge every few seconds, picking the kinds in turn.
-/// Driven by Tick like the game: no timer of its own.
-/// </summary>
+// Keeps the player busy: a new challenge every interval, the kinds taken in turn.
 public sealed class ChallengeSpawner
 {
     public const double DefaultIntervalSeconds = 20;
@@ -15,6 +12,11 @@ public sealed class ChallengeSpawner
     private readonly Func<Challenge>[] _kinds;
     private double _secondsSinceLast;
     private int _nextKind;
+
+    public ChallengeSpawner(Game game, params Func<Challenge>[] kinds)
+        : this(game, DefaultIntervalSeconds, kinds)
+    {
+    }
 
     public ChallengeSpawner(Game game, double intervalSeconds, params Func<Challenge>[] kinds)
     {
