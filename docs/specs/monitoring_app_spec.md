@@ -1,6 +1,6 @@
 # Monitoring app (computer)
 
-Opens from the `MonitoringPressed` signal on the desk computer. Called **Dashboard** in [game-v1.md](../game-v1.md) §10. Values and rules: §5 and §7. Look and feel: [agents_gui_guide.md](../agents_gui_guide.md).
+Opens from the `MonitoringPressed` signal on the desk computer. Called **Dashboard** in [game-v1.md](../game-v1.md) §10. Values and rules: §5 and §7. Look and feel: [GUI guide](../../agent_context/gui/README.md).
 
 ## Purpose
 

@@ -20,6 +20,8 @@ public sealed class GameState
     private const double RealSecondsPerNight = RealSecondsPerInGameHour * NightLengthInGameHours;
     private const double RealSecondsPerDay = RealSecondsPerInGameHour * DayLengthInGameHours;
 
+    private const int WrongReportPenalty = 25;
+
     private double _elapsedRealSeconds;
 
     public double Sla { get; private set; } = 100;
@@ -30,7 +32,17 @@ public sealed class GameState
     public double Power { get; private set; } = 100f;
 
 
-    public int Points { get; private set; } = 1000;
+    private const int StartingPoints = 1000;
+
+    public GameState()
+    {
+        Player.EarnPoints(StartingPoints);
+    }
+
+    /// <summary>The one player and the one points source: the HUD, the mail and the challenges all use it.</summary>
+    public PlayerProfile Player { get; } = new("Player");
+
+    public int Points => Player.Points;
 
     /// <summary>The night (20:00 to 08:00): Running, then Won at 08:00 or Lost when the SLA hits 0.</summary>
     public NightStatus Status { get; private set; } = NightStatus.Running;
@@ -44,6 +56,12 @@ public sealed class GameState
     /// <summary>Hour of the day from 0 (inclusive) to 24 (exclusive), with fractions.</summary>
     public double HourOfDay =>
         (NightStartInMinutes / 60.0 + _elapsedRealSeconds / RealSecondsPerInGameHour) % DayLengthInGameHours;
+
+    public double MinutesSinceNightStart => _elapsedRealSeconds * 60 / RealSecondsPerInGameHour;
+
+    public Inbox Inbox { get; } = new();
+
+    public event Action<Mail>? MailReceived;
 
     public string ClockText
     {
@@ -66,6 +84,11 @@ public sealed class GameState
 
         _elapsedRealSeconds = Math.Min(_elapsedRealSeconds + realSeconds, RealSecondsPerDay);
 
+        foreach (Mail mail in Inbox.DeliverDue(MinutesSinceNightStart))
+        {
+            MailReceived?.Invoke(mail);
+        }
+
         if (_elapsedRealSeconds >= RealSecondsPerNight)
         {
             Status = NightStatus.Won;
@@ -77,10 +100,22 @@ public sealed class GameState
         }
     }
 
+    // Returns whether the mail really was Phishing. A wrong report costs points only the first time.
+    public bool ReportPhishing(int mailId)
+    {
+        Mail mail = Inbox.Get(mailId);
+        bool isPhishing = mail.Kind == MailKind.Phishing;
+        if (!isPhishing && !mail.IsReported)
+        {
+            LosePoints(WrongReportPenalty);
+        }
+        Inbox.MarkReported(mail);
+        return isPhishing;
+    }
+
     public void LosePoints(int points)
     {
-        ArgumentOutOfRangeException.ThrowIfNegative(points);
-        Points -= points;
+        Player.LosePoints(points);
     }
 
     public void DrainSla(double percent)

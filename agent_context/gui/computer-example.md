@@ -1,6 +1,6 @@
 # Example: the desk computer
 
-Part of the [GUI guide](../agents_gui_guide.md).
+Part of the [GUI guide](README.md).
 
 `dusk-till-dawn/main/computer_ui/` applies the style as a diegetic OS desktop (NixOS + GNOME wallpaper, top bar with live clock, app icons with labels). The desktop theme belongs only to the computer. Other components take the style from it, not the desktop.
 

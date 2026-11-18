@@ -2,10 +2,7 @@ using System;
 
 namespace DuskTillDawn.Core;
 
-/// <summary>
-/// Two players race on the same challenges. The game ends once every challenge is succeeded or failed,
-/// and the player with the most points wins.
-/// </summary>
+// Two players race on the same challenges; whoever has the most points after the last one wins.
 public sealed class DuoGame : Game
 {
     public DuoGame(PlayerProfile first, PlayerProfile second, int challengeCount)
@@ -17,12 +14,12 @@ public sealed class DuoGame : Game
 
     public int ChallengeCount { get; }
 
-    /// <summary>Nobody loses the company in a race: there is only a winner.</summary>
+    // A race has a winner, never a lost company.
     public override bool IsLost => false;
 
     public override bool IsFinished => FinishedChallenges() >= ChallengeCount;
 
-    /// <summary>The player with the most points once the game is over, or null on a tie or before the end.</summary>
+    // A tie gives no winner, and nobody wins before the last challenge ends.
     public PlayerProfile? Winner
     {
         get

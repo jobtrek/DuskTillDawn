@@ -1,6 +1,6 @@
 # Mail app (computer)
 
-Opens from the `MailPressed` signal on the desk computer. Content rules come from [game-v1.md](../game-v1.md) §7, §8 and §10. Look and feel: [agents_gui_guide.md](../agents_gui_guide.md). Terms (Incident, Mail): [CONTEXT.md](../../CONTEXT.md).
+Opens from the `MailPressed` signal on the desk computer. Content rules come from [game-v1.md](../game-v1.md) §7, §8 and §10. Look and feel: [GUI guide](../../agent_context/gui/README.md). Terms (Incident, Mail): [CONTEXT.md](../../CONTEXT.md).
 
 ## Purpose
 

@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" path="res://main/hud_ui/textures/icon_sun.png" id="4_sun"]
 [ext_resource type="Texture2D" path="res://main/hud_ui/textures/icon_moon.png" id="5_moon"]
 [ext_resource type="Texture2D" path="res://main/hud_ui/textures/icon_coin.png" id="6_coin"]
+[ext_resource type="Texture2D" path="res://main/hud_ui/textures/icon_mail.png" id="7_mail"]
 
 [sub_resource type="Theme" id="Theme_hud"]
 default_font_size = 13
@@ -197,3 +198,68 @@ theme_override_font_sizes/font_size = 22
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
+
+[node name="MailToast" type="Control" parent="Root"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchor_left = 0.82
+anchor_top = 0.88
+anchor_right = 0.988
+anchor_bottom = 0.948
+mouse_filter = 2
+
+[node name="Fill" type="ColorRect" parent="Root/MailToast"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+mouse_filter = 2
+color = Color(0.06, 0.06, 0.08, 0.92)
+
+[node name="Frame" type="NinePatchRect" parent="Root/MailToast"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+texture = ExtResource("3_frame")
+draw_center = false
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+
+[node name="Content" type="HBoxContainer" parent="Root/MailToast"]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 6.0
+offset_right = -12.0
+offset_bottom = -6.0
+mouse_filter = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="MailIcon" type="TextureRect" parent="Root/MailToast/Content"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("7_mail")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="MailToastLabel" type="Label" parent="Root/MailToast/Content"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "New mail"
+vertical_alignment = 1

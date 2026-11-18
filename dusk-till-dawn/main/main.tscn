@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" path="res://main/computer_ui/computer_menu.tscn" id="11_cmenu"]
 [ext_resource type="PackedScene" uid="uid://b3u8k7nh0kgqx" path="res://assets/Exterior.blend" id="98_ext"]
 [ext_resource type="PackedScene" path="res://main/hud_ui/hud.tscn" id="99_hud"]
+[ext_resource type="PackedScene" path="res://main/dashboard_ui/dashboard.tscn" id="100_dashboard"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_v0o3d"]
 size = Vector2(300, 300)
@@ -2160,6 +2161,8 @@ shape = SubResource("BoxShape3D_rooframpTip")
 [node name="Exterior" parent="." unique_id=835197837 instance=ExtResource("98_ext")]
 
 [node name="Hud" parent="." unique_id=1702548748 instance=ExtResource("99_hud")]
+
+[node name="Dashboard" parent="." unique_id=1702548749 instance=ExtResource("100_dashboard")]
 
 [node name="Node" type="Node" parent="." unique_id=749536896]
 

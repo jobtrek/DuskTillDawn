@@ -1,6 +1,6 @@
 # Motion: open animation, block reveal, hover
 
-Part of the [GUI guide](../agents_gui_guide.md). Code to copy: `dusk-till-dawn/main/computer_ui/ComputerMenu.cs`.
+Part of the [GUI guide](README.md). Code to copy: `dusk-till-dawn/main/computer_ui/ComputerMenu.cs`.
 
 ## Open animation (`PlayOpen()` pattern)
 

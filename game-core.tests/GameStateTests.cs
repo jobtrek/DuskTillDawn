@@ -241,4 +241,35 @@ public class GameStateTests
 
         Assert.Equal(20, state.HourOfDay, precision: 6);
     }
+
+    [Fact]
+    public void The_player_starts_with_1000_points()
+    {
+        var state = new GameState();
+
+        Assert.Equal(1000, state.Points);
+        Assert.Equal(1000, state.Player.Points);
+    }
+
+    [Fact]
+    public void Points_lost_and_won_share_one_source()
+    {
+        var state = new GameState();
+        var challenge = new BrokenDisk();
+        challenge.Start();
+
+        state.LosePoints(50);
+        challenge.Repair(state.Player, PlayerAction.ReplaceDisk);
+
+        Assert.Equal(1050, state.Points);
+        Assert.Equal(state.Player.Points, state.Points);
+    }
+
+    [Fact]
+    public void Losing_negative_points_is_rejected()
+    {
+        var state = new GameState();
+
+        Assert.Throws<ArgumentOutOfRangeException>(() => state.LosePoints(-1));
+    }
 }
