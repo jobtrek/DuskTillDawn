@@ -1,6 +1,6 @@
 # AI helper app (computer)
 
-Opens from the `HelpPressed` signal on the desk computer. Rules from [game-v1.md](../game-v1.md) §9, §10 and §13. Look and feel: [agents_gui_guide.md](../agents_gui_guide.md).
+Opens from the `HelpPressed` signal on the desk computer. Rules from [game-v1.md](../game-v1.md) §9, §10 and §13. Look and feel: [GUI guide](../../agent_context/gui/README.md).
 
 ## Purpose
 

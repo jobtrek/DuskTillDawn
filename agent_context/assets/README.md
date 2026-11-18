@@ -1,4 +1,4 @@
-# Agent guide: voxel Elements
+# Assets: voxel Elements
 
 Read this page first. Open only the file your task needs.
 
@@ -11,7 +11,7 @@ Read this page first. Open only the file your task needs.
 | Rules every Element follows (grids, axes, detail layers, palette) | [build-rules.md](build-rules.md) |
 | Something fails or looks wrong | [gotchas.md](gotchas.md) |
 
-Terms (Element, Spec, Part, Layout, Grid, State): `CONTEXT.md`. Layout keys and States: `sdk/README.md`.
+Terms (Element, Spec, Part, Layout, Grid, State): `CONTEXT.md`. Layout keys and States: `game-assets/sdk/README.md`.
 
 ## Five rules
 
