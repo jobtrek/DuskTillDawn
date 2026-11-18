@@ -34,6 +34,7 @@ public partial class MailApp : Control
     private Label _date = null!;
     private Label _body = null!;
     private Label _result = null!;
+    private Label _title = null!;
     private Godot.Button _report = null!;
     private BlockReveal _reveal = null!;
     private FontVariation _bold = null!;
@@ -55,6 +56,7 @@ public partial class MailApp : Control
         _result = GetNode<Label>("Body/Reader/Mail/Footer/Result");
         _report = GetNode<Godot.Button>("Body/Reader/Mail/Footer/Report");
         _reveal = GetNode<BlockReveal>("BlockReveal");
+        _title = GetNode<Label>("TitleBar/Title");
         _bold = new FontVariation { BaseFont = GetThemeFont("font", "Label"), VariationEmbolden = 0.9f };
 
         var close = GetNode<Godot.Button>("TitleBar/Close");
@@ -97,6 +99,12 @@ public partial class MailApp : Control
         {
             _rows.AddChild(MakeRow(mail));
         }
+    }
+
+    /// <summary>Shows the unread and total number of mails next to the window title.</summary>
+    public void SetCount(int total, int unread)
+    {
+        _title.Text = $"Mail ({unread} unread / {total})";
     }
 
     /// <summary>Called by the game after a ReportPressed, with whether the mail really was phishing.</summary>

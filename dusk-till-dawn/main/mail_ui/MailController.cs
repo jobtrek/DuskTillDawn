@@ -14,6 +14,7 @@ public partial class MailController : Node
     private const int WrongReportPenalty = 25;
 
     private bool _seeded;
+    private int _shownCount;
     private MailApp _app = null!;
     private GameState _state = null!;
 
@@ -54,21 +55,53 @@ public partial class MailController : Node
             Refresh();
         };
         _app.CloseRequested += () => _app.Hide();
+
+        // Mails arrive when the night starts (20:00), not when the player first opens the app.
+        _state.NightStarted += DeliverMails;
+    }
+
+    public override void _ExitTree()
+    {
+        _state.NightStarted -= DeliverMails;
+    }
+
+    /// <summary>Each frame: move the inbox clock forward and redraw when new mails have arrived.</summary>
+    public override void _Process(double delta)
+    {
+        if (!_seeded)
+        {
+            return;
+        }
+
+        _db.SetTime(Database.ShiftStart.AddMinutes(_state.MinutesSinceNightStart));
+        if (_db.CountAllEmails() != _shownCount)
+        {
+            Refresh();
+        }
+    }
+
+    private void DeliverMails()
+    {
+        if (_seeded)
+        {
+            return;
+        }
+        // Mails get their (randomised) times now; they show up one by one as the clock passes them.
+        _db.GenerateDatabase();
+        _seeded = true;
+        Refresh();
     }
 
     private void OpenMail()
     {
-        if (!_seeded)
-        {
-            _db.GenerateDatabase();
-            _seeded = true;
-        }
         Refresh();
         _app.Show();
     }
 
     private void Refresh()
     {
+        _shownCount = _db.CountAllEmails();
         _app.SetMails(_db.GetAllEmails());
+        _app.SetCount(_shownCount, _db.UnReadCount());
     }
 }

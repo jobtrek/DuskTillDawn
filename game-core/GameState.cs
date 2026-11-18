@@ -55,6 +55,14 @@ public sealed class GameState
     public double HourOfDay =>
         (NightStartInMinutes / 60.0 + _elapsedRealSeconds / RealSecondsPerInGameHour) % DayLengthInGameHours;
 
+    /// <summary>In-game minutes since 20:00.</summary>
+    public double MinutesSinceNightStart => _elapsedRealSeconds * 60 / RealSecondsPerInGameHour;
+
+    /// <summary>Raised once, on the first Tick of the night (20:00). The mail app delivers its inbox on it.</summary>
+    public event Action? NightStarted;
+
+    private bool _nightStartRaised;
+
     public string ClockText
     {
         get
@@ -72,6 +80,12 @@ public sealed class GameState
         if (Status == NightStatus.Lost || DaySurvived)
         {
             return;
+        }
+
+        if (!_nightStartRaised)
+        {
+            _nightStartRaised = true;
+            NightStarted?.Invoke();
         }
 
         _elapsedRealSeconds = Math.Min(_elapsedRealSeconds + realSeconds, RealSecondsPerDay);
