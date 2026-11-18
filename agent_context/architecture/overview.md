@@ -9,7 +9,7 @@ DuskTillDawn/
 ├─ scripts/            One-off and dev scripts                          → ci-and-tools.md
 ├─ docs/               Human-owned: contract, game-v1, ADRs, specs, ideas
 ├─ agent_context/      This folder: rules and maps for agents
-└─ .claude/skills/     Project skills: create-ui, blender-voxel-py, csharp-godot
+└─ .claude/skills/     Project skills: create-ui, blender-voxel-py, csharp-godot, game-pr-review
 ```
 
 Exact file per task: [where-to-change.md](where-to-change.md).

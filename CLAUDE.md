@@ -23,5 +23,6 @@ per topic. Open only the file your task needs. Glossary: `CONTEXT.md`.
 | Write a user story or task | `agent_context/rules/user-stories.md` |
 | Where do I change X? | `agent_context/architecture/where-to-change.md` |
 | Find where code lives | `agent_context/architecture/overview.md` |
+| Review a teammate's PR | `/game-pr-review <PR number>` |
 
 Keep docs in sync with code, and flag docs that disagree with it (`agent_context/rules/ai-usage.md`).

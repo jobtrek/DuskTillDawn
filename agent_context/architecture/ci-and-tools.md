@@ -35,3 +35,4 @@ match `docs/contract.md`.
 | `create-ui` | Build or review in-game UI |
 | `blender-voxel-py` | Build a voxel model in headless Blender |
 | `csharp-godot` | C# in Godot API reference |
+| `game-pr-review` | Review a teammate's PR (code + docs), post inline comments |
