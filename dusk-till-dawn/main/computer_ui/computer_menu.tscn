@@ -11,6 +11,9 @@
 [ext_resource type="Script" path="res://main/mail_ui/MailController.cs" id="9_mailctl"]
 [ext_resource type="Script" path="res://main/monitor_ui/MonitoringController.cs" id="10_monctl"]
 [ext_resource type="PackedScene" path="res://main/monitor_ui/monitor_app.tscn" id="11_monapp"]
+[ext_resource type="Texture2D" path="res://main/computer_ui/textures/icon_admin.png" id="12_admin"]
+[ext_resource type="PackedScene" path="res://main/admin_ui/admin_app.tscn" id="13_adminapp"]
+[ext_resource type="Script" path="res://main/admin_ui/AdminController.cs" id="14_adminctl"]
 
 [node name="ComputerMenu" type="Control"]
 texture_filter = 1
@@ -149,7 +152,7 @@ layout_mode = 0
 offset_left = 16.0
 offset_top = 42.0
 offset_right = 126.0
-offset_bottom = 400.0
+offset_bottom = 450.0
 theme_override_constants/separation = 14
 
 [node name="MailApp" type="VBoxContainer" parent="Map/Screen/Icons"]
@@ -218,11 +221,37 @@ theme_override_font_sizes/font_size = 14
 text = "ChatGPT"
 horizontal_alignment = 1
 
+[node name="AdminApp" type="VBoxContainer" parent="Map/Screen/Icons"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Button" type="TextureButton" parent="Map/Screen/Icons/AdminApp"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+tooltip_text = "Admin"
+texture_normal = ExtResource("12_admin")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Map/Screen/Icons/AdminApp"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.85)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 14
+text = "Admin"
+horizontal_alignment = 1
+
 [node name="MailApp" parent="Map/Screen" instance=ExtResource("8_mailapp")]
 visible = false
 layout_mode = 1
 
 [node name="MonitorApp" parent="Map/Screen" instance=ExtResource("11_monapp")]
+visible = false
+layout_mode = 1
+
+[node name="AdminApp" parent="Map/Screen" instance=ExtResource("13_adminapp")]
 visible = false
 layout_mode = 1
 
@@ -241,3 +270,6 @@ script = ExtResource("9_mailctl")
 
 [node name="MonitoringController" type="Node" parent="."]
 script = ExtResource("10_monctl")
+
+[node name="AdminController" type="Node" parent="."]
+script = ExtResource("14_adminctl")

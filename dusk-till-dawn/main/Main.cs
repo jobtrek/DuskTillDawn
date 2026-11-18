@@ -68,6 +68,10 @@ public partial class Main : Node3D
         _hud = GetNode<Hud>("Hud");
         _dashboard = GetNodeOrNull<Dashboard>("Dashboard");
         _computerMenu = GetNodeOrNull<Control>("Company/Desk/MeshInstance3D/Menu/ComputerMenu");
+        if (_computerMenu != null)
+        {
+            _computerMenu.GetNode<AdminApp>("Map/Screen/AdminApp").ActionPressed += OnAdminAction;
+        }
         _state.Inbox.LoadSchedule(FileAccess.GetFileAsString(MailSchedulePath));
         _sun = GetNode<DirectionalLight3D>("DirectionalLight3D");
         _sunEnergy = _sun.LightEnergy;
@@ -160,16 +164,25 @@ public partial class Main : Node3D
         _game.Launch(challenge);
     }
 
+    // With no challenge running, an admin action does nothing and costs nothing.
+    private void OnAdminAction(string system, string action)
+    {
+        if (!System.Enum.TryParse(action, out PlayerAction playerAction)
+            || !System.Enum.IsDefined(playerAction))
+        {
+            GD.PushError($"Admin action '{system}/{action}' is not a PlayerAction.");
+            return;
+        }
+
+        _game.Repair(_game.Players[0], playerAction);
+    }
+
     // Debug only: tries every action on every challenge, as if the player fixed them all.
     private void RepairAllChallenges()
     {
-        PlayerProfile player = _game.Players[0];
-        foreach (Challenge challenge in _game.Challenges)
+        foreach (PlayerAction action in System.Enum.GetValues<PlayerAction>())
         {
-            foreach (PlayerAction action in System.Enum.GetValues<PlayerAction>())
-            {
-                challenge.Repair(player, action);
-            }
+            _game.Repair(_game.Players[0], action);
         }
     }
 
