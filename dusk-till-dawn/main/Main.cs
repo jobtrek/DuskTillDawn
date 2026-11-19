@@ -150,7 +150,11 @@ public partial class Main : Node3D
         }
 
         _dashboard.Visible = _computerMenu == null || !_computerMenu.IsVisibleInTree();
-        _dashboard.ShowGame(_game);
+        // Only while visible, so a change made at the computer pops once the player walks away.
+        if (_dashboard.Visible)
+        {
+            _dashboard.ShowGame(_game);
+        }
     }
 
     private void LaunchDebugChallenge()

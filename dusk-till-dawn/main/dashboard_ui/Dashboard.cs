@@ -4,7 +4,7 @@ using Godot;
 
 /// <summary>
 /// Small HUD panel (top right): points, failures out of 3 and every running challenge with its room and timer.
-/// Main calls ShowGame every frame. The dashboard only reads the game; it never changes it.
+/// Main calls ShowGame every frame while the dashboard is visible. The dashboard only reads the game; it never changes it.
 /// </summary>
 public partial class Dashboard : CanvasLayer
 {
