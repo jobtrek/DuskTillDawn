@@ -14,6 +14,8 @@ Main (Node3D, main/Main.cs)       owns the one GameState and SoloGame, calls Tic
  ├─ Player (player/Player.cs)     CharacterBody3D + camera
  ├─ Basement_Levels               imported .blend, Element States as child nodes
  ├─ DiskRepairSpot (disk_repair/) server room rack: red disk while a BrokenDisk runs, E repairs it
+ ├─ FireEffect (fire/)           server room: flickering flames + smoke while a Fire runs
+ ├─ ExtinguisherSpot (fire/)     server room wall: E puts the Fire out
  └─ desk computer                 DetectPlayerNearComputer shows the menu when near
      └─ ComputerMenu (computer_ui/)   emits MailPressed / MonitoringPressed / HelpPressed / AdminPressed
          ├─ MailController   → MailApp     (mail_ui/)
