@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://b3u8k7nh0kgqx" path="res://assets/Exterior.blend" id="98_ext"]
 [ext_resource type="PackedScene" path="res://main/hud_ui/hud.tscn" id="99_hud"]
 [ext_resource type="PackedScene" path="res://main/dashboard_ui/dashboard.tscn" id="100_dashboard"]
+[ext_resource type="PackedScene" path="res://main/disk_repair/disk_repair_spot.tscn" id="101_diskspot"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_v0o3d"]
 size = Vector2(300, 300)
@@ -1797,6 +1798,12 @@ transform = Transform3D(3.1391647e-07, 0, 1, 0, 1, 0, -1, 0, 3.1391647e-07, 3.49
 [node name="Exterior_Cladding" parent="Company" index="41" unique_id=70297543]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.46427155, -3.3243723, 6.061369)
 
+[node name="HardDrive_Failed" parent="Company" index="49" unique_id=2005326886]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2268, -2.0077, -3.0778)
+
+[node name="HardDrive_Healthy" parent="Company" index="50" unique_id=939457843]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2268, -2.0077, -3.0778)
+
 [node name="HeadphonesThermos" parent="Company" index="51" unique_id=1561658263]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.465416, -2.7043724, -8.197187)
 
@@ -2163,6 +2170,11 @@ shape = SubResource("BoxShape3D_rooframpTip")
 [node name="Hud" parent="." unique_id=1702548748 instance=ExtResource("99_hud")]
 
 [node name="Dashboard" parent="." unique_id=1702548749 instance=ExtResource("100_dashboard")]
+
+[node name="DiskRepairSpot" parent="." unique_id=1702548750 node_paths=PackedStringArray("HealthyDisk", "FailedDisk") instance=ExtResource("101_diskspot")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75.2344, 0.9823, 22.9703)
+HealthyDisk = NodePath("../Company/HardDrive_Healthy")
+FailedDisk = NodePath("../Company/HardDrive_Failed")
 
 [node name="Node" type="Node" parent="." unique_id=749536896]
 

@@ -1,7 +1,6 @@
 # Godot project (`dusk-till-dawn/`)
 
-Godot 4.7.2 .NET, C#, `net8.0`, nullable on. Main scene: `main/main.tscn`.
-References `game-core` through `DuskTillDawn.csproj`.
+Godot 4.7.2 .NET, C#, `net8.0`, nullable on. Main scene: `main/main.tscn`; uses `game-core` via `DuskTillDawn.csproj`.
 Autoload: `MCPGameBridge` (local dev tooling for the Godot MCP; its addon
 `addons/godot_mcp/` is git-ignored, not game code).
 
@@ -14,6 +13,7 @@ Main (Node3D, main/Main.cs)       owns the one GameState and SoloGame, calls Tic
  ├─ Hud (hud_ui/)                 reads GameState: clock, SLA bar, points, banner
  ├─ Player (player/Player.cs)     CharacterBody3D + camera
  ├─ Basement_Levels               imported .blend, Element States as child nodes
+ ├─ DiskRepairSpot (disk_repair/) server room rack: red disk while a BrokenDisk runs, E repairs it
  └─ desk computer                 DetectPlayerNearComputer shows the menu when near
      └─ ComputerMenu (computer_ui/)   emits MailPressed / MonitoringPressed / HelpPressed
          ├─ MailController   → MailApp     (mail_ui/)
