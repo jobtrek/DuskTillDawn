@@ -47,7 +47,8 @@ public class RemainingChallengesTests
             if (action == rightAction)
             {
                 Assert.Equal(ChallengeState.Succeeded, challenge.State);
-                Assert.Equal(challenge.Points, player.Points);
+                // Repaired at once, so the fast repair bonus applies.
+                Assert.Equal(challenge.Points + challenge.Points * PointsRule.FastRepairBonusPercent / 100, player.Points);
             }
             else
             {
@@ -77,7 +78,7 @@ public class RemainingChallengesTests
         }
 
         Assert.All(challenges, challenge => Assert.Equal(ChallengeState.Succeeded, challenge.State));
-        Assert.Equal(150 + 100 + 100 + 200 + 100 + 100, player.Points);
+        Assert.Equal((150 + 100 + 100 + 200 + 100 + 100) * 3 / 2, player.Points);
     }
 
     private static Challenge Create(string name)
