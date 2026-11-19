@@ -50,10 +50,35 @@ public class ChallengeSpawnerTests
     {
         var (game, spawner) = NewSpawner();
 
-        spawner.Tick(Interval * 3);
+        spawner.Tick(Interval * 2);
 
         Assert.IsType<BrokenDisk>(game.Challenges[0]);
         Assert.IsType<SecurityAttack>(game.Challenges[1]);
+    }
+
+    [Fact]
+    public void A_kind_still_running_is_not_launched_again()
+    {
+        var (game, spawner) = NewSpawner();
+
+        spawner.Tick(Interval * 3);
+
+        Assert.Equal(2, game.Challenges.Count);
+    }
+
+    [Fact]
+    public void A_fixed_challenge_comes_back_only_one_interval_after_its_fix()
+    {
+        var (game, spawner) = NewSpawner();
+        spawner.Tick(Interval * 2);
+        spawner.Tick(Interval / 2);
+        game.Repair(game.Players[0], PlayerAction.ReplaceDisk);
+
+        spawner.Tick(Interval / 2);
+        Assert.Equal(2, game.Challenges.Count);
+
+        spawner.Tick(Interval);
+        Assert.Equal(3, game.Challenges.Count);
         Assert.IsType<BrokenDisk>(game.Challenges[2]);
     }
 
@@ -69,7 +94,7 @@ public class ChallengeSpawnerTests
         }
         bigSpawner.Tick(60);
 
-        Assert.Equal(3, bigGame.Challenges.Count);
+        Assert.Equal(2, bigGame.Challenges.Count);
         Assert.Equal(bigGame.Challenges.Count, smallGame.Challenges.Count);
     }
 
