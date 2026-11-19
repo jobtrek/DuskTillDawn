@@ -30,6 +30,13 @@ flowchart LR
 
 In two-player mode, both players get the same challenge at the same time. The first one to finish it gets the points.
 
+### Carried items (proposal, to validate with the team)
+
+- The player holds one item at a time, in the right hand of the first-person view. Only the extinguisher can be picked up for now.
+- **E** next to the extinguisher picks it up. **E** near the fire with the extinguisher in hand puts it out.
+- **Q** hangs the extinguisher back on its bracket.
+- Code: `game-core/PlayerProfile.cs` (`Holding`), `dusk-till-dawn/main/fire/ExtinguisherSpot.cs`.
+
 ## 3. Points rule (proposal, to validate with the team)
 
 | Case | Points | Example (challenge worth 100) |

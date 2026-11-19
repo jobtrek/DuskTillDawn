@@ -2,6 +2,8 @@
 
 Players grow their setup from one laptop to a multi-rack server room. Each stage is unlocked by a need, not just money.
 
+**In v1** ([game-v1.md](game-v1.md#server-stages)): stages are bought in the shop between nights with points. The Unlock rules, Pacing and Economy sections below are for after v1.
+
 ## Stages
 
 | # | Setup | Capacity | New mechanic |
