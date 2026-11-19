@@ -3,6 +3,8 @@ using System;
 namespace DuskTillDawn.Core;
 
 // Keeps the player busy: a new challenge every interval, the kinds taken in turn.
+// A kind never runs twice at once, and a kind that just ended waits one full interval before it comes back,
+// so a fixed incident does not reappear right after the player fixed it.
 public sealed class ChallengeSpawner
 {
     public const double DefaultIntervalSeconds = 20;
@@ -10,6 +12,9 @@ public sealed class ChallengeSpawner
 
     private readonly Game _game;
     private readonly Func<Challenge>[] _kinds;
+    private readonly Challenge?[] _lastOfKind;
+    private readonly double[] _lastEndedAt;
+    private double _elapsedSeconds;
     private double _secondsSinceLast;
     private int _nextKind;
 
@@ -29,6 +34,8 @@ public sealed class ChallengeSpawner
         _game = game;
         IntervalSeconds = intervalSeconds;
         _kinds = kinds;
+        _lastOfKind = new Challenge?[kinds.Length];
+        _lastEndedAt = new double[kinds.Length];
     }
 
     public double IntervalSeconds { get; }
@@ -42,14 +49,57 @@ public sealed class ChallengeSpawner
             return;
         }
 
+        NoteEndedChallenges();
+        _elapsedSeconds += seconds;
         _secondsSinceLast += seconds;
 
-        // A big tick can cover several intervals: launch one challenge per interval.
+        // A big tick can cover several intervals: one launch per interval at most.
         while (_secondsSinceLast >= IntervalSeconds - RoundingMargin)
         {
             _secondsSinceLast -= IntervalSeconds;
-            _game.Launch(_kinds[_nextKind]());
-            _nextKind = (_nextKind + 1) % _kinds.Length;
+            LaunchNextAvailableKind(_elapsedSeconds - _secondsSinceLast);
         }
+    }
+
+    private void NoteEndedChallenges()
+    {
+        for (var i = 0; i < _kinds.Length; i++)
+        {
+            if (_lastOfKind[i] is { State: ChallengeState.Succeeded or ChallengeState.Failed } && double.IsNaN(_lastEndedAt[i]))
+            {
+                _lastEndedAt[i] = _elapsedSeconds;
+            }
+        }
+    }
+
+    // Skips a kind that is still running or ended less than one interval ago; if every kind is busy, nothing launches.
+    private void LaunchNextAvailableKind(double now)
+    {
+        for (var offset = 0; offset < _kinds.Length; offset++)
+        {
+            int kind = (_nextKind + offset) % _kinds.Length;
+            if (!IsAvailable(kind, now))
+            {
+                continue;
+            }
+
+            Challenge challenge = _kinds[kind]();
+            _lastOfKind[kind] = challenge;
+            _lastEndedAt[kind] = double.NaN;
+            _game.Launch(challenge);
+            _nextKind = (kind + 1) % _kinds.Length;
+            return;
+        }
+    }
+
+    private bool IsAvailable(int kind, double now)
+    {
+        Challenge? last = _lastOfKind[kind];
+        if (last == null)
+        {
+            return true;
+        }
+
+        return !double.IsNaN(_lastEndedAt[kind]) && now - _lastEndedAt[kind] >= IntervalSeconds - RoundingMargin;
     }
 }
