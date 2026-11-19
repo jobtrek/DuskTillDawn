@@ -131,6 +131,7 @@ public partial class Main : Node3D
     {
         _state.Tick(delta * _clockSpeed);
         _game.Tick(delta * _clockSpeed);
+        _state.DrainSlaOverTime(_game.SlaDrainPerMinute, delta * _clockSpeed);
         if (!NightEnded())
         {
             _spawner.Tick(delta * _clockSpeed);

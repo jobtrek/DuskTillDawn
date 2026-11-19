@@ -18,6 +18,23 @@ public abstract class Game
     public IReadOnlyList<Challenge> Challenges => _challenges;
     public int Failures { get; private set; }
 
+    public double SlaDrainPerMinute
+    {
+        get
+        {
+            double drain = 0;
+            for (var i = 0; i < _challenges.Count; i++)
+            {
+                if (_challenges[i].State == ChallengeState.Running)
+                {
+                    drain += _challenges[i].SlaDrainPerMinute;
+                }
+            }
+
+            return drain;
+        }
+    }
+
     public abstract bool IsLost { get; }
     public abstract bool IsFinished { get; }
 

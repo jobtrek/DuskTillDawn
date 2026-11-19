@@ -118,6 +118,11 @@ public sealed class GameState
         Player.LosePoints(points);
     }
 
+    public void DrainSlaOverTime(double percentPerInGameMinute, double realSeconds)
+    {
+        DrainSla(percentPerInGameMinute * realSeconds * 60 / RealSecondsPerInGameHour);
+    }
+
     public void DrainSla(double percent)
     {
         ArgumentOutOfRangeException.ThrowIfNegative(percent);

@@ -28,6 +28,7 @@ public enum PlayerAction
 public abstract class Challenge
 {
     private const double RoundingMargin = 1e-9;
+    private const double DefaultSlaDrainPerMinute = 0.4;
 
     protected Challenge(string alert, Room room, int points, double durationSeconds)
     {
@@ -47,6 +48,9 @@ public abstract class Challenge
     public double DurationSeconds { get; }
     public double TimeRemaining { get; private set; }
     public ChallengeState State { get; private set; } = ChallengeState.Pending;
+
+    // How much SLA the company loses per in-game minute while this challenge is left running.
+    public virtual double SlaDrainPerMinute => DefaultSlaDrainPerMinute;
 
     public void Start()
     {
