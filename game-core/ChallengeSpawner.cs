@@ -72,7 +72,6 @@ public sealed class ChallengeSpawner
         }
     }
 
-    // Skips a kind that is still running or ended less than one interval ago; if every kind is busy, nothing launches.
     private void LaunchNextAvailableKind(double now)
     {
         for (var offset = 0; offset < _kinds.Length; offset++)
