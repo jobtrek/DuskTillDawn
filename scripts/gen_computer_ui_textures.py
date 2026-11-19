@@ -102,6 +102,25 @@ CHAT = """
 ................
 """
 
+ADMIN = """
+................
+.kkkkkkkkkkkkkk.
+.kbbbbbbbbbbbbk.
+.kbbbbbbbbbbbbk.
+.kkkkkkkkkkkkkk.
+.krrrkrrrrkrrrk.
+.krrrkrrrrkrrrk.
+.kkkkkkkkkkkkkk.
+.krrkrrrrkrrrrk.
+.krrkrrrrkrrrrk.
+.kkkkkkkkkkkkkk.
+.krrrkrrrrkrrrk.
+.krrrkrrrrkrrrk.
+.kkkkkkkkkkkkkk.
+................
+................
+"""
+
 
 def icons() -> None:
     base = {".": CLEAR, "k": INK}
@@ -113,6 +132,9 @@ def icons() -> None:
     }))
     write_png(OUT / "icon_chat.png", from_ascii(CHAT, {
         **base, "t": hex_rgba("10a37f"), "w": hex_rgba("ffffff"),
+    }))
+    write_png(OUT / "icon_admin.png", from_ascii(ADMIN, {
+        **base, "b": hex_rgba("5278bf"), "r": hex_rgba("c4553a"),
     }))
 
 

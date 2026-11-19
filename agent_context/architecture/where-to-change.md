@@ -15,6 +15,7 @@ Paths from the repo root. `dtd/` = `dusk-till-dawn/`. Open these first, search o
 | Mail content (seed mails, categories) | `dtd/main/mail_ui/DataStructure.cs` |
 | Mail window (view) / its logic | `dtd/main/mail_ui/MailApp.cs` / `MailController.cs` |
 | Monitoring (Dashboard) window / its logic | `dtd/main/monitor_ui/MonitorApp.cs` / `MonitoringController.cs` |
+| Admin window (fix actions, e.g. traffic filter) / which challenge it repairs | `dtd/main/admin_ui/AdminApp.cs` / `AdminController.cs` |
 | Desk computer menu, app icons, signals | `dtd/main/computer_ui/ComputerMenu.cs`, `computer_menu.tscn` |
 | When the computer opens (player nearby) | `dtd/main/DetectPlayerNearComputer.cs` |
 | Replace the broken disk (server room rack, E key) | `dtd/main/disk_repair/DiskRepairSpot.cs`; prompt: `dtd/main/prompt_ui/` |

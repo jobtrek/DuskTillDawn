@@ -23,6 +23,7 @@ public partial class MonitoringController : Node
         menu.MonitoringPressed += OpenMonitor;
         // Only one app window at a time: the mail window sits in the same spot.
         menu.MailPressed += () => _app.Hide();
+        menu.AdminPressed += () => _app.Hide();
         // Player walked away from the computer: close the window too.
         menu.VisibilityChanged += () =>
         {

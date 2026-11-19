@@ -26,6 +26,7 @@ public partial class MailController : Node
         menu.MailPressed += OpenMail;
         // Only one app window at a time: the monitoring window sits in the same spot.
         menu.MonitoringPressed += () => _app.Hide();
+        menu.AdminPressed += () => _app.Hide();
         menu.VisibilityChanged += () =>
         {
             bool atDesk = menu.IsVisibleInTree();

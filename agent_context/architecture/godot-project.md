@@ -15,9 +15,10 @@ Main (Node3D, main/Main.cs)       owns the one GameState and SoloGame, calls Tic
  ├─ Basement_Levels               imported .blend, Element States as child nodes
  ├─ DiskRepairSpot (disk_repair/) server room rack: red disk while a BrokenDisk runs, E repairs it
  └─ desk computer                 DetectPlayerNearComputer shows the menu when near
-     └─ ComputerMenu (computer_ui/)   emits MailPressed / MonitoringPressed / HelpPressed
+     └─ ComputerMenu (computer_ui/)   emits MailPressed / MonitoringPressed / HelpPressed / AdminPressed
          ├─ MailController   → MailApp     (mail_ui/)
-         └─ MonitoringController → MonitorApp (monitor_ui/)
+         ├─ MonitoringController → MonitorApp (monitor_ui/)
+         └─ AdminController  → AdminApp    (admin_ui/)  ActionPressed → Main repairs challenges
 ```
 
 ## Pattern: App + Controller
@@ -26,7 +27,6 @@ Main (Node3D, main/Main.cs)       owns the one GameState and SoloGame, calls Tic
 - `*Controller.cs` (Node): glue. Gets `GameState` from `Main.State`, listens to the
   menu's signals, pushes values into the App, calls `GameState` methods on actions.
 - Only one app window is open at a time; walking away closes them.
-
 ## Folders
 
 | Folder | Holds |

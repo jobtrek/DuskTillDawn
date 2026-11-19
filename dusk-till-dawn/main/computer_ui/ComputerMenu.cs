@@ -6,13 +6,14 @@ using Godot;
 /// Every time it becomes visible it plays a "raise the map" animation:
 /// the framed screen rises from the bottom, straightens, and the voxel blocks clear.
 ///
-/// Hook your app menus to the three signals below (MailPressed, MonitoringPressed, HelpPressed).
+/// Hook your app menus to the signals below (MailPressed, MonitoringPressed, HelpPressed, AdminPressed).
 /// </summary>
 public partial class ComputerMenu : Control
 {
     [Signal] public delegate void MailPressedEventHandler();
     [Signal] public delegate void MonitoringPressedEventHandler();
     [Signal] public delegate void HelpPressedEventHandler();
+    [Signal] public delegate void AdminPressedEventHandler();
 
     [Export] public float OpenDuration = 0.45f;
     [Export] public float RevealDuration = 0.6f;
@@ -35,6 +36,7 @@ public partial class ComputerMenu : Control
         WireIcon("Map/Screen/Icons/MailApp", () => EmitSignal(SignalName.MailPressed));
         WireIcon("Map/Screen/Icons/MonitoringApp", () => EmitSignal(SignalName.MonitoringPressed));
         WireIcon("Map/Screen/Icons/HelpApp", () => EmitSignal(SignalName.HelpPressed));
+        WireIcon("Map/Screen/Icons/AdminApp", () => EmitSignal(SignalName.AdminPressed));
         BuildMailBadge(GetNode<TextureButton>("Map/Screen/Icons/MailApp/Button"));
 
         // Rotate/scale around the bottom-centre, like lifting a map into view.

@@ -37,6 +37,15 @@ public abstract class Game
         challenge.Start();
     }
 
+    // A player's fix reaches every challenge; each one decides whether this action repairs it.
+    public void Repair(PlayerProfile player, PlayerAction action)
+    {
+        foreach (Challenge challenge in _challenges)
+        {
+            challenge.Repair(player, action);
+        }
+    }
+
     public void Tick(double seconds)
     {
         ArgumentOutOfRangeException.ThrowIfNegative(seconds);

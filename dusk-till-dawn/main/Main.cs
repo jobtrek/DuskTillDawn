@@ -150,7 +150,11 @@ public partial class Main : Node3D
         }
 
         _dashboard.Visible = _computerMenu == null || !_computerMenu.IsVisibleInTree();
-        _dashboard.ShowGame(_game);
+        // Only while visible, so a change made at the computer pops once the player walks away.
+        if (_dashboard.Visible)
+        {
+            _dashboard.ShowGame(_game);
+        }
     }
 
     private void LaunchDebugChallenge()
@@ -163,13 +167,9 @@ public partial class Main : Node3D
     // Debug only: tries every action on every challenge, as if the player fixed them all.
     private void RepairAllChallenges()
     {
-        PlayerProfile player = _game.Players[0];
-        foreach (Challenge challenge in _game.Challenges)
+        foreach (PlayerAction action in System.Enum.GetValues<PlayerAction>())
         {
-            foreach (PlayerAction action in System.Enum.GetValues<PlayerAction>())
-            {
-                challenge.Repair(player, action);
-            }
+            _game.Repair(_game.Players[0], action);
         }
     }
 
