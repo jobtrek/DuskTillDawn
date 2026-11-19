@@ -19,6 +19,10 @@ public enum PlayerAction
 {
     EnableTrafficFilter,
     ReplaceDisk,
+    RestartCooling,
+    UseExtinguisher,
+    PlugCable,
+    ReportEmail,
 }
 
 public abstract class Challenge
