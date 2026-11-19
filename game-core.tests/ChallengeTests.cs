@@ -109,7 +109,7 @@ public class ChallengeTests
 
         Assert.Equal(ChallengeState.Succeeded, challenge.State);
         Assert.Equal(40, challenge.TimeRemaining);
-        Assert.Equal(100, player.Points);
+        Assert.Equal(150, player.Points);
     }
 
     [Fact]
@@ -151,7 +151,7 @@ public class ChallengeTests
 
         Assert.Equal(ChallengeState.Succeeded, challenge.State);
         Assert.Equal(60, challenge.TimeRemaining);
-        Assert.Equal(100, player.Points);
+        Assert.Equal(150, player.Points);
     }
 
     [Fact]
@@ -165,7 +165,7 @@ public class ChallengeTests
         challenge.Repair(first, PlayerAction.ReplaceDisk);
         challenge.Repair(second, PlayerAction.ReplaceDisk);
 
-        Assert.Equal(100, first.Points);
+        Assert.Equal(150, first.Points);
         Assert.Equal(0, second.Points);
     }
 

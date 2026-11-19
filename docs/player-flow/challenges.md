@@ -29,3 +29,15 @@ flowchart LR
 | 6 | Fake e-mail | "New urgent message" | Control room | Spot that the e-mail is fake and report it | 100 |
 
 In two-player mode, both players get the same challenge at the same time. The first one to finish it gets the points.
+
+## 3. Points rule (proposal, to validate with the team)
+
+| Case | Points | Example (challenge worth 100) |
+|---|---|---|
+| Repaired with at least half the time left | Base points + 50 % | +150 |
+| Repaired later | Base points | +100 |
+| Failed (time ran out) | Every player loses 50 % of the base points | −50 |
+
+- Points never go below 0.
+- The +50 % bonus follows `docs/game-v1.md`: reading the dashboard early pays.
+- Code: `game-core/PointsRule.cs`.

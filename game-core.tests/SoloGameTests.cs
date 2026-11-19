@@ -98,7 +98,7 @@ public class SoloGameTests
         game.Tick(ChallengeDuration);
 
         Assert.Equal(0, game.Failures);
-        Assert.Equal(100, game.Players[0].Points);
+        Assert.Equal(150, game.Players[0].Points);
     }
 
     [Fact]

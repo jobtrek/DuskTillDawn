@@ -19,7 +19,8 @@ public sealed class PlayerProfile(string name)
     public void LosePoints(int points)
     {
         ArgumentOutOfRangeException.ThrowIfNegative(points);
-        Points -= points;
+        // Points never go below 0: a bad night cannot leave the player in debt.
+        Points = Math.Max(Points - points, 0);
 
     }
 }

@@ -34,7 +34,7 @@ public class ChallengeTypesTests
         challenge.Repair(player, PlayerAction.EnableTrafficFilter);
 
         Assert.Equal(ChallengeState.Succeeded, challenge.State);
-        Assert.Equal(150, player.Points);
+        Assert.Equal(225, player.Points);
     }
 
     [Fact]
@@ -60,7 +60,7 @@ public class ChallengeTypesTests
         challenge.Repair(player, PlayerAction.ReplaceDisk);
 
         Assert.Equal(ChallengeState.Succeeded, challenge.State);
-        Assert.Equal(100, player.Points);
+        Assert.Equal(150, player.Points);
     }
 
     [Fact]
@@ -93,6 +93,6 @@ public class ChallengeTypesTests
         }
 
         Assert.All(challenges, challenge => Assert.Equal(ChallengeState.Succeeded, challenge.State));
-        Assert.Equal(250, player.Points);
+        Assert.Equal(375, player.Points);
     }
 }

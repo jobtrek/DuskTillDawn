@@ -261,7 +261,7 @@ public class GameStateTests
         state.LosePoints(50);
         challenge.Repair(state.Player, PlayerAction.ReplaceDisk);
 
-        Assert.Equal(1050, state.Points);
+        Assert.Equal(1100, state.Points);
         Assert.Equal(state.Player.Points, state.Points);
     }
 

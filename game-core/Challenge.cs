@@ -79,7 +79,7 @@ public abstract class Challenge
             return;
         }
         State = ChallengeState.Succeeded;
-        player.EarnPoints(Points);
+        player.EarnPoints(PointsRule.RepairReward(Points, TimeRemaining, DurationSeconds));
     }
 
     /// <summary>Each challenge decides which action fixes it.</summary>

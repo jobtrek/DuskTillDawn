@@ -57,7 +57,18 @@ public abstract class Game
             if (wasRunning && challenge.State == ChallengeState.Failed)
             {
                 Failures++;
+                LoseFailurePenalty(challenge);
             }
+        }
+    }
+
+    // A missed challenge hurts the whole company, so every player pays for it.
+    private void LoseFailurePenalty(Challenge challenge)
+    {
+        int penalty = PointsRule.FailurePenalty(challenge.Points);
+        for (var i = 0; i < _players.Count; i++)
+        {
+            _players[i].LosePoints(penalty);
         }
     }
 }
