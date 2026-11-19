@@ -149,6 +149,9 @@ public partial class ExtinguisherSpot : Node3D
         _heldMaterials.Clear();
     }
 
+
+    // this basically walks the node tree, all the childrend and their children and hands it back
+    // every MeshInstance3D it finds, one at a time, yield return basically lets callers foreachover over "mesh"
     private static IEnumerable<MeshInstance3D> MeshesOf(Node node)
     {
         if (node is MeshInstance3D mesh)
