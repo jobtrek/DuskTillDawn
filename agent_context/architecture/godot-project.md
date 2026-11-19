@@ -8,7 +8,7 @@ Autoload: `MCPGameBridge` (local dev tooling for the Godot MCP; its addon
 
 ```
 Main (Node3D, main/Main.cs)       owns the one GameState and SoloGame, calls Tick() each frame,
- │                                ticks a ChallengeSpawner (a challenge every 20 s),
+ │                                ticks a ChallengeSpawner (at most one challenge every 20 s),
  │                                drives sun/moon/sky from SunPosition/MoonPosition
  ├─ Hud (hud_ui/)                 reads GameState: clock, SLA bar, points, banner
  ├─ Player (player/Player.cs)     CharacterBody3D + camera
