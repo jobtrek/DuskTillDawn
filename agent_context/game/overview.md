@@ -15,7 +15,7 @@ servers alive from 20:00 until 08:00. Things break, some by accident, some by at
 | Floors | 3: Roof, Control room, Basement (cut-away, all on screen) |
 | Nights | 5 (surviving night 5 wins the run) |
 | Incidents | 8 |
-| Computer apps | Dashboard (Monitoring), Mail, Admin console, AI helper |
+| Computer apps | Monitoring, Mail, Admin console, AI helper |
 | Shop | Between nights, counter-upgrades only |
 
 ## Pillars (every feature supports one, or it waits)

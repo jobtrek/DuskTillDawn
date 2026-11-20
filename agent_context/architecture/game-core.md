@@ -13,8 +13,14 @@ game state and rules so they run and test without the engine.
 | `PointsRule.cs` | Points for a challenge: +50 % for a fast repair, −50 % for every player on a failure |
 | `Game.cs` | Abstract game: players, challenges, failures. `Tick` moves the challenges; `SlaDrainPerMinute` adds up the running ones; each mode says when it is lost or finished |
 | `SoloGame.cs` | One player; lost after 3 failed challenges |
-| `DuoGame.cs` | Two-player race: ends after `ChallengeCount` challenges, `Winner` has the most points (null on a tie) |
+| `DuoGame.cs` | Two-player race: ends after `ChallengeCount` challenges, `Winner` has the most points (null on a tie). Parked (contract: 1 player), not wired in Godot |
+| `Inbox.cs`, `Mail.cs` | Mail schedule (loaded from `emails.json`), arrival, read and phishing-report state |
+| `HeldItem.cs` | What the player carries (one item at a time) |
+| `Weather.cs`, `WeatherSystem.cs` | Weather kinds and rain blend, ticked by `GameState`. Built early: Weather is parked to M2 (`docs/game-v1.md`) |
 | `SunPosition.cs`, `MoonPosition.cs` | Sky positions from the hour of day |
+
+Built so far vs v1 target ([game/rules-v1.md](../game/rules-v1.md)): 6 challenges, states
+Pending → Running → Succeeded/Failed; `Main` spawns only `BrokenDisk` and `SecurityAttack`.
 
 ## Rules for changes
 
