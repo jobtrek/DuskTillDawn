@@ -46,6 +46,20 @@ public abstract class Game
         }
     }
 
+    // Some tools only handle one problem per use (one extinguisher, one fire): the oldest running one is fixed.
+    public bool RepairOne(PlayerProfile player, PlayerAction action)
+    {
+        for (var i = 0; i < _challenges.Count; i++)
+        {
+            if (_challenges[i].Repair(player, action))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public void Tick(double seconds)
     {
         ArgumentOutOfRangeException.ThrowIfNegative(seconds);

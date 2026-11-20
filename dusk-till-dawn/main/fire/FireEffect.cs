@@ -1,14 +1,15 @@
 using DuskTillDawn.Core;
 using Godot;
 
-// The fire in the server room. While a Fire challenge runs, the flames burn on the rack and smoke
-// rises; the A and B models of each flame lean opposite ways, so swapping them makes it flicker.
+// The fire in the server room. While a Fire challenge runs, the battery racks burn and smoke rises;
+// the A and B models of each flame lean opposite ways, so swapping them makes it flicker.
 public partial class FireEffect : Node3D
 {
     private const double FlickerSeconds = 0.15;
 
     [Export] public Node3D[] FlamesA { get; set; } = [];
     [Export] public Node3D[] FlamesB { get; set; } = [];
+    [Export] public Node3D[] Fires { get; set; } = [];
 
     private Game _game = null!;
     private GpuParticles3D _smoke = null!;
@@ -62,6 +63,18 @@ public partial class FireEffect : Node3D
         foreach (Node3D flame in FlamesB)
         {
             flame.Visible = burning && !_showA;
+        }
+
+        foreach (Node3D fire in Fires)
+        {
+            fire.Visible = burning;
+            foreach (Node child in fire.GetChildren())
+            {
+                if (child is GpuParticles3D particles)
+                {
+                    particles.Emitting = burning;
+                }
+            }
         }
 
         _smoke.Emitting = burning;

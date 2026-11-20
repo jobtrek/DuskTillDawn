@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" path="res://main/disk_repair/disk_repair_spot.tscn" id="101_diskspot"]
 [ext_resource type="PackedScene" path="res://main/fire/extinguisher_spot.tscn" id="103_extinguisher"]
 [ext_resource type="PackedScene" path="res://main/fire/fire_particles.tscn" id="104_fireparticles"]
+[ext_resource type="PackedScene" path="res://main/fire/fire_effect.tscn" id="105_fireeffect"]
 [ext_resource type="Shader" uid="uid://dak754rs84iae" path="res://main/sky/sky.gdshader" id="sky_shader"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_v0o3d"]
@@ -1828,7 +1829,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.25, -3.1666012, -5)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0599976, -3.32, -0.15578651)
 
 [node name="FlameLarge_B" parent="Company" index="46" unique_id=1923167104]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0599976, -3.32, -16.026474)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.0599976, -3.32, -0.15578651)
 
 [node name="FlameSmall_A" parent="Company" index="47" unique_id=382899750]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.23000336, -3.32, -0.18997765)
@@ -2214,9 +2215,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75.2344, 0.9823, 22.9703)
 HealthyDisk = NodePath("../Company/HardDrive_Healthy")
 FailedDisk = NodePath("../Company/HardDrive_Failed")
 
-[node name="ExtinguisherSpot" parent="." unique_id=1702548757 node_paths=PackedStringArray("Extinguisher") instance=ExtResource("103_extinguisher")]
+[node name="ExtinguisherSpot" parent="." unique_id=1702548757 node_paths=PackedStringArray("Extinguisher", "FireSpot") instance=ExtResource("103_extinguisher")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 70.7576, 0.92, 21.0481)
 Extinguisher = NodePath("../Company/Extinguisher")
+FireSpot = NodePath("../Company/BatteryRackFrame_002/FireParticles")
+
+[node name="FireEffect" parent="." unique_id=1702548758 node_paths=PackedStringArray("FlamesA", "FlamesB", "Fires") instance=ExtResource("105_fireeffect")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 76.8968, -0.182, 22.9587)
+FlamesA = [NodePath("../Company/FlameLarge_A"), NodePath("../Company/FlameSmall_A")]
+FlamesB = [NodePath("../Company/FlameLarge_B"), NodePath("../Company/FlameSmall_B")]
+Fires = [NodePath("../Company/BatteryRackFrame_002/FireParticles"), NodePath("../Company/BatteryRackFrame_001/FireParticles2")]
 
 [node name="Node" type="Node" parent="." unique_id=749536896]
 

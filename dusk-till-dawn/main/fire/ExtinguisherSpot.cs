@@ -17,6 +17,7 @@ public partial class ExtinguisherSpot : Node3D
 
     private Game _game = null!;
     private InteractionPrompt _prompt = null!;
+    private GpuParticles3D _spray = null!;
     private Player? _player;
     private bool _playerAtBracket;
     private Node _bracket = null!;
@@ -29,6 +30,10 @@ public partial class ExtinguisherSpot : Node3D
         _prompt = GetNode<InteractionPrompt>("InteractionPrompt");
         _bracket = Extinguisher.GetParent();
         _onBracket = Extinguisher.Transform;
+
+        // The spray comes out of the nozzle, so it travels with the extinguisher into the player's hand.
+        _spray = GetNode<GpuParticles3D>("Spray");
+        _spray.Reparent(Extinguisher, keepGlobalTransform: false);
 
         var zone = GetNode<Area3D>("Zone");
         zone.BodyEntered += OnBodyEntered;
@@ -194,12 +199,10 @@ public partial class ExtinguisherSpot : Node3D
         return false;
     }
 
-    // Each challenge decides if the extinguisher fixes it, so only the fire reacts.
+    // One spray puts out one fire; with several burning, the player has to use it again.
     private void UseExtinguisher(PlayerProfile profile)
     {
-        for (var i = 0; i < _game.Challenges.Count; i++)
-        {
-            _game.Challenges[i].Repair(profile, PlayerAction.UseExtinguisher);
-        }
+        _spray.Restart();
+        _game.RepairOne(profile, PlayerAction.UseExtinguisher);
     }
 }
