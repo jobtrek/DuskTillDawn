@@ -22,6 +22,7 @@ public partial class Main : Node3D
     {
         _state = new GameState();
         _game = new SoloGame(_state.Player);
+        _game.ChallengeSucceeded += challenge => _state.RestoreSla(challenge.SlaRestoredOnSuccess);
         _incidents = new StoreInstancesOfIncidents([() => new BrokenDisk(), () => new SecurityAttack()]);
         _spawner = new ChallengeSpawner(_game, () => _incidents.PickRandom());
     }

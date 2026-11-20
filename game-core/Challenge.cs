@@ -1,3 +1,5 @@
+using System;
+
 namespace DuskTillDawn.Core;
 
 public enum ChallengeState
@@ -28,7 +30,8 @@ public enum PlayerAction
 public abstract class Challenge
 {
     private const double RoundingMargin = 1e-9;
-    private const double DefaultSlaDrainPerMinute = 0.4;
+    private const double DefaultSlaDrainPerMinute = 0.1;
+    private const double DefaultSlaRestoredOnSuccess = 5;
 
     protected Challenge(string alert, Room room, int points, double durationSeconds)
     {
@@ -51,6 +54,11 @@ public abstract class Challenge
 
     // How much SLA the company loses per in-game minute while this challenge is left running.
     public virtual double SlaDrainPerMinute => DefaultSlaDrainPerMinute;
+
+    // How much SLA the company wins back when this challenge is fixed in time.
+    public virtual double SlaRestoredOnSuccess => DefaultSlaRestoredOnSuccess;
+
+    public event Action<Challenge>? Succeeded;
 
     public void Start()
     {
@@ -84,6 +92,7 @@ public abstract class Challenge
         }
         State = ChallengeState.Succeeded;
         player.EarnPoints(PointsRule.RepairReward(Points, TimeRemaining, DurationSeconds));
+        Succeeded?.Invoke(this);
         return true;
     }
 

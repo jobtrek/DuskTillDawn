@@ -146,4 +146,16 @@ public sealed class GameState(int? seed = null)
             Status = NightStatus.Lost;
         }
     }
+
+    public void RestoreSla(double percent)
+    {
+        ArgumentOutOfRangeException.ThrowIfNegative(percent);
+
+        if (Status != NightStatus.Running)
+        {
+            return;
+        }
+
+        Sla = Math.Min(Sla + percent, 100);
+    }
 }
