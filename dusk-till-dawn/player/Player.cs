@@ -19,9 +19,12 @@ public partial class Player : CharacterBody3D
 
     private Camera3D _camera = null!;
 
+    public Node3D RightHand { get; private set; } = null!;
+
     public override void _Ready()
     {
         _camera = GetNode<Camera3D>("Camera3D");
+        RightHand = GetNode<Node3D>("Camera3D/RightHand");
         FloorMaxAngle = Mathf.DegToRad(60f); // the stairs are ~50 degrees, default max is 45
         FloorSnapLength = 0.5f;
         var body = GetNodeOrNull<Node3D>("MeshInstance3D");

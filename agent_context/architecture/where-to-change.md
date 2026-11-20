@@ -19,6 +19,9 @@ Paths from the repo root. `dtd/` = `dusk-till-dawn/`. Open these first, search o
 | Desk computer menu, app icons, signals | `dtd/main/computer_ui/ComputerMenu.cs`, `computer_menu.tscn` |
 | When the computer opens (player nearby) | `dtd/main/DetectPlayerNearComputer.cs` |
 | Replace the broken disk (server room rack, E key) | `dtd/main/disk_repair/DiskRepairSpot.cs`; prompt: `dtd/main/prompt_ui/` |
+| Fire in the server room (flames, smoke) | `dtd/main/fire/FireEffect.cs`, `fire_effect.tscn`; flame positions: `Company/Flame*` in `main.tscn` |
+| Pick up / put back the extinguisher (E, Q), put out the fire | `dtd/main/fire/ExtinguisherSpot.cs`, `extinguisher_spot.tscn`; model: `Company/Extinguisher` in `main.tscn`; held item: `game-core/PlayerProfile.cs` |
+| Where held items sit on screen | `Player/Camera3D/RightHand` in `dtd/main/main.tscn` |
 | Block-pop open animation | `dtd/main/computer_ui/BlockReveal.cs` |
 | HUD: clock, SLA bar, points, banner | `dtd/main/hud_ui/Hud.cs`, `SlaBar.cs`, `hud.tscn` |
 | UI pixel textures | `scripts/gen_computer_ui_textures.py` → `dtd/main/computer_ui/textures/` (HUD: `dtd/main/hud_ui/textures/`) |

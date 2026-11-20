@@ -10,7 +10,7 @@ All numbers are **starting values**. Put them in data files and tune them in Fri
 
 You are the only sysadmin on the night shift. Servers run on solar power. Things break, some by accident, some because someone is attacking you. Keep the company alive until 08:00.
 
-**v1 = single player, 3 floors, 5 nights, 8 incidents, one upgrade shop.**
+**v1 = single player, 3 floors, 5 nights, 8 incidents, one upgrade shop, a server room that grows.**
 
 ## 2. Pillars
 
@@ -152,6 +152,13 @@ Survive night 5 and you win the run.
 - Rule: a counter-upgrade removes or shortens its incident, but **never removes the lesson**. Example: after buying auto-renewal, the TLS incident can no longer happen, and the shop explains why.
 - Price range: 300 to 1500 points. Expect about 700 points per night, so the player can afford 1–2 upgrades per night.
 - Upgrades persist for the rest of the run. Losing resets everything.
+
+### Server stages
+
+- The basement server room grows through the 5 stages of [server-progression.md](server-progression.md), from one laptop to several racks.
+- The shop sells the next stage, paid in points like the counter-upgrades. At most one stage per shop visit, so night 5 can reach stage 5.
+- Each stage handles more Traffic but adds Heat and Power draw (section 5).
+- The coins, contracts and 4–5 h pacing in server-progression.md are not in v1. Points are the only currency.
 
 ### Infinite mode (after simple mode works)
 

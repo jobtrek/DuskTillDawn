@@ -61,7 +61,7 @@ The shared floor area of the building (800×600 cm) that all three floors use; t
 _Avoid_: floor plan, layout
 
 **Stage**:
-One step of the server progression, 1 (single laptop) to 5 (multiple racks), unlocked by need plus money. Not to be confused with Tier, which is an Element size class.
+One step of the server progression, 1 (single laptop) to 5 (multiple racks). In v1 the player buys the next Stage in the shop with points. Not to be confused with Tier, which is an Element size class.
 _Avoid_: tier (for the progression), level
 
 **Night den**:
