@@ -18,6 +18,7 @@ game state and rules so they run and test without the engine.
 | `HeldItem.cs` | What the player carries (one item at a time) |
 | `Weather.cs`, `WeatherSystem.cs` | Weather kinds and rain blend, ticked by `GameState`. Built early: Weather is parked to M2 (`docs/game-v1.md`) |
 | `SunPosition.cs`, `MoonPosition.cs` | Sky positions from the hour of day |
+| `Weather.cs`, `WeatherSystem.cs` | Weather kinds (Clear, Cloudy, Rainy, Storm) and their rain; `GameState.Weather` changes every 120 s by weighted chance, rain blends in slowly; `SkipToNext` is the debug skip (F4) |
 
 Built so far vs v1 target ([game/rules-v1.md](../game/rules-v1.md)): 6 challenges, states
 Pending → Running → Succeeded/Failed; `Main` spawns only `BrokenDisk` and `SecurityAttack`.

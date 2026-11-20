@@ -9,7 +9,7 @@ Autoload: `MCPGameBridge` (dev tooling for the Godot MCP, configured in root `.m
 ```
 Main (Node3D, main/Main.cs)       owns the one GameState and SoloGame, calls Tick() each frame,
  │                                ticks a ChallengeSpawner (at most one challenge every 20 s),
- │                                drives sun/moon/sky from SunPosition/MoonPosition
+ │                                drives sun/moon/sky, and passes Weather to Rain/RainSound
  ├─ Hud (hud_ui/)                 reads GameState: clock, SLA bar, points, banner
  ├─ Dashboard (dashboard_ui/)     reads SoloGame: points, failures, running challenges
  ├─ Player (player/Player.cs)     CharacterBody3D + camera
@@ -34,7 +34,7 @@ Main (Node3D, main/Main.cs)       owns the one GameState and SoloGame, calls Tic
 
 | Folder | Holds |
 |---|---|
-| `main/` | `Main.cs`, `main.tscn`, sky shader, UI folders `*_ui/` |
+| `main/` | `Main.cs`, `main.tscn`, sky shader, `weather/` (rain nodes), UI folders `*_ui/` |
 | `main/computer_ui/` | Desk OS menu, `BlockReveal`, pixel textures |
 | `player/` | Player body and camera |
 | `levels/<floor>/` | Floor `.blend` files + per-level scripts |

@@ -14,6 +14,11 @@
 [ext_resource type="PackedScene" path="res://main/hud_ui/hud.tscn" id="99_hud"]
 [ext_resource type="PackedScene" path="res://main/dashboard_ui/dashboard.tscn" id="100_dashboard"]
 [ext_resource type="PackedScene" path="res://main/disk_repair/disk_repair_spot.tscn" id="101_diskspot"]
+[ext_resource type="Script" path="res://main/weather/Rain.cs" id="102_rain"]
+[ext_resource type="Script" path="res://main/weather/RainLook.cs" id="103_rainlook"]
+[ext_resource type="Script" path="res://main/weather/RainSound.cs" id="104_rainsound"]
+[ext_resource type="AudioStream" uid="uid://bekcwh38pgxch" path="res://main/weather/sounds/rain_light.ogg" id="105_rainlight"]
+[ext_resource type="AudioStream" uid="uid://cptkondk3qt1j" path="res://main/weather/sounds/rain_heavy.ogg" id="106_rainheavy"]
 [ext_resource type="PackedScene" path="res://main/fire/extinguisher_spot.tscn" id="103_extinguisher"]
 [ext_resource type="PackedScene" path="res://main/fire/fire_particles.tscn" id="104_fireparticles"]
 [ext_resource type="PackedScene" path="res://main/fire/fire_effect.tscn" id="105_fireeffect"]
@@ -227,6 +232,47 @@ size = Vector3(0.87, 0.2, 0.4)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_3s6sg"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sky"]
+shader = ExtResource("sky_shader")
+shader_parameter/sky_top_color = Color(0.16, 0.45, 0.95, 1)
+shader_parameter/sky_horizon_color = Color(0.58, 0.8, 1, 1)
+
+[sub_resource type="Sky" id="Sky_world"]
+sky_material = SubResource("ShaderMaterial_sky")
+
+[sub_resource type="Environment" id="Environment_world"]
+background_mode = 2
+sky = SubResource("Sky_world")
+ambient_light_source = 3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_moon"]
+shading_mode = 0
+albedo_color = Color(0.86, 0.9, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_moon"]
+material = SubResource("StandardMaterial3D_moon")
+radius = 0.5
+height = 1.0
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_rain"]
+emission_shape = 3
+emission_box_extents = Vector3(15, 0.5, 15)
+direction = Vector3(0, -1, 0)
+spread = 3.0
+initial_velocity_min = 18.0
+initial_velocity_max = 22.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rain"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0.75, 0.82, 0.92, 0.35)
+billboard_mode = 2
+billboard_keep_scale = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_rain"]
+material = SubResource("StandardMaterial3D_rain")
+size = Vector2(0.03, 0.6)
+
 [node name="Main" type="Node3D" unique_id=942546274]
 script = ExtResource("1_main")
 
@@ -260,6 +306,28 @@ mesh = SubResource("SphereMesh_moon")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=614694605]
 environment = SubResource("Environment_world")
+
+[node name="Rain" type="GPUParticles3D" parent="."]
+script = ExtResource("102_rain")
+emitting = false
+amount = 4000
+lifetime = 1.2
+local_coords = false
+visibility_aabb = AABB(-20, -35, -20, 40, 40, 40)
+process_material = SubResource("ParticleProcessMaterial_rain")
+draw_pass_1 = SubResource("QuadMesh_rain")
+
+[node name="RainLook" type="Node" parent="."]
+script = ExtResource("103_rainlook")
+
+[node name="RainSound" type="Node" parent="."]
+script = ExtResource("104_rainsound")
+
+[node name="Light" type="AudioStreamPlayer" parent="RainSound"]
+stream = ExtResource("105_rainlight")
+
+[node name="Heavy" type="AudioStreamPlayer" parent="RainSound"]
+stream = ExtResource("106_rainheavy")
 
 [node name="Player" type="CharacterBody3D" parent="." unique_id=628655475]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 83.87202, 0.22459394, 16.888489)

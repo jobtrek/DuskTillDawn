@@ -30,6 +30,14 @@ public sealed class WeatherSystem(WeatherKind initialWeather, int seed)
         RainIntensity = RainIntensity + (targetRain - RainIntensity) * piece;
     }
 
+    // For testing the weather by hand: jumps straight to the next kind, with its full rain, instead of waiting.
+    public void SkipToNext()
+    {
+        Current = (WeatherKind)(((int)Current + 1) % Enum.GetValues<WeatherKind>().Length);
+        RainIntensity = WeatherProfile.For(Current).Rain;
+        _secondsUntilChange = RealSecondsPerWeather;
+    }
+
     private WeatherKind NextAfter(WeatherKind kind)
     {
         var options = OptionsFor(kind);

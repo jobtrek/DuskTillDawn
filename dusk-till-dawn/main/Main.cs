@@ -61,6 +61,9 @@ public partial class Main : Node3D
     private ShaderMaterial _skyMaterial = null!;
     private Color _daySkyTopColor;
     private Color _daySkyHorizonColor;
+    private Rain _rain = null!;
+    private RainLook _rainLook = null!;
+    private RainSound _rainSound = null!;
 
     public override void _Ready()
     {
@@ -74,6 +77,9 @@ public partial class Main : Node3D
         _moon = GetNode<DirectionalLight3D>("MoonLight3D");
         _moonEnergy = _moon.LightEnergy;
         _moonBody = GetNode<Node3D>("Moon");
+        _rain = GetNode<Rain>("Rain");
+        _rainLook = GetNode<RainLook>("RainLook");
+        _rainSound = GetNode<RainSound>("RainSound");
         _environment = GetNode<WorldEnvironment>("WorldEnvironment").Environment;
         _dayAmbientEnergy = _environment.AmbientLightEnergy;
         _daySkyEnergy = _environment.BackgroundEnergyMultiplier;
@@ -138,6 +144,8 @@ public partial class Main : Node3D
         }
         UpdateSun();
         UpdateMoon();
+        _rain.ShowWeather(_state.Weather);
+        _rainSound.ShowWeather(_state.Weather);
         ShowStateAndPauseIfGameEnded();
         ShowDashboard();
     }
@@ -181,6 +189,7 @@ public partial class Main : Node3D
 
     private void UpdateSun()
     {
+        float rain = _state.Weather.RainIntensity;
         var sun = SunPosition.At(_state.HourOfDay);
 
         // Very flat light gives stretched, flickering shadows, so keep the beam a bit above the horizon.
@@ -189,7 +198,7 @@ public partial class Main : Node3D
 
         // Fade in over the first degrees after sunrise (and out before sunset) instead of popping.
         double fade = sun.IsUp ? Math.Clamp(sun.ElevationDegrees / SunFadeDegrees, 0, 1) : 0;
-        _sun.LightEnergy = (float)(_sunEnergy * fade);
+        _sun.LightEnergy = (float)(_sunEnergy * fade) * _rainLook.LightFactor(rain);
         SetShadowStrength(_sun, sun.IsUp, sun.ElevationDegrees);
 
         // Warm orange near the horizon, neutral white once the sun is high.
@@ -198,8 +207,8 @@ public partial class Main : Node3D
 
         // Sky: dark at night, blue by day, with an orange horizon while the sun is low.
         Color dayHorizon = SunHorizonColor.Lerp(_daySkyHorizonColor, whiteness);
-        _skyMaterial.SetShaderParameter("sky_top_color", NightSkyTopColor.Lerp(_daySkyTopColor, (float)fade));
-        _skyMaterial.SetShaderParameter("sky_horizon_color", NightSkyHorizonColor.Lerp(dayHorizon, (float)fade));
+        _skyMaterial.SetShaderParameter("sky_top_color", _rainLook.Greyed(NightSkyTopColor.Lerp(_daySkyTopColor, (float)fade), rain));
+        _skyMaterial.SetShaderParameter("sky_horizon_color", _rainLook.Greyed(NightSkyHorizonColor.Lerp(dayHorizon, (float)fade), rain));
 
         // Sun disk at its real position (not the clamped beam), stars come out as the daylight fades.
         _skyMaterial.SetShaderParameter("sun_direction", SkyDirection(sun.AzimuthDegrees, sun.ElevationDegrees));
@@ -211,20 +220,21 @@ public partial class Main : Node3D
         // By day the ambient light comes from the sky. At night the sky is almost black, so it blends
         // to a fixed moonlit blue instead: dark, but bright enough to see where you are going.
         _environment.AmbientLightSkyContribution = (float)fade;
-        _environment.AmbientLightEnergy = Mathf.Lerp(NightAmbientEnergy, _dayAmbientEnergy, (float)fade);
+        _environment.AmbientLightEnergy = Mathf.Lerp(NightAmbientEnergy, _dayAmbientEnergy, (float)fade) * _rainLook.LightFactor(rain);
         _environment.BackgroundEnergyMultiplier = _daySkyEnergy * Mathf.Lerp(NightSkyFraction, 1f, (float)fade);
     }
 
     // Same axes as the sun. The pitch is always negative, so the moon only ever shines down on the scene.
     private void UpdateMoon()
     {
+        float rain = _state.Weather.RainIntensity;
         var moon = MoonPosition.At(_state.HourOfDay);
 
         double pitch = Math.Max(moon.ElevationDegrees, SunMinElevationDegrees);
         _moon.RotationDegrees = new Vector3((float)-pitch, (float)-moon.AzimuthDegrees, 0);
 
         double fade = moon.IsUp ? Math.Clamp(moon.ElevationDegrees / SunFadeDegrees, 0, 1) : 0;
-        _moon.LightEnergy = (float)(_moonEnergy * fade);
+        _moon.LightEnergy = (float)(_moonEnergy * fade) * _rainLook.LightFactor(rain);
         SetShadowStrength(_moon, moon.IsUp, moon.ElevationDegrees);
 
         PlaceMoonBody(moon.IsUp, moon.AzimuthDegrees, moon.ElevationDegrees);
@@ -275,7 +285,11 @@ public partial class Main : Node3D
             return;
         }
 
-        if (key.Keycode == Key.F6)
+        if (key.Keycode == Key.F4)
+        {
+            _state.Weather.SkipToNext();
+        }
+        else if (key.Keycode == Key.F6)
         {
             LaunchDebugChallenge();
         }
