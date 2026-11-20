@@ -11,6 +11,7 @@ Main (Node3D, main/Main.cs)       owns the one GameState and SoloGame, calls Tic
  │                                ticks a ChallengeSpawner (at most one challenge every 20 s),
  │                                drives sun/moon/sky from SunPosition/MoonPosition
  ├─ Hud (hud_ui/)                 reads GameState: clock, SLA bar, points, banner
+ ├─ Dashboard (dashboard_ui/)     reads SoloGame: points, failures, running challenges
  ├─ Player (player/Player.cs)     CharacterBody3D + camera
  ├─ Basement_Levels               imported .blend, Element States as child nodes
  ├─ DiskRepairSpot (disk_repair/) server room rack: red disk while a BrokenDisk runs, E repairs it
@@ -20,7 +21,7 @@ Main (Node3D, main/Main.cs)       owns the one GameState and SoloGame, calls Tic
      └─ ComputerMenu (computer_ui/)   emits MailPressed / MonitoringPressed / HelpPressed / AdminPressed
          ├─ MailController   → MailApp     (mail_ui/)
          ├─ MonitoringController → MonitorApp (monitor_ui/)
-         └─ AdminController  → AdminApp    (admin_ui/)  ActionPressed → Main repairs challenges
+         └─ AdminController  → AdminApp    (admin_ui/)  ActionPressed → Game.Repair
 ```
 
 ## Pattern: App + Controller

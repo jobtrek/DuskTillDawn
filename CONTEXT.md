@@ -12,6 +12,10 @@ _Avoid_: défi, challenge, problem, panne
 A message in the computer's Mail app. Three kinds: a Warning mail (early sign of an Incident), a News mail (tech news, flavour and hints) and a Phishing mail (a fake that the player must report). The inbox empties at the start of each night.
 _Avoid_: email, e-mail, message
 
+**Dashboard**:
+The small HUD panel (top right) with points, failures and every running Incident. Not the computer's Monitoring app.
+_Avoid_: monitoring (for the HUD panel)
+
 **Asset table**:
 `game-assets/INDEX.md`. A generated index of every Element, rebuilt from the Specs by `voxel-sdk index`. Never edited by hand.
 _Avoid_: asset list, master list
