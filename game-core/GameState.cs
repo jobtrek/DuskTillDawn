@@ -10,7 +10,7 @@ public enum NightStatus
 }
 
 /// <summary>All game state lives here. Scene nodes display it, they never own it.</summary>
-public sealed class GameState
+public sealed class GameState(int? seed = null)
 {
     private const double RealSecondsPerInGameHour = 50;
     private const int NightLengthInGameHours = 12;
@@ -50,6 +50,9 @@ public sealed class GameState
     /// <summary>True once the clock is back at 20:00 after a won night. The game is over for this day.</summary>
     public bool DaySurvived { get; private set; }
 
+    /// <summary>The weather. It ticks with the game clock.</summary>
+    public WeatherSystem Weather { get; } = new(WeatherKind.Clear, seed ?? Random.Shared.Next());
+
     /// <summary>Real seconds since 08:00 (0 while the night is still running).</summary>
     public double RealSecondsSinceNightEnded => Math.Max(_elapsedRealSeconds - RealSecondsPerNight, 0);
 
@@ -81,6 +84,8 @@ public sealed class GameState
         {
             return;
         }
+
+        Weather.Tick(realSeconds);
 
         _elapsedRealSeconds = Math.Min(_elapsedRealSeconds + realSeconds, RealSecondsPerDay);
 
