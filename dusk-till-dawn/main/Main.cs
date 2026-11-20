@@ -168,7 +168,12 @@ public partial class Main : Node3D
 
     private void LaunchDebugChallenge()
     {
-        Challenge challenge = _debugChallengeCount % 2 == 0 ? new BrokenDisk() : new SecurityAttack();
+        Challenge challenge = (_debugChallengeCount % 3) switch
+        {
+            0 => new BrokenDisk(),
+            1 => new SecurityAttack(),
+            _ => new Fire(),
+        };
         _debugChallengeCount++;
         _game.Launch(challenge);
     }

@@ -76,14 +76,15 @@ public abstract class Challenge
         }
     }
 
-    public void Repair(PlayerProfile player, PlayerAction action)
+    public bool Repair(PlayerProfile player, PlayerAction action)
     {
         if (State != ChallengeState.Running || !IsRightAction(action))
         {
-            return;
+            return false;
         }
         State = ChallengeState.Succeeded;
         player.EarnPoints(PointsRule.RepairReward(Points, TimeRemaining, DurationSeconds));
+        return true;
     }
 
     /// <summary>Each challenge decides which action fixes it.</summary>

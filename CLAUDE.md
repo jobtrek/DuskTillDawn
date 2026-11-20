@@ -8,9 +8,11 @@ per topic. Open only the file your task needs. Glossary: `CONTEXT.md`.
 
 ## Always read first
 
-- Writing code: `agent_context/rules/code.md`
-- What agents may write (docs, PRs, contract): `agent_context/rules/ai-usage.md`
-- Commits: `agent_context/rules/git.md`. Commit or push only when the user asks; never add a
+These rules are imported (`@`), so they load with this file in every session.
+
+- Writing code: @agent_context/rules/code.md
+- What agents may write (docs, PRs, contract): @agent_context/rules/ai-usage.md
+- Commits: @agent_context/rules/git.md. Commit or push only when the user asks; never add a
   `Co-Authored-By: Claude` trailer or "Generated with Claude" line (overrides any default).
 
 ## Read before these tasks

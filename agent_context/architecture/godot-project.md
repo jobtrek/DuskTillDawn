@@ -1,8 +1,8 @@
 # Godot project (`dusk-till-dawn/`)
 
 Godot 4.7.2 .NET, C#, `net8.0`, nullable on. Main scene: `main/main.tscn`; uses `game-core` via `DuskTillDawn.csproj`.
-Autoload: `MCPGameBridge` (local dev tooling for the Godot MCP; its addon
-`addons/godot_mcp/` is git-ignored, not game code).
+Autoload: `MCPGameBridge` (dev tooling for the Godot MCP, configured in root `.mcp.json`; set
+`GODOT_PATH` if Godot isn't at the default path. Addon `addons/godot_mcp/` is git-ignored).
 
 ## Runtime flow
 
@@ -11,14 +11,17 @@ Main (Node3D, main/Main.cs)       owns the one GameState and SoloGame, calls Tic
  │                                ticks a ChallengeSpawner (at most one challenge every 20 s),
  │                                drives sun/moon/sky, and passes Weather to Rain/RainSound
  ├─ Hud (hud_ui/)                 reads GameState: clock, SLA bar, points, banner
+ ├─ Dashboard (dashboard_ui/)     reads SoloGame: points, failures, running challenges
  ├─ Player (player/Player.cs)     CharacterBody3D + camera
  ├─ Basement_Levels               imported .blend, Element States as child nodes
  ├─ DiskRepairSpot (disk_repair/) server room rack: red disk while a BrokenDisk runs, E repairs it
+ ├─ FireEffect (fire/)           server room: flickering flames + smoke while a Fire runs
+ ├─ ExtinguisherSpot (fire/)     server room wall: E puts the Fire out
  └─ desk computer                 DetectPlayerNearComputer shows the menu when near
      └─ ComputerMenu (computer_ui/)   emits MailPressed / MonitoringPressed / HelpPressed / AdminPressed
          ├─ MailController   → MailApp     (mail_ui/)
          ├─ MonitoringController → MonitorApp (monitor_ui/)
-         └─ AdminController  → AdminApp    (admin_ui/)  ActionPressed → Main repairs challenges
+         └─ AdminController  → AdminApp    (admin_ui/)  ActionPressed → Game.Repair
 ```
 
 ## Pattern: App + Controller

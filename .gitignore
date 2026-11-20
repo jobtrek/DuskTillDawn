@@ -34,5 +34,4 @@ __pycache__/
 # Local tooling / backups
 *.blend1
 dusk-till-dawn/addons/godot_mcp/
-.mcp.json
 skills-lock.json

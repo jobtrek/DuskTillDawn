@@ -19,6 +19,12 @@ public partial class InteractionPrompt : CanvasLayer
         VisibilityChanged += OnVisibilityChanged;
     }
 
+    public void SetText(string text)
+    {
+        Text = text;
+        _label.Text = text;
+    }
+
     private void OnVisibilityChanged()
     {
         if (!Visible)
