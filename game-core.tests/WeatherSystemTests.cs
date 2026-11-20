@@ -118,4 +118,38 @@ public class WeatherSystemTests
 
         Assert.Throws<ArgumentOutOfRangeException>(() => weather.Tick(-1));
     }
+
+    [Fact]
+    public void Skipping_goes_to_the_next_weather_and_its_rain()
+    {
+        var weather = new WeatherSystem(WeatherKind.Clear, Seed);
+
+        weather.SkipToNext();
+
+        Assert.Equal(WeatherKind.Cloudy, weather.Current);
+        Assert.Equal(WeatherProfile.For(WeatherKind.Cloudy).Rain, weather.RainIntensity);
+    }
+
+    [Fact]
+    public void Skipping_after_storm_goes_back_to_clear()
+    {
+        var weather = new WeatherSystem(WeatherKind.Storm, Seed);
+
+        weather.SkipToNext();
+
+        Assert.Equal(WeatherKind.Clear, weather.Current);
+        Assert.Equal(WeatherProfile.For(WeatherKind.Clear).Rain, weather.RainIntensity);
+    }
+
+    [Fact]
+    public void Skipping_gives_the_new_weather_its_full_time()
+    {
+        var weather = new WeatherSystem(WeatherKind.Rainy, Seed);
+        weather.Tick(RealSecondsPerWeather - 1);
+
+        weather.SkipToNext();
+        weather.Tick(RealSecondsPerWeather - 1);
+
+        Assert.Equal(WeatherKind.Storm, weather.Current);
+    }
 }

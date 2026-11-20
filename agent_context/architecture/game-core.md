@@ -15,6 +15,7 @@ game state and rules so they run and test without the engine.
 | `SoloGame.cs` | One player; lost after 3 failed challenges |
 | `DuoGame.cs` | Two-player race: ends after `ChallengeCount` challenges, `Winner` has the most points (null on a tie) |
 | `SunPosition.cs`, `MoonPosition.cs` | Sky positions from the hour of day |
+| `Weather.cs`, `WeatherSystem.cs` | Weather kinds (Clear, Cloudy, Rainy, Storm) and their rain; `GameState.Weather` changes every 120 s by weighted chance, rain blends in slowly; `SkipToNext` is the debug skip (F4) |
 
 ## Rules for changes
 

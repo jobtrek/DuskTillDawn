@@ -63,6 +63,7 @@ public partial class Main : Node3D
     private Color _daySkyHorizonColor;
     private Rain _rain = null!;
     private RainLook _rainLook = null!;
+    private RainSound _rainSound = null!;
 
     public override void _Ready()
     {
@@ -78,6 +79,7 @@ public partial class Main : Node3D
         _moonBody = GetNode<Node3D>("Moon");
         _rain = GetNode<Rain>("Rain");
         _rainLook = GetNode<RainLook>("RainLook");
+        _rainSound = GetNode<RainSound>("RainSound");
         _environment = GetNode<WorldEnvironment>("WorldEnvironment").Environment;
         _dayAmbientEnergy = _environment.AmbientLightEnergy;
         _daySkyEnergy = _environment.BackgroundEnergyMultiplier;
@@ -143,6 +145,7 @@ public partial class Main : Node3D
         UpdateSun();
         UpdateMoon();
         _rain.ShowWeather(_state.Weather);
+        _rainSound.ShowWeather(_state.Weather);
         ShowStateAndPauseIfGameEnded();
         ShowDashboard();
     }
@@ -277,7 +280,11 @@ public partial class Main : Node3D
             return;
         }
 
-        if (key.Keycode == Key.F6)
+        if (key.Keycode == Key.F4)
+        {
+            _state.Weather.SkipToNext();
+        }
+        else if (key.Keycode == Key.F6)
         {
             LaunchDebugChallenge();
         }
