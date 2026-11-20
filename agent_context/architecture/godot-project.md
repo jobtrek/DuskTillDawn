@@ -1,8 +1,8 @@
 # Godot project (`dusk-till-dawn/`)
 
 Godot 4.7.2 .NET, C#, `net8.0`, nullable on. Main scene: `main/main.tscn`; uses `game-core` via `DuskTillDawn.csproj`.
-Autoload: `MCPGameBridge` (local dev tooling for the Godot MCP; its addon
-`addons/godot_mcp/` is git-ignored, not game code).
+Autoload: `MCPGameBridge` (dev tooling for the Godot MCP, configured in root `.mcp.json`; set
+`GODOT_PATH` if Godot isn't at the default path. Addon `addons/godot_mcp/` is git-ignored).
 
 ## Runtime flow
 
