@@ -18,6 +18,8 @@ public abstract class Game
     public IReadOnlyList<Challenge> Challenges => _challenges;
     public int Failures { get; private set; }
 
+    public event Action<Challenge>? ChallengeSucceeded;
+
     public double SlaDrainPerMinute
     {
         get
@@ -44,6 +46,7 @@ public abstract class Game
         if (!_challenges.Contains(challenge))
         {
             _challenges.Add(challenge);
+            challenge.Succeeded += c => ChallengeSucceeded?.Invoke(c);
         }
     }
 
