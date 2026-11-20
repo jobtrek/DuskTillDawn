@@ -46,7 +46,7 @@ public sealed class WeatherSystem(WeatherKind initialWeather, int seed)
             {
                 return next;
             }
-            
+
             roll -= weight;
         }
 
