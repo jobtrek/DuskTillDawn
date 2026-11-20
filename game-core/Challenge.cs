@@ -30,7 +30,7 @@ public enum PlayerAction
 public abstract class Challenge
 {
     private const double RoundingMargin = 1e-9;
-    private const double DefaultSlaDrainPerMinute = 0.1;
+    private const double DefaultSlaDrainPerMinute = 0.2;
     private const double DefaultSlaRestoredOnSuccess = 5;
 
     protected Challenge(string alert, Room room, int points, double durationSeconds)
