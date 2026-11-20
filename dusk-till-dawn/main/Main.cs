@@ -10,6 +10,7 @@ public partial class Main : Node3D
     // Challenges and failures (issue #35). The game uses the GameState player, so there is one points source.
     private readonly SoloGame _game;
     private readonly ChallengeSpawner _spawner;
+    private readonly StoreInstancesOfIncidents _incidents;
     private Dashboard? _dashboard;
     private Control? _computerMenu;
     private int _debugChallengeCount;
@@ -21,7 +22,8 @@ public partial class Main : Node3D
     {
         _state = new GameState();
         _game = new SoloGame(_state.Player);
-        _spawner = new ChallengeSpawner(_game, () => new BrokenDisk(), () => new SecurityAttack());
+        _incidents = new StoreInstancesOfIncidents([() => new BrokenDisk(), () => new SecurityAttack()]);
+        _spawner = new ChallengeSpawner(_game, () => _incidents.PickRandom());
     }
 
     private const string MailSchedulePath = "res://main/mail_ui/emails.json";
