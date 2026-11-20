@@ -89,9 +89,10 @@ public sealed class GameState(int? seed = null)
             MailReceived?.Invoke(mail);
         }
 
-        if (_elapsedRealSeconds >= RealSecondsPerNight)
+        if (Status == NightStatus.Running && _elapsedRealSeconds >= RealSecondsPerNight)
         {
             Status = NightStatus.Won;
+            Player.EarnPoints(PointsRule.NightBonus(Sla));
         }
 
         if (_elapsedRealSeconds >= RealSecondsPerDay)
