@@ -34,13 +34,8 @@ public sealed class GameState(int? seed = null)
 
     private const int StartingPoints = 1000;
 
-    public GameState()
-    {
-        Player.EarnPoints(StartingPoints);
-    }
-
     /// <summary>The one player and the one points source: the HUD, the mail and the challenges all use it.</summary>
-    public PlayerProfile Player { get; } = new("Player");
+    public PlayerProfile Player { get; } = CreatePlayer();
 
     public int Points => Player.Points;
 
@@ -116,6 +111,13 @@ public sealed class GameState(int? seed = null)
         }
         Inbox.MarkReported(mail);
         return isPhishing;
+    }
+
+    private static PlayerProfile CreatePlayer()
+    {
+        var player = new PlayerProfile("Player");
+        player.EarnPoints(StartingPoints);
+        return player;
     }
 
     public void LosePoints(int points)
