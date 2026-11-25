@@ -11,14 +11,8 @@ public enum Metric
     Sla,
 }
 
-/// <summary>
-/// Monitoring window shown inside the desk computer screen.
-/// Metrics tab: one row per <see cref="Metric"/>: name, a danger bar, the real value.
-/// Servers tab: one row per Server: name, status, Clients, load.
-///
-/// The UI only shows values and emits signals. <see cref="MonitoringController"/> reads GameState,
-/// computes the danger t (0 = good, 1 = bad) and calls <see cref="SetMetric"/> and <see cref="SetServers"/>.
-/// </summary>
+// dusk-till-dawn/main/monitor_ui/MonitorApp.cs
+// The window only shows values and emits signals: MonitoringController reads GameState and decides.
 public partial class MonitorApp : Control
 {
     [Signal] public delegate void CloseRequestedEventHandler();

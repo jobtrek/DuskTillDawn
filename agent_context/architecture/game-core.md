@@ -18,7 +18,7 @@ game state and rules so they run and test without the engine.
 | `Servers/` | Servers and their Clients: `Server` (name, Client names, load, status), `ServerHealth` (Ok / Warn / Down), `ServerRack` (8 fixed Servers set in code, `PickRandom`; optional `Random`, seeded by `GameState(seed)`) |
 | `PlayerProfile.cs` | Name, points (never below 0), room |
 | `PointsRule.cs` | Points for a challenge: +50 % for a fast repair, −50 % for every player on a failure; `NightBonus` gives +200 plus 1 per SLA % for a won night |
-| `Game.cs` | Abstract game: players, challenges, failures. `Tick` moves the challenges; `SlaDrainPerMinute` = Clients on broken Servers × `SlaDrainPerClient` (each Server once), plus the flat drain of running ones with no Targets; sets each target's `Server.Status` to Down while it runs, Ok once it is fixed or failed; each mode says when it is lost or finished |
+| `Game.cs` | Abstract game: players, challenges, failures. `Tick` moves the challenges; `SlaDrainPerMinute` = distinct Clients on broken Servers × `SlaDrainPerClient` (each Client once), plus the flat drain of running ones with no Targets; sets each target's `Server.Status` to Down while it runs, Ok once it is fixed or failed; each mode says when it is lost or finished |
 | `Game.cs` | Abstract game: players, challenges, failures, solved. `Tick` moves the challenges; `SlaDrainPerMinute` adds up the running ones; each mode says when it is lost or finished |
 | `SoloGame.cs` | One player; lost after 3 failed challenges |
 | `DuoGame.cs` | Two-player race: ends after `ChallengeCount` challenges, `Winner` has the most points (null on a tie). Parked (contract: 1 player), not wired in Godot |
