@@ -12,14 +12,14 @@ game state and rules so they run and test without the engine.
 | `StoreInstancesOfIncidents.cs` | Holds the incident factories and picks one at random (`PickRandom`); optional `Random` for a fixed seed |
 | `PlayerProfile.cs` | Name, points (never below 0), room |
 | `PointsRule.cs` | Points for a challenge: +50 % for a fast repair, −50 % for every player on a failure; `NightBonus` gives +200 plus 1 per SLA % for a won night |
-| `Game.cs` | Abstract game: players, challenges, failures. `Tick` moves the challenges; `SlaDrainPerMinute` adds up the running ones; each mode says when it is lost or finished |
+| `Game.cs` | Abstract game: players, challenges, failures, solved. `Tick` moves the challenges; `SlaDrainPerMinute` adds up the running ones; each mode says when it is lost or finished |
 | `SoloGame.cs` | One player; lost after 3 failed challenges |
 | `DuoGame.cs` | Two-player race: ends after `ChallengeCount` challenges, `Winner` has the most points (null on a tie). Parked (contract: 1 player), not wired in Godot |
 | `Inbox.cs`, `Mail.cs` | Mail schedule (loaded from `emails.json`), arrival, read and phishing-report state |
 | `HeldItem.cs` | What the player carries (one item at a time) |
-| `Weather.cs`, `WeatherSystem.cs` | Weather kinds and rain blend, ticked by `GameState`. Built early: Weather is parked to M2 (`docs/game-v1.md`) |
+| `NightReport.cs` | End-of-night summary: survived, SLA left, challenges solved and failed, points earned this night (`GameState.PointsEarnedThisNight`) |
 | `SunPosition.cs`, `MoonPosition.cs` | Sky positions from the hour of day |
-| `Weather.cs`, `WeatherSystem.cs` | Weather kinds (Clear, Cloudy, Rainy, Storm) and their rain; `GameState.Weather` changes every 120 s by weighted chance, rain blends in slowly; `SkipToNext` is the debug skip (F4) |
+| `Weather.cs`, `WeatherSystem.cs` | Weather kinds (Clear, Cloudy, Rainy, Storm) and their rain; `GameState.Weather` changes every 120 s by weighted chance, rain blends in slowly; `SkipToNext` is the debug skip (F4). Built early: parked to M2 (`docs/game-v1.md`) |
 
 Built so far vs v1 target ([game/rules-v1.md](../game/rules-v1.md)): 6 challenges, states
 Pending → Running → Succeeded/Failed; `Main` spawns only `BrokenDisk` and `SecurityAttack`.
