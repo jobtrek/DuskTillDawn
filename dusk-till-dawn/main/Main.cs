@@ -29,12 +29,14 @@ public partial class Main : Node3D
 
     public GameState State => _state;
     public SoloGame Game => _game;
+    public PhishingIncidents Phishing { get; }
 
     public Main()
     {
         _state = new GameState();
         _game = new SoloGame(_state.Player);
         _game.ChallengeSucceeded += challenge => _state.RestoreSla(challenge.SlaRestoredOnSuccess);
+        Phishing = new PhishingIncidents(_state, _game);
         NightPlan plan = NightPlan.For(CurrentNight, _state.Servers);
         _incidents = new StoreInstancesOfIncidents(plan.Kinds);
         _spawner = new ChallengeSpawner(_game, plan.SpawnIntervalSeconds, () => _incidents.PickRandom());

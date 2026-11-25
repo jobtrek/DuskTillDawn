@@ -8,6 +8,7 @@ public partial class MailController : Node
 {
     private MailApp _app = null!;
     private GameState _state = null!;
+    private PhishingIncidents _phishing = null!;
     private Hud _hud = null!;
     private ComputerMenu _menu = null!;
 
@@ -16,6 +17,7 @@ public partial class MailController : Node
         // global:: because "Main" alone resolves to the DuskTillDawn.Main namespace here.
         var main = (global::Main)GetTree().CurrentScene;
         _state = main.State;
+        _phishing = main.Phishing;
         _hud = main.GetNode<Hud>("Hud");
 
         var menu = GetParent<ComputerMenu>();
@@ -49,7 +51,8 @@ public partial class MailController : Node
         };
         _app.ReportPressed += id =>
         {
-            _app.ShowReportResult(id, _state.ReportPhishing(id));
+            PhishingReport report = _phishing.Report(id);
+            _app.ShowReportResult(id, report.IsPhishing, report.Points);
             Refresh();
         };
         _app.CloseRequested += () => _app.Hide();
