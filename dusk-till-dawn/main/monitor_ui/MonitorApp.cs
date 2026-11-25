@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Godot;
+using DuskTillDawn.Core;
 
 public enum Metric
 {
@@ -12,10 +13,11 @@ public enum Metric
 
 /// <summary>
 /// Monitoring window shown inside the desk computer screen.
-/// One row per <see cref="Metric"/>: name, a danger bar, the real value.
+/// Metrics tab: one row per <see cref="Metric"/>: name, a danger bar, the real value.
+/// Servers tab: one row per Server: name, status, Clients, load.
 ///
 /// The UI only shows values and emits signals. <see cref="MonitoringController"/> reads GameState,
-/// computes the danger t (0 = good, 1 = bad) and calls <see cref="SetMetric"/>.
+/// computes the danger t (0 = good, 1 = bad) and calls <see cref="SetMetric"/> and <see cref="SetServers"/>.
 /// </summary>
 public partial class MonitorApp : Control
 {
@@ -28,17 +30,25 @@ public partial class MonitorApp : Control
     private static readonly Color Green = new(0.45f, 0.85f, 0.45f);
     private static readonly Color Orange = new(0.95f, 0.65f, 0.25f);
     private static readonly Color Red = new(0.95f, 0.4f, 0.35f);
+    private static readonly Color Muted = new(1f, 1f, 1f, 0.55f);
+    private static readonly Color TabNormal = new(1f, 1f, 1f, 0.06f);
+    private static readonly Color TabSelected = new(0.32f, 0.47f, 0.75f, 0.35f);
 
     private readonly Dictionary<Metric, Row> _rows = new();
+    private readonly Dictionary<string, ServerRow> _serverRows = new();
+    private readonly List<(Godot.Button Tab, Control Page)> _tabs = new();
     private VBoxContainer _list = null!;
+    private VBoxContainer _servers = null!;
     private BlockReveal _reveal = null!;
     private Tween? _openTween;
 
     private sealed record Row(ColorRect Fill, Label Value, string Unit);
+    private sealed record ServerRow(Label Status, Label Clients, Label Load);
 
     public override void _Ready()
     {
-        _list = GetNode<VBoxContainer>("Body/Rows");
+        _list = GetNode<VBoxContainer>("Body/Pages/Rows");
+        _servers = GetNode<VBoxContainer>("Body/Pages/Servers");
         _reveal = GetNode<BlockReveal>("BlockReveal");
 
         AddRow(Metric.Power, "Power", "%");
@@ -46,6 +56,13 @@ public partial class MonitorApp : Control
         AddRow(Metric.Traffic, "Traffic", "%");
         AddRow(Metric.Disk, "Disk", "%");
         AddRow(Metric.Sla, "SLA", "%");
+
+        _servers.AddChild(MakeServerLine("SERVER", "STATUS", "CLIENTS", "LOAD", Muted).Line);
+
+        var tabs = GetNode<HBoxContainer>("Body/Pages/Tabs");
+        AddTab(tabs, "Metrics", _list);
+        AddTab(tabs, "Servers", _servers);
+        SelectTab(_list);
 
         var close = GetNode<Godot.Button>("TitleBar/Close");
         close.Pressed += () => EmitSignal(SignalName.CloseRequested);
@@ -82,6 +99,31 @@ public partial class MonitorApp : Control
         row.Value.Modulate = color;
         row.Fill.AnchorRight = danger;
         row.Fill.Color = color;
+    }
+
+    public void SetServers(IReadOnlyList<Server> servers)
+    {
+        foreach (var server in servers)
+        {
+            if (!_serverRows.TryGetValue(server.Name, out var row))
+            {
+                var made = MakeServerLine(server.Name, "", "", "", Colors.White);
+                _servers.AddChild(made.Line);
+                row = made.Row;
+                _serverRows[server.Name] = row;
+            }
+
+            var color = server.Status switch
+            {
+                ServerHealth.Down => Red,
+                ServerHealth.Warn => Orange,
+                _ => Green,
+            };
+            row.Status.Text = $"● {server.Status.ToString().ToUpperInvariant()}";
+            row.Status.Modulate = color;
+            row.Clients.Text = string.Join(", ", server.Clients);
+            row.Load.Text = server.Status == ServerHealth.Down ? "—" : $"{server.Load * 100:0} %";
+        }
     }
 
     private static Color DangerColor(float t)
@@ -124,6 +166,63 @@ public partial class MonitorApp : Control
 
         _list.AddChild(line);
         _rows[metric] = new Row(fill, value, unit);
+    }
+
+    private static (HBoxContainer Line, ServerRow Row) MakeServerLine(
+        string name, string status, string clients, string load, Color color)
+    {
+        var line = new HBoxContainer { MouseFilter = MouseFilterEnum.Ignore };
+        line.AddThemeConstantOverride("separation", 10);
+
+        var nameLabel = MakeLabel(name, 14);
+        nameLabel.CustomMinimumSize = new Vector2(70, 0);
+        var statusLabel = MakeLabel(status, 14);
+        statusLabel.CustomMinimumSize = new Vector2(70, 0);
+        var clientsLabel = MakeLabel(clients, 14);
+        clientsLabel.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+        clientsLabel.TextOverrunBehavior = TextServer.OverrunBehavior.TrimEllipsis;
+        clientsLabel.ClipText = true;
+        var loadLabel = MakeLabel(load, 14);
+        loadLabel.CustomMinimumSize = new Vector2(50, 0);
+        loadLabel.HorizontalAlignment = HorizontalAlignment.Right;
+
+        foreach (var label in new[] { nameLabel, statusLabel, clientsLabel, loadLabel })
+        {
+            label.Modulate = color;
+            line.AddChild(label);
+        }
+        return (line, new ServerRow(statusLabel, clientsLabel, loadLabel));
+    }
+
+    private void AddTab(HBoxContainer tabs, string text, Control page)
+    {
+        var tab = new Godot.Button
+        {
+            Text = text,
+            CustomMinimumSize = new Vector2(90, 24),
+            FocusMode = FocusModeEnum.None,
+        };
+        tab.AddThemeFontSizeOverride("font_size", 13);
+        tab.AddThemeStyleboxOverride("focus", new StyleBoxEmpty());
+        tab.Pressed += () => SelectTab(page);
+        tab.MouseEntered += () => SetHover(tab, true);
+        tab.MouseExited += () => SetHover(tab, false);
+        tabs.AddChild(tab);
+        _tabs.Add((tab, page));
+    }
+
+    private void SelectTab(Control page)
+    {
+        foreach (var (tab, tabPage) in _tabs)
+        {
+            bool selected = tabPage == page;
+            tabPage.Visible = selected;
+            var box = new StyleBoxFlat { BgColor = selected ? TabSelected : TabNormal };
+            foreach (var state in new[] { "normal", "hover", "pressed" })
+            {
+                tab.AddThemeStyleboxOverride(state, box);
+            }
+        }
     }
 
     private static Label MakeLabel(string text, int size)

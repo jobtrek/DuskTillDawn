@@ -32,7 +32,7 @@ public partial class Main : Node3D
         _state = new GameState();
         _game = new SoloGame(_state.Player);
         _game.ChallengeSucceeded += challenge => _state.RestoreSla(challenge.SlaRestoredOnSuccess);
-        _incidents = new StoreInstancesOfIncidents([() => new BrokenDisk(), () => new SecurityAttack(), () => new OverheatingServer()]);
+        _incidents = new StoreInstancesOfIncidents([() => new BrokenDisk(_state.Servers), () => new SecurityAttack(), () => new OverheatingServer()]);
         _spawner = new ChallengeSpawner(_game, () => _incidents.PickRandom());
         _faultRisk = new ElectricalFaultRisk(_game);
         _state.ServerRoom.StartNight(panelCleanliness: 1);

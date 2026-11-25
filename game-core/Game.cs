@@ -53,7 +53,7 @@ public abstract class Game
 
             foreach (Server server in broken)
             {
-                drain += server.Clients * SlaDrainPerClient;
+                drain += server.Clients.Count * SlaDrainPerClient;
             }
 
             return drain;
