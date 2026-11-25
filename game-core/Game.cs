@@ -51,10 +51,7 @@ public abstract class Game
                 }
             }
 
-            foreach (Server server in broken)
-            {
-                drain += server.Clients * SlaDrainPerClient;
-            }
+            drain += broken.SelectMany(server => server.Clients).Distinct().Count() * SlaDrainPerClient;
 
             return drain;
         }

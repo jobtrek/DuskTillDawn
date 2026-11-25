@@ -20,7 +20,7 @@ Paths from the repo root. `dtd/` = `dusk-till-dawn/`. Open these first, search o
 | Sun, moon, sky colours | `game-core/SunPosition.cs`, `MoonPosition.cs`; visuals in `dtd/main/Main.cs`, `dtd/main/sky/sky.gdshader` |
 | Mail content (schedule, kinds) / inbox rules | `dtd/main/mail_ui/emails.json` / `game-core/Inbox.cs`, `Mail.cs` |
 | Mail window (view) / its logic | `dtd/main/mail_ui/MailApp.cs` / `MailController.cs` |
-| Monitoring window / its logic | `dtd/main/monitor_ui/MonitorApp.cs` / `MonitoringController.cs` |
+| Monitoring window (Metrics and Servers tabs) / its logic | `dtd/main/monitor_ui/MonitorApp.cs` / `MonitoringController.cs` |
 | Admin window (traffic filter, Power: faulty circuit, Eco Mode, Graceful shutdown) / what each does | `dtd/main/admin_ui/AdminApp.cs` / `AdminController.cs` |
 | Desk computer menu, app icons, signals; block-pop open animation | `dtd/main/computer_ui/ComputerMenu.cs`, `computer_menu.tscn`; `BlockReveal.cs` |
 | When the computer opens (player nearby) | `dtd/main/DetectPlayerNearComputer.cs` |

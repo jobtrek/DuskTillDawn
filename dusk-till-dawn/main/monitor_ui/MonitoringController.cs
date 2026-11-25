@@ -56,5 +56,6 @@ public partial class MonitoringController : Node
         _app.SetMetric(Metric.Traffic, _state.Traffic, _db.TrafficDanger((float)_state.Traffic));
         _app.SetMetric(Metric.Disk, _state.Disk, _db.DiskDanger((float)_state.Disk));
         _app.SetMetric(Metric.Sla, _state.Sla, _db.SLADanger((float)_state.Sla));
+        _app.SetServers(_state.Servers.All);
     }
 }
