@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DuskTillDawn.Core;
 
@@ -8,6 +9,9 @@ public abstract class Game
 {
     private readonly List<PlayerProfile> _players;
     private readonly List<Challenge> _challenges = [];
+
+    // Placeholder until the team agrees on the number (issue #105).
+    private const double SlaDrainPerClient = 0.05;
 
     protected Game(IEnumerable<PlayerProfile> players)
     {
@@ -20,17 +24,47 @@ public abstract class Game
 
     public event Action<Challenge>? ChallengeSucceeded;
 
+
+
+    public ServerStatus StatusOf(Server server)
+    {
+        for (var i = 0; i < _challenges.Count; i++)
+        {
+            if (_challenges[i].State == ChallengeState.Running && _challenges[i].Targets.Contains(server))
+            {
+                return ServerStatus.Down;
+            }
+        }
+
+        return ServerStatus.Ok;
+    }
+
     public double SlaDrainPerMinute
     {
         get
         {
             double drain = 0;
+            var broken = new HashSet<Server>();
             for (var i = 0; i < _challenges.Count; i++)
             {
-                if (_challenges[i].State == ChallengeState.Running)
+                if (_challenges[i].State != ChallengeState.Running)
+                {
+                    continue;
+                }
+
+                if (_challenges[i].Targets.Count == 0)
                 {
                     drain += _challenges[i].SlaDrainPerMinute;
                 }
+                else
+                {
+                    broken.UnionWith(_challenges[i].Targets);
+                }
+            }
+
+            foreach (Server server in broken)
+            {
+                drain += server.Clients * SlaDrainPerClient;
             }
 
             return drain;

@@ -8,6 +8,14 @@ A single-player game about the only sysadmin on a solar-powered night shift, kee
 Something that goes wrong during a night and that the player must fix (an expired certificate, a phishing mail, a failing drive). It moves through Warning, Active, Escalated and Resolved.
 _Avoid_: défi, challenge, problem, panne
 
+**Server**:
+One named machine in the server room (WEB-01, DB-01, MAIL-01…, the same names the Mails use). It hosts Clients, has a load and a status: OK, WARN or DOWN. An Incident hits one Server, a circuit of two, or every Server.
+_Avoid_: machine, host, node, box
+
+**Client**:
+A customer company hosted on a Server. When its Server breaks, the SLA drains by the number of Clients hurt. Every Client counts the same in v1.
+_Avoid_: customer, user, tenant
+
 **Mail**:
 A message in the computer's Mail app. Three kinds: a Warning mail (early sign of an Incident), a News mail (tech news, flavour and hints) and a Phishing mail (a fake that the player must report). The inbox empties at the start of each night.
 _Avoid_: email, e-mail, message

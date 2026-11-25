@@ -6,7 +6,7 @@ Paths from the repo root. `dtd/` = `dusk-till-dawn/`. Open these first, search o
 |---|---|
 | Game state, SLA, Heat/Power/Traffic/Disk, points | `game-core/GameState.cs` |
 | Clock, night/day hours, time speed | `game-core/GameState.cs` (constants at top); debug speed: `scripts/run-fast.sh` |
-| Incidents (code name Challenge) | `game-core/Challenge.cs`, one file per challenge (`Fire.cs`, …); rules in `docs/player-flow/challenges.md` |
+| Incidents (code name Challenge) | `game-core/Challenge.cs`, one file per challenge (`Fire.cs`, …); rules in `docs/player-flow/challenges.md`; Servers and Clients they hit: `game-core/Servers/` |
 | Incident spawn rate / which incident spawns (random order) | `game-core/ChallengeSpawner.cs` / `game-core/StoreInstancesOfIncidents.cs`; list of incidents in `dtd/main/Main.cs` |
 | Player name, points, room | `game-core/PlayerProfile.cs` |
 | Points rule (fast bonus, failure penalty) | `game-core/PointsRule.cs`; rule in `docs/player-flow/challenges.md` |

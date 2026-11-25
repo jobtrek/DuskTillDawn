@@ -24,6 +24,7 @@ public sealed class GameState(int? seed = null)
 
     private double _elapsedRealSeconds;
 
+    public ServerRoom Servers { get; } = new();
     public double Sla { get; private set; } = 100;
     public double Heat { get; private set; } = 20;
 
