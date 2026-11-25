@@ -1,8 +1,8 @@
 using DuskTillDawn.Core;
 using Godot;
 
-// The rack in the server room where a broken disk gets swapped. While a BrokenDisk challenge runs,
-// the red disk shows; the player walks up, presses E and the disk turns healthy again.
+// The rack in the server room. E swaps a broken disk (the red disk shows), restarts the failed AC,
+// or reboots the servers after a heat Auto-shutdown once the room has cooled down.
 public partial class DiskRepairSpot : Node3D
 {
     private const string RepairAction = "repair";
@@ -11,12 +11,15 @@ public partial class DiskRepairSpot : Node3D
     [Export] public Node3D FailedDisk { get; set; } = null!;
 
     private Game _game = null!;
+    private ServerRoom _serverRoom = null!;
     private InteractionPrompt _prompt = null!;
     private bool _playerInRange;
 
     public override void _Ready()
     {
-        _game = ((Main)GetTree().CurrentScene).Game;
+        var main = (Main)GetTree().CurrentScene;
+        _game = main.Game;
+        _serverRoom = main.State.ServerRoom;
         _prompt = GetNode<InteractionPrompt>("InteractionPrompt");
 
         var zone = GetNode<Area3D>("Zone");
@@ -36,11 +39,51 @@ public partial class DiskRepairSpot : Node3D
     {
         bool broken = HasBrokenDisk();
         ShowDisk(broken);
-        _prompt.Visible = _playerInRange && broken;
 
-        if (_prompt.Visible && Input.IsActionJustPressed(RepairAction))
+        string? prompt = null;
+        if (broken)
+        {
+            prompt = "Press E to replace the disk";
+        }
+        else if (_game.IsRunning<OverheatingServer>())
+        {
+            prompt = "Press E to restart the cooling";
+        }
+        else if (_serverRoom.CanReboot)
+        {
+            prompt = "Press E to reboot the servers";
+        }
+        else if (_serverRoom.Status == ServerStatus.ShutDownByHeat)
+        {
+            prompt = $"Too hot to reboot: wait until {ServerRoom.ThrottleHeat:0} °C";
+        }
+
+        _prompt.Visible = _playerInRange && prompt != null;
+        if (!_prompt.Visible)
+        {
+            return;
+        }
+
+        _prompt.SetText(prompt!);
+        if (Input.IsActionJustPressed(RepairAction))
+        {
+            UseRack(broken);
+        }
+    }
+
+    private void UseRack(bool broken)
+    {
+        if (broken)
         {
             ReplaceDisk();
+        }
+        else if (_game.IsRunning<OverheatingServer>())
+        {
+            _game.Repair(_game.Players[0], PlayerAction.RestartCooling);
+        }
+        else
+        {
+            _serverRoom.TryReboot();
         }
     }
 

@@ -25,11 +25,12 @@ public sealed class GameState(int? seed = null)
     private double _elapsedRealSeconds;
 
     public double Sla { get; private set; } = 100;
-    public double Heat { get; private set; } = 20;
+    public ServerRoom ServerRoom { get; } = new();
 
-    public double Traffic { get; private set; } = 40;
+    public double Heat => ServerRoom.Heat;
+    public double Traffic => ServerRoom.Traffic;
     public double Disk { get; private set; } = 0;
-    public double Power { get; private set; } = 100f;
+    public double Power => ServerRoom.Battery;
 
 
     private const int StartingPoints = 1000;

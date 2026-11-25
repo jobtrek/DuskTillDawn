@@ -5,7 +5,7 @@ so for the monitor service I need to stock these 5 things
 ├─────────┼────────────────────────────────┼─────────────────────────┼─────────────────────────────────┤
 │ Power   │ 0–100 %                        │ not decided yet         │ 0 % = servers offline           │
 ├─────────┼────────────────────────────────┼─────────────────────────┼─────────────────────────────────┤
-│ Heat    │ 20–100 °C                      │ not decided yet         │ 80 °C = fire risk, 95 °C = fire │
+│ Heat    │ 18–55 °C                       │ 27 °C = warning         │ 45 °C = auto-shutdown           │
 ├─────────┼────────────────────────────────┼─────────────────────────┼─────────────────────────────────┤
 │ Traffic │ 0–100 % (about 40 % is normal) │ not decided yet         │ 100 % = requests dropped        │
 ├─────────┼────────────────────────────────┼─────────────────────────┼─────────────────────────────────┤
@@ -114,13 +114,13 @@ public sealed class dataStructure
 {
 
     private int gPower = 100;
-    private int gHeat = 20;
+    private int gHeat = 18;
     private int gTraffic = 40;
     private int gDisk = 0;
     private int gSla = 100;
 
     private int bPower = 0;
-    private int bHeat = 95;
+    private int bHeat = 45;
     private int bTraffic = 100;
     private int bDisk = 100;
     private int bSla = 0;
