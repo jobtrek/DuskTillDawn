@@ -21,8 +21,10 @@ public abstract class Game
     public IReadOnlyList<PlayerProfile> Players => _players;
     public IReadOnlyList<Challenge> Challenges => _challenges;
     public int Failures { get; private set; }
+    public int Solved { get; private set; }
 
     public event Action<Challenge>? ChallengeSucceeded;
+    public event Action<Challenge>? ChallengeFailed;
 
 
 
@@ -58,6 +60,19 @@ public abstract class Game
         }
     }
 
+    public bool IsRunning<T>() where T : Challenge
+    {
+        for (var i = 0; i < _challenges.Count; i++)
+        {
+            if (_challenges[i] is T && _challenges[i].State == ChallengeState.Running)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public abstract bool IsLost { get; }
     public abstract bool IsFinished { get; }
 
@@ -67,7 +82,11 @@ public abstract class Game
         if (!_challenges.Contains(challenge))
         {
             _challenges.Add(challenge);
-            challenge.Succeeded += c => ChallengeSucceeded?.Invoke(c);
+            challenge.Succeeded += c =>
+            {
+                Solved++;
+                ChallengeSucceeded?.Invoke(c);
+            };
         }
     }
 
@@ -126,6 +145,7 @@ public abstract class Game
             {
                 Failures++;
                 LoseFailurePenalty(challenge);
+                ChallengeFailed?.Invoke(challenge);
             }
         }
 

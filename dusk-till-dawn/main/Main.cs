@@ -11,9 +11,18 @@ public partial class Main : Node3D
     private readonly SoloGame _game;
     private readonly ChallengeSpawner _spawner;
     private readonly StoreInstancesOfIncidents _incidents;
+    private readonly ElectricalFaultRisk _faultRisk;
+    private readonly NightLog _nightLog = new();
+    private bool _nightLogWritten;
     private Dashboard? _dashboard;
     private Control? _computerMenu;
     private int _debugChallengeCount;
+
+    // The report is frozen when the night ends, so repairs during the day do not change it.
+    private const string NightReportScenePath = "res://main/night_report_ui/night_report.tscn";
+    private const double NightReportSeconds = 15;
+    private NightReportPanel _nightReportPanel = null!;
+    private NightReport? _nightReport;
 
     public GameState State => _state;
     public SoloGame Game => _game;
@@ -23,11 +32,14 @@ public partial class Main : Node3D
         _state = new GameState();
         _game = new SoloGame(_state.Player);
         _game.ChallengeSucceeded += challenge => _state.RestoreSla(challenge.SlaRestoredOnSuccess);
-        _incidents = new StoreInstancesOfIncidents([() => new BrokenDisk(_state.Servers), () => new SecurityAttack()]);
+        _incidents = new StoreInstancesOfIncidents([() => new BrokenDisk(), () => new SecurityAttack(), () => new OverheatingServer()]);
         _spawner = new ChallengeSpawner(_game, () => _incidents.PickRandom());
+        _faultRisk = new ElectricalFaultRisk(_game);
+        _state.ServerRoom.StartNight(panelCleanliness: 1);
     }
 
     private const string MailSchedulePath = "res://main/mail_ui/emails.json";
+    private const string NightLogFolder = "user://night_logs";
     private const double SunFadeDegrees = 10;
     private const double SunMinElevationDegrees = 5;
     private const double ShadowFadeDegrees = 10;
@@ -72,6 +84,8 @@ public partial class Main : Node3D
     {
         _clockSpeed = ReadClockSpeed();
         _hud = GetNode<Hud>("Hud");
+        _nightReportPanel = GD.Load<PackedScene>(NightReportScenePath).Instantiate<NightReportPanel>();
+        AddChild(_nightReportPanel);
         _dashboard = GetNodeOrNull<Dashboard>("Dashboard");
         _computerMenu = GetNodeOrNull<Control>("Company/Desk/MeshInstance3D/Menu/ComputerMenu");
         _state.Inbox.LoadSchedule(FileAccess.GetFileAsString(MailSchedulePath));
@@ -138,12 +152,19 @@ public partial class Main : Node3D
 
     public override void _Process(double delta)
     {
-        _state.Tick(delta * _clockSpeed);
-        _game.Tick(delta * _clockSpeed);
-        _state.DrainSlaOverTime(_game.SlaDrainPerMinute, delta * _clockSpeed);
+        double seconds = delta * _clockSpeed;
+        _state.Tick(seconds);
+        _game.Tick(seconds);
+        if (_state.Status == NightStatus.Running)
+        {
+            _state.ServerRoom.Tick(seconds, _state.HourOfDay, _game);
+            _faultRisk.Tick(seconds, _state.ServerRoom.PowerDraw);
+            _nightLog.Sample(_state);
+        }
+        _state.DrainSlaOverTime(_game.SlaDrainPerMinute + _state.ServerRoom.SlaDrainPerMinute, seconds);
         if (!NightEnded())
         {
-            _spawner.Tick(delta * _clockSpeed);
+            _spawner.Tick(seconds);
         }
         UpdateSun();
         UpdateMoon();
@@ -169,12 +190,30 @@ public partial class Main : Node3D
         }
     }
 
+    // One file per night in the user data folder, read later to check the balancing targets.
+    private void WriteNightLogOnce()
+    {
+        bool nightOver = _state.Status != NightStatus.Running || _game.IsLost;
+        if (_nightLogWritten || !nightOver)
+        {
+            return;
+        }
+
+        _nightLogWritten = true;
+        string folder = ProjectSettings.GlobalizePath(NightLogFolder);
+        System.IO.Directory.CreateDirectory(folder);
+        string file = System.IO.Path.Combine(folder, $"night-{DateTime.Now:yyyyMMdd-HHmmss}.csv");
+        System.IO.File.WriteAllText(file, _nightLog.ToCsv(_state, _game));
+    }
+
     private void LaunchDebugChallenge()
     {
-        Challenge challenge = (_debugChallengeCount % 3) switch
+        Challenge challenge = (_debugChallengeCount % 5) switch
         {
             0 => new BrokenDisk(_state.Servers),
             1 => new SecurityAttack(),
+            2 => new OverheatingServer(),
+            3 => new ElectricalFault(),
             _ => new Fire(),
         };
         _debugChallengeCount++;
@@ -315,7 +354,23 @@ public partial class Main : Node3D
     private void ShowStateAndPauseIfGameEnded()
     {
         _hud.ShowState(_state);
+        WriteNightLogOnce();
         GetTree().Paused = NightEnded();
+        ShowNightReport();
+    }
+
+    // Shown at 08:00 for a while, and for good once the game is over (lost, or the day survived).
+    private void ShowNightReport()
+    {
+        bool nightOver = _state.Status != NightStatus.Running || _game.IsLost;
+        if (nightOver && _nightReport == null)
+        {
+            _nightReport = NightReport.Of(_state, _game);
+            _nightReportPanel.ShowReport(_nightReport);
+        }
+
+        _nightReportPanel.Visible = _nightReport != null
+            && (NightEnded() || _state.RealSecondsSinceNightEnded < NightReportSeconds);
     }
 
     private bool NightEnded()
