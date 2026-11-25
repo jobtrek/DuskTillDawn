@@ -23,6 +23,7 @@ Paths from the repo root. `dtd/` = `dusk-till-dawn/`. Open these first, search o
 | Monitoring window (Metrics and Servers tabs) / its logic | `dtd/main/monitor_ui/MonitorApp.cs` / `MonitoringController.cs` |
 | Admin window (traffic filter, Power: faulty circuit, Eco Mode, Graceful shutdown) / what each does | `dtd/main/admin_ui/AdminApp.cs` / `AdminController.cs` |
 | Desk computer menu, app icons, signals; block-pop open animation | `dtd/main/computer_ui/ComputerMenu.cs`, `computer_menu.tscn`; `BlockReveal.cs` |
+| Shared UI motion (hover, App window open, lift-the-map open, Esc close, HUD pop and slide-in, loss/gain tints) | `dtd/main/UiMotion.cs` |
 | When the computer opens (player nearby) | `dtd/main/DetectPlayerNearComputer.cs` |
 | Server room rack, E key: replace disk, restart cooling, reboot servers | `dtd/main/disk_repair/DiskRepairSpot.cs`; prompt: `dtd/main/prompt_ui/` |
 | Fire in the server room (flames, smoke) | `dtd/main/fire/FireEffect.cs`, `fire_effect.tscn`; flame positions: `Company/Flame*` in `main.tscn` |

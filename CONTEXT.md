@@ -35,6 +35,10 @@ _Avoid_: load-shed mode, power saving
 A message in the computer's Mail app. Three kinds: a Warning mail (early sign of an Incident), a News mail (tech news, flavour and hints) and a Phishing mail (a fake that the player must report). The inbox empties at the start of each night.
 _Avoid_: email, e-mail, message
 
+**App**:
+A program on the desk computer: Mail, Monitoring or Admin. The player opens it from the computer's desktop and closes it with Esc or its close button.
+_Avoid_: window, screen, program
+
 **Dashboard**:
 The small HUD panel (top right) with points, failures and every running Incident. Not the computer's Monitoring app.
 _Avoid_: monitoring (for the HUD panel)

@@ -61,10 +61,10 @@ public partial class MailApp : Control
 
         var close = GetNode<Godot.Button>("TitleBar/Close");
         close.Pressed += () => EmitSignal(SignalName.CloseRequested);
-        WireHover(close);
+        UiMotion.AddHover(close);
 
         _report.Pressed += OnReportPressed;
-        WireHover(_report);
+        UiMotion.AddHover(_report);
 
         ShowReader(null);
 
@@ -80,9 +80,8 @@ public partial class MailApp : Control
 
     public override void _UnhandledInput(InputEvent @event)
     {
-        if (IsVisibleInTree() && @event.IsActionPressed("ui_cancel"))
+        if (UiMotion.IsCloseRequest(this, @event))
         {
-            GetViewport().SetInputAsHandled();
             EmitSignal(SignalName.CloseRequested);
         }
     }
@@ -215,33 +214,8 @@ public partial class MailApp : Control
         EmitSignal(SignalName.ReportPressed, _selected.Id);
     }
 
-    private static void WireHover(Godot.Button button)
-    {
-        button.MouseEntered += () => SetHover(button, true);
-        button.MouseExited += () => SetHover(button, false);
-    }
-
-    private static void SetHover(Godot.Button button, bool hovered)
-    {
-        button.PivotOffset = button.Size / 2f;
-        var tween = button.CreateTween().SetParallel();
-        tween.TweenProperty(button, "scale", Vector2.One * (hovered ? 1.12f : 1f), 0.08);
-        tween.TweenProperty(button, "self_modulate", hovered ? new Color(1.25f, 1.25f, 1.25f) : Colors.White, 0.08);
-    }
-
     private void PlayOpen()
     {
-        _openTween?.Kill();
-
-        Scale = Vector2.One * 0.85f;
-        Modulate = Colors.Transparent;
-        _reveal.Progress = 0f;
-
-        _openTween = CreateTween().SetParallel();
-        _openTween.TweenProperty(this, "modulate", Colors.White, OpenDuration * 0.6f);
-        _openTween.TweenProperty(this, "scale", Vector2.One, OpenDuration)
-            .SetTrans(Tween.TransitionType.Back).SetEase(Tween.EaseType.Out);
-        _openTween.TweenProperty(_reveal, "Progress", 1f, RevealDuration)
-            .SetDelay(OpenDuration * 0.4f);
+        _openTween = UiMotion.PlayWindowOpen(this, _reveal, _openTween, OpenDuration, RevealDuration);
     }
 }

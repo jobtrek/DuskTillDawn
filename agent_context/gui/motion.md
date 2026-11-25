@@ -1,6 +1,6 @@
 # Motion: open animation, block reveal, hover
 
-Part of the [GUI guide](README.md). Code to copy: `dusk-till-dawn/main/computer_ui/ComputerMenu.cs`.
+Part of the [GUI guide](README.md). Call `dusk-till-dawn/main/UiMotion.cs` (hover, App window open, HUD pop, lift-the-map open for full-screen panels).
 
 ## Open animation (`PlayOpen()` pattern)
 
