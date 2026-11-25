@@ -7,7 +7,9 @@ using DuskTillDawn.Core;
 /// </summary>
 public partial class MonitoringController : Node
 {
-    private readonly dataStructure _db = new();
+    private const double Empty = 0;
+    private const double Full = 100;
+
     private GameState _state = null!;
     private MonitorApp _app = null!;
 
@@ -51,11 +53,11 @@ public partial class MonitoringController : Node
 
     private void Refresh()
     {
-        _app.SetMetric(Metric.Power, _state.Power, _db.PowerDanger((float)_state.Power));
-        _app.SetMetric(Metric.Heat, _state.Heat, _db.HeatDanger((float)_state.Heat));
-        _app.SetMetric(Metric.Traffic, _state.Traffic, _db.TrafficDanger((float)_state.Traffic));
-        _app.SetMetric(Metric.Disk, _state.Disk, _db.DiskDanger((float)_state.Disk));
-        _app.SetMetric(Metric.Sla, _state.Sla, _db.SLADanger((float)_state.Sla));
+        _app.SetMetric(Metric.Power, _state.Power, MonitorDanger.Danger(Full, Empty, _state.Power));
+        _app.SetMetric(Metric.Heat, _state.Heat, MonitorDanger.Danger(ServerRoom.MinHeat, ServerRoom.ShutdownHeat, _state.Heat));
+        _app.SetMetric(Metric.Traffic, _state.Traffic, MonitorDanger.Danger(ServerRoom.NormalTraffic, Full, _state.Traffic));
+        _app.SetMetric(Metric.Disk, _state.Disk, MonitorDanger.Danger(Empty, Full, _state.Disk));
+        _app.SetMetric(Metric.Sla, _state.Sla, MonitorDanger.Danger(Full, Empty, _state.Sla));
         _app.SetServers(_state.Servers.All);
     }
 }
