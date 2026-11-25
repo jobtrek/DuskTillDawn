@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace DuskTillDawn.Core;
@@ -5,17 +6,22 @@ namespace DuskTillDawn.Core;
 // What the player gets back from a report: whether the mail was Phishing, and the points it earned or cost.
 public readonly record struct PhishingReport(bool IsPhishing, int Points);
 
-// Every Phishing mail is an Incident: it starts when the mail arrives and is fixed by reporting that mail.
+// A Phishing mail can be an Incident: it starts when the mail arrives and is fixed by reporting that mail.
+// Only one runs at a time and the night allows a few; the other Phishing mails are only reported, for no points.
 public sealed class PhishingIncidents
 {
     private readonly GameState _state;
     private readonly Game _game;
     private readonly Dictionary<int, PhishingEmail> _byMail = [];
+    private readonly int _maxPerNight;
+    private int _launched;
 
-    public PhishingIncidents(GameState state, Game game)
+    public PhishingIncidents(GameState state, Game game, int maxPerNight)
     {
+        ArgumentOutOfRangeException.ThrowIfNegative(maxPerNight);
         _state = state;
         _game = game;
+        _maxPerNight = maxPerNight;
         _state.MailReceived += OnMailReceived;
     }
 
@@ -34,13 +40,14 @@ public sealed class PhishingIncidents
 
     private void OnMailReceived(Mail mail)
     {
-        if (mail.Kind != MailKind.Phishing)
+        if (mail.Kind != MailKind.Phishing || _launched >= _maxPerNight || _game.IsRunning<PhishingEmail>())
         {
             return;
         }
 
         var incident = new PhishingEmail();
         _byMail[mail.Id] = incident;
+        _launched++;
         _game.Launch(incident);
     }
 }

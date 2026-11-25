@@ -57,24 +57,25 @@ Security attack = DDoS (#2), Broken hard drive = Failing hard drive (#7),
 Overheating server and Fire = Cooling failure → fire (#6), Fake e-mail = Phishing (#8).
 Unplugged cable is not in the v1 list. TLS (#1), dependency (#3), bad update (#4) and solar panels (#5) are not built yet.
 
-| Night | Challenges | One new challenge every | v1 table (§9) |
-|---|---|---|---|
-| 1 | Broken hard drive, Security attack, Overheating server | 180 s (3 min) | 1 every ~3 min |
-| 2 | Same as night 1 | 150 s | 1 every ~2.5 min |
-| 3 | + Unplugged cable | 120 s | 1 every ~2 min |
-| 4 | + Fire | 90 s | 1 every ~90 s |
-| 5 | Same as night 4 | 75 s | 1 every ~75 s |
+| Night | Challenges | One new challenge every | Fake e-mails | v1 table (§9) |
+|---|---|---|---|---|
+| 1 | Broken hard drive, Security attack, Overheating server | 180 s (3 min) | 1 | 1 every ~3 min |
+| 2 | Same as night 1 | 150 s | 2 | 1 every ~2.5 min |
+| 3 | + Unplugged cable | 120 s | 2 | 1 every ~2 min |
+| 4 | + Fire | 90 s | 3 | 1 every ~90 s |
+| 5 | Same as night 4 | 75 s | 3 | 1 every ~75 s |
 
-- Fake e-mails are not in this table: every Phishing mail of the schedule brings its own (section 5), from night 1.
+- Fake e-mails come from Phishing mails, not from the spawner (section 5). `docs/game-v1.md` §9 has no Phishing before night 4: to agree with the team.
 - A night lasts 10 real minutes, so night 1 gets about 3 challenges and night 5 about 8.
 - Fire spawns on its own from night 4; before that it only comes from Electrical faults (`ElectricalFaultRisk`).
-- Two challenges overlapping on night 5 is not built: one challenge runs at a time.
+- Two spawned challenges overlapping on night 5 is not built: one spawned challenge runs at a time, plus at most one Fake e-mail.
 - The game only plays night 1 for now; nights 2 to 5 come with the shop (#64).
 - Code: `game-core/NightPlan.cs`.
 
 ## 5. Fake e-mail (proposal, to validate with the team)
 
-Each Phishing mail starts a Fake e-mail challenge when it arrives. Reporting the mail fixes it.
+A Phishing mail starts a Fake e-mail challenge when it arrives, if none is running and the night still allows one
+(table in section 4). Reporting the mail fixes it. The other Phishing mails can still be reported, for no points.
 
 | Time since the mail arrived | Stage | SLA drain per in-game minute |
 |---|---|---|
@@ -86,5 +87,6 @@ Each Phishing mail starts a Fake e-mail challenge when it arrives. Reporting the
 - Points: 100, so +150 when reported in the first 2.5 min (fast repair bonus, section 3), +100 after.
   This matches #44 ("+150 in Warning, +100 later") with the one points rule.
 - A wrong report (a real mail) still costs −25. The Mail app shows "Reported ✓ +150" or "Not phishing −25".
-- Ignored, one mail costs about 10 % SLA, close to an ignored challenge of another kind.
+- Ignored, one Fake e-mail costs about 14 % SLA (216 in-game min × 0.04 + 72 × 0.08), the same as an ignored
+  challenge of another kind, plus the −50 failure. Fixed, it gives no SLA back: it drained nothing in Warning.
 - Code: `game-core/PhishingEmail.cs`, `game-core/PhishingIncidents.cs`.

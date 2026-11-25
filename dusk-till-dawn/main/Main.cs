@@ -36,8 +36,8 @@ public partial class Main : Node3D
         _state = new GameState();
         _game = new SoloGame(_state.Player);
         _game.ChallengeSucceeded += challenge => _state.RestoreSla(challenge.SlaRestoredOnSuccess);
-        Phishing = new PhishingIncidents(_state, _game);
         NightPlan plan = NightPlan.For(CurrentNight, _state.Servers);
+        Phishing = new PhishingIncidents(_state, _game, plan.FakeEmails);
         _incidents = new StoreInstancesOfIncidents(plan.Kinds);
         _spawner = new ChallengeSpawner(_game, plan.SpawnIntervalSeconds, () => _incidents.PickRandom());
         _faultRisk = new ElectricalFaultRisk(_game);

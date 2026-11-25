@@ -5,8 +5,8 @@ namespace DuskTillDawn.Core;
 // Keeps the player busy: a new challenge every interval, the kinds taken in turn.
 // A kind never runs twice at once, and a kind that just ended waits one full interval before it comes back,
 // so a fixed incident does not reappear right after the player fixed it.
-// The game gives it a single kind that picks an incident at random, so only one incident runs at a time:
-// v1 lets two incidents overlap only on the final night (docs/game-v1.md).
+// The game gives it a single kind that picks an incident at random, so only one spawned incident runs at a time
+// (a Fake e-mail from a Phishing mail can run beside it). v1 lets two incidents overlap only on the final night.
 public sealed class ChallengeSpawner
 {
     public const double DefaultIntervalSeconds = 20;

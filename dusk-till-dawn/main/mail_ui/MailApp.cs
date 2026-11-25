@@ -41,7 +41,7 @@ public partial class MailApp : Control
     private Tween? _openTween;
 
     private Mail? _selected;
-    // Mail id → was the report right? Kept by the UI so the button stays disabled.
+    // Mail id → was the report right, and the points it earned or cost. Kept by the UI so the button stays disabled.
     private readonly Dictionary<int, (bool Correct, int Points)> _reports = new();
 
     public override void _Ready()

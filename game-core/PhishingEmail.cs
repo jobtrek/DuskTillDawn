@@ -30,6 +30,9 @@ public sealed class PhishingEmail() : Challenge("New urgent message", Room.Contr
         _ => 0,
     };
 
+    // Reported in Warning it never drained anything, so there is no SLA to give back.
+    public override double SlaRestoredOnSuccess => 0;
+
     protected override bool IsRightAction(PlayerAction action)
     {
         return action == PlayerAction.ReportEmail;
