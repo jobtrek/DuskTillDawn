@@ -19,7 +19,10 @@ public partial class L1StripLightOn : MeshInstance3D
 
     private void Apply()
     {
-        if (!IsInsideTree()) return;
+        if (!IsInsideTree())
+        {
+            return;
+        }
 
         // 1. Glowing surface (unique material so other meshes aren't affected)
         MaterialOverride = new StandardMaterial3D
@@ -47,6 +50,8 @@ public partial class L1StripLightOn : MeshInstance3D
         var env = GetViewport()?.World3D?.Environment
             ?? (GetTree().Root.FindChild("WorldEnvironment", true, false) as WorldEnvironment)?.Environment;
         if (env != null)
+        {
             env.GlowEnabled = true;
+        }
     }
 }

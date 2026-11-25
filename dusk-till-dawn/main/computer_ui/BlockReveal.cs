@@ -31,7 +31,9 @@ public partial class BlockReveal : Control
     public override void _Draw()
     {
         if (_progress >= 1f || Size.X <= 0f)
+        {
             return;
+        }
 
         float cell = Size.X / Columns;
         int rows = Mathf.CeilToInt(Size.Y / cell);
@@ -46,7 +48,9 @@ public partial class BlockReveal : Control
                 float dist = (new Vector2(x + 0.5f, y + 0.5f) - centre).Length() / maxDist;
                 float revealAt = dist * 0.6f + noise * 0.4f;
                 if (revealAt < _progress)
+                {
                     continue;
+                }
 
                 var shade = BlockColor.Lightened(noise * 0.12f);
                 DrawRect(new Rect2(x * cell, y * cell, cell + 1f, cell + 1f), shade);
