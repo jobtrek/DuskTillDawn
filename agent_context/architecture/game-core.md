@@ -9,6 +9,7 @@ game state and rules so they run and test without the engine.
 | `Challenge.cs` | Abstract Incident (legacy name; the domain term is Incident): alert, `Room`, points, duration, Pending → Running → Succeeded/Failed; `SlaDrainPerMinute` (0.4 by default, virtual) is the SLA lost while it runs |
 | `SecurityAttack.cs`, `BrokenDisk.cs`, `OverheatingServer.cs`, `Fire.cs`, `UnpluggedCable.cs`, `PhishingEmail.cs` | The six challenges: each one sets its alert, room, points and the `PlayerAction` that fixes it |
 | `ChallengeSpawner.cs` | Launches a challenge every interval (default 20 s), kinds in turn, driven by `Tick`; skips a kind still running or that ended less than one interval ago; stops when the game is finished. `Main` passes one random-pick kind, so one incident runs at a time |
+| `NightPlan.cs` | Per night (1 to 5): which challenges can spawn and the spawn interval (180 s down to 75 s); table in `docs/player-flow/challenges.md` §4 |
 | `StoreInstancesOfIncidents.cs` | Holds the incident factories and picks one at random (`PickRandom`); optional `Random` for a fixed seed |
 | `PlayerProfile.cs` | Name, points (never below 0), room |
 | `PointsRule.cs` | Points for a challenge: +50 % for a fast repair, −50 % for every player on a failure; `NightBonus` gives +200 plus 1 per SLA % for a won night |
@@ -22,7 +23,7 @@ game state and rules so they run and test without the engine.
 | `Weather.cs`, `WeatherSystem.cs` | Weather kinds (Clear, Cloudy, Rainy, Storm) and their rain; `GameState.Weather` changes every 120 s by weighted chance, rain blends in slowly; `SkipToNext` is the debug skip (F4) |
 
 Built so far vs v1 target ([game/rules-v1.md](../game/rules-v1.md)): 6 challenges, states
-Pending → Running → Succeeded/Failed; `Main` spawns only `BrokenDisk` and `SecurityAttack`.
+Pending → Running → Succeeded/Failed; `Main` spawns the night 1 plan: `BrokenDisk` and `SecurityAttack`.
 
 ## Rules for changes
 

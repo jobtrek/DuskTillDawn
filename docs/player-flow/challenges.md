@@ -48,3 +48,24 @@ In two-player mode, both players get the same challenge at the same time. The fi
 - Points never go below 0.
 - The +50 % bonus follows `docs/game-v1.md`: reading the dashboard early pays.
 - Code: `game-core/PointsRule.cs`.
+
+## 4. Challenges per night (proposal, to validate with the team)
+
+Our six challenges mapped to the v1 incidents (`docs/game-v1.md` §8):
+Security attack = DDoS (#2), Broken hard drive = Failing hard drive (#7),
+Overheating server and Fire = Cooling failure → fire (#6), Fake e-mail = Phishing (#8).
+Unplugged cable is not in the v1 list. TLS (#1), dependency (#3), bad update (#4) and solar panels (#5) are not built yet.
+
+| Night | Challenges | One new challenge every | v1 table (§9) |
+|---|---|---|---|
+| 1 | Broken hard drive, Security attack | 180 s (3 min) | 1 every ~3 min |
+| 2 | + Fake e-mail | 150 s | 1 every ~2.5 min |
+| 3 | + Unplugged cable | 120 s | 1 every ~2 min |
+| 4 | + Overheating server, Fire (all six) | 90 s | 1 every ~90 s |
+| 5 | All six | 75 s | 1 every ~75 s |
+
+- A night lasts 10 real minutes, so night 1 gets about 3 challenges and night 5 about 8.
+- Fire spawns on its own until the overheating → fire cascade exists (#78).
+- Two challenges overlapping on night 5 is not built: one challenge runs at a time.
+- The game only plays night 1 for now; nights 2 to 5 come with the shop (#64).
+- Code: `game-core/NightPlan.cs`.
