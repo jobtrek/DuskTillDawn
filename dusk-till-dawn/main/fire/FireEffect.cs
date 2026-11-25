@@ -25,7 +25,7 @@ public partial class FireEffect : Node3D
 
     public override void _Process(double delta)
     {
-        bool burning = HasFire();
+        bool burning = _game.IsRunning<Fire>();
         if (burning)
         {
             _flickerTimer += delta;
@@ -37,20 +37,6 @@ public partial class FireEffect : Node3D
         }
 
         ShowFire(burning);
-    }
-
-    private bool HasFire()
-    {
-        for (var i = 0; i < _game.Challenges.Count; i++)
-        {
-            Challenge challenge = _game.Challenges[i];
-            if (challenge is Fire && challenge.State == ChallengeState.Running)
-            {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     private void ShowFire(bool burning)

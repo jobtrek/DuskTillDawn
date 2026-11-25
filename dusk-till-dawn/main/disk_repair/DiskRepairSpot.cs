@@ -37,7 +37,7 @@ public partial class DiskRepairSpot : Node3D
 
     public override void _Process(double delta)
     {
-        bool broken = HasBrokenDisk();
+        bool broken = _game.IsRunning<BrokenDisk>();
         ShowDisk(broken);
 
         string? prompt = null;
@@ -75,7 +75,7 @@ public partial class DiskRepairSpot : Node3D
     {
         if (broken)
         {
-            ReplaceDisk();
+            _game.Repair(_game.Players[0], PlayerAction.ReplaceDisk);
         }
         else if (_game.IsRunning<OverheatingServer>())
         {
@@ -101,30 +101,6 @@ public partial class DiskRepairSpot : Node3D
         if (body is CharacterBody3D)
         {
             _playerInRange = false;
-        }
-    }
-
-    private bool HasBrokenDisk()
-    {
-        for (var i = 0; i < _game.Challenges.Count; i++)
-        {
-            Challenge challenge = _game.Challenges[i];
-            if (challenge is BrokenDisk && challenge.State == ChallengeState.Running)
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    // Each challenge decides if a new disk fixes it, so only the broken disk reacts.
-    private void ReplaceDisk()
-    {
-        PlayerProfile player = _game.Players[0];
-        for (var i = 0; i < _game.Challenges.Count; i++)
-        {
-            _game.Challenges[i].Repair(player, PlayerAction.ReplaceDisk);
         }
     }
 
