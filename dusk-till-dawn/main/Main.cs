@@ -210,7 +210,7 @@ public partial class Main : Node3D
     {
         Challenge challenge = (_debugChallengeCount % 5) switch
         {
-            0 => new BrokenDisk(),
+            0 => new BrokenDisk(_state.Servers),
             1 => new SecurityAttack(),
             2 => new OverheatingServer(),
             3 => new ElectricalFault(),

@@ -4,6 +4,9 @@ Paths from the repo root. `dtd/` = `dusk-till-dawn/`. Open these first, search o
 
 | To change… | Go to |
 |---|---|
+| Game state, SLA, Heat/Power/Traffic/Disk, points | `game-core/GameState.cs` |
+| Clock, night/day hours, time speed | `game-core/GameState.cs` (constants at top); debug speed: `scripts/run-fast.sh` |
+| Incidents (code name Challenge) | `game-core/Challenge.cs`, one file per challenge (`Fire.cs`, …); rules in `docs/player-flow/challenges.md`; Servers and Clients they hit: `game-core/Servers/` |
 | Game state, SLA, Disk, points | `game-core/GameState.cs` |
 | Heat, battery, Traffic, UPS, Auto-shutdown, Eco Mode (numbers at the top) / Electrical fault chance, fault → Fire | `game-core/ServerRoom.cs` / `game-core/ElectricalFaultRisk.cs` |
 | Clock, night/day hours, time speed | `game-core/GameState.cs` (constants at top); debug speed: `scripts/run-fast.sh`; balancing log (`user://night_logs/*.csv`): `game-core/NightLog.cs` |
