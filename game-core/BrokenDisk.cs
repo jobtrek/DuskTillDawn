@@ -8,11 +8,11 @@ public sealed class BrokenDisk : Challenge
     {
     }
 
-    // The failed disk sits in one Server, picked at random in the room.
-    public BrokenDisk(ServerRoom room)
+    // The failed disk sits in one Server, picked at random in the rack.
+    public BrokenDisk(ServerRack rack)
         : this()
     {
-        Hit(room.PickRandom());
+        Hit(rack.PickRandom());
     }
 
     protected override bool IsRightAction(PlayerAction action)

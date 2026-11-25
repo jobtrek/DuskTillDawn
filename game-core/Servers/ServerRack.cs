@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace DuskTillDawn.Core;
 
-public sealed class ServerRoom
+public sealed class ServerRack
 {
     private readonly List<Server> _servers = [];
     private readonly Random _random;
 
-    public ServerRoom(Random? random = null)
+    public ServerRack(Random? random = null)
     {
         _random = random ?? new Random();
         _servers.Add(new Server("WEB-01", 6));

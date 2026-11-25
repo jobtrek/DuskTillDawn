@@ -159,7 +159,7 @@ public abstract class Game
         {
             foreach (Server server in _challenges[i].Targets)
             {
-                server.Status = ServerStatus.Ok;
+                server.Status = ServerHealth.Ok;
             }
         }
 
@@ -172,7 +172,7 @@ public abstract class Game
 
             foreach (Server server in _challenges[i].Targets)
             {
-                server.Status = ServerStatus.Down;
+                server.Status = ServerHealth.Down;
             }
         }
     }

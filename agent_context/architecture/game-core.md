@@ -7,7 +7,7 @@ game state and rules so they run and test without the engine.
 |---|---|
 | `GameState.cs` | The single game state: clock, SLA, Heat, Traffic, Disk, Power, Points, `NightStatus`. `Tick(realSeconds)` advances time; `DrainSlaOverTime` turns a per-minute SLA loss into real seconds; the night bonus is paid once at 08:00 |
 | `Challenge.cs` | Abstract Incident (legacy name; the domain term is Incident): alert, `Room`, points, duration, Pending → Running → Succeeded/Failed; `SlaDrainPerMinute` (0.2 by default, virtual) is the SLA lost while it runs when it hits no Server; `Hit(servers)` sets its `Targets` |
-| `SecurityAttack.cs`, `BrokenDisk.cs`, `OverheatingServer.cs`, `Fire.cs`, `UnpluggedCable.cs`, `PhishingEmail.cs` | The six challenges: each one sets its alert, room, points and the `PlayerAction` that fixes it; `BrokenDisk(room)` hits one random Server of the `ServerRoom` |
+| `SecurityAttack.cs`, `BrokenDisk.cs`, `OverheatingServer.cs`, `Fire.cs`, `UnpluggedCable.cs`, `PhishingEmail.cs` | The six challenges: each one sets its alert, room, points and the `PlayerAction` that fixes it; `BrokenDisk(rack)` hits one random Server of the `ServerRack` |
 | `Challenge.cs` | Abstract Incident (legacy name; the domain term is Incident): alert, `Room`, points, duration, Pending → Running → Succeeded/Failed; `SlaDrainPerMinute` (0.4 by default, virtual) is the SLA lost while it runs |
 | `SecurityAttack.cs`, `BrokenDisk.cs`, `OverheatingServer.cs`, `Fire.cs`, `UnpluggedCable.cs`, `PhishingEmail.cs`, `ElectricalFault.cs` | The seven challenges: each one sets its alert, room, points and the `PlayerAction` that fixes it |
 | `ServerRoom.cs` | Heat (18–55 °C, zones), battery, Traffic, UPS, Auto-shutdown, Eco Mode; ticked by `Main` during the night |
@@ -15,7 +15,7 @@ game state and rules so they run and test without the engine.
 | `NightLog.cs` | Samples every 30 in-game min and the night result, as CSV |
 | `ChallengeSpawner.cs` | Launches a challenge every interval (default 20 s), kinds in turn, driven by `Tick`; skips a kind still running or that ended less than one interval ago; stops when the game is finished. `Main` passes one random-pick kind, so one incident runs at a time |
 | `StoreInstancesOfIncidents.cs` | Holds the incident factories and picks one at random (`PickRandom`); optional `Random` for a fixed seed |
-| `Servers/` | Servers and their Clients: `Server` (name, clients, load, status), `ServerStatus` (Ok / Warn / Down), `ServerRoom` (8 fixed Servers set in code, `PickRandom`; optional `Random`, seeded by `GameState(seed)`) |
+| `Servers/` | Servers and their Clients: `Server` (name, clients, load, status), `ServerHealth` (Ok / Warn / Down), `ServerRack` (8 fixed Servers set in code, `PickRandom`; optional `Random`, seeded by `GameState(seed)`) |
 | `PlayerProfile.cs` | Name, points (never below 0), room |
 | `PointsRule.cs` | Points for a challenge: +50 % for a fast repair, −50 % for every player on a failure; `NightBonus` gives +200 plus 1 per SLA % for a won night |
 | `Game.cs` | Abstract game: players, challenges, failures. `Tick` moves the challenges; `SlaDrainPerMinute` = Clients on broken Servers × `SlaDrainPerClient` (each Server once), plus the flat drain of running ones with no Targets; sets each target's `Server.Status` to Down while it runs, Ok once it is fixed or failed; each mode says when it is lost or finished |
