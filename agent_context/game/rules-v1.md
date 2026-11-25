@@ -23,7 +23,7 @@ DDoS → load → Heat and Power draw.
 ## Win and lose
 
 - Lose: SLA hits 0 % (bankruptcy). Win a night: reach 08:00 with SLA > 0.
-- Each Active Incident drains SLA per in-game minute; servers down: extra −1 %/min.
+- SLA drain/min: Clients on broken Servers × 0.05 % (each Server once) + flat rate of Incidents with no Server.
 
 ## Incident life cycle
 

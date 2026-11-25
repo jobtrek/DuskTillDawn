@@ -26,19 +26,6 @@ public abstract class Game
 
 
 
-    public ServerStatus StatusOf(Server server)
-    {
-        for (var i = 0; i < _challenges.Count; i++)
-        {
-            if (_challenges[i].State == ChallengeState.Running && _challenges[i].Targets.Contains(server))
-            {
-                return ServerStatus.Down;
-            }
-        }
-
-        return ServerStatus.Ok;
-    }
-
     public double SlaDrainPerMinute
     {
         get
@@ -89,6 +76,7 @@ public abstract class Game
     {
         Add(challenge);
         challenge.Start();
+        RefreshServerStatus();
     }
 
     // A player's fix reaches every challenge; each one decides whether this action repairs it.
@@ -98,6 +86,8 @@ public abstract class Game
         {
             challenge.Repair(player, action);
         }
+
+        RefreshServerStatus();
     }
 
     // Some tools only handle one problem per use (one extinguisher, one fire): the oldest running one is fixed.
@@ -107,6 +97,7 @@ public abstract class Game
         {
             if (_challenges[i].Repair(player, action))
             {
+                RefreshServerStatus();
                 return true;
             }
         }
@@ -135,6 +126,33 @@ public abstract class Game
             {
                 Failures++;
                 LoseFailurePenalty(challenge);
+            }
+        }
+
+        RefreshServerStatus();
+    }
+
+    // A Server is Down while a running challenge hits it, and back to Ok once that one is fixed or failed.
+    private void RefreshServerStatus()
+    {
+        for (var i = 0; i < _challenges.Count; i++)
+        {
+            foreach (Server server in _challenges[i].Targets)
+            {
+                server.Status = ServerStatus.Ok;
+            }
+        }
+
+        for (var i = 0; i < _challenges.Count; i++)
+        {
+            if (_challenges[i].State != ChallengeState.Running)
+            {
+                continue;
+            }
+
+            foreach (Server server in _challenges[i].Targets)
+            {
+                server.Status = ServerStatus.Down;
             }
         }
     }

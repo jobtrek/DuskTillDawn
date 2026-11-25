@@ -6,10 +6,11 @@ namespace DuskTillDawn.Core;
 public sealed class ServerRoom
 {
     private readonly List<Server> _servers = [];
-    private readonly Random _random = new();
+    private readonly Random _random;
 
-    public ServerRoom()
+    public ServerRoom(Random? random = null)
     {
+        _random = random ?? new Random();
         _servers.Add(new Server("WEB-01", 6));
         _servers.Add(new Server("WEB-02", 4));
         _servers.Add(new Server("DB-01", 8));
