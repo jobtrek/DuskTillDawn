@@ -19,14 +19,15 @@ flowchart LR
 
 ## 2. List of challenges (proposal)
 
-| # | Problem | Alert on the dashboard | Where to repair | What the player does | Points |
-|---|---|---|---|---|---|
-| 1 | Security attack | "Too many suspicious visits!" | Control room | Turn on the filter on the computer | 150 |
-| 2 | Broken hard drive | "A disk is not responding" | Server room | Find the red disk and replace it | 100 |
-| 3 | Overheating server | "Temperature too high" | Server room | Restart the air conditioning | 100 |
-| 4 | Fire | "Fire alarm!" | Server room | Grab the extinguisher and put out the fire | 200 |
-| 5 | Unplugged cable | "A server is offline" | Server room | Find the right cable and plug it back in | 100 |
-| 6 | Fake e-mail | "New urgent message" | Control room | Spot that the e-mail is fake and report it | 100 |
+| #   | Problem            | Alert on the dashboard        | Where to repair              | What the player does                                       | Points |
+| --- | ------------------ | ----------------------------- | ---------------------------- | ---------------------------------------------------------- | ------ |
+| 1   | Security attack    | "Too many suspicious visits!" | Control room                 | Turn on the filter on the computer                         | 150    |
+| 2   | Broken hard drive  | "A disk is not responding"    | Server room                  | Find the red disk and replace it                           | 100    |
+| 3   | Overheating server | "Temperature too high"        | Server room                  | Restart the air conditioning                               | 100    |
+| 4   | Fire               | "Fire alarm!"                 | Server room                  | Grab the extinguisher and put out the fire                 | 200    |
+| 5   | Unplugged cable    | "A server is offline"         | Server room                  | Find the right cable and plug it back in                   | 100    |
+| 6   | Fake e-mail        | "New urgent message"          | Control room                 | Spot that the e-mail is fake and report it                 | 100    |
+| 7   | Electrical fault   | "Power fault in the basement" | Control room (Admin → Power) | Cut power to the faulty circuit. Ignored: it starts a Fire | 150    |
 
 In two-player mode, both players get the same challenge at the same time. The first one to finish it gets the points.
 
@@ -39,11 +40,11 @@ In two-player mode, both players get the same challenge at the same time. The fi
 
 ## 3. Points rule (proposal, to validate with the team)
 
-| Case | Points | Example (challenge worth 100) |
-|---|---|---|
-| Repaired with at least half the time left | Base points + 50 % | +150 |
-| Repaired later | Base points | +100 |
-| Failed (time ran out) | Every player loses 50 % of the base points | −50 |
+| Case                                      | Points                                     | Example (challenge worth 100) |
+| ----------------------------------------- | ------------------------------------------ | ----------------------------- |
+| Repaired with at least half the time left | Base points + 50 %                         | +150                          |
+| Repaired later                            | Base points                                | +100                          |
+| Failed (time ran out)                     | Every player loses 50 % of the base points | −50                           |
 
 - Points never go below 0.
 - The +50 % bonus follows `docs/game-v1.md`: reading the dashboard early pays.
