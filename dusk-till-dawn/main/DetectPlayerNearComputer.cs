@@ -29,21 +29,29 @@ public partial class DetectPlayerNearComputer : MeshInstance3D
 
         // this verifies that there isn't an action and creates a new Action and assigns an event to said action.
         if (!InputMap.HasAction("open_menu"))
+        {
             InputMap.AddAction("open_menu");
-        InputMap.ActionAddEvent("open_menu", new InputEventKey { PhysicalKeycode = Key.E });
+            InputMap.ActionAddEvent("open_menu", new InputEventKey { PhysicalKeycode = Key.E });
+        }
     }
 
     // The Area3D also overlaps static bodies (floor, desk) at startup; only the player counts.
     private void OnBodyEntered(Node3D body)
     {
-        if (body is not CharacterBody3D) return;
+        if (body is not CharacterBody3D)
+        {
+            return;
+        }
         _playerInRange = true;
         _control.Show();
     }
 
     private void OnBodyExited(Node3D body)
     {
-        if (body is not CharacterBody3D) return;
+        if (body is not CharacterBody3D)
+        {
+            return;
+        }
         _playerInRange = false;
         _control.Hide();
         _control2.Hide();

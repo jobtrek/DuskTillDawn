@@ -46,7 +46,6 @@ public abstract class Challenge
 
 
 
-    // getters and setters allow other classes to modify private properties. 
     public string Alert { get; }
     public Room Room { get; }
     public int Points { get; }
