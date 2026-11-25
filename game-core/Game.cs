@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DuskTillDawn.Core;
 
@@ -9,6 +10,9 @@ public abstract class Game
     private readonly List<PlayerProfile> _players;
     private readonly List<Challenge> _challenges = [];
 
+    // Placeholder until the team agrees on the number (issue #105).
+    private const double SlaDrainPerClient = 0.05;
+
     protected Game(IEnumerable<PlayerProfile> players)
     {
         _players = [.. players];
@@ -17,24 +21,53 @@ public abstract class Game
     public IReadOnlyList<PlayerProfile> Players => _players;
     public IReadOnlyList<Challenge> Challenges => _challenges;
     public int Failures { get; private set; }
+    public int Solved { get; private set; }
 
     public event Action<Challenge>? ChallengeSucceeded;
+    public event Action<Challenge>? ChallengeFailed;
+
+
 
     public double SlaDrainPerMinute
     {
         get
         {
             double drain = 0;
+            var broken = new HashSet<Server>();
             for (var i = 0; i < _challenges.Count; i++)
             {
-                if (_challenges[i].State == ChallengeState.Running)
+                if (_challenges[i].State != ChallengeState.Running)
+                {
+                    continue;
+                }
+
+                if (_challenges[i].Targets.Count == 0)
                 {
                     drain += _challenges[i].SlaDrainPerMinute;
                 }
+                else
+                {
+                    broken.UnionWith(_challenges[i].Targets);
+                }
             }
+
+            drain += broken.SelectMany(server => server.Clients).Distinct().Count() * SlaDrainPerClient;
 
             return drain;
         }
+    }
+
+    public bool IsRunning<T>() where T : Challenge
+    {
+        for (var i = 0; i < _challenges.Count; i++)
+        {
+            if (_challenges[i] is T && _challenges[i].State == ChallengeState.Running)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public abstract bool IsLost { get; }
@@ -46,7 +79,11 @@ public abstract class Game
         if (!_challenges.Contains(challenge))
         {
             _challenges.Add(challenge);
-            challenge.Succeeded += c => ChallengeSucceeded?.Invoke(c);
+            challenge.Succeeded += c =>
+            {
+                Solved++;
+                ChallengeSucceeded?.Invoke(c);
+            };
         }
     }
 
@@ -55,6 +92,7 @@ public abstract class Game
     {
         Add(challenge);
         challenge.Start();
+        RefreshServerStatus();
     }
 
     // A player's fix reaches every challenge; each one decides whether this action repairs it.
@@ -64,6 +102,8 @@ public abstract class Game
         {
             challenge.Repair(player, action);
         }
+
+        RefreshServerStatus();
     }
 
     // Some tools only handle one problem per use (one extinguisher, one fire): the oldest running one is fixed.
@@ -73,6 +113,7 @@ public abstract class Game
         {
             if (_challenges[i].Repair(player, action))
             {
+                RefreshServerStatus();
                 return true;
             }
         }
@@ -101,6 +142,34 @@ public abstract class Game
             {
                 Failures++;
                 LoseFailurePenalty(challenge);
+                ChallengeFailed?.Invoke(challenge);
+            }
+        }
+
+        RefreshServerStatus();
+    }
+
+    // A Server is Down while a running challenge hits it, and back to Ok once that one is fixed or failed.
+    private void RefreshServerStatus()
+    {
+        for (var i = 0; i < _challenges.Count; i++)
+        {
+            foreach (Server server in _challenges[i].Targets)
+            {
+                server.Status = ServerHealth.Ok;
+            }
+        }
+
+        for (var i = 0; i < _challenges.Count; i++)
+        {
+            if (_challenges[i].State != ChallengeState.Running)
+            {
+                continue;
+            }
+
+            foreach (Server server in _challenges[i].Targets)
+            {
+                server.Status = ServerHealth.Down;
             }
         }
     }

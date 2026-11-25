@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace DuskTillDawn.Core;
 
@@ -25,6 +26,7 @@ public enum PlayerAction
     UseExtinguisher,
     PlugCable,
     ReportEmail,
+    CutFaultyCircuit,
 }
 
 public abstract class Challenge
@@ -57,6 +59,15 @@ public abstract class Challenge
 
     // How much SLA the company wins back when this challenge is fixed in time.
     public virtual double SlaRestoredOnSuccess => DefaultSlaRestoredOnSuccess;
+
+
+    public IReadOnlyList<Server> Targets { get; private set; } = [];
+
+    public void Hit(params Server[] servers)
+    {
+        Targets = servers;
+    }
+
 
     public event Action<Challenge>? Succeeded;
 

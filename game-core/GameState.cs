@@ -24,12 +24,14 @@ public sealed class GameState(int? seed = null)
 
     private double _elapsedRealSeconds;
 
+    public ServerRack Servers { get; } = new(seed is null ? null : new Random(seed.Value));
     public double Sla { get; private set; } = 100;
-    public double Heat { get; private set; } = 20;
+    public ServerRoom ServerRoom { get; } = new();
 
-    public double Traffic { get; private set; } = 40;
+    public double Heat => ServerRoom.Heat;
+    public double Traffic => ServerRoom.Traffic;
     public double Disk { get; private set; } = 0;
-    public double Power { get; private set; } = 100f;
+    public double Power => ServerRoom.Battery;
 
 
     private const int StartingPoints = 1000;
@@ -38,6 +40,9 @@ public sealed class GameState(int? seed = null)
     public PlayerProfile Player { get; } = CreatePlayer();
 
     public int Points => Player.Points;
+
+    // Negative when the failure penalties cost more than the repairs and the night bonus earned.
+    public int PointsEarnedThisNight => Points - StartingPoints;
 
     /// <summary>The night (20:00 to 08:00): Running, then Won at 08:00 or Lost when the SLA hits 0.</summary>
     public NightStatus Status { get; private set; } = NightStatus.Running;
