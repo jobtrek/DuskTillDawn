@@ -8,7 +8,7 @@ Autoload: `MCPGameBridge` (dev tooling for the Godot MCP, configured in root `.m
 
 ```
 Main (Node3D, main/Main.cs)       owns the one GameState and SoloGame, calls Tick() each frame,
- │                                ticks a ChallengeSpawner (at most one challenge every 20 s),
+ │                                ticks a ChallengeSpawner built from NightPlan (night 1: every 180 s),
  │                                drives sun/moon/sky, passes Weather to Rain/RainSound, and adds the
  │                                NightReportPanel (night_report_ui/) shown at 08:00 or on a loss
  ├─ Hud (hud_ui/)                 reads GameState: clock, SLA bar, points, banner
