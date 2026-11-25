@@ -40,6 +40,9 @@ public sealed class GameState(int? seed = null)
 
     public int Points => Player.Points;
 
+    // Negative when the failure penalties cost more than the repairs and the night bonus earned.
+    public int PointsEarnedThisNight => Points - StartingPoints;
+
     /// <summary>The night (20:00 to 08:00): Running, then Won at 08:00 or Lost when the SLA hits 0.</summary>
     public NightStatus Status { get; private set; } = NightStatus.Running;
 
@@ -90,9 +93,10 @@ public sealed class GameState(int? seed = null)
             MailReceived?.Invoke(mail);
         }
 
-        if (_elapsedRealSeconds >= RealSecondsPerNight)
+        if (Status == NightStatus.Running && _elapsedRealSeconds >= RealSecondsPerNight)
         {
             Status = NightStatus.Won;
+            Player.EarnPoints(PointsRule.NightBonus(Sla));
         }
 
         if (_elapsedRealSeconds >= RealSecondsPerDay)

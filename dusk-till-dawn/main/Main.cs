@@ -18,6 +18,12 @@ public partial class Main : Node3D
     private Control? _computerMenu;
     private int _debugChallengeCount;
 
+    // The report is frozen when the night ends, so repairs during the day do not change it.
+    private const string NightReportScenePath = "res://main/night_report_ui/night_report.tscn";
+    private const double NightReportSeconds = 15;
+    private NightReportPanel _nightReportPanel = null!;
+    private NightReport? _nightReport;
+
     public GameState State => _state;
     public SoloGame Game => _game;
 
@@ -78,6 +84,8 @@ public partial class Main : Node3D
     {
         _clockSpeed = ReadClockSpeed();
         _hud = GetNode<Hud>("Hud");
+        _nightReportPanel = GD.Load<PackedScene>(NightReportScenePath).Instantiate<NightReportPanel>();
+        AddChild(_nightReportPanel);
         _dashboard = GetNodeOrNull<Dashboard>("Dashboard");
         _computerMenu = GetNodeOrNull<Control>("Company/Desk/MeshInstance3D/Menu/ComputerMenu");
         _state.Inbox.LoadSchedule(FileAccess.GetFileAsString(MailSchedulePath));
@@ -348,6 +356,21 @@ public partial class Main : Node3D
         _hud.ShowState(_state);
         WriteNightLogOnce();
         GetTree().Paused = NightEnded();
+        ShowNightReport();
+    }
+
+    // Shown at 08:00 for a while, and for good once the game is over (lost, or the day survived).
+    private void ShowNightReport()
+    {
+        bool nightOver = _state.Status != NightStatus.Running || _game.IsLost;
+        if (nightOver && _nightReport == null)
+        {
+            _nightReport = NightReport.Of(_state, _game);
+            _nightReportPanel.ShowReport(_nightReport);
+        }
+
+        _nightReportPanel.Visible = _nightReport != null
+            && (NightEnded() || _state.RealSecondsSinceNightEnded < NightReportSeconds);
     }
 
     private bool NightEnded()

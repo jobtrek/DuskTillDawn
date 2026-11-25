@@ -7,6 +7,10 @@ public static class PointsRule
     public const int FastRepairBonusPercent = 50;
     public const int FailurePenaltyPercent = 50;
 
+    // Surviving until 08:00 pays a fixed bonus plus one point for every SLA percent kept.
+    public const int NightSurvivedBonus = 200;
+    public const int PointsPerSlaPercent = 1;
+
     // A repair is fast while at least half of the challenge's time is left.
     public static bool IsFastRepair(double timeRemaining, double durationSeconds)
     {
@@ -26,5 +30,10 @@ public static class PointsRule
     public static int FailurePenalty(int basePoints)
     {
         return basePoints * FailurePenaltyPercent / 100;
+    }
+
+    public static int NightBonus(double slaLeft)
+    {
+        return NightSurvivedBonus + (int)slaLeft * PointsPerSlaPercent;
     }
 }
