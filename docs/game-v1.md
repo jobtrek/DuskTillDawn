@@ -47,7 +47,7 @@ Everything the player sees on the dashboard comes from these.
 | Value | Range | Rule |
 |---|---|---|
 | **Power** | 0–100 % | Panels charge the battery. Servers drain it. At 0 %, servers go offline. |
-| **Heat** | 20–100 °C | Rises with server load, falls with cooling. Above 80 °C: fire risk. At 95 °C: fire starts. |
+| **Heat** | 18–55 °C | Rises with server load, falls with cooling. 27 °C warning, 32 °C throttling, 45 °C Auto-shutdown (no fire). |
 | **Traffic** | 0–100 % of capacity | Normal ~40 %. Above 100 %, requests are dropped. |
 | **Disk** | 0–100 % | Fills slowly from logs. At 100 %, the app crashes. |
 | **SLA** | 0–100 % | The score. See section 6. |
@@ -57,8 +57,8 @@ Everything the player sees on the dashboard comes from these.
 | If... | Then... |
 |---|---|
 | Panels are dirty or damaged | Battery charges slower, so Power drops, so servers slow down |
-| Cooling fails | Heat rises, so Fire |
-| Traffic spike (DDoS) | Load rises, so Heat and Power draw both rise |
+| Cooling fails | Heat rises, so servers throttle, then Auto-shutdown at 45 °C |
+| Traffic spike (DDoS) | Load rises, so Heat and Power draw rise, so an Electrical fault is more likely. Ignored, it starts a Fire |
 
 These three are enough to teach "everything is connected". More cascades come later.
 
@@ -109,13 +109,13 @@ One per row. Each gets a spec file in `docs/design/incidents/` and a data file i
 | 3 | **Vulnerable dependency** | Control room | Log4Shell | Read mail → update package → restart app | Vulnerability scanner |
 | 4 | **Bad update** | Control room | CrowdStrike | Roll back the update → reboot servers | Staged rollouts |
 | 5 | **Dirty solar panels** | Roof | Snow / dust | Walk up → sweep panels (hold button) | Self-cleaning panels |
-| 6 | **Cooling failure → fire** | Basement | OVHcloud fire | Restart AC. If fire started: use extinguisher | Second AC / sprinklers |
+| 6 | **Cooling failure** | Basement | OVHcloud outage | Restart AC → wait below 32 °C → reboot servers | Second AC |
 | 7 | **Failing hard drive** | Basement | Drive failures | Find red drive → swap with spare | RAID |
 | 8 | **Phishing email** | Control room | Social engineering | Read mail → spot the fake → report it | 2FA |
 
 Notes:
 - 5 of 8 are on the computer, so the core loop works even before the voxel world is ready.
-- #6 is the showcase: it is a cascade (cooling → heat → fire) that needs two floors.
+- #6 is the showcase: it is a cascade (cooling → heat → Auto-shutdown) that needs two floors. Fire now only comes from an ignored Electrical fault.
 - The supply-chain backdoor (xz-utils) is parked, because it needs the delivery dock.
 
 ### Incident spec (what each data file holds)

@@ -25,6 +25,7 @@ public enum PlayerAction
     UseExtinguisher,
     PlugCable,
     ReportEmail,
+    CutFaultyCircuit,
 }
 
 public abstract class Challenge

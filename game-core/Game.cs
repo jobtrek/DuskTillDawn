@@ -20,6 +20,7 @@ public abstract class Game
     public int Solved { get; private set; }
 
     public event Action<Challenge>? ChallengeSucceeded;
+    public event Action<Challenge>? ChallengeFailed;
 
     public double SlaDrainPerMinute
     {
@@ -36,6 +37,19 @@ public abstract class Game
 
             return drain;
         }
+    }
+
+    public bool IsRunning<T>() where T : Challenge
+    {
+        for (var i = 0; i < _challenges.Count; i++)
+        {
+            if (_challenges[i] is T && _challenges[i].State == ChallengeState.Running)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public abstract bool IsLost { get; }
@@ -106,6 +120,7 @@ public abstract class Game
             {
                 Failures++;
                 LoseFailurePenalty(challenge);
+                ChallengeFailed?.Invoke(challenge);
             }
         }
     }

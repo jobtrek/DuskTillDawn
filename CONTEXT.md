@@ -8,6 +8,22 @@ A single-player game about the only sysadmin on a solar-powered night shift, kee
 Something that goes wrong during a night and that the player must fix (an expired certificate, a phishing mail, a failing drive). It moves through Warning, Active, Escalated and Resolved.
 _Avoid_: défi, challenge, problem, panne
 
+**Electrical fault**:
+An Incident in the Basement power equipment. If ignored it escalates into a Fire. It is the only cause of Fire; heat alone never starts one.
+_Avoid_: short circuit, electrical fire (for the Warning stage)
+
+**Auto-shutdown**:
+The servers switching themselves off when the room gets too hot. They stay off until the room cools and the player reboots them at the racks.
+_Avoid_: crash, overheat fire
+
+**Start charge**:
+The battery level at 20:00, set by how clean the solar panels were during the day.
+_Avoid_: initial power, day charge
+
+**Eco Mode**:
+A low-power mode the player can turn on when the battery runs low: less Traffic served, slower drain.
+_Avoid_: load-shed mode, power saving
+
 **Mail**:
 A message in the computer's Mail app. Three kinds: a Warning mail (early sign of an Incident), a News mail (tech news, flavour and hints) and a Phishing mail (a fake that the player must report). The inbox empties at the start of each night.
 _Avoid_: email, e-mail, message

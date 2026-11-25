@@ -7,7 +7,10 @@ game state and rules so they run and test without the engine.
 |---|---|
 | `GameState.cs` | The single game state: clock, SLA, Heat, Traffic, Disk, Power, Points, `NightStatus`. `Tick(realSeconds)` advances time; `DrainSlaOverTime` turns a per-minute SLA loss into real seconds; the night bonus is paid once at 08:00 |
 | `Challenge.cs` | Abstract Incident (legacy name; the domain term is Incident): alert, `Room`, points, duration, Pending → Running → Succeeded/Failed; `SlaDrainPerMinute` (0.4 by default, virtual) is the SLA lost while it runs |
-| `SecurityAttack.cs`, `BrokenDisk.cs`, `OverheatingServer.cs`, `Fire.cs`, `UnpluggedCable.cs`, `PhishingEmail.cs` | The six challenges: each one sets its alert, room, points and the `PlayerAction` that fixes it |
+| `SecurityAttack.cs`, `BrokenDisk.cs`, `OverheatingServer.cs`, `Fire.cs`, `UnpluggedCable.cs`, `PhishingEmail.cs`, `ElectricalFault.cs` | The seven challenges: each one sets its alert, room, points and the `PlayerAction` that fixes it |
+| `ServerRoom.cs` | Heat (18–55 °C, zones), battery, Traffic, UPS, Auto-shutdown, Eco Mode; ticked by `Main` during the night |
+| `ElectricalFaultRisk.cs` | Random Electrical faults, likelier under high power draw; a failed fault launches a Fire |
+| `NightLog.cs` | Samples every 30 in-game min and the night result, as CSV |
 | `ChallengeSpawner.cs` | Launches a challenge every interval (default 20 s), kinds in turn, driven by `Tick`; skips a kind still running or that ended less than one interval ago; stops when the game is finished. `Main` passes one random-pick kind, so one incident runs at a time |
 | `StoreInstancesOfIncidents.cs` | Holds the incident factories and picks one at random (`PickRandom`); optional `Random` for a fixed seed |
 | `PlayerProfile.cs` | Name, points (never below 0), room |
@@ -21,8 +24,9 @@ game state and rules so they run and test without the engine.
 | `SunPosition.cs`, `MoonPosition.cs` | Sky positions from the hour of day |
 | `Weather.cs`, `WeatherSystem.cs` | Weather kinds (Clear, Cloudy, Rainy, Storm) and their rain; `GameState.Weather` changes every 120 s by weighted chance, rain blends in slowly; `SkipToNext` is the debug skip (F4). Built early: parked to M2 (`docs/game-v1.md`) |
 
-Built so far vs v1 target ([game/rules-v1.md](../game/rules-v1.md)): 6 challenges, states
-Pending → Running → Succeeded/Failed; `Main` spawns only `BrokenDisk` and `SecurityAttack`.
+Built so far vs v1 target ([game/rules-v1.md](../game/rules-v1.md)): 7 challenges, states
+Pending → Running → Succeeded/Failed; `Main` spawns `BrokenDisk`, `SecurityAttack`, `OverheatingServer`
+and lets `ElectricalFaultRisk` spawn faults.
 
 ## Rules for changes
 

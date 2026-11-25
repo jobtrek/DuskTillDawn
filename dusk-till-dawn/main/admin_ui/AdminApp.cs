@@ -1,7 +1,8 @@
 using Godot;
 
 // Admin console window: where the player does the fix once they know the cause
-// (docs/specs/admin_console_spec.md). v1 only has Firewall → Enable traffic filtering.
+// (docs/specs/admin_console_spec.md): Firewall (traffic filtering) and Power (faulty circuit, Eco Mode,
+// Graceful shutdown).
 public partial class AdminApp : Control
 {
     // action is a PlayerAction name, so the game can match it to the challenge it repairs.
@@ -13,6 +14,9 @@ public partial class AdminApp : Control
 
     private BlockReveal _reveal = null!;
     private Tween? _openTween;
+    private Label _powerStatus = null!;
+    private Godot.Button _ecoMode = null!;
+    private Godot.Button _gracefulShutdown = null!;
 
     public override void _Ready()
     {
@@ -22,9 +26,11 @@ public partial class AdminApp : Control
         close.Pressed += () => EmitSignal(SignalName.CloseRequested);
         AddHover(close);
 
-        var filter = GetNode<Godot.Button>("Body/Panel/Firewall/EnableTrafficFilter");
-        filter.Pressed += () => EmitSignal(SignalName.ActionPressed, "Firewall", "EnableTrafficFilter");
-        AddHover(filter);
+        AddAction("Firewall", "EnableTrafficFilter");
+        AddAction("Power", "CutFaultyCircuit");
+        _ecoMode = AddAction("Power", "EcoMode");
+        _gracefulShutdown = AddAction("Power", "GracefulShutdown");
+        _powerStatus = GetNode<Label>("Body/Panel/Sections/Power/Status");
 
         Resized += () => PivotOffset = Size / 2f;
         VisibilityChanged += () =>
@@ -43,6 +49,28 @@ public partial class AdminApp : Control
             GetViewport().SetInputAsHandled();
             EmitSignal(SignalName.CloseRequested);
         }
+    }
+
+    public void ShowPower(string status, bool ecoModeOn, bool canTurnOnEcoMode, bool canShutDown)
+    {
+        _powerStatus.Text = status;
+        _ecoMode.Text = ecoModeOn ? "Turn off Eco Mode" : "Eco Mode";
+        SetEnabled(_ecoMode, ecoModeOn || canTurnOnEcoMode);
+        SetEnabled(_gracefulShutdown, canShutDown);
+    }
+
+    private static void SetEnabled(Godot.Button button, bool enabled)
+    {
+        button.Disabled = !enabled;
+        button.Modulate = enabled ? Colors.White : new Color(1f, 1f, 1f, 0.4f);
+    }
+
+    private Godot.Button AddAction(string system, string action)
+    {
+        var button = GetNode<Godot.Button>($"Body/Panel/Sections/{system}/{action}");
+        button.Pressed += () => EmitSignal(SignalName.ActionPressed, system, action);
+        AddHover(button);
+        return button;
     }
 
     private static void AddHover(Godot.Button button)

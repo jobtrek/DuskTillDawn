@@ -11,6 +11,9 @@ public partial class Main : Node3D
     private readonly SoloGame _game;
     private readonly ChallengeSpawner _spawner;
     private readonly StoreInstancesOfIncidents _incidents;
+    private readonly ElectricalFaultRisk _faultRisk;
+    private readonly NightLog _nightLog = new();
+    private bool _nightLogWritten;
     private Dashboard? _dashboard;
     private Control? _computerMenu;
     private int _debugChallengeCount;
@@ -29,11 +32,14 @@ public partial class Main : Node3D
         _state = new GameState();
         _game = new SoloGame(_state.Player);
         _game.ChallengeSucceeded += challenge => _state.RestoreSla(challenge.SlaRestoredOnSuccess);
-        _incidents = new StoreInstancesOfIncidents([() => new BrokenDisk(), () => new SecurityAttack()]);
+        _incidents = new StoreInstancesOfIncidents([() => new BrokenDisk(), () => new SecurityAttack(), () => new OverheatingServer()]);
         _spawner = new ChallengeSpawner(_game, () => _incidents.PickRandom());
+        _faultRisk = new ElectricalFaultRisk(_game);
+        _state.ServerRoom.StartNight(panelCleanliness: 1);
     }
 
     private const string MailSchedulePath = "res://main/mail_ui/emails.json";
+    private const string NightLogFolder = "user://night_logs";
     private const double SunFadeDegrees = 10;
     private const double SunMinElevationDegrees = 5;
     private const double ShadowFadeDegrees = 10;
@@ -146,12 +152,19 @@ public partial class Main : Node3D
 
     public override void _Process(double delta)
     {
-        _state.Tick(delta * _clockSpeed);
-        _game.Tick(delta * _clockSpeed);
-        _state.DrainSlaOverTime(_game.SlaDrainPerMinute, delta * _clockSpeed);
+        double seconds = delta * _clockSpeed;
+        _state.Tick(seconds);
+        _game.Tick(seconds);
+        if (_state.Status == NightStatus.Running)
+        {
+            _state.ServerRoom.Tick(seconds, _state.HourOfDay, _game);
+            _faultRisk.Tick(seconds, _state.ServerRoom.PowerDraw);
+            _nightLog.Sample(_state);
+        }
+        _state.DrainSlaOverTime(_game.SlaDrainPerMinute + _state.ServerRoom.SlaDrainPerMinute, seconds);
         if (!NightEnded())
         {
-            _spawner.Tick(delta * _clockSpeed);
+            _spawner.Tick(seconds);
         }
         UpdateSun();
         UpdateMoon();
@@ -177,12 +190,30 @@ public partial class Main : Node3D
         }
     }
 
+    // One file per night in the user data folder, read later to check the balancing targets.
+    private void WriteNightLogOnce()
+    {
+        bool nightOver = _state.Status != NightStatus.Running || _game.IsLost;
+        if (_nightLogWritten || !nightOver)
+        {
+            return;
+        }
+
+        _nightLogWritten = true;
+        string folder = ProjectSettings.GlobalizePath(NightLogFolder);
+        System.IO.Directory.CreateDirectory(folder);
+        string file = System.IO.Path.Combine(folder, $"night-{DateTime.Now:yyyyMMdd-HHmmss}.csv");
+        System.IO.File.WriteAllText(file, _nightLog.ToCsv(_state, _game));
+    }
+
     private void LaunchDebugChallenge()
     {
-        Challenge challenge = (_debugChallengeCount % 3) switch
+        Challenge challenge = (_debugChallengeCount % 5) switch
         {
             0 => new BrokenDisk(),
             1 => new SecurityAttack(),
+            2 => new OverheatingServer(),
+            3 => new ElectricalFault(),
             _ => new Fire(),
         };
         _debugChallengeCount++;
@@ -323,6 +354,7 @@ public partial class Main : Node3D
     private void ShowStateAndPauseIfGameEnded()
     {
         _hud.ShowState(_state);
+        WriteNightLogOnce();
         GetTree().Paused = NightEnded();
         ShowNightReport();
     }
