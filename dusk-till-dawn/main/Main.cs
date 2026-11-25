@@ -29,6 +29,7 @@ public partial class Main : Node3D
 
     public GameState State => _state;
     public SoloGame Game => _game;
+    public PhishingIncidents Phishing { get; }
 
     public Main()
     {
@@ -36,6 +37,7 @@ public partial class Main : Node3D
         _game = new SoloGame(_state.Player);
         _game.ChallengeSucceeded += challenge => _state.RestoreSla(challenge.SlaRestoredOnSuccess);
         NightPlan plan = NightPlan.For(CurrentNight, _state.Servers);
+        Phishing = new PhishingIncidents(_state, _game, plan.FakeEmails);
         _incidents = new StoreInstancesOfIncidents(plan.Kinds);
         _spawner = new ChallengeSpawner(_game, plan.SpawnIntervalSeconds, () => _incidents.PickRandom());
         _faultRisk = new ElectricalFaultRisk(_game);

@@ -41,8 +41,8 @@ public partial class MailApp : Control
     private Tween? _openTween;
 
     private Mail? _selected;
-    // Mail id → was the report right? Kept by the UI so the button stays disabled.
-    private readonly Dictionary<int, bool> _reports = new();
+    // Mail id → was the report right, and the points it earned or cost. Kept by the UI so the button stays disabled.
+    private readonly Dictionary<int, (bool Correct, int Points)> _reports = new();
 
     public override void _Ready()
     {
@@ -107,9 +107,9 @@ public partial class MailApp : Control
     }
 
     /// <summary>Called by the game after a ReportPressed, with whether the mail really was phishing.</summary>
-    public void ShowReportResult(int id, bool correct)
+    public void ShowReportResult(int id, bool correct, int points)
     {
-        _reports[id] = correct;
+        _reports[id] = (correct, points);
         if (_selected?.Id == id)
         {
             ShowReader(_selected);
@@ -199,10 +199,21 @@ public partial class MailApp : Control
         _date.Text = mail.ArrivedAt.ToString("HH:mm");
         _body.Text = mail.Body;
 
-        bool reported = _reports.TryGetValue(mail.Id, out bool correct);
+        bool reported = _reports.TryGetValue(mail.Id, out var report);
+        bool correct = report.Correct;
         _report.Disabled = reported;
-        _result.Text = !reported ? "" : correct ? "Reported ✓" : "Not phishing";
+        _result.Text = !reported ? "" : $"{(correct ? "Reported ✓" : "Not phishing")}{PointsText(report.Points)}";
         _result.Modulate = correct ? Good : Bad;
+    }
+
+    private static string PointsText(int points)
+    {
+        return points switch
+        {
+            > 0 => $" +{points}",
+            < 0 => $" {points}",
+            _ => "",
+        };
     }
 
     private void OnReportPressed()
