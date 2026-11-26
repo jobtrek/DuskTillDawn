@@ -160,18 +160,16 @@ public partial class Main : Node3D
     {
         double seconds = delta * _clockSpeed;
         _state.Tick(seconds);
-        _game.Tick(seconds);
+        // Incidents only happen at night: from 08:00 they neither start, nor run out, nor cost points.
         if (_state.Status == NightStatus.Running)
         {
+            _game.Tick(seconds);
             _state.ServerRoom.Tick(seconds, _state.HourOfDay, _game);
             _faultRisk.Tick(seconds, _state.ServerRoom.PowerDraw);
             _nightLog.Sample(_state);
-        }
-        _state.DrainSlaOverTime(_game.SlaDrainPerMinute + _state.ServerRoom.SlaDrainPerMinute, seconds);
-        if (!NightEnded())
-        {
             _spawner.Tick(seconds);
         }
+        _state.DrainSlaOverTime(_game.SlaDrainPerMinute + _state.ServerRoom.SlaDrainPerMinute, seconds);
         UpdateSun();
         UpdateMoon();
         _rain.ShowWeather(_state.Weather);
