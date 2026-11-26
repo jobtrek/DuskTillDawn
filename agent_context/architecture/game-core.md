@@ -11,8 +11,8 @@ game state and rules so they run and test without the engine.
 | `ServerRoom.cs` | Heat (18–55 °C, zones), battery, Traffic, UPS, Auto-shutdown, Eco Mode; ticked by `Main` during the night |
 | `ElectricalFaultRisk.cs` | Random Electrical faults, likelier under high power draw; a failed fault launches a Fire |
 | `NightLog.cs` | Samples every 30 in-game min and the night result, as CSV |
-| `ChallengeSpawner.cs` | Launches a challenge every interval (default 20 s), kinds in turn, driven by `Tick`; skips a kind still running or that ended less than one interval ago; stops when the game is finished. `Main` passes one random-pick kind, so one incident runs at a time |
-| `NightPlan.cs` | Per night (1 to 5): which challenges can spawn and the spawn interval (180 s down to 75 s); table in `docs/player-flow/challenges.md` §4 |
+| `ChallengeSpawner.cs` | Launches a challenge every interval (default 20 s), kinds in turn, driven by `Tick`; skips a kind still running or that ended less than one interval ago; stops when the game is finished. `Main` passes one random-pick kind, so one spawned incident runs at a time (plus at most one Fake e-mail) |
+| `NightPlan.cs` | Per night (1 to 5): which challenges can spawn, the spawn interval (180 s down to 75 s) and how many Phishing mails become Fake e-mails; table in `docs/player-flow/challenges.md` §4 |
 | `StoreInstancesOfIncidents.cs` | Holds the incident factories and picks one at random (`PickRandom`); optional `Random` for a fixed seed |
 | `Servers/` | Servers and their Clients: `Server` (name, Client names, load, status), `ServerHealth` (Ok / Warn / Down), `ServerRack` (8 fixed Servers set in code, `PickRandom`; optional `Random`, seeded by `GameState(seed)`) |
 | `PlayerProfile.cs` | Name, points (never below 0), room |
@@ -21,6 +21,7 @@ game state and rules so they run and test without the engine.
 | `SoloGame.cs` | One player; lost after 3 failed challenges |
 | `DuoGame.cs` | Two-player race: ends after `ChallengeCount` challenges, `Winner` has the most points (null on a tie). Parked (contract: 1 player), not wired in Godot |
 | `Inbox.cs`, `Mail.cs` | News and Phishing schedule (`emails.json`), arrival, read and phishing-report state; `GameState.ReceiveWarning` adds an Incident's Warning mail (`Challenge.Warning`, linked by `Mail.ChallengeId`) |
+| `PhishingIncidents.cs` | An arriving Phishing mail launches a `PhishingEmail` (one at a time, `NightPlan.FakeEmails` per night); `Report(mailId)` repairs it and returns the points (Warning → Active after 60 s → Escalated after 4 min, fails at 5 min) |
 | `HeldItem.cs` | What the player carries (one item at a time) |
 | `SunPosition.cs`, `MoonPosition.cs` | Sky positions from the hour of day |
 | `Weather.cs`, `WeatherSystem.cs` | Weather kinds (Clear, Cloudy, Rainy, Storm) and their rain; `GameState.Weather` changes every 120 s by weighted chance, rain blends in slowly; `SkipToNext` is the debug skip (F4). Built early: parked to M2 (`docs/game-v1.md`) |

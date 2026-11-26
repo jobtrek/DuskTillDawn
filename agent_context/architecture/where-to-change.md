@@ -18,7 +18,7 @@ Paths from the repo root. `dtd/` = `dusk-till-dawn/`. Open these first, search o
 | Weather kinds, chances, rain strength | `game-core/Weather.cs`, `WeatherSystem.cs` |
 | Rain look, light dim, rain sound | `dtd/main/weather/Rain.cs`, `RainLook.cs` (Inspector values), `RainSound.cs`; sounds in `weather/sounds/` |
 | Sun, moon, sky colours | `game-core/SunPosition.cs`, `MoonPosition.cs`; visuals in `dtd/main/Main.cs`, `dtd/main/sky/sky.gdshader` |
-| Mail content (schedule, kinds) / inbox rules | `dtd/main/mail_ui/emails.json` / `game-core/Inbox.cs`, `Mail.cs` |
+| Mail content (schedule, kinds) / inbox rules / Phishing mail → Fake e-mail challenge | `dtd/main/mail_ui/emails.json` / `game-core/Inbox.cs`, `Mail.cs` / `game-core/PhishingIncidents.cs`, `PhishingEmail.cs` |
 | Mail window (view) / its logic | `dtd/main/mail_ui/MailApp.cs` / `MailController.cs` |
 | Monitoring window (Metrics and Servers tabs) / its logic | `dtd/main/monitor_ui/MonitorApp.cs` / `MonitoringController.cs` |
 | Admin window (traffic filter, Power: faulty circuit, Eco Mode, Graceful shutdown) / what each does | `dtd/main/admin_ui/AdminApp.cs` / `AdminController.cs` |
