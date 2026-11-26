@@ -32,7 +32,7 @@ Every v1 feature must support at least one. If it doesn't, it waits.
 
 | Floor | What is there | What the player does here |
 |---|---|---|
-| **Roof** | Solar panels, radio antenna | Clean panels, realign antenna |
+| **Roof** | Solar panels, radio antenna | Clean or repair panels, realign antenna |
 | **Control room** | Main computer (dashboard, mail, AI helper) | Diagnose, change settings, read warnings |
 | **Basement** | Servers, cooling, cables | Fight fires, swap drives, replug cables |
 
@@ -108,7 +108,7 @@ One per row. Each gets a spec file in `docs/design/incidents/` and a data file i
 | 2 | **DDoS** | Control room | Cloudflare attacks | Enable traffic filtering | CDN shield |
 | 3 | **Vulnerable dependency** | Control room | Log4Shell | Read mail → update package → restart app | Vulnerability scanner |
 | 4 | **Bad update** | Control room | CrowdStrike | Roll back the update → reboot servers | Staged rollouts |
-| 5 | **Dirty solar panels** | Roof | Snow / dust | Walk up → sweep panels (hold button) | Self-cleaning panels |
+| 5 | **Dirty or damaged solar panels** | Roof | Snow / dust / lightning | Walk up → sweep  or repair panels | Self-cleaning panels |
 | 6 | **Cooling failure** | Basement | OVHcloud outage | Restart AC → wait below 32 °C → reboot servers | Second AC |
 | 7 | **Failing hard drive** | Basement | Drive failures | Find red drive → swap with spare | RAID |
 | 8 | **Phishing email** | Control room | Social engineering | Read mail → spot the fake → report it | 2FA |
@@ -184,7 +184,7 @@ Kept in [ideas/](ideas/), in rough order of when to bring them back.
 | **Infinite mode** | Easy once nights work, not needed to test fun | M2 |
 | **Battery shed + generator yard** | Great depth, but needs outdoor area, new mini-games and new art | M2 |
 | **Outdoor areas** (fiber trench, substation, gate) | Same as above | M2 |
-| **Weather** (snow, storms, floods, lightning, animals) | Needs outdoor world | M2 |
+| **Weather** (snow, floods,  animals) | Needs outdoor world | M2 |
 | **Delivery dock + supply-chain attacks** | Very good idea, but a full area plus mini-game | M2/M3 |
 | **Daytime maintenance rounds** | Doubles the content. v1 uses only the shop between nights. | M3 |
 | **Two-player co-op** | Needs network sync. Design incidents as 1-player first. | M3 |

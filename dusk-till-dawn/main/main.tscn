@@ -20,7 +20,7 @@
 [ext_resource type="AudioStream" uid="uid://bekcwh38pgxch" path="res://main/weather/sounds/rain_light.ogg" id="105_rainlight"]
 [ext_resource type="AudioStream" uid="uid://cptkondk3qt1j" path="res://main/weather/sounds/rain_heavy.ogg" id="106_rainheavy"]
 [ext_resource type="Script" path="res://main/weather/Lightning.cs" id="107_lightning"]
-[ext_resource type="AudioStream" uid="uid://b5iatf7hq3sxv" path="res://main/weather/sounds/thunder.ogg" id="108_thunder"]
+[ext_resource type="AudioStream" path="res://main/weather/sounds/thunder_sounds.tres" id="108_thunder"]
 [ext_resource type="PackedScene" path="res://main/fire/extinguisher_spot.tscn" id="103_extinguisher"]
 [ext_resource type="PackedScene" path="res://main/fire/fire_particles.tscn" id="104_fireparticles"]
 [ext_resource type="PackedScene" path="res://main/fire/fire_effect.tscn" id="105_fireeffect"]
