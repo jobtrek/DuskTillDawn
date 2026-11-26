@@ -37,7 +37,7 @@ _Avoid_: email, e-mail, message
 
 **App**:
 A program on the desk computer: Mail, Monitoring or Admin. The player opens it from the computer's desktop and closes it with Esc or its close button.
-_Avoid_: window, screen, program
+_Avoid_: screen, program
 
 **Dashboard**:
 The small HUD panel (top right) with points, failures and every running Incident. Not the computer's Monitoring app.
