@@ -11,19 +11,19 @@ Numbers are starting values; the full tables are in `docs/game-v1.md` §5–§9.
 
 | Value | Range | Key rule |
 |---|---|---|
-| Power | 0–100 % | Panels charge, servers drain. 0 % = servers offline |
-| Heat | 20–100 °C | > 80 fire risk, 95 fire starts |
+| Power | 0–100 % | Battery: start charge from panels, drains all night, solar 06–08. 0 % = UPS 15 s |
+| Heat | 18–55 °C | 27 warning, 32 throttling, 45 Auto-shutdown (no fire) |
 | Traffic | 0–100 % | > 100 % requests dropped |
 | Disk | 0–100 % | 100 % = app crash |
 | SLA | 0–100 % | The score. Starts at 100 each night |
 
-Three cascades only: dirty panels → less Power; cooling fails → Heat → fire;
-DDoS → load → Heat and Power draw.
+Cascades: dirty panels → lower start charge; cooling fails → Heat → Auto-shutdown;
+DDoS → load → Heat and Power draw → Electrical fault → Fire.
 
 ## Win and lose
 
 - Lose: SLA hits 0 % (bankruptcy). Win a night: reach 08:00 with SLA > 0.
-- Each Active Incident drains SLA per in-game minute; servers down: extra −1 %/min.
+- SLA drain/min: Clients on broken Servers × 0.05 % (each Server once) + flat rate of Incidents with no Server.
 
 ## Incident life cycle
 
@@ -36,5 +36,5 @@ DDoS → load → Heat and Power draw.
 ## The 8 Incidents
 
 TLS cert, DDoS, vulnerable dependency, bad update, phishing mail (Control room);
-dirty solar panels (Roof); cooling failure → fire, failing drive (Basement).
+dirty solar panels (Roof); cooling failure, Electrical fault → Fire, failing drive (Basement).
 Fix steps, upgrades, night table: `docs/game-v1.md` §8–§9.

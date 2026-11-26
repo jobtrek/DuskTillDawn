@@ -8,8 +8,9 @@ Autoload: `MCPGameBridge` (dev tooling for the Godot MCP, configured in root `.m
 
 ```
 Main (Node3D, main/Main.cs)       owns the one GameState and SoloGame, calls Tick() each frame,
- │                                ticks a ChallengeSpawner (at most one challenge every 20 s),
- │                                drives sun/moon/sky, and passes Weather to Rain/RainSound
+ │                                ticks a ChallengeSpawner built from NightPlan (night 1: every 180 s),
+ │                                drives sun/moon/sky, passes Weather to Rain/RainSound, and adds the
+ │                                NightReportPanel (night_report_ui/) shown at 08:00 or on a loss
  ├─ Hud (hud_ui/)                 reads GameState: clock, SLA bar, points, banner
  ├─ Dashboard (dashboard_ui/)     reads SoloGame: points, failures, running challenges
  ├─ Player (player/Player.cs)     CharacterBody3D + camera
@@ -19,7 +20,7 @@ Main (Node3D, main/Main.cs)       owns the one GameState and SoloGame, calls Tic
  ├─ ExtinguisherSpot (fire/)     server room wall: E puts the Fire out
  └─ desk computer                 DetectPlayerNearComputer shows the menu when near
      └─ ComputerMenu (computer_ui/)   emits MailPressed / MonitoringPressed / HelpPressed / AdminPressed
-         ├─ MailController   → MailApp     (mail_ui/)
+         ├─ MailController   → MailApp     (mail_ui/)  ReportPressed → Main.Phishing.Report
          ├─ MonitoringController → MonitorApp (monitor_ui/)
          └─ AdminController  → AdminApp    (admin_ui/)  ActionPressed → Game.Repair
 ```

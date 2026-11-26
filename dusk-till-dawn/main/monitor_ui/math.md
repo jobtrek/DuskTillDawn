@@ -7,7 +7,7 @@ The monitor service tracks 5 values.
 | Value   | Range                         | Orange (close to limit) | Red (past limit)                |
 | ------- | ----------------------------- | ----------------------- | ------------------------------- |
 | Power   | 0 to 100 %                    | Not decided yet         | 0 % = servers offline           |
-| Heat    | 20 to 100 °C                  | Not decided yet         | 80 °C = fire risk, 95 °C = fire |
+| Heat    | 18 to 55 °C                   | 27 °C = warning         | 45 °C = auto-shutdown           |
 | Traffic | 0 to 100 % (40 % is normal)   | Not decided yet         | 100 % = requests dropped        |
 | Disk    | 0 to 100 %                    | Not decided yet         | 100 % = crash                   |
 | SLA     | 0 to 100 %                    | Not decided yet         | 0 % = game lost                 |
@@ -38,7 +38,7 @@ Each value has its own Good and Bad:
 | Value   | Good  | Bad   |
 | ------- | ----- | ----- |
 | Power   | 100 % | 0 %   |
-| Heat    | 20 °C | 95 °C |
+| Heat    | 18 °C | 45 °C |
 | Traffic | 40 %  | 100 % |
 | Disk    | 0 %   | 100 % |
 | SLA     | 100 % | 0 %   |
@@ -59,9 +59,9 @@ They are the same line, read in opposite directions.
 Example with Heat:
 
 ```
-Good = 20                              value = 84      Bad = 95
+Good = 18                              value = 39.6    Bad = 45
 |----------------------------------------|---------------|
-t = 0                                  t = 0.85        t = 1
+t = 0                                  t = 0.80        t = 1
 ```
 
 ### Inverse lerp (value to t)
@@ -69,7 +69,7 @@ t = 0                                  t = 0.85        t = 1
 | Value   | Good  | Bad   | Current | t = (Current - Good) / (Bad - Good) |
 | ------- | ----- | ----- | ------- | ----------------------------------- |
 | Power   | 100 % | 0 %   | 60 %    | (60 - 100) / (0 - 100) = 0.40       |
-| Heat    | 20 °C | 95 °C | 84 °C   | (84 - 20) / (95 - 20) = 0.85        |
+| Heat    | 18 °C | 45 °C | 39.6 °C | (39.6 - 18) / (45 - 18) = 0.80      |
 | Traffic | 40 %  | 100 % | 70 %    | (70 - 40) / (100 - 40) = 0.50       |
 | Disk    | 0 %   | 100 % | 22 %    | (22 - 0) / (100 - 0) = 0.22         |
 | SLA     | 100 % | 0 %   | 91 %    | (91 - 100) / (0 - 100) = 0.09       |
@@ -81,7 +81,7 @@ Putting `t` back in gives the current value again.
 | Value   | Good  | Bad   | t    | value = Good + (Bad - Good) * t  |
 | ------- | ----- | ----- | ---- | -------------------------------- |
 | Power   | 100 % | 0 %   | 0.40 | 100 + (0 - 100) * 0.40 = 60 %    |
-| Heat    | 20 °C | 95 °C | 0.85 | 20 + (95 - 20) * 0.85 = 84 °C    |
+| Heat    | 18 °C | 45 °C | 0.80 | 18 + (45 - 18) * 0.80 = 39.6 °C  |
 | Traffic | 40 %  | 100 % | 0.50 | 40 + (100 - 40) * 0.50 = 70 %    |
 | Disk    | 0 %   | 100 % | 0.22 | 0 + (100 - 0) * 0.22 = 22 %      |
 | SLA     | 100 % | 0 %   | 0.09 | 100 + (0 - 100) * 0.09 = 91 %    |
@@ -94,11 +94,11 @@ When Good is bigger than Bad (Power, SLA), no special code is needed. The two mi
 percentage = t * 100
 ```
 
-Example: Heat `0.85 * 100 = 85 %` of the way to danger.
+Example: Heat `0.80 * 100 = 80 %` of the way to danger.
 
 This is how close the value is to danger. It is not the value the player reads.
 
-- Show the real value on the row: Power 60 %, Heat 84 °C.
+- Show the real value on the row: Power 60 %, Heat 39.6 °C.
 - Use `t` (or `t * 100`) only for the colour and the bar fill.
 - Showing 40 % on the Power row would look like the battery is at 40 %. It is at 60 %.
 

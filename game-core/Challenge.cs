@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+
 namespace DuskTillDawn.Core;
 
 public enum ChallengeState
@@ -24,12 +27,14 @@ public enum PlayerAction
     PlugCable,
     ReportEmail,
     RepairPanel,
+    CutFaultyCircuit,
 }
 
 public abstract class Challenge
 {
     private const double RoundingMargin = 1e-9;
-    private const double DefaultSlaDrainPerMinute = 0.4;
+    private const double DefaultSlaDrainPerMinute = 0.2;
+    private const double DefaultSlaRestoredOnSuccess = 5;
 
     protected Challenge(string alert, Room room, int points, double durationSeconds)
     {
@@ -42,7 +47,6 @@ public abstract class Challenge
 
 
 
-    // getters and setters allow other classes to modify private properties. 
     public string Alert { get; }
     public Room Room { get; }
     public int Points { get; }
@@ -52,6 +56,20 @@ public abstract class Challenge
 
     // How much SLA the company loses per in-game minute while this challenge is left running.
     public virtual double SlaDrainPerMinute => DefaultSlaDrainPerMinute;
+
+    // How much SLA the company wins back when this challenge is fixed in time.
+    public virtual double SlaRestoredOnSuccess => DefaultSlaRestoredOnSuccess;
+
+
+    public IReadOnlyList<Server> Targets { get; private set; } = [];
+
+    public void Hit(params Server[] servers)
+    {
+        Targets = servers;
+    }
+
+
+    public event Action<Challenge>? Succeeded;
 
     public void Start()
     {
@@ -85,6 +103,7 @@ public abstract class Challenge
         }
         State = ChallengeState.Succeeded;
         player.EarnPoints(PointsRule.RepairReward(Points, TimeRemaining, DurationSeconds));
+        Succeeded?.Invoke(this);
         return true;
     }
 

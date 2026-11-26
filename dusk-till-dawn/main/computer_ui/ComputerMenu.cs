@@ -44,14 +44,18 @@ public partial class ComputerMenu : Control
         VisibilityChanged += () =>
         {
             if (IsVisibleInTree())
+            {
                 PlayOpen();
+            }
         };
     }
 
     public override void _Process(double delta)
     {
         if (IsVisibleInTree())
+        {
             _clock.Text = Time.GetTimeStringFromSystem()[..5];
+        }
     }
 
     // The player sees unread mail from the desktop, before opening the Mail app.
