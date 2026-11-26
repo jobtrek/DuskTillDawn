@@ -53,7 +53,7 @@ Points (100 base, −25 wrong report) live in the Incident data file, so they ca
 | `Id` | int |
 | `Kind` | Warning, News or Phishing (never shown) |
 | `From`, `Subject`, `Body` | string |
-| `IncidentId` | int or null (News mails have none) |
+| `ChallengeId` | int or null (News mails have none) |
 | `IsRead`, `IsReported` | bool |
 
 Listens to `MailReceived` to add new rows while open.

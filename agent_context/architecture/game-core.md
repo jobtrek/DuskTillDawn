@@ -17,10 +17,10 @@ game state and rules so they run and test without the engine.
 | `Servers/` | Servers and their Clients: `Server` (name, Client names, load, status), `ServerHealth` (Ok / Warn / Down), `ServerRack` (8 fixed Servers set in code, `PickRandom`; optional `Random`, seeded by `GameState(seed)`) |
 | `PlayerProfile.cs` | Name, points (never below 0), room |
 | `PointsRule.cs` | Points for a challenge: +50 % for a fast repair, −50 % for every player on a failure; `NightBonus` gives +200 plus 1 per SLA % for a won night |
-| `Game.cs` | Abstract game: players, challenges, failures, solved. `Tick` moves the challenges; `SlaDrainPerMinute` = distinct Clients on broken Servers × `SlaDrainPerClient` (each Client once), plus the flat drain of running ones with no Targets; sets each target's `Server.Status` to Down while it runs, Ok once it is fixed or failed; each mode says when it is lost or finished |
+| `Game.cs` | Abstract game: players, challenges, failures, solved. `Tick` moves the challenges; `SlaDrainPerMinute` = distinct Clients on broken Servers × `SlaDrainPerClient` (each Client once), plus the flat drain of running ones with no Targets; sets each target's `Server.Status` to Down while it runs, Ok once it is fixed or failed; raises `ChallengeLaunched` (Main sends it to `GameState.ReceiveWarning`); each mode says when it is lost or finished |
 | `SoloGame.cs` | One player; lost after 3 failed challenges |
 | `DuoGame.cs` | Two-player race: ends after `ChallengeCount` challenges, `Winner` has the most points (null on a tie). Parked (contract: 1 player), not wired in Godot |
-| `Inbox.cs`, `Mail.cs` | Mail schedule (loaded from `emails.json`), arrival, read and phishing-report state |
+| `Inbox.cs`, `Mail.cs` | News and Phishing schedule (`emails.json`), arrival, read and phishing-report state; `GameState.ReceiveWarning` adds an Incident's Warning mail (`Challenge.Warning`, linked by `Mail.ChallengeId`) |
 | `HeldItem.cs` | What the player carries (one item at a time) |
 | `SunPosition.cs`, `MoonPosition.cs` | Sky positions from the hour of day |
 | `Weather.cs`, `WeatherSystem.cs` | Weather kinds (Clear, Cloudy, Rainy, Storm) and their rain; `GameState.Weather` changes every 120 s by weighted chance, rain blends in slowly; `SkipToNext` is the debug skip (F4). Built early: parked to M2 (`docs/game-v1.md`) |

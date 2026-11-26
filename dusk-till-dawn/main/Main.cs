@@ -35,6 +35,7 @@ public partial class Main : Node3D
         _state = new GameState();
         _game = new SoloGame(_state.Player);
         _game.ChallengeSucceeded += challenge => _state.RestoreSla(challenge.SlaRestoredOnSuccess);
+        _game.ChallengeLaunched += _state.ReceiveWarning;
         NightPlan plan = NightPlan.For(CurrentNight, _state.Servers);
         _incidents = new StoreInstancesOfIncidents(plan.Kinds);
         _spawner = new ChallengeSpawner(_game, plan.SpawnIntervalSeconds, () => _incidents.PickRandom());

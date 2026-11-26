@@ -15,6 +15,7 @@ public sealed class Inbox
 
     private readonly List<Mail> _mails = new();
     private readonly Queue<(int Minute, Mail Mail)> _schedule = new();
+    private int _nextId = 1;
 
     // In arrival order, oldest first.
     public IReadOnlyList<Mail> Mails => _mails;
@@ -27,7 +28,7 @@ public sealed class Inbox
         var data = JsonSerializer.Deserialize<Dictionary<MailKind, List<ScheduledMail>>>(json)
             ?? throw new ArgumentException("The mail schedule is empty or invalid.", nameof(json));
 
-        int nextId = 1;
+        _nextId = 1;
         var scheduled = new List<(int Minute, Mail Mail)>();
         foreach (var (kind, mails) in data)
         {
@@ -37,12 +38,11 @@ public sealed class Inbox
                     + random.Next(-ArrivalJitterMinutes, ArrivalJitterMinutes + 1);
                 scheduled.Add((minute, new Mail
                 {
-                    Id = nextId++,
+                    Id = _nextId++,
                     Kind = kind,
                     From = entry.From,
                     Subject = entry.Subject,
                     Body = entry.Body,
-                    IncidentId = entry.IncidentId,
                     ArrivedAt = NightStart.AddMinutes(minute),
                 }));
             }
@@ -77,6 +77,27 @@ public sealed class Inbox
         }
     }
 
+    internal Mail? DeliverWarning(Challenge incident, TimeOnly arrivedAt)
+    {
+        if (incident.Warning is not { } text)
+        {
+            return null;
+        }
+
+        var mail = new Mail
+        {
+            Id = _nextId++,
+            Kind = MailKind.Warning,
+            From = text.From,
+            Subject = text.Subject,
+            Body = text.Body,
+            ChallengeId = incident.Id,
+            ArrivedAt = arrivedAt,
+        };
+        _mails.Add(mail);
+        return mail;
+    }
+
     internal IEnumerable<Mail> DeliverDue(double minutesSinceNightStart)
     {
         while (_schedule.Count > 0 && _schedule.Peek().Minute <= minutesSinceNightStart)
@@ -87,5 +108,5 @@ public sealed class Inbox
         }
     }
 
-    private sealed record ScheduledMail(string From, string Subject, string Body, int MinutesAfterFirstMail, string? IncidentId = null);
+    private sealed record ScheduledMail(string From, string Subject, string Body, int MinutesAfterFirstMail);
 }

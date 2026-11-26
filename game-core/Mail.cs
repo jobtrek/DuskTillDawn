@@ -18,9 +18,11 @@ public sealed class Mail
     public required string Body { get; init; }
 
     // The Incident a Warning mail announces; News and Phishing mails have none.
-    public string? IncidentId { get; init; }
+    public int? ChallengeId { get; init; }
 
     public required TimeOnly ArrivedAt { get; init; }
     public bool IsRead { get; internal set; }
     public bool IsReported { get; internal set; }
 }
+
+public sealed record WarningText(string From, string Subject, string Body);

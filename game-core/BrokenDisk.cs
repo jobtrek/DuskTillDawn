@@ -15,6 +15,16 @@ public sealed class BrokenDisk : Challenge
         Hit(rack.PickRandom());
     }
 
+    public override WarningText Warning
+    {
+        get
+        {
+            string server = TargetNames(whenNone: "A server");
+            return new("Monitoring", $"Disk failing on {TargetNames(whenNone: "a server")}",
+                $"{server} reports disk errors. Replace the drive before it fails.");
+        }
+    }
+
     protected override bool IsRightAction(PlayerAction action)
     {
         return action == PlayerAction.ReplaceDisk;

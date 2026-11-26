@@ -25,6 +25,7 @@ public abstract class Game
 
     public event Action<Challenge>? ChallengeSucceeded;
     public event Action<Challenge>? ChallengeFailed;
+    public event Action<Challenge>? ChallengeLaunched;
 
 
 
@@ -79,6 +80,7 @@ public abstract class Game
         if (!_challenges.Contains(challenge))
         {
             _challenges.Add(challenge);
+            challenge.Id = _challenges.Count;
             challenge.Succeeded += c =>
             {
                 Solved++;
@@ -91,8 +93,14 @@ public abstract class Game
     public void Launch(Challenge challenge)
     {
         Add(challenge);
+        bool wasPending = challenge.State == ChallengeState.Pending;
         challenge.Start();
         RefreshServerStatus();
+
+        if (wasPending)
+        {
+            ChallengeLaunched?.Invoke(challenge);
+        }
     }
 
     // A player's fix reaches every challenge; each one decides whether this action repairs it.
