@@ -17,7 +17,7 @@ Full panels open like this, all in one parallel tween:
 - Open under 0.5s (`OpenDuration = 0.45`), reveal under 0.7s (`RevealDuration = 0.6`). Both are `[Export]` fields.
 - Trigger it from `VisibilityChanged` when `IsVisibleInTree()`.
 - Kill the previous tween first (`_openTween?.Kill()`), then reset every animated property before tweening.
-- Set the panel's pivot to bottom-centre on `Resized`, so it lifts like a map.
+- `PlayLiftOpen` sets the pivot to bottom-centre when the panel opens, so it lifts like a map.
 
 ## Block reveal (`BlockReveal.cs`)
 
