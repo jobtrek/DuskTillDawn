@@ -80,7 +80,7 @@ public partial class MailApp : Control
 
     public override void _UnhandledInput(InputEvent @event)
     {
-        if (UiMotion.IsCloseRequest(this, @event))
+        if (UiMotion.TryConsumeClose(this, @event))
         {
             EmitSignal(SignalName.CloseRequested);
         }

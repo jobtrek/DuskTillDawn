@@ -77,7 +77,7 @@ public static class UiMotion
     }
 
     // Esc closes the open window; true means the caller should ask to close.
-    public static bool IsCloseRequest(Control window, InputEvent @event)
+    public static bool TryConsumeClose(Control window, InputEvent @event)
     {
         if (!window.IsVisibleInTree() || !@event.IsActionPressed("ui_cancel"))
         {
