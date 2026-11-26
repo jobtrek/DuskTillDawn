@@ -24,6 +24,7 @@
 [ext_resource type="PackedScene" path="res://main/fire/extinguisher_spot.tscn" id="103_extinguisher"]
 [ext_resource type="PackedScene" path="res://main/fire/fire_particles.tscn" id="104_fireparticles"]
 [ext_resource type="PackedScene" path="res://main/fire/fire_effect.tscn" id="105_fireeffect"]
+[ext_resource type="PackedScene" path="res://main/solar_repair/panel_repair_spot.tscn" id="109_panelspot"]
 [ext_resource type="Shader" uid="uid://dak754rs84iae" path="res://main/sky/sky.gdshader" id="sky_shader"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_v0o3d"]
@@ -2296,6 +2297,12 @@ shape = SubResource("BoxShape3D_rooframpTip")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75.2344, 0.9823, 22.9703)
 HealthyDisk = NodePath("../Company/HardDrive_Healthy")
 FailedDisk = NodePath("../Company/HardDrive_Failed")
+
+[node name="PanelRepairSpot" parent="." unique_id=1702548790 node_paths=PackedStringArray("Slots", "CleanModel", "DamagedModel") instance=ExtResource("109_panelspot")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 75.1, 6.4, 21.3)
+Slots = [NodePath("../Company/SolarPanel_Damaged_001"), NodePath("../Company/SolarPanel_Clean_004"), NodePath("../Company/SolarPanel_Clean"), NodePath("../Company/SolarPanel_Clean_1"), NodePath("../Company/SolarPanel_Clean_2"), NodePath("../Company/SolarPanel_Damaged_004"), NodePath("../Company/SolarPanel_Damaged_003"), NodePath("../Company/SolarPanel_Damaged"), NodePath("../Company/SolarPanel_Clean_3")]
+CleanModel = NodePath("../Company/SolarPanel_Clean")
+DamagedModel = NodePath("../Company/SolarPanel_Damaged")
 
 [node name="ExtinguisherSpot" parent="." unique_id=1702548757 node_paths=PackedStringArray("Extinguisher", "FireSpot") instance=ExtResource("103_extinguisher")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 70.7576, 0.92, 21.0481)

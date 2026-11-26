@@ -1,0 +1,25 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://main/solar_repair/PanelRepairSpot.cs" id="1_spot"]
+[ext_resource type="PackedScene" path="res://main/prompt_ui/interaction_prompt.tscn" id="2_prompt"]
+[ext_resource type="Script" path="res://main/weather/LightningBolt.cs" id="3_bolt"]
+[ext_resource type="PackedScene" path="res://main/solar_repair/panel_damage.tscn" id="4_damage"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_zone"]
+size = Vector3(1.6, 2.5, 3.2)
+
+[node name="PanelRepairSpot" type="Node3D"]
+script = ExtResource("1_spot")
+
+[node name="Zone" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Zone"]
+shape = SubResource("BoxShape3D_zone")
+
+[node name="InteractionPrompt" parent="." instance=ExtResource("2_prompt")]
+Text = "Press E to repair the panel"
+
+[node name="Bolt" type="Node3D" parent="."]
+script = ExtResource("3_bolt")
+
+[node name="Damage" parent="." instance=ExtResource("4_damage")]

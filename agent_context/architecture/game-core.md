@@ -15,6 +15,7 @@ game state and rules so they run and test without the engine.
 | `NightPlan.cs` | Per night (1 to 5): which challenges can spawn, the spawn interval (180 s down to 75 s) and how many Phishing mails become Fake e-mails; table in `docs/player-flow/challenges.md` §4 |
 | `StoreInstancesOfIncidents.cs` | Holds the incident factories and picks one at random (`PickRandom`); optional `Random` for a fixed seed |
 | `Servers/` | Servers and their Clients: `Server` (name, Client names, load, status), `ServerHealth` (Ok / Warn / Down), `ServerRack` (8 fixed Servers set in code, `PickRandom`; optional `Random`, seeded by `GameState(seed)`) |
+| `SolarPanels/` | Roof solar panels: `SolarPanel` (name), `SolarArray` (9 panels PANEL-01..09, `PickRandom`, `PickRandomExcept(broken)`; seeded by `GameState(seed)`), owned by `GameState.SolarPanels` |
 | `PlayerProfile.cs` | Name, points (never below 0), room |
 | `PointsRule.cs` | Points for a challenge: +50 % for a fast repair, −50 % for every player on a failure; `NightBonus` gives +200 plus 1 per SLA % for a won night |
 | `Game.cs` | Abstract game: players, challenges, failures, solved. `Tick` moves the challenges; `SlaDrainPerMinute` = distinct Clients on broken Servers × `SlaDrainPerClient` (each Client once), plus the flat drain of running ones with no Targets; sets each target's `Server.Status` to Down while it runs, Ok once it is fixed or failed; raises `ChallengeLaunched` (Main sends it to `GameState.ReceiveWarning`); each mode says when it is lost or finished |
@@ -24,7 +25,7 @@ game state and rules so they run and test without the engine.
 | `PhishingIncidents.cs` | An arriving Phishing mail launches a `PhishingEmail` (one at a time, `NightPlan.FakeEmails` per night); `Report(mailId)` repairs it and returns the points (Warning → Active after 60 s → Escalated after 4 min, fails at 5 min) |
 | `HeldItem.cs` | What the player carries (one item at a time) |
 | `SunPosition.cs`, `MoonPosition.cs` | Sky positions from the hour of day |
-| `Weather.cs`, `WeatherSystem.cs` | Weather kinds (Clear, Cloudy, Rainy, Storm) and their rain; `GameState.Weather` changes every 120 s by weighted chance, rain blends in slowly; `SkipToNext` is the debug skip (F4). In a Storm, `LightningStruck` fires about every 15 s; `ForceStrike` is the debug strike (F3). `LightningDamage.cs`: a strike has a 35 % chance to launch a `DamagedSolarPanel` (Roof) when no incident runs. Storms and lightning are v1; snow, floods and animals are parked to M2 (`docs/game-v1.md`) |
+| `Weather.cs`, `WeatherSystem.cs` | Weather kinds (Clear, Cloudy, Rainy, Storm) and their rain; `GameState.Weather` changes every 120 s by weighted chance, rain blends in slowly; `SkipToNext` is the debug skip (F4). In a Storm, `LightningStruck` fires about every 15 s; `ForceStrike` is the debug strike (F3). `LightningDamage.cs`: a strike has a 35 % chance to launch a `DamagedSolarPanel` on a random intact `SolarPanel` (its `Target`), even while other incidents run; `Game.RepairPanel` repairs one panel. Storms and lightning are v1; snow, floods and animals are parked to M2 (`docs/game-v1.md`) |
 
 Built so far vs v1 target ([game/rules-v1.md](../game/rules-v1.md)): 8 challenges, states
 Pending → Running → Succeeded/Failed; `Main` spawns the night 1 plan (`NightPlan`): `BrokenDisk` (hits one random Server),
