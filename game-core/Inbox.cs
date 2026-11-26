@@ -15,6 +15,9 @@ public sealed class Inbox
 
     private readonly List<Mail> _mails = new();
     private readonly List<(int Minute, Mail Mail)> _schedule = new();
+    // Every scheduled mail, kept so a mail sent on demand can be sent again once the schedule has none left.
+    private readonly List<Mail> _loaded = new();
+    private int _resent;
     private int _nextId = 1;
 
     // In arrival order, oldest first.
@@ -50,6 +53,8 @@ public sealed class Inbox
 
         _mails.Clear();
         _schedule.Clear();
+        _loaded.Clear();
+        _loaded.AddRange(scheduled.Select(item => item.Mail));
         _schedule.AddRange(scheduled.OrderBy(item => item.Minute));
     }
 
@@ -107,16 +112,36 @@ public sealed class Inbox
     }
 
     // The next scheduled mail of this kind arrives now instead of at its planned time.
-    internal Mail? DeliverNext(MailKind kind)
+    // With none left, one already sent comes again as a new mail. Null only when the schedule has none of this kind.
+    internal Mail? DeliverNow(MailKind kind, TimeOnly arrivedAt)
     {
         int index = _schedule.FindIndex(item => item.Mail.Kind == kind);
-        if (index < 0)
+        Mail? source;
+        if (index >= 0)
+        {
+            source = _schedule[index].Mail;
+            _schedule.RemoveAt(index);
+        }
+        else
+        {
+            List<Mail> sameKind = _loaded.FindAll(mail => mail.Kind == kind);
+            source = sameKind.Count == 0 ? null : sameKind[_resent++ % sameKind.Count];
+        }
+
+        if (source == null)
         {
             return null;
         }
 
-        Mail mail = _schedule[index].Mail;
-        _schedule.RemoveAt(index);
+        var mail = new Mail
+        {
+            Id = _nextId++,
+            Kind = source.Kind,
+            From = source.From,
+            Subject = source.Subject,
+            Body = source.Body,
+            ArrivedAt = arrivedAt,
+        };
         _mails.Add(mail);
         return mail;
     }

@@ -35,6 +35,10 @@ _Avoid_: load-shed mode, power saving
 A message in the computer's Mail app. Three kinds: a Warning mail (sent by an Incident when it starts, naming the Server it hits, if it hits one), a News mail (tech news, flavour and hints) and a Phishing mail (a fake that the player must report). The inbox empties at the start of each night.
 _Avoid_: email, e-mail, message
 
+**Demo run**:
+The short presentation mode: three Incidents one after the other (Fire, traffic attack, Phishing mail), each a Ladder step with a Difficulty (Easy, Medium, Hard). Fixed in time, the next step starts; missed, the run starts over from the first step.
+_Avoid_: level, stage, challenge mode
+
 **App**:
 A program on the desk computer: Mail, Monitoring or Admin. The player opens it from the computer's desktop and closes it with Esc or its close button.
 _Avoid_: screen, program

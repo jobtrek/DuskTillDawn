@@ -19,16 +19,14 @@ public enum Difficulty
     Hard,
 }
 
-public sealed record LadderStep(string Name, Difficulty Difficulty, Func<Challenge> Start);
+// Start launches the step's Incident and returns it, or null when it cannot happen (the step is then skipped).
+public sealed record LadderStep(string Name, Difficulty Difficulty, Func<Challenge?> Start);
 
 public sealed class ChallengeLadder
 {
-    public const double BreakSeconds = 4;
-
     private readonly IReadOnlyList<LadderStep> _steps;
-    private double _breakLeft;
 
-    public ChallengeLadder(IReadOnlyList<LadderStep> steps)
+    public ChallengeLadder(Game game, IReadOnlyList<LadderStep> steps)
     {
         if (steps.Count == 0)
         {
@@ -36,6 +34,8 @@ public sealed class ChallengeLadder
         }
 
         _steps = steps;
+        game.ChallengeSucceeded += OnSucceeded;
+        game.ChallengeFailed += OnFailed;
     }
 
     public LadderStage Stage { get; private set; } = LadderStage.Ready;
@@ -45,15 +45,15 @@ public sealed class ChallengeLadder
     public Challenge? Current { get; private set; }
 
     public event Action<LadderStage>? StageChanged;
+
     public static ChallengeLadder Demo(Game game, PhishingIncidents phishing)
     {
-        return new ChallengeLadder(
+        return new ChallengeLadder(game,
         [
             new LadderStep("Fire in the server room", Difficulty.Easy, () => Launched(game, new Fire(durationSeconds: 90))),
             new LadderStep("Traffic attack on the servers", Difficulty.Medium,
-                () => Launched(game, new SecurityAttack(durationSeconds: 60))),
-            new LadderStep("Phishing mail", Difficulty.Hard, () => phishing.SendNow(durationSeconds: 60)
-                ?? throw new InvalidOperationException("No Phishing mail left in the schedule.")),
+                () => Launched(game, new SecurityAttack(durationSeconds: 75))),
+            new LadderStep("Phishing mail", Difficulty.Hard, () => phishing.SendNow(durationSeconds: 60)),
         ]);
     }
 
@@ -65,36 +65,31 @@ public sealed class ChallengeLadder
         }
     }
 
-    // Called after Game.Tick, so a challenge that just failed or was fixed is seen in the same frame.
-    public void Tick(double seconds)
+    // The player gets a moment to see the step was won; the UI decides how long, then moves on.
+    public void Continue()
     {
-        ArgumentOutOfRangeException.ThrowIfNegative(seconds);
-
-        if (Stage == LadderStage.Playing)
+        if (Stage == LadderStage.StepWon)
         {
-            CheckCurrent();
-        }
-        else if (Stage == LadderStage.StepWon)
-        {
-            _breakLeft -= seconds;
-            if (_breakLeft <= 0)
-            {
-                StartStep(StepIndex + 1);
-            }
+            StartStep(StepIndex + 1);
         }
     }
 
-    private void CheckCurrent()
+    private void OnSucceeded(Challenge challenge)
     {
-        if (Current!.State == ChallengeState.Failed)
+        if (Stage != LadderStage.Playing || challenge != Current)
+        {
+            return;
+        }
+
+        bool lastStep = StepIndex == _steps.Count - 1;
+        ChangeStage(lastStep ? LadderStage.Completed : LadderStage.StepWon);
+    }
+
+    private void OnFailed(Challenge challenge)
+    {
+        if (Stage == LadderStage.Playing && challenge == Current)
         {
             ChangeStage(LadderStage.Lost);
-        }
-        else if (Current.State == ChallengeState.Succeeded)
-        {
-            bool lastStep = StepIndex == _steps.Count - 1;
-            _breakLeft = BreakSeconds;
-            ChangeStage(lastStep ? LadderStage.Completed : LadderStage.StepWon);
         }
     }
 
@@ -102,6 +97,12 @@ public sealed class ChallengeLadder
     {
         StepIndex = index;
         Current = _steps[index].Start();
+        if (Current == null)
+        {
+            ChangeStage(index == _steps.Count - 1 ? LadderStage.Completed : LadderStage.StepWon);
+            return;
+        }
+
         ChangeStage(LadderStage.Playing);
     }
 
