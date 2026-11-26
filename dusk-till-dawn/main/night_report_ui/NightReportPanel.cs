@@ -28,7 +28,6 @@ public partial class NightReportPanel : CanvasLayer
         _failedValue = GetNode<Label>("%FailedValue");
         _pointsValue = GetNode<Label>("%PointsValue");
 
-        _panel.Resized += () => _panel.PivotOffset = new Vector2(_panel.Size.X / 2f, _panel.Size.Y);
         VisibilityChanged += () =>
         {
             if (Visible)
@@ -50,25 +49,6 @@ public partial class NightReportPanel : CanvasLayer
 
     private void PlayOpen()
     {
-        _openTween?.Kill();
-
-        float lift = GetViewport().GetVisibleRect().Size.Y * 0.6f;
-        _panel.OffsetTop = lift;
-        _panel.OffsetBottom = lift;
-        _panel.Scale = Vector2.One * 0.6f;
-        _panel.RotationDegrees = -8f;
-        _reveal.Progress = 0f;
-
-        _openTween = _panel.CreateTween().SetParallel();
-        _openTween.TweenProperty(_panel, "offset_top", 0f, OpenDuration)
-            .SetTrans(Tween.TransitionType.Back).SetEase(Tween.EaseType.Out);
-        _openTween.TweenProperty(_panel, "offset_bottom", 0f, OpenDuration)
-            .SetTrans(Tween.TransitionType.Back).SetEase(Tween.EaseType.Out);
-        _openTween.TweenProperty(_panel, "scale", Vector2.One, OpenDuration)
-            .SetTrans(Tween.TransitionType.Back).SetEase(Tween.EaseType.Out);
-        _openTween.TweenProperty(_panel, "rotation_degrees", 0f, OpenDuration)
-            .SetTrans(Tween.TransitionType.Cubic).SetEase(Tween.EaseType.Out);
-        _openTween.TweenProperty(_reveal, "Progress", 1f, RevealDuration)
-            .SetDelay(OpenDuration * 0.5f);
+        _openTween = UiMotion.PlayLiftOpen(_panel, _reveal, _openTween, OpenDuration, RevealDuration);
     }
 }

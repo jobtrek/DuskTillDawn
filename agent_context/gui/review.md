@@ -12,7 +12,7 @@ Part of the [GUI guide](README.md). Read the component's `.tscn`, its scripts, a
 
 ## Motion ([motion.md](motion.md))
 
-6. Full panels play the `PlayOpen()` animation on `VisibilityChanged`, killing the previous tween first.
+6. Full panels open with `UiMotion.PlayLiftOpen` or `UiMotion.PlayWindowOpen` on `VisibilityChanged`, passing back the previous tween.
 7. Full panels end with a `BlockReveal` tweened 0 → 1.
 8. Every clickable node has the hover zoom (1.12, brighten, 0.08s).
 9. Durations are `[Export]` fields, open < 0.5s, reveal < 0.7s.
@@ -23,7 +23,7 @@ Part of the [GUI guide](README.md). Read the component's `.tscn`, its scripts, a
 11. Panels are sized with anchors in percent; pixel offsets only for inner details.
 12. Overlays (reveal, glows, vignettes) have `mouse_filter = Ignore`.
 13. Actions leave the component only as `[Signal]`s; the component never hides itself or touches game state.
-14. Shared pieces (`BlockReveal`, `frame.png`, `PlayOpen`, `SetHover`) are referenced, not copied. A second user of a piece still living in `computer_ui/` is a fail: move it to `main/ui/`.
+14. Shared pieces (`BlockReveal`, `frame.png`, `UiMotion`) are referenced, not copied. A second user of a piece still living in `computer_ui/` is a fail: move it to `main/`.
 15. Coexists with the other UI ([coexist.md](coexist.md)): every component that can be visible at the same time is named, and space, stacking, input and meaning each pass against it.
 
 ## Code

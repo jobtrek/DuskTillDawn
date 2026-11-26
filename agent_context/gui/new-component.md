@@ -9,7 +9,7 @@ Part of the [GUI guide](README.md).
 3. **Neighbours.** List the existing UI that can be on screen with this one and plan its place, layer and input around them ([coexist.md](coexist.md)).
 4. **Tree.** Build the standard panel structure from [structure.md](structure.md), sized with anchors.
 5. **Textures.** Reuse `frame.png`. Draw anything new at tiny pixel sizes ([look.md](look.md)) into the component's `textures/` folder.
-6. **Motion.** Add the `PlayOpen()` animation with `BlockReveal`, and `SetHover()` on every button ([motion.md](motion.md)).
+6. **Motion.** Open with `UiMotion.PlayLiftOpen` (full-screen) or `UiMotion.PlayWindowOpen` (App window) and a `BlockReveal`, and call `UiMotion.AddHover` on every button ([motion.md](motion.md)).
 7. **Signals.** One `[Signal]` per action. Connect show/hide in the trigger script, not in the component.
 8. **Build.** Run `dotnet build` in `dusk-till-dawn/`. Done when it builds with no errors.
 9. **Review.** Run every check in [review.md](review.md) on the new component. Done when all pass.
@@ -19,11 +19,11 @@ Part of the [GUI guide](README.md).
 | Piece | Where | Use for |
 |---|---|---|
 | `BlockReveal.cs` | `main/computer_ui/` | The block-clearing reveal |
-| `PlayOpen()` | `main/computer_ui/ComputerMenu.cs` | Open animation |
-| `SetHover()` | `main/computer_ui/ComputerMenu.cs` | Hover zoom on buttons |
+| `UiMotion.PlayLiftOpen` / `PlayWindowOpen` | `main/UiMotion.cs` | Open animation |
+| `UiMotion.AddHover` | `main/UiMotion.cs` | Hover zoom on buttons |
 | `frame.png` | `main/computer_ui/textures/` | Default panel frame (NinePatch) |
 
-When a second component needs one of these, move it to a shared folder (e.g. `main/ui/`) and point both components at it, instead of copying it.
+When a second component needs one of these, move it to `main/` (as `UiMotion.cs` was) and point both components at it, instead of copying it.
 
 ## C# conventions
 

@@ -13,8 +13,6 @@ public partial class Dashboard : CanvasLayer
     [Export] public float AppearDuration = 0.4f;
     [Export] public float PopDuration = 0.25f;
 
-    private static readonly Color LossTint = new(1f, 0.45f, 0.4f);
-    private static readonly Color GainTint = new(0.5f, 1f, 0.55f);
     private static readonly Color Faded = new(1f, 1f, 1f, 0.55f);
 
     private Control _panel = null!;
@@ -58,7 +56,7 @@ public partial class Dashboard : CanvasLayer
         _pointsValue.Text = points.ToString();
         if (previous != null)
         {
-            Pop(_pointsValue, points < previous ? LossTint : GainTint);
+            UiMotion.Pop(_pointsValue, points < previous ? UiMotion.LossTint : UiMotion.GainTint, PopDuration, _popTweens);
         }
     }
 
@@ -74,11 +72,11 @@ public partial class Dashboard : CanvasLayer
         _failures = failures;
         _lost = lost;
         _failuresValue.Text = lost ? $"{failures} / {SoloGame.MaxFailures}  GAME OVER" : $"{failures} / {SoloGame.MaxFailures}";
-        _failuresValue.SelfModulate = lost ? LossTint : Colors.White;
+        _failuresValue.SelfModulate = lost ? UiMotion.LossTint : Colors.White;
 
         if (!firstShow && increased)
         {
-            Pop(_failuresValue, LossTint);
+            UiMotion.Pop(_failuresValue, UiMotion.LossTint, PopDuration, _popTweens);
         }
     }
 
@@ -113,35 +111,7 @@ public partial class Dashboard : CanvasLayer
     // The panel slides in from the right when the game starts.
     private void PlayAppear()
     {
-        _panel.OffsetLeft = 80f;
-        _panel.OffsetRight = 80f;
-        _panel.Modulate = Colors.Transparent;
-
-        var tween = CreateTween().SetParallel();
-        tween.TweenProperty(_panel, "offset_left", 0f, AppearDuration)
-            .SetTrans(Tween.TransitionType.Back).SetEase(Tween.EaseType.Out);
-        tween.TweenProperty(_panel, "offset_right", 0f, AppearDuration)
-            .SetTrans(Tween.TransitionType.Back).SetEase(Tween.EaseType.Out);
-        tween.TweenProperty(_panel, "modulate", Colors.White, AppearDuration * 0.6f);
-    }
-
-    // Quick scale pop with a tint that fades back to white (green for a gain, red for a loss).
-    private void Pop(Control item, Color tint)
-    {
-        if (_popTweens.TryGetValue(item, out Tween? previous))
-        {
-            previous.Kill();
-        }
-
-        item.PivotOffset = item.Size / 2f;
-        item.Scale = Vector2.One * 1.3f;
-        item.Modulate = tint;
-
-        Tween tween = item.CreateTween().SetParallel();
-        tween.TweenProperty(item, "scale", Vector2.One, PopDuration)
-            .SetTrans(Tween.TransitionType.Back).SetEase(Tween.EaseType.Out);
-        tween.TweenProperty(item, "modulate", Colors.White, PopDuration);
-        _popTweens[item] = tween;
+        UiMotion.SlideIn(_panel, new Vector2(80f, 0f), AppearDuration);
     }
 
     private static string RoomName(Room room)
@@ -198,7 +168,7 @@ public partial class Dashboard : CanvasLayer
 
             _seconds = seconds;
             _time.Text = $"{seconds / 60}:{seconds % 60:00}";
-            _time.SelfModulate = seconds <= UrgentSeconds ? LossTint : Colors.White;
+            _time.SelfModulate = seconds <= UrgentSeconds ? UiMotion.LossTint : Colors.White;
         }
 
         public void Hide()

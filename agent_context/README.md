@@ -18,7 +18,7 @@ Read this index, then open only the file your task needs. Terms: [CONTEXT.md](..
 |---|---|
 | Understand the game | [game/overview.md](game/overview.md) |
 | Game rules (time, SLA, simulation, Incidents) | [game/rules-v1.md](game/rules-v1.md) |
-| Where do I change X? | [architecture/where-to-change.md](architecture/where-to-change.md) |
+| Where do I change X? | [architecture/where-to-change.md](architecture/where-to-change.md) (UI: [where-to-change-ui.md](architecture/where-to-change-ui.md)) |
 | Find where code lives | [architecture/overview.md](architecture/overview.md) |
 | Godot project (scenes, UI, controllers) | [architecture/godot-project.md](architecture/godot-project.md) |
 | Game logic library | [architecture/game-core.md](architecture/game-core.md) |

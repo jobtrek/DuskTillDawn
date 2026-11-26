@@ -39,8 +39,6 @@ public partial class ComputerMenu : Control
         WireIcon("Map/Screen/Icons/AdminApp", () => EmitSignal(SignalName.AdminPressed));
         BuildMailBadge(GetNode<TextureButton>("Map/Screen/Icons/MailApp/Button"));
 
-        // Rotate/scale around the bottom-centre, like lifting a map into view.
-        _map.Resized += () => _map.PivotOffset = new Vector2(_map.Size.X / 2f, _map.Size.Y);
         VisibilityChanged += () =>
         {
             if (IsVisibleInTree())
@@ -101,41 +99,11 @@ public partial class ComputerMenu : Control
         var app = GetNode<Control>(path);
         var button = app.GetNode<TextureButton>("Button");
         button.Pressed += onPressed;
-        button.MouseEntered += () => SetHover(button, true);
-        button.MouseExited += () => SetHover(button, false);
-    }
-
-    private void SetHover(TextureButton button, bool hovered)
-    {
-        button.PivotOffset = button.Size / 2f;
-        var tween = button.CreateTween().SetParallel();
-        tween.TweenProperty(button, "scale", Vector2.One * (hovered ? 1.12f : 1f), 0.08);
-        tween.TweenProperty(button, "self_modulate", hovered ? new Color(1.25f, 1.25f, 1.25f) : Colors.White, 0.08);
+        UiMotion.AddHover(button);
     }
 
     private void PlayOpen()
     {
-        _openTween?.Kill();
-
-        float lift = GetViewportRect().Size.Y * 0.6f;
-        _map.OffsetTop = lift;
-        _map.OffsetBottom = lift;
-        _map.Scale = Vector2.One * 0.6f;
-        _map.RotationDegrees = -8f;
-        _backdrop.Modulate = Colors.Transparent;
-        _reveal.Progress = 0f;
-
-        _openTween = CreateTween().SetParallel();
-        _openTween.TweenProperty(_backdrop, "modulate", Colors.White, OpenDuration);
-        _openTween.TweenProperty(_map, "offset_top", 0f, OpenDuration)
-            .SetTrans(Tween.TransitionType.Back).SetEase(Tween.EaseType.Out);
-        _openTween.TweenProperty(_map, "offset_bottom", 0f, OpenDuration)
-            .SetTrans(Tween.TransitionType.Back).SetEase(Tween.EaseType.Out);
-        _openTween.TweenProperty(_map, "scale", Vector2.One, OpenDuration)
-            .SetTrans(Tween.TransitionType.Back).SetEase(Tween.EaseType.Out);
-        _openTween.TweenProperty(_map, "rotation_degrees", 0f, OpenDuration)
-            .SetTrans(Tween.TransitionType.Cubic).SetEase(Tween.EaseType.Out);
-        _openTween.TweenProperty(_reveal, "Progress", 1f, RevealDuration)
-            .SetDelay(OpenDuration * 0.5f);
+        _openTween = UiMotion.PlayLiftOpen(_map, _reveal, _openTween, OpenDuration, RevealDuration, _backdrop);
     }
 }

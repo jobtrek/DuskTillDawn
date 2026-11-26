@@ -7,6 +7,6 @@ Part of the [GUI guide](README.md).
 | File | Role |
 |---|---|
 | `computer_menu.tscn` | Backdrop, framed screen, desktop, four app icons |
-| `ComputerMenu.cs` | Open animation, clock, hover, `MailPressed` / `MonitoringPressed` / `HelpPressed` / `AdminPressed` signals |
+| `ComputerMenu.cs` | Clock, open animation and hover (via `UiMotion`), `MailPressed` / `MonitoringPressed` / `HelpPressed` / `AdminPressed` signals |
 | `BlockReveal.cs` | Block reveal |
 | `../DetectPlayerNearComputer.cs` | Trigger: shows "press E" when the player is in range, opens on E, hides on exit |

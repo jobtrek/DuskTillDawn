@@ -26,8 +26,6 @@ public partial class Hud : CanvasLayer
     // Set while the player sits at the desk computer, where the inbox already shows new mail.
     public bool MailToastMuted { get; set; }
 
-    private static readonly Color LossTint = new(1f, 0.45f, 0.4f);
-    private static readonly Color GainTint = new(0.5f, 1f, 0.55f);
     private static readonly Color Flash = new(1.6f, 1.6f, 1.6f);
 
     private Control _statusBar = null!;
@@ -41,7 +39,7 @@ public partial class Hud : CanvasLayer
     private Control _mailToast = null!;
     private Label _mailToastLabel = null!;
 
-    private readonly Dictionary<CanvasItem, Tween> _popTweens = new();
+    private readonly Dictionary<Control, Tween> _popTweens = new();
     private Tween? _bannerTween;
     private Tween? _toastTween;
     // Mails the current toast is announcing; a second arrival while it shows adds up instead of hiding the first.
@@ -158,7 +156,7 @@ public partial class Hud : CanvasLayer
         _clockIcon.Texture = night ? MoonIcon : SunIcon;
         if (!firstShow)
         {
-            Pop(_clockIcon, Colors.White);
+            UiMotion.Pop(_clockIcon, Colors.White, PopDuration, _popTweens);
         }
     }
 
@@ -182,7 +180,7 @@ public partial class Hud : CanvasLayer
 
         if (dropped)
         {
-            Pop(_slaBar, Flash, 1f);
+            UiMotion.Pop(_slaBar, Flash, PopDuration, _popTweens, scaleFrom: 1f);
         }
     }
 
@@ -198,7 +196,7 @@ public partial class Hud : CanvasLayer
         _pointsValue.Text = points.ToString();
         if (previous != null)
         {
-            Pop(_pointsValue, points < previous ? LossTint : GainTint);
+            UiMotion.Pop(_pointsValue, points < previous ? UiMotion.LossTint : UiMotion.GainTint, PopDuration, _popTweens);
         }
     }
 
@@ -221,7 +219,7 @@ public partial class Hud : CanvasLayer
         }
 
         _bannerLabel.Text = message;
-        _bannerLabel.SelfModulate = message == SlaLostMessage || message == FailuresLostMessage ? LossTint : Colors.White;
+        _bannerLabel.SelfModulate = message == SlaLostMessage || message == FailuresLostMessage ? UiMotion.LossTint : Colors.White;
         _banner.Visible = true;
         _banner.PivotOffset = _banner.Size / 2f;
         _banner.Scale = Vector2.One * 0.6f;
@@ -238,35 +236,7 @@ public partial class Hud : CanvasLayer
     // The status bar drops in from above the screen when the game starts.
     private void PlayAppear()
     {
-        _statusBar.OffsetTop = -80f;
-        _statusBar.OffsetBottom = -80f;
-        _statusBar.Modulate = Colors.Transparent;
-
-        var tween = CreateTween().SetParallel();
-        tween.TweenProperty(_statusBar, "offset_top", 0f, AppearDuration)
-            .SetTrans(Tween.TransitionType.Back).SetEase(Tween.EaseType.Out);
-        tween.TweenProperty(_statusBar, "offset_bottom", 0f, AppearDuration)
-            .SetTrans(Tween.TransitionType.Back).SetEase(Tween.EaseType.Out);
-        tween.TweenProperty(_statusBar, "modulate", Colors.White, AppearDuration * 0.6f);
-    }
-
-    // Quick scale pop with a tint that fades back to white.
-    private void Pop(Control item, Color tint, float scaleFrom = 1.3f)
-    {
-        if (_popTweens.TryGetValue(item, out Tween? previous))
-        {
-            previous.Kill();
-        }
-
-        item.PivotOffset = item.Size / 2f;
-        item.Scale = Vector2.One * scaleFrom;
-        item.Modulate = tint;
-
-        Tween tween = item.CreateTween().SetParallel();
-        tween.TweenProperty(item, "scale", Vector2.One, PopDuration)
-            .SetTrans(Tween.TransitionType.Back).SetEase(Tween.EaseType.Out);
-        tween.TweenProperty(item, "modulate", Colors.White, PopDuration);
-        _popTweens[item] = tween;
+        UiMotion.SlideIn(_statusBar, new Vector2(0f, -80f), AppearDuration);
     }
 
     // The night is lost two ways: the SLA hits 0 %, or too many incidents are missed.
