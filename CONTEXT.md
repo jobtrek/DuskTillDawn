@@ -5,8 +5,8 @@ A single-player game about the only sysadmin on a solar-powered night shift, kee
 ## Language
 
 **Incident**:
-Something that goes wrong during a night and that the player must fix (an expired certificate, a phishing mail, a failing drive). It moves through Warning, Active, Escalated and Resolved.
-_Avoid_: défi, challenge, problem, panne
+Something that goes wrong during a night and that the player must fix (an expired certificate, a phishing mail, a failing drive). It waits Dormant, then moves through the Escalation stages Warning, Active and Escalated, and ends only when the player resolves it. An Incident left unfixed stays Escalated, causing damage, until it is Resolved or the night ends. Each kind of Incident may spend a different time in each stage.
+_Avoid_: défi, challenge, problem, panne, failed (for an unfixed Incident)
 
 **Server**:
 One named machine in the server room (WEB-01, DB-01, MAIL-01…, the same names the Mails use). It hosts Clients, has a load and a status: OK, WARN or DOWN. An Incident hits one Server, a circuit of two, or every Server.
@@ -40,7 +40,7 @@ A program on the desk computer: Mail, Monitoring or Admin. The player opens it f
 _Avoid_: screen, program
 
 **Dashboard**:
-The small HUD panel (top right) with points, failures and every running Incident. Not the computer's Monitoring app.
+The small HUD panel (top right) with points, escalations (Incidents that reached Escalated) and every running Incident. Not the computer's Monitoring app.
 _Avoid_: monitoring (for the HUD panel)
 
 **Asset table**:
