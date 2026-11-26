@@ -9,12 +9,14 @@ public sealed class LightningDamage
     private readonly Random _random;
     private readonly Game _game;
     private readonly double _hitChance;
+    private readonly SolarArray _panels;
 
-    public LightningDamage(WeatherSystem weather, Game game, Random random, double hitChance = DefaultHitChance)
+    public LightningDamage(WeatherSystem weather, Game game, SolarArray panels, Random random, double hitChance = DefaultHitChance)
     {
         _game = game;
         _random = random;
         _hitChance = hitChance;
+        _panels = panels;
         weather.LightningStruck += OnStrike;
     }
 
@@ -25,11 +27,18 @@ public sealed class LightningDamage
             return;
         }
 
-        if (_game.Challenges.Any(c => c.State == ChallengeState.Running))
+        var broken = _game.Challenges
+            .OfType<DamagedSolarPanel>()
+            .Where(c => c.State == ChallengeState.Running)
+            .Select(c => c.Target!)
+            .ToList();
+
+        SolarPanel? panel = _panels.PickRandomExcept(broken);
+        if (panel == null)
         {
             return;
         }
 
-        _game.Launch(new DamagedSolarPanel());
+        _game.Launch(new DamagedSolarPanel(panel));
     }
 }

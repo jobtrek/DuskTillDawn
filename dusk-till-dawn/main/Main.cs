@@ -36,7 +36,7 @@ public partial class Main : Node3D
     {
         _state = new GameState();
         _game = new SoloGame(_state.Player);
-        _lightningDamage = new LightningDamage(_state.Weather, _game, new Random());
+        _lightningDamage = new LightningDamage(_state.Weather, _game, _state.SolarPanels, new Random());
         _game.ChallengeSucceeded += challenge => _state.RestoreSla(challenge.SlaRestoredOnSuccess);
         _game.ChallengeLaunched += _state.ReceiveWarning;
         NightPlan plan = NightPlan.For(CurrentNight, _state.Servers);

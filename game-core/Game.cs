@@ -129,6 +129,23 @@ public abstract class Game
         return false;
     }
 
+    public bool RepairPanel(PlayerProfile player, SolarPanel panel)
+    {
+        for (var i = 0; i < _challenges.Count; i++)
+        {
+            if (_challenges[i] is DamagedSolarPanel damaged && damaged.Target == panel)
+            {
+                if (damaged.Repair(player, PlayerAction.RepairPanel))
+                {
+                    RefreshServerStatus();
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     public void Tick(double seconds)
     {
         ArgumentOutOfRangeException.ThrowIfNegative(seconds);
