@@ -27,6 +27,7 @@ public enum PlayerAction
     UseExtinguisher,
     PlugCable,
     ReportEmail,
+    RepairPanel,
     CutFaultyCircuit,
 }
 
