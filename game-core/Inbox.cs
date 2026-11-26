@@ -14,7 +14,10 @@ public sealed class Inbox
     private static readonly TimeOnly NightStart = new(20, 0);
 
     private readonly List<Mail> _mails = new();
-    private readonly Queue<(int Minute, Mail Mail)> _schedule = new();
+    private readonly List<(int Minute, Mail Mail)> _schedule = new();
+    // Every scheduled mail, kept so a mail sent on demand can be sent again once the schedule has none left.
+    private readonly List<Mail> _loaded = new();
+    private int _resent;
     private int _nextId = 1;
 
     // In arrival order, oldest first.
@@ -50,10 +53,9 @@ public sealed class Inbox
 
         _mails.Clear();
         _schedule.Clear();
-        foreach (var item in scheduled.OrderBy(item => item.Minute))
-        {
-            _schedule.Enqueue(item);
-        }
+        _loaded.Clear();
+        _loaded.AddRange(scheduled.Select(item => item.Mail));
+        _schedule.AddRange(scheduled.OrderBy(item => item.Minute));
     }
 
     public void MarkRead(int mailId)
@@ -100,12 +102,48 @@ public sealed class Inbox
 
     internal IEnumerable<Mail> DeliverDue(double minutesSinceNightStart)
     {
-        while (_schedule.Count > 0 && _schedule.Peek().Minute <= minutesSinceNightStart)
+        while (_schedule.Count > 0 && _schedule[0].Minute <= minutesSinceNightStart)
         {
-            Mail mail = _schedule.Dequeue().Mail;
+            Mail mail = _schedule[0].Mail;
+            _schedule.RemoveAt(0);
             _mails.Add(mail);
             yield return mail;
         }
+    }
+
+    // The next scheduled mail of this kind arrives now instead of at its planned time.
+    // With none left, one already sent comes again as a new mail. Null only when the schedule has none of this kind.
+    internal Mail? DeliverNow(MailKind kind, TimeOnly arrivedAt)
+    {
+        int index = _schedule.FindIndex(item => item.Mail.Kind == kind);
+        Mail? source;
+        if (index >= 0)
+        {
+            source = _schedule[index].Mail;
+            _schedule.RemoveAt(index);
+        }
+        else
+        {
+            List<Mail> sameKind = _loaded.FindAll(mail => mail.Kind == kind);
+            source = sameKind.Count == 0 ? null : sameKind[_resent++ % sameKind.Count];
+        }
+
+        if (source == null)
+        {
+            return null;
+        }
+
+        var mail = new Mail
+        {
+            Id = _nextId++,
+            Kind = source.Kind,
+            From = source.From,
+            Subject = source.Subject,
+            Body = source.Body,
+            ArrivedAt = arrivedAt,
+        };
+        _mails.Add(mail);
+        return mail;
     }
 
     private sealed record ScheduledMail(string From, string Subject, string Body, int MinutesAfterFirstMail);

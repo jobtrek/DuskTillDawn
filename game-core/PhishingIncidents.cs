@@ -15,6 +15,7 @@ public sealed class PhishingIncidents
     private readonly Dictionary<int, PhishingEmail> _byMail = [];
     private readonly int _maxPerNight;
     private int _launched;
+    private double? _forcedDuration;
 
     public PhishingIncidents(GameState state, Game game, int maxPerNight)
     {
@@ -38,14 +39,33 @@ public sealed class PhishingIncidents
         return new PhishingReport(isPhishing, _state.Points - pointsBefore);
     }
 
+    // The next Phishing mail arrives now and is always an Incident, whatever the night allows.
+    public PhishingEmail? SendNow(double durationSeconds)
+    {
+        _forcedDuration = durationSeconds;
+        Mail? mail = _state.ReceiveNow(MailKind.Phishing);
+        _forcedDuration = null;
+        return mail != null && _byMail.TryGetValue(mail.Id, out PhishingEmail? incident) ? incident : null;
+    }
+
     private void OnMailReceived(Mail mail)
     {
+        if (_forcedDuration is { } forced && mail.Kind == MailKind.Phishing)
+        {
+            Launch(mail, new PhishingEmail(forced));
+            return;
+        }
+
         if (mail.Kind != MailKind.Phishing || _launched >= _maxPerNight || _game.IsRunning<PhishingEmail>())
         {
             return;
         }
 
-        var incident = new PhishingEmail();
+        Launch(mail, new PhishingEmail());
+    }
+
+    private void Launch(Mail mail, PhishingEmail incident)
+    {
         _byMail[mail.Id] = incident;
         _launched++;
         _game.Launch(incident);

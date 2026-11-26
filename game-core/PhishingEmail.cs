@@ -10,16 +10,19 @@ public enum PhishingStage
 // A fake e-mail arrived. Fixed by reporting it from the control room.
 // Ignored, it gets worse (docs/game-v1.md §7): no damage while it is a Warning, the SLA drains once it is
 // Active, and the drain doubles once it is Escalated. Reported early, it pays the fast repair bonus.
-public sealed class PhishingEmail() : Challenge("New urgent message", Room.Control, points: 100, durationSeconds: 300)
+public sealed class PhishingEmail(double durationSeconds = 300)
+    : Challenge("New urgent message", Room.Control, points: 100, durationSeconds)
 {
-    public const double ActiveAfterSeconds = 60;
-    public const double EscalatedAfterSeconds = ActiveAfterSeconds + 180;
+    // Warning for the first fifth of its time, Escalated for the last fifth: 60 s and 4 min of the usual 5 min,
+    // so a shorter one (the demo run's Hard step) goes through every stage too.
+    private const double ActiveFraction = 0.2;
+    private const double EscalatedFraction = 0.8;
     private const double ActiveSlaDrainPerMinute = 0.04;
 
-    public PhishingStage Stage => (DurationSeconds - TimeRemaining) switch
+    public PhishingStage Stage => ((DurationSeconds - TimeRemaining) / DurationSeconds) switch
     {
-        >= EscalatedAfterSeconds => PhishingStage.Escalated,
-        >= ActiveAfterSeconds => PhishingStage.Active,
+        >= EscalatedFraction => PhishingStage.Escalated,
+        >= ActiveFraction => PhishingStage.Active,
         _ => PhishingStage.Warning,
     };
 

@@ -106,13 +106,26 @@ public sealed class GameState(int? seed = null)
         }
     }
 
+    private TimeOnly Now => new TimeOnly(0, 0).AddMinutes(NightStartInMinutes + MinutesSinceNightStart);
+
     public void ReceiveWarning(Challenge incident)
     {
-        TimeOnly now = new TimeOnly(0, 0).AddMinutes(NightStartInMinutes + MinutesSinceNightStart);
-        if (Inbox.DeliverWarning(incident, now) is { } mail)
+        if (Inbox.DeliverWarning(incident, Now) is { } mail)
         {
             MailReceived?.Invoke(mail);
         }
+    }
+
+    // The demo ladder needs a Phishing mail right now, not at its scheduled time.
+    public Mail? ReceiveNow(MailKind kind)
+    {
+        Mail? mail = Inbox.DeliverNow(kind, Now);
+        if (mail != null)
+        {
+            MailReceived?.Invoke(mail);
+        }
+
+        return mail;
     }
 
     // Returns whether the mail really was Phishing. A wrong report costs points only the first time.
