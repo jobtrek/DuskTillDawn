@@ -115,6 +115,18 @@ public sealed class GameState(int? seed = null)
         }
     }
 
+    // The demo ladder needs a Phishing mail right now, not at its scheduled time.
+    public Mail? ReceiveNow(MailKind kind)
+    {
+        Mail? mail = Inbox.DeliverNext(kind);
+        if (mail != null)
+        {
+            MailReceived?.Invoke(mail);
+        }
+
+        return mail;
+    }
+
     // Returns whether the mail really was Phishing. A wrong report costs points only the first time.
     public bool ReportPhishing(int mailId)
     {

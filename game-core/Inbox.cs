@@ -14,7 +14,7 @@ public sealed class Inbox
     private static readonly TimeOnly NightStart = new(20, 0);
 
     private readonly List<Mail> _mails = new();
-    private readonly Queue<(int Minute, Mail Mail)> _schedule = new();
+    private readonly List<(int Minute, Mail Mail)> _schedule = new();
     private int _nextId = 1;
 
     // In arrival order, oldest first.
@@ -50,10 +50,7 @@ public sealed class Inbox
 
         _mails.Clear();
         _schedule.Clear();
-        foreach (var item in scheduled.OrderBy(item => item.Minute))
-        {
-            _schedule.Enqueue(item);
-        }
+        _schedule.AddRange(scheduled.OrderBy(item => item.Minute));
     }
 
     public void MarkRead(int mailId)
@@ -100,12 +97,28 @@ public sealed class Inbox
 
     internal IEnumerable<Mail> DeliverDue(double minutesSinceNightStart)
     {
-        while (_schedule.Count > 0 && _schedule.Peek().Minute <= minutesSinceNightStart)
+        while (_schedule.Count > 0 && _schedule[0].Minute <= minutesSinceNightStart)
         {
-            Mail mail = _schedule.Dequeue().Mail;
+            Mail mail = _schedule[0].Mail;
+            _schedule.RemoveAt(0);
             _mails.Add(mail);
             yield return mail;
         }
+    }
+
+    // The next scheduled mail of this kind arrives now instead of at its planned time.
+    internal Mail? DeliverNext(MailKind kind)
+    {
+        int index = _schedule.FindIndex(item => item.Mail.Kind == kind);
+        if (index < 0)
+        {
+            return null;
+        }
+
+        Mail mail = _schedule[index].Mail;
+        _schedule.RemoveAt(index);
+        _mails.Add(mail);
+        return mail;
     }
 
     private sealed record ScheduledMail(string From, string Subject, string Body, int MinutesAfterFirstMail);
