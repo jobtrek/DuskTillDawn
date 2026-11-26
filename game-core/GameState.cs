@@ -106,6 +106,15 @@ public sealed class GameState(int? seed = null)
         }
     }
 
+    public void ReceiveWarning(Challenge incident)
+    {
+        TimeOnly now = new TimeOnly(0, 0).AddMinutes(NightStartInMinutes + MinutesSinceNightStart);
+        if (Inbox.DeliverWarning(incident, now) is { } mail)
+        {
+            MailReceived?.Invoke(mail);
+        }
+    }
+
     // Returns whether the mail really was Phishing. A wrong report costs points only the first time.
     public bool ReportPhishing(int mailId)
     {

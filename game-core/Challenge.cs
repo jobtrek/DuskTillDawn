@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DuskTillDawn.Core;
 
@@ -47,6 +48,8 @@ public abstract class Challenge
 
 
 
+    // Set by Game when the challenge joins the night; 0 until then.
+    public int Id { get; internal set; }
     public string Alert { get; }
     public Room Room { get; }
     public int Points { get; }
@@ -62,6 +65,14 @@ public abstract class Challenge
 
 
     public IReadOnlyList<Server> Targets { get; private set; } = [];
+
+    // The Warning mail the inbox gets when this Incident starts; null when it sends none.
+    public virtual WarningText? Warning => null;
+
+    protected string TargetNames(string whenNone)
+    {
+        return Targets.Count == 0 ? whenNone : string.Join(", ", Targets.Select(server => server.Name));
+    }
 
     public void Hit(params Server[] servers)
     {

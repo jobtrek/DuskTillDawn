@@ -40,6 +40,7 @@ public partial class Main : Node3D
         _spawner = new ChallengeSpawner(_game, () => _incidents.PickRandom());
         _lightningDamage = new LightningDamage(_state.Weather, _game, new Random());
         _game.ChallengeSucceeded += challenge => _state.RestoreSla(challenge.SlaRestoredOnSuccess);
+        _game.ChallengeLaunched += _state.ReceiveWarning;
         NightPlan plan = NightPlan.For(CurrentNight, _state.Servers);
         Phishing = new PhishingIncidents(_state, _game, plan.FakeEmails);
         _incidents = new StoreInstancesOfIncidents(plan.Kinds);
