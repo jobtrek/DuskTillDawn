@@ -12,7 +12,8 @@ public partial class Hud : CanvasLayer
     private const double NightStartHour = 20;
     private const double NightEndHour = 8;
     private const double SlaDangerPercent = 25;
-    private const string LostMessage = "SLA at 0 %: the company is bankrupt";
+    private const string SlaLostMessage = "SLA at 0 %: the company is bankrupt";
+    private static readonly string FailuresLostMessage = $"{SoloGame.MaxFailures} incidents missed: the company is bankrupt";
 
     [Export] public float AppearDuration = 0.4f;
     [Export] public float PopDuration = 0.25f;
@@ -100,12 +101,12 @@ public partial class Hud : CanvasLayer
         _slaValue.SelfModulate = Colors.White.Lerp(_slaBar.BadColor, t);
     }
 
-    public void ShowState(GameState state)
+    public void ShowState(GameState state, Game game)
     {
         ShowClock(state);
         ShowSla(state.Sla);
         ShowPoints(state.Points);
-        ShowBanner(EndMessage(state));
+        ShowBanner(EndMessage(state, game));
     }
 
     // Only the count, never sender or subject: the player has to go to the computer to judge a mail.
@@ -220,7 +221,7 @@ public partial class Hud : CanvasLayer
         }
 
         _bannerLabel.Text = message;
-        _bannerLabel.SelfModulate = message == LostMessage ? LossTint : Colors.White;
+        _bannerLabel.SelfModulate = message == SlaLostMessage || message == FailuresLostMessage ? LossTint : Colors.White;
         _banner.Visible = true;
         _banner.PivotOffset = _banner.Size / 2f;
         _banner.Scale = Vector2.One * 0.6f;
@@ -268,11 +269,17 @@ public partial class Hud : CanvasLayer
         _popTweens[item] = tween;
     }
 
-    private static string? EndMessage(GameState state)
+    // The night is lost two ways: the SLA hits 0 %, or too many incidents are missed.
+    private static string? EndMessage(GameState state, Game game)
     {
         if (state.Status == NightStatus.Lost)
         {
-            return LostMessage;
+            return SlaLostMessage;
+        }
+
+        if (game.IsLost)
+        {
+            return FailuresLostMessage;
         }
 
         if (state.DaySurvived)
