@@ -368,7 +368,7 @@ public partial class Main : Node3D
 
     private void ShowStateAndPauseIfGameEnded()
     {
-        _hud.ShowState(_state);
+        _hud.ShowState(_state, _game);
         WriteNightLogOnce();
         GetTree().Paused = NightEnded();
         ShowNightReport();
