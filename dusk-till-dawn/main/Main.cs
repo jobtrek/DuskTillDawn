@@ -36,8 +36,6 @@ public partial class Main : Node3D
     {
         _state = new GameState();
         _game = new SoloGame(_state.Player);
-        _incidents = new StoreInstancesOfIncidents([() => new BrokenDisk(), () => new SecurityAttack()]);
-        _spawner = new ChallengeSpawner(_game, () => _incidents.PickRandom());
         _lightningDamage = new LightningDamage(_state.Weather, _game, new Random());
         _game.ChallengeSucceeded += challenge => _state.RestoreSla(challenge.SlaRestoredOnSuccess);
         NightPlan plan = NightPlan.For(CurrentNight, _state.Servers);

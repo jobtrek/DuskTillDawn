@@ -15,8 +15,8 @@ Paths from the repo root. `dtd/` = `dusk-till-dawn/`. Open these first, search o
 | Player name, points, room | `game-core/PlayerProfile.cs` |
 | Points rule (fast bonus, failure penalty) | `game-core/PointsRule.cs`; rule in `docs/player-flow/challenges.md` |
 | Game modes (solo, duo), end of game, winner | `game-core/Game.cs`, `SoloGame.cs`, `DuoGame.cs` |
-| Weather kinds, chances, rain strength | `game-core/Weather.cs`, `WeatherSystem.cs` |
-| Rain look, light dim, rain sound | `dtd/main/weather/Rain.cs`, `RainLook.cs` (Inspector values), `RainSound.cs`; sounds in `weather/sounds/` |
+| Weather kinds, chances, rain strength, strike rate | `game-core/Weather.cs`, `WeatherSystem.cs`; strike hits a panel: `LightningDamage.cs` |
+| Rain look, light dim, rain sound, lightning flash + thunder | `dtd/main/weather/Rain.cs`, `RainLook.cs` (Inspector values), `RainSound.cs`, `Lightning.cs`; sounds in `weather/sounds/` (thunder clips: `thunder_sounds.tres`; sources: `CREDITS.md`) |
 | Sun, moon, sky colours | `game-core/SunPosition.cs`, `MoonPosition.cs`; visuals in `dtd/main/Main.cs`, `dtd/main/sky/sky.gdshader` |
 | Mail content (schedule, kinds) / inbox rules / Phishing mail → Fake e-mail challenge | `dtd/main/mail_ui/emails.json` / `game-core/Inbox.cs`, `Mail.cs` / `game-core/PhishingIncidents.cs`, `PhishingEmail.cs` |
 | Mail window (view) / its logic | `dtd/main/mail_ui/MailApp.cs` / `MailController.cs` |

@@ -1,0 +1,16 @@
+[gd_resource type="AudioStreamRandomizer" format=3]
+
+[ext_resource type="AudioStream" path="res://main/weather/sounds/thunder_1.ogg" id="1_thunder"]
+[ext_resource type="AudioStream" path="res://main/weather/sounds/thunder_2.ogg" id="2_thunder"]
+[ext_resource type="AudioStream" path="res://main/weather/sounds/thunder_3.ogg" id="3_thunder"]
+
+[resource]
+playback_mode = 0
+random_pitch = 1.08
+streams_count = 3
+stream_0/stream = ExtResource("1_thunder")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("2_thunder")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("3_thunder")
+stream_2/weight = 1.0

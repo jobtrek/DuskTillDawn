@@ -5,9 +5,6 @@ using Godot;
 public partial class Lightning : Node
 {
     [Export(PropertyHint.Range, "0,16,0.1")] public float FlashEnergy { get; set; } = 6f;
-
-    // The thunder file starts with rain; the thunder roll begins about here.
-    [Export] public float ThunderStartSeconds { get; set; } = 19.5f;
     [Export] public float ThunderSeconds { get; set; } = 9f;
 
     private const float FadeOutSeconds = 2f;
@@ -69,6 +66,6 @@ public partial class Lightning : Node
     private void StartThunder()
     {
         _thunder.VolumeLinear = 1f;
-        _thunder.Play(ThunderStartSeconds);
+        _thunder.Play();
     }
 }
