@@ -48,7 +48,7 @@ public partial class ExtinguisherSpot : Node3D
         PlayerProfile profile = _game.Players[0];
         bool holding = profile.Holding == HeldItem.Extinguisher;
         bool canPickUp = _playerAtBracket && profile.Holding == HeldItem.None;
-        bool canUse = holding && HasFire() && IsPlayerNearFire();
+        bool canUse = holding && _game.IsRunning<Fire>() && IsPlayerNearFire();
 
         _prompt.Visible = canPickUp || canUse;
         if (canPickUp)
@@ -183,20 +183,6 @@ public partial class ExtinguisherSpot : Node3D
         Vector3 offset = _player.GlobalPosition - FireSpot.GlobalPosition;
         offset.Y = 0;
         return offset.Length() <= FireReach;
-    }
-
-    private bool HasFire()
-    {
-        for (var i = 0; i < _game.Challenges.Count; i++)
-        {
-            Challenge challenge = _game.Challenges[i];
-            if (challenge is Fire && challenge.State == ChallengeState.Running)
-            {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     // One spray puts out one fire; with several burning, the player has to use it again.
