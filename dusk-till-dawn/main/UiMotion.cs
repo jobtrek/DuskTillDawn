@@ -18,7 +18,7 @@ public static class UiMotion
         button.MouseExited += () => SetHover(button, false);
     }
 
-    public static void SetHover(Control button, bool hovered)
+    private static void SetHover(Control button, bool hovered)
     {
         button.PivotOffset = button.Size / 2f;
         var tween = button.CreateTween().SetParallel();
