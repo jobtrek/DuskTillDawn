@@ -10,6 +10,7 @@ public partial class Main : Node3D
     // Challenges and failures (issue #35). The game uses the GameState player, so there is one points source.
     private readonly SoloGame _game;
     private readonly ChallengeSpawner _spawner;
+    private readonly LightningDamage _lightningDamage;
     private readonly StoreInstancesOfIncidents _incidents;
     private Dashboard? _dashboard;
     private Control? _computerMenu;
@@ -24,6 +25,7 @@ public partial class Main : Node3D
         _game = new SoloGame(_state.Player);
         _incidents = new StoreInstancesOfIncidents([() => new BrokenDisk(), () => new SecurityAttack()]);
         _spawner = new ChallengeSpawner(_game, () => _incidents.PickRandom());
+        _lightningDamage = new LightningDamage(_state.Weather, _game, new Random());
     }
 
     private const string MailSchedulePath = "res://main/mail_ui/emails.json";
@@ -66,6 +68,7 @@ public partial class Main : Node3D
     private Rain _rain = null!;
     private RainLook _rainLook = null!;
     private RainSound _rainSound = null!;
+    private Lightning _lightning = null!;
 
     public override void _Ready()
     {
@@ -82,6 +85,8 @@ public partial class Main : Node3D
         _rain = GetNode<Rain>("Rain");
         _rainLook = GetNode<RainLook>("RainLook");
         _rainSound = GetNode<RainSound>("RainSound");
+        _lightning = GetNode<Lightning>("Lightning");
+        _lightning.Watch(_state.Weather);
         _environment = GetNode<WorldEnvironment>("WorldEnvironment").Environment;
         _dayAmbientEnergy = _environment.AmbientLightEnergy;
         _daySkyEnergy = _environment.BackgroundEnergyMultiplier;
@@ -287,7 +292,11 @@ public partial class Main : Node3D
             return;
         }
 
-        if (key.Keycode == Key.F4)
+        if (key.Keycode == Key.F3)
+        {
+            _state.Weather.ForceStrike();
+        }
+        else if (key.Keycode == Key.F4)
         {
             _state.Weather.SkipToNext();
         }

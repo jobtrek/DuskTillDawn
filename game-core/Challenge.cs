@@ -23,6 +23,7 @@ public enum PlayerAction
     UseExtinguisher,
     PlugCable,
     ReportEmail,
+    RepairPanel,
 }
 
 public abstract class Challenge
