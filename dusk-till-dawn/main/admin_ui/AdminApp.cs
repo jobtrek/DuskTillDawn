@@ -5,7 +5,7 @@ using Godot;
 // Graceful shutdown).
 public partial class AdminApp : Control
 {
-    // action is a PlayerAction name, so the game can match it to the challenge it repairs.
+    // action is a PlayerAction name, so the game can match it to the incident it repairs.
     [Signal] public delegate void ActionPressedEventHandler(string system, string action);
     [Signal] public delegate void CloseRequestedEventHandler();
 

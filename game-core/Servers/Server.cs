@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace DuskTillDawn.Core;
+namespace DuskTillDawn.Core.Servers;
 
 public sealed class Server
 {

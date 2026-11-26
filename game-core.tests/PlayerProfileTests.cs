@@ -1,4 +1,5 @@
 using System;
+using DuskTillDawn.Core.Night;
 
 namespace DuskTillDawn.Core.Tests;
 

@@ -1,9 +1,10 @@
 using System.Collections.Generic;
-using DuskTillDawn.Core;
+using DuskTillDawn.Core.Building;
+using DuskTillDawn.Core.Incidents;
 using Godot;
 
 /// <summary>
-/// Small HUD panel (top right): points, failures out of 3 and every running challenge with its room and timer.
+/// Small HUD panel (top right): points, failures out of 3 and every running incident with its room and timer.
 /// Main calls ShowGame every frame while the dashboard is visible. The dashboard only reads the game; it never changes it.
 /// </summary>
 public partial class Dashboard : CanvasLayer
@@ -41,7 +42,7 @@ public partial class Dashboard : CanvasLayer
     {
         ShowPoints(game.Players[0].Points);
         ShowFailures(game.Failures, game.IsLost);
-        ShowAlerts(game.Challenges);
+        ShowAlerts(game.Incidents);
     }
 
     private void ShowPoints(int points)
@@ -80,13 +81,13 @@ public partial class Dashboard : CanvasLayer
         }
     }
 
-    private void ShowAlerts(IReadOnlyList<Challenge> challenges)
+    private void ShowAlerts(IReadOnlyList<Incident> incidents)
     {
         int shown = 0;
-        for (int i = 0; i < challenges.Count; i++)
+        for (int i = 0; i < incidents.Count; i++)
         {
-            Challenge challenge = challenges[i];
-            if (challenge.State != ChallengeState.Running)
+            Incident incident = incidents[i];
+            if (incident.State != IncidentState.Running)
             {
                 continue;
             }
@@ -96,7 +97,7 @@ public partial class Dashboard : CanvasLayer
                 _rows.Add(new AlertRow(_alertList));
             }
 
-            _rows[shown].Show(challenge);
+            _rows[shown].Show(incident);
             shown++;
         }
 
@@ -131,7 +132,7 @@ public partial class Dashboard : CanvasLayer
         private readonly Label _alert;
         private readonly Label _room;
         private readonly Label _time;
-        private Challenge? _challenge;
+        private Incident? _incident;
         private int _seconds = -1;
 
         public AlertRow(VBoxContainer parent)
@@ -149,18 +150,18 @@ public partial class Dashboard : CanvasLayer
             parent.AddChild(_box);
         }
 
-        public void Show(Challenge challenge)
+        public void Show(Incident incident)
         {
             _box.Visible = true;
-            if (challenge != _challenge)
+            if (incident != _incident)
             {
-                _challenge = challenge;
+                _incident = incident;
                 _seconds = -1;
-                _alert.Text = challenge.Alert;
-                _room.Text = RoomName(challenge.Room);
+                _alert.Text = incident.Alert;
+                _room.Text = RoomName(incident.Room);
             }
 
-            int seconds = Mathf.CeilToInt(challenge.TimeRemaining);
+            int seconds = Mathf.CeilToInt(incident.TimeRemaining);
             if (seconds == _seconds)
             {
                 return;
@@ -174,7 +175,7 @@ public partial class Dashboard : CanvasLayer
         public void Hide()
         {
             _box.Visible = false;
-            _challenge = null;
+            _incident = null;
         }
     }
 }

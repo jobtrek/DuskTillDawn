@@ -1,5 +1,9 @@
 using System;
 using System.Linq;
+using DuskTillDawn.Core.Building;
+using DuskTillDawn.Core.Incidents;
+using DuskTillDawn.Core.Night;
+using DuskTillDawn.Core.Weather;
 
 namespace DuskTillDawn.Core.Tests;
 
@@ -27,7 +31,7 @@ public class LightningDamageTests
 
             panel.Repair(new PlayerProfile("Bilal"), action);
 
-            var expected = action == PlayerAction.RepairPanel ? ChallengeState.Succeeded : ChallengeState.Running;
+            var expected = action == PlayerAction.RepairPanel ? IncidentState.Succeeded : IncidentState.Running;
             Assert.Equal(expected, panel.State);
         }
     }
@@ -39,9 +43,9 @@ public class LightningDamageTests
 
         weather.ForceStrike();
 
-        var panel = Assert.Single(game.Challenges);
+        var panel = Assert.Single(game.Incidents);
         Assert.IsType<DamagedSolarPanel>(panel);
-        Assert.Equal(ChallengeState.Running, panel.State);
+        Assert.Equal(IncidentState.Running, panel.State);
     }
 
     [Fact]
@@ -51,7 +55,7 @@ public class LightningDamageTests
 
         weather.ForceStrike();
 
-        Assert.Empty(game.Challenges);
+        Assert.Empty(game.Incidents);
     }
 
     [Fact]
@@ -62,7 +66,7 @@ public class LightningDamageTests
 
         weather.ForceStrike();
 
-        Assert.DoesNotContain(game.Challenges, challenge => challenge is DamagedSolarPanel);
+        Assert.DoesNotContain(game.Incidents, incident => incident is DamagedSolarPanel);
     }
 
     [Fact]
@@ -73,7 +77,7 @@ public class LightningDamageTests
         weather.ForceStrike();
         weather.ForceStrike();
 
-        Assert.Single(game.Challenges);
+        Assert.Single(game.Incidents);
     }
 
     [Fact]
@@ -85,7 +89,7 @@ public class LightningDamageTests
 
         weather.ForceStrike();
 
-        Assert.Equal(2, game.Challenges.Count(challenge => challenge is DamagedSolarPanel));
+        Assert.Equal(2, game.Incidents.Count(incident => incident is DamagedSolarPanel));
     }
 
     [Fact]

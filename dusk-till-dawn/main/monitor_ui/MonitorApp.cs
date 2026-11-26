@@ -1,6 +1,6 @@
 using System.Collections.Generic;
+using DuskTillDawn.Core.Servers;
 using Godot;
-using DuskTillDawn.Core;
 
 public enum Metric
 {

@@ -1,4 +1,6 @@
 using System;
+using DuskTillDawn.Core.Incidents;
+using DuskTillDawn.Core.Night;
 
 namespace DuskTillDawn.Core.Tests;
 
@@ -255,11 +257,11 @@ public class GameStateTests
     public void Points_lost_and_won_share_one_source()
     {
         var state = new GameState();
-        var challenge = new BrokenDisk();
-        challenge.Start();
+        var incident = new BrokenDisk();
+        incident.Start();
 
         state.LosePoints(50);
-        challenge.Repair(state.Player, PlayerAction.ReplaceDisk);
+        incident.Repair(state.Player, PlayerAction.ReplaceDisk);
 
         Assert.Equal(1100, state.Points);
         Assert.Equal(state.Player.Points, state.Points);

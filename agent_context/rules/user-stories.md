@@ -21,7 +21,7 @@ Example:
 Depends on #33.
 
 Goal
-Write down how points are counted, then code it. Today a challenge always gives fixed points.
+Write down how points are counted, then code it. Today an Incident always gives fixed points.
 
 To do
 - Short rule in docs/player-flow/challenges.md: base points, bonus for a fast repair, penalty for a failure
@@ -29,7 +29,7 @@ To do
 - Code it in game-core/ (a failure removes points from the player)
 
 Done when
-A solved challenge gives points by the rule, and a failure removes them.
+A solved Incident gives points by the rule, and a failure removes them.
 ```
 
 ## When a story needs more detail

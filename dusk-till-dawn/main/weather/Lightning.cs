@@ -1,4 +1,4 @@
-using DuskTillDawn.Core;
+using DuskTillDawn.Core.Weather;
 using Godot;
 
 // The storm's lightning: a flicker of cold light, then thunder a moment later (sound travels slower than light).

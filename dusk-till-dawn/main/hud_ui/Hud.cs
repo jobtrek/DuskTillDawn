@@ -1,5 +1,7 @@
 using System.Collections.Generic;
-using DuskTillDawn.Core;
+using DuskTillDawn.Core.Incidents;
+using DuskTillDawn.Core.Mails;
+using DuskTillDawn.Core.Night;
 using Godot;
 
 /// <summary>

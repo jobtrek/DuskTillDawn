@@ -1,4 +1,4 @@
-using DuskTillDawn.Core;
+using DuskTillDawn.Core.Weather;
 using Godot;
 
 // The rain only exists around the player: a 30 x 30 m box of drops that travels with the camera.

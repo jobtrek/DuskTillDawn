@@ -1,4 +1,4 @@
-using DuskTillDawn.Core;
+using DuskTillDawn.Core.Night;
 using Godot;
 
 // The end-of-shift summary. Main decides when it shows; the panel only displays a report.

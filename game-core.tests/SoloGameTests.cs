@@ -1,12 +1,15 @@
 using System;
+using DuskTillDawn.Core.Building;
+using DuskTillDawn.Core.Incidents;
+using DuskTillDawn.Core.Night;
 
 namespace DuskTillDawn.Core.Tests;
 
 public class SoloGameTests
 {
-    private const double ChallengeDuration = 60;
+    private const double IncidentDuration = 60;
 
-    private sealed class TestChallenge() : Challenge("Test alert", Room.Servers, points: 100, durationSeconds: ChallengeDuration)
+    private sealed class TestIncident() : Incident("Test alert", Room.Servers, points: 100, durationSeconds: IncidentDuration)
     {
         protected override bool IsRightAction(PlayerAction action)
         {
@@ -19,10 +22,10 @@ public class SoloGameTests
         return new SoloGame(new PlayerProfile("Bilal"));
     }
 
-    private static void FailOneChallenge(SoloGame game)
+    private static void FailOneIncident(SoloGame game)
     {
-        game.Launch(new TestChallenge());
-        game.Tick(ChallengeDuration);
+        game.Launch(new TestIncident());
+        game.Tick(IncidentDuration);
     }
 
     [Fact]
@@ -37,15 +40,15 @@ public class SoloGameTests
     }
 
     [Fact]
-    public void Launching_a_challenge_starts_it()
+    public void Launching_a_incident_starts_it()
     {
         var game = NewGame();
-        var challenge = new TestChallenge();
+        var incident = new TestIncident();
 
-        game.Launch(challenge);
+        game.Launch(incident);
 
-        Assert.Equal(ChallengeState.Running, challenge.State);
-        Assert.Contains(challenge, game.Challenges);
+        Assert.Equal(IncidentState.Running, incident.State);
+        Assert.Contains(incident, game.Incidents);
     }
 
     [Fact]
@@ -53,8 +56,8 @@ public class SoloGameTests
     {
         var game = NewGame();
 
-        FailOneChallenge(game);
-        FailOneChallenge(game);
+        FailOneIncident(game);
+        FailOneIncident(game);
 
         Assert.Equal(2, game.Failures);
         Assert.False(game.IsLost);
@@ -66,9 +69,9 @@ public class SoloGameTests
     {
         var game = NewGame();
 
-        FailOneChallenge(game);
-        FailOneChallenge(game);
-        FailOneChallenge(game);
+        FailOneIncident(game);
+        FailOneIncident(game);
+        FailOneIncident(game);
 
         Assert.Equal(3, game.Failures);
         Assert.True(game.IsLost);
@@ -76,37 +79,37 @@ public class SoloGameTests
     }
 
     [Fact]
-    public void A_failed_challenge_counts_only_once()
+    public void A_failed_incident_counts_only_once()
     {
         var game = NewGame();
-        FailOneChallenge(game);
+        FailOneIncident(game);
 
-        game.Tick(ChallengeDuration);
-        game.Tick(ChallengeDuration);
+        game.Tick(IncidentDuration);
+        game.Tick(IncidentDuration);
 
         Assert.Equal(1, game.Failures);
     }
 
     [Fact]
-    public void A_repaired_challenge_is_not_a_failure()
+    public void A_repaired_incident_is_not_a_failure()
     {
         var game = NewGame();
-        var challenge = new TestChallenge();
-        game.Launch(challenge);
+        var incident = new TestIncident();
+        game.Launch(incident);
 
-        challenge.Repair(game.Players[0], PlayerAction.ReplaceDisk);
-        game.Tick(ChallengeDuration);
+        incident.Repair(game.Players[0], PlayerAction.ReplaceDisk);
+        game.Tick(IncidentDuration);
 
         Assert.Equal(0, game.Failures);
         Assert.Equal(150, game.Players[0].Points);
     }
 
     [Fact]
-    public void Tick_moves_running_challenges_but_not_pending_ones()
+    public void Tick_moves_running_incidents_but_not_pending_ones()
     {
         var game = NewGame();
-        var running = new TestChallenge();
-        var pending = new TestChallenge();
+        var running = new TestIncident();
+        var pending = new TestIncident();
         game.Launch(running);
         game.Add(pending);
 
@@ -114,17 +117,17 @@ public class SoloGameTests
 
         Assert.Equal(50, running.TimeRemaining);
         Assert.Equal(60, pending.TimeRemaining);
-        Assert.Equal(ChallengeState.Pending, pending.State);
+        Assert.Equal(IncidentState.Pending, pending.State);
     }
 
     [Fact]
     public void Nothing_moves_after_the_game_is_over()
     {
         var game = NewGame();
-        FailOneChallenge(game);
-        FailOneChallenge(game);
-        FailOneChallenge(game);
-        var late = new TestChallenge();
+        FailOneIncident(game);
+        FailOneIncident(game);
+        FailOneIncident(game);
+        var late = new TestIncident();
         game.Launch(late);
 
         game.Tick(10);
@@ -142,12 +145,12 @@ public class SoloGameTests
     }
 
     [Fact]
-    public void A_thousand_ticks_with_ten_challenges_allocate_nothing()
+    public void A_thousand_ticks_with_ten_incidents_allocate_nothing()
     {
         var game = NewGame();
         for (var i = 0; i < 10; i++)
         {
-            game.Launch(new TestChallenge());
+            game.Launch(new TestIncident());
         }
         game.Tick(0);
 

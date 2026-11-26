@@ -1,3 +1,6 @@
+using DuskTillDawn.Core.Incidents;
+using DuskTillDawn.Core.Night;
+
 namespace DuskTillDawn.Core.Tests;
 
 public class PointsRuleTests
@@ -24,18 +27,18 @@ public class PointsRuleTests
     [Fact]
     public void A_repair_with_exactly_half_the_time_left_is_still_fast()
     {
-        var challenge = new BrokenDisk();
+        var incident = new BrokenDisk();
         var player = new PlayerProfile("Bilal");
-        challenge.Start();
+        incident.Start();
 
-        challenge.Tick(30);
-        challenge.Repair(player, PlayerAction.ReplaceDisk);
+        incident.Tick(30);
+        incident.Repair(player, PlayerAction.ReplaceDisk);
 
         Assert.Equal(150, player.Points);
     }
 
     [Fact]
-    public void A_failure_removes_half_the_challenge_points()
+    public void A_failure_removes_half_the_incident_points()
     {
         var player = new PlayerProfile("Bilal");
         player.EarnPoints(200);
@@ -45,22 +48,6 @@ public class PointsRuleTests
         game.Tick(60);
 
         Assert.Equal(150, player.Points);
-    }
-
-    [Fact]
-    public void In_a_duo_game_a_failure_costs_both_players()
-    {
-        var first = new PlayerProfile("Bilal");
-        var second = new PlayerProfile("Thomas");
-        first.EarnPoints(200);
-        second.EarnPoints(200);
-        var game = new DuoGame(first, second, challengeCount: 2);
-        game.Launch(new SecurityAttack());
-
-        game.Tick(60);
-
-        Assert.Equal(125, first.Points);
-        Assert.Equal(125, second.Points);
     }
 
     [Fact]

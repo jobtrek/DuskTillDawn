@@ -1,5 +1,6 @@
 using System.Linq;
-using DuskTillDawn.Core;
+using DuskTillDawn.Core.Mails;
+using DuskTillDawn.Core.Night;
 using Godot;
 
 namespace DuskTillDawn.Main.MailUi;

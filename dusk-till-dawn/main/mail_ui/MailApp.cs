@@ -1,6 +1,6 @@
 using System.Collections.Generic;
+using DuskTillDawn.Core.Mails;
 using Godot;
-using DuskTillDawn.Core;
 
 namespace DuskTillDawn.Main.MailUi;
 

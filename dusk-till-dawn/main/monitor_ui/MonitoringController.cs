@@ -1,5 +1,6 @@
+using DuskTillDawn.Core.Night;
+using DuskTillDawn.Core.Power;
 using Godot;
-using DuskTillDawn.Core;
 
 /// <summary>
 /// Glue between the desk computer, the GameState values and the monitoring window.

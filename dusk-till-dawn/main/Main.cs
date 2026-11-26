@@ -1,5 +1,9 @@
 using System;
-using DuskTillDawn.Core;
+using DuskTillDawn.Core.Incidents;
+using DuskTillDawn.Core.Mails;
+using DuskTillDawn.Core.Night;
+using DuskTillDawn.Core.Power;
+using DuskTillDawn.Core.Weather;
 using Godot;
 
 public partial class Main : Node3D
@@ -7,17 +11,17 @@ public partial class Main : Node3D
     private readonly GameState _state;
     private Hud _hud = null!;
 
-    // Challenges and failures (issue #35). The game uses the GameState player, so there is one points source.
+    // Incidents and failures (issue #35). The game uses the GameState player, so there is one points source.
     private readonly SoloGame _game;
-    private readonly ChallengeSpawner _spawner;
+    private readonly IncidentSpawner _spawner;
     private readonly LightningDamage _lightningDamage;
-    private readonly StoreInstancesOfIncidents _incidents;
+    private readonly IncidentPool _incidents;
     private readonly ElectricalFaultRisk _faultRisk;
     private readonly NightLog _nightLog = new();
     private bool _nightLogWritten;
     private Dashboard? _dashboard;
     private Control? _computerMenu;
-    private int _debugChallengeCount;
+    private int _debugIncidentCount;
 
     // The report is frozen when the night ends, so repairs during the day do not change it.
     private const string NightReportScenePath = "res://main/night_report_ui/night_report.tscn";
@@ -36,15 +40,15 @@ public partial class Main : Node3D
     {
         _state = new GameState();
         _game = new SoloGame(_state.Player);
-        _incidents = new StoreInstancesOfIncidents([() => new BrokenDisk(), () => new SecurityAttack()]);
-        _spawner = new ChallengeSpawner(_game, () => _incidents.PickRandom());
+        _incidents = new IncidentPool([() => new BrokenDisk(), () => new SecurityAttack()]);
+        _spawner = new IncidentSpawner(_game, () => _incidents.PickRandom());
         _lightningDamage = new LightningDamage(_state.Weather, _game, new Random());
-        _game.ChallengeSucceeded += challenge => _state.RestoreSla(challenge.SlaRestoredOnSuccess);
-        _game.ChallengeLaunched += _state.ReceiveWarning;
+        _game.IncidentSucceeded += incident => _state.RestoreSla(incident.SlaRestoredOnSuccess);
+        _game.IncidentLaunched += _state.ReceiveWarning;
         NightPlan plan = NightPlan.For(CurrentNight, _state.Servers);
         Phishing = new PhishingIncidents(_state, _game, plan.FakeEmails);
-        _incidents = new StoreInstancesOfIncidents(plan.Kinds);
-        _spawner = new ChallengeSpawner(_game, plan.SpawnIntervalSeconds, () => _incidents.PickRandom());
+        _incidents = new IncidentPool(plan.Kinds);
+        _spawner = new IncidentSpawner(_game, plan.SpawnIntervalSeconds, () => _incidents.PickRandom());
         _faultRisk = new ElectricalFaultRisk(_game);
         _state.ServerRoom.StartNight(panelCleanliness: 1);
     }
@@ -218,9 +222,9 @@ public partial class Main : Node3D
         System.IO.File.WriteAllText(file, _nightLog.ToCsv(_state, _game));
     }
 
-    private void LaunchDebugChallenge()
+    private void LaunchDebugIncident()
     {
-        Challenge challenge = (_debugChallengeCount % 5) switch
+        Incident incident = (_debugIncidentCount % 5) switch
         {
             0 => new BrokenDisk(_state.Servers),
             1 => new SecurityAttack(),
@@ -228,12 +232,12 @@ public partial class Main : Node3D
             3 => new ElectricalFault(),
             _ => new Fire(),
         };
-        _debugChallengeCount++;
-        _game.Launch(challenge);
+        _debugIncidentCount++;
+        _game.Launch(incident);
     }
 
-    // Debug only: tries every action on every challenge, as if the player fixed them all.
-    private void RepairAllChallenges()
+    // Debug only: tries every action on every incident, as if the player fixed them all.
+    private void RepairAllIncidents()
     {
         foreach (PlayerAction action in System.Enum.GetValues<PlayerAction>())
         {
@@ -349,11 +353,11 @@ public partial class Main : Node3D
         }
         else if (key.Keycode == Key.F6)
         {
-            LaunchDebugChallenge();
+            LaunchDebugIncident();
         }
         else if (key.Keycode == Key.F7)
         {
-            RepairAllChallenges();
+            RepairAllIncidents();
         }
         else if (key.Keycode == Key.F9)
         {

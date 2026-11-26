@@ -5,7 +5,7 @@ Numbers are starting values; the full tables are in `docs/game-v1.md` §5–§9.
 ## Time
 
 - Night 20:00 → 08:00. 1 in-game hour = 50 real s (night = 10 min).
-- Day 08:00 → 20:00, SLA frozen. Implemented in `game-core/GameState.cs`.
+- Day 08:00 → 20:00, SLA frozen. Implemented in `game-core/Night/GameState.cs`.
 
 ## Simulation: 5 values
 

@@ -1,4 +1,5 @@
-using DuskTillDawn.Core;
+using DuskTillDawn.Core.Incidents;
+using DuskTillDawn.Core.Power;
 using Godot;
 
 // Shows and hides the Admin window, turns AdminApp.ActionPressed into a repair on the game,
@@ -51,16 +52,16 @@ public partial class AdminController : Node
     {
         string status = _serverRoom.Status switch
         {
-            ServerStatus.OnUps => $"Battery empty: UPS {_serverRoom.SecondsLeft:0} s left",
-            ServerStatus.Rebooting => $"Servers rebooting: {_serverRoom.SecondsLeft:0} s",
-            ServerStatus.ShutDownByHeat => "Servers off: too hot. Reboot them at the rack",
-            ServerStatus.ShutDownCleanly or ServerStatus.Crashed => "Servers off: waiting for power",
+            RoomPowerState.OnUps => $"Battery empty: UPS {_serverRoom.SecondsLeft:0} s left",
+            RoomPowerState.Rebooting => $"Servers rebooting: {_serverRoom.SecondsLeft:0} s",
+            RoomPowerState.ShutDownByHeat => "Servers off: too hot. Reboot them at the rack",
+            RoomPowerState.ShutDownCleanly or RoomPowerState.Crashed => "Servers off: waiting for power",
             _ => $"Battery {_serverRoom.Battery:0} %",
         };
-        _app.ShowPower(status, _serverRoom.EcoMode, _serverRoom.CanTurnOnEcoMode, _serverRoom.Status == ServerStatus.OnUps);
+        _app.ShowPower(status, _serverRoom.EcoMode, _serverRoom.CanTurnOnEcoMode, _serverRoom.Status == RoomPowerState.OnUps);
     }
 
-    // With no challenge running, an admin action does nothing and costs nothing.
+    // With no incident running, an admin action does nothing and costs nothing.
     private void OnActionPressed(string system, string action)
     {
         if (action == "EcoMode")

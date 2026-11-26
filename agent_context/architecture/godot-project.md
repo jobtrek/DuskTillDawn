@@ -8,11 +8,11 @@ Autoload: `MCPGameBridge` (dev tooling for the Godot MCP, configured in root `.m
 
 ```
 Main (Node3D, main/Main.cs)       owns the one GameState and SoloGame, calls Tick() each frame,
- │                                ticks a ChallengeSpawner built from NightPlan (night 1: every 180 s),
+ │                                ticks an IncidentSpawner built from NightPlan (night 1: every 180 s),
  │                                drives sun/moon/sky, passes Weather to Rain/RainSound, and adds the
  │                                NightReportPanel (night_report_ui/) shown at 08:00 or on a loss
  ├─ Hud (hud_ui/)                 reads GameState: clock, SLA bar, points, banner
- ├─ Dashboard (dashboard_ui/)     reads SoloGame: points, failures, running challenges
+ ├─ Dashboard (dashboard_ui/)     reads SoloGame: points, failures, running Incidents
  ├─ Player (player/Player.cs)     CharacterBody3D + camera
  ├─ Basement_Levels               imported .blend, Element States as child nodes
  ├─ DiskRepairSpot (disk_repair/) server room rack: red disk while a BrokenDisk runs, E repairs it

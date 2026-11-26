@@ -1,7 +1,7 @@
-using DuskTillDawn.Core;
+using DuskTillDawn.Core.Incidents;
 using Godot;
 
-// The fire in the server room. While a Fire challenge runs, the battery racks burn and smoke rises;
+// The fire in the server room. While a Fire incident runs, the battery racks burn and smoke rises;
 // the A and B models of each flame lean opposite ways, so swapping them makes it flicker.
 public partial class FireEffect : Node3D
 {

@@ -1,4 +1,4 @@
-using DuskTillDawn.Core;
+using DuskTillDawn.Core.Weather;
 using Godot;
 
 // Two rain loops that always play together: light rain fades into heavy rain as the storm builds.

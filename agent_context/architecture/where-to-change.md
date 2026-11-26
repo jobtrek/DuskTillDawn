@@ -4,22 +4,22 @@ Paths from the repo root. `dtd/` = `dusk-till-dawn/`. Open these first, search o
 
 | To change… | Go to |
 |---|---|
-| Game state, SLA, Disk, points | `game-core/GameState.cs` |
-| Heat, battery, Traffic, UPS, Auto-shutdown, Eco Mode (numbers at the top) / Electrical fault chance, fault → Fire | `game-core/ServerRoom.cs` / `game-core/ElectricalFaultRisk.cs` |
-| Clock, night/day hours, time speed | `game-core/GameState.cs` (constants at top); debug speed: `scripts/run-fast.sh`; balancing log (`user://night_logs/*.csv`): `game-core/NightLog.cs` |
-| Incidents (code name Challenge) | `game-core/Challenge.cs`, one file per challenge (`Fire.cs`, …); rules in `docs/player-flow/challenges.md`; Servers and Clients they hit: `game-core/Servers/` |
-| Incident spawn rate / which incident spawns (random order) / per night | `game-core/ChallengeSpawner.cs` / `game-core/StoreInstancesOfIncidents.cs` / `game-core/NightPlan.cs`; current night in `dtd/main/Main.cs` |
-| Player name, points, room | `game-core/PlayerProfile.cs` |
-| Points rule (fast bonus, failure penalty) | `game-core/PointsRule.cs`; rule in `docs/player-flow/challenges.md` |
-| Game modes (solo, duo), end of game, winner | `game-core/Game.cs`, `SoloGame.cs`, `DuoGame.cs` |
-| Weather kinds, chances, rain strength | `game-core/Weather.cs`, `WeatherSystem.cs` |
+| Game state, SLA, Disk, points | `game-core/Night/GameState.cs` |
+| Heat, battery, Traffic, UPS, Auto-shutdown, Eco Mode (numbers at the top) / Electrical fault chance, fault → Fire | `game-core/Power/ServerRoom.cs` / `game-core/Power/ElectricalFaultRisk.cs` |
+| Clock, night/day hours, time speed | `game-core/Night/GameState.cs` (constants at top); debug speed: `scripts/run-fast.sh`; balancing log (`user://night_logs/*.csv`): `game-core/Night/NightLog.cs` |
+| Incidents | `game-core/Incidents/Incident.cs`, one file per kind (`Fire.cs`, …); rules in `docs/player-flow/challenges.md`; Servers and Clients they hit: `game-core/Servers/` |
+| Incident spawn rate / which incident spawns (random order) / per night | `game-core/Incidents/IncidentSpawner.cs` / `game-core/Incidents/IncidentPool.cs` / `game-core/Night/NightPlan.cs`; current night in `dtd/main/Main.cs` |
+| Player name, points, held item | `game-core/Night/PlayerProfile.cs` |
+| Points rule (fast bonus, failure penalty) | `game-core/Incidents/PointsRule.cs`; rule in `docs/player-flow/challenges.md` |
+| Incident engine, failures, end of game | `game-core/Incidents/Game.cs`, `SoloGame.cs` |
+| Weather kinds, chances, rain strength | `game-core/Weather/Weather.cs`, `WeatherSystem.cs` |
 | Rain look, light dim, rain sound | `dtd/main/weather/Rain.cs`, `RainLook.cs` (Inspector values), `RainSound.cs`; sounds in `weather/sounds/` |
-| Sun, moon, sky colours | `game-core/SunPosition.cs`, `MoonPosition.cs`; visuals in `dtd/main/Main.cs`, `dtd/main/sky/sky.gdshader` |
-| Mail content (schedule, kinds) / inbox rules / Phishing mail → Fake e-mail challenge | `dtd/main/mail_ui/emails.json` / `game-core/Inbox.cs`, `Mail.cs` / `game-core/PhishingIncidents.cs`, `PhishingEmail.cs` |
+| Sun, moon, sky colours | `game-core/Weather/SunPosition.cs`, `MoonPosition.cs`; visuals in `dtd/main/Main.cs`, `dtd/main/sky/sky.gdshader` |
+| Mail content (schedule, kinds) / inbox rules / Phishing mail → Fake e-mail Incident | `dtd/main/mail_ui/emails.json` / `game-core/Mails/Inbox.cs`, `Mail.cs` / `game-core/Mails/PhishingIncidents.cs`, `game-core/Incidents/PhishingEmail.cs` |
 | Any UI: desk computer, Apps, HUD, Dashboard, UI motion | [where-to-change-ui.md](where-to-change-ui.md) |
 | Server room rack, E key: replace disk, restart cooling, reboot servers | `dtd/main/disk_repair/DiskRepairSpot.cs`; prompt: `dtd/main/prompt_ui/` |
 | Fire in the server room (flames, smoke) | `dtd/main/fire/FireEffect.cs`, `fire_effect.tscn`; flame positions: `Company/Flame*` in `main.tscn` |
-| Pick up / put back the extinguisher (E, Q), put out the fire | `dtd/main/fire/ExtinguisherSpot.cs`, `extinguisher_spot.tscn`; model: `Company/Extinguisher` in `main.tscn`; held item: `game-core/PlayerProfile.cs` |
+| Pick up / put back the extinguisher (E, Q), put out the fire | `dtd/main/fire/ExtinguisherSpot.cs`, `extinguisher_spot.tscn`; model: `Company/Extinguisher` in `main.tscn`; held item: `game-core/Night/PlayerProfile.cs` |
 | Where held items sit on screen | `Player/Camera3D/RightHand` in `dtd/main/main.tscn` |
 | Player movement, camera | `dtd/player/Player.cs` |
 | Scene tree, what's in the world | `dtd/main/main.tscn` (one owner per scene) |

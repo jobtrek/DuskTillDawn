@@ -1,4 +1,4 @@
-namespace DuskTillDawn.Core;
+namespace DuskTillDawn.Core.Servers;
 
 // What the Monitoring app will show for a server.
 // Ok: no incident on it. Down: a running incident targets it.

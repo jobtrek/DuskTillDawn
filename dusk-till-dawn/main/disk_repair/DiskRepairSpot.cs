@@ -1,4 +1,5 @@
-using DuskTillDawn.Core;
+using DuskTillDawn.Core.Incidents;
+using DuskTillDawn.Core.Power;
 using Godot;
 
 // The rack in the server room. E swaps a broken disk (the red disk shows), restarts the failed AC,
@@ -53,7 +54,7 @@ public partial class DiskRepairSpot : Node3D
         {
             prompt = "Press E to reboot the servers";
         }
-        else if (_serverRoom.Status == ServerStatus.ShutDownByHeat)
+        else if (_serverRoom.Status == RoomPowerState.ShutDownByHeat)
         {
             prompt = $"Too hot to reboot: wait until {ServerRoom.ThrottleHeat:0} °C";
         }

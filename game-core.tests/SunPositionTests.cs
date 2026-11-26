@@ -1,3 +1,5 @@
+using DuskTillDawn.Core.Weather;
+
 namespace DuskTillDawn.Core.Tests;
 
 public class SunPositionTests

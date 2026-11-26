@@ -1,5 +1,6 @@
 using System.Collections.Generic;
-using DuskTillDawn.Core;
+using DuskTillDawn.Core.Incidents;
+using DuskTillDawn.Core.Night;
 using Godot;
 
 // The extinguisher on the server room wall. The player picks it up with E, carries it in the right
