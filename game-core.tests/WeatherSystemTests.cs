@@ -152,4 +152,93 @@ public class WeatherSystemTests
 
         Assert.Equal(WeatherKind.Storm, weather.Current);
     }
+
+    [Theory]
+    [InlineData(WeatherKind.Clear)]
+    [InlineData(WeatherKind.Cloudy)]
+    [InlineData(WeatherKind.Rainy)]
+    public void Lightning_never_strikes_outside_a_storm(WeatherKind kind)
+    {
+        var weather = new WeatherSystem(kind, Seed);
+        int strikes = 0;
+        weather.LightningStruck += () => strikes++;
+
+        TickInSteps(weather, RealSecondsPerWeather - 1, step: 0.5);
+
+        Assert.Equal(0, strikes);
+    }
+
+    [Fact]
+    public void Lightning_strikes_now_and_then_in_a_storm()
+    {
+        var weather = new WeatherSystem(WeatherKind.Storm, Seed);
+        int strikes = 0;
+        weather.LightningStruck += () => strikes++;
+
+        TickInSteps(weather, RealSecondsPerWeather - 1, step: 0.5);
+
+        Assert.InRange(strikes, 2, 30);
+    }
+
+    [Fact]
+    public void The_same_seed_gives_the_same_strikes()
+    {
+        var first = new WeatherSystem(WeatherKind.Storm, Seed);
+        var second = new WeatherSystem(WeatherKind.Storm, Seed);
+        var firstTimes = new List<int>();
+        var secondTimes = new List<int>();
+        int tick = 0;
+        first.LightningStruck += () => firstTimes.Add(tick);
+        second.LightningStruck += () => secondTimes.Add(tick);
+
+        for (tick = 0; tick < 200; tick++)
+        {
+            first.Tick(0.5);
+            second.Tick(0.5);
+        }
+
+        Assert.Equal(firstTimes, secondTimes);
+    }
+
+    [Fact]
+    public void Lightning_strikes_about_as_often_at_any_frame_rate()
+    {
+        int slowFrames = CountStrikesOverManyStorms(step: 1.0 / 20);
+        int fastFrames = CountStrikesOverManyStorms(step: 1.0 / 240);
+
+        Assert.InRange(fastFrames, slowFrames * 0.8, slowFrames * 1.2);
+    }
+
+    [Fact]
+    public void A_forced_strike_strikes_once_even_in_clear_weather()
+    {
+        var weather = new WeatherSystem(WeatherKind.Clear, Seed);
+        int strikes = 0;
+        weather.LightningStruck += () => strikes++;
+
+        weather.ForceStrike();
+
+        Assert.Equal(1, strikes);
+    }
+
+    private static int CountStrikesOverManyStorms(double step)
+    {
+        int strikes = 0;
+        for (int seed = 0; seed < 50; seed++)
+        {
+            var weather = new WeatherSystem(WeatherKind.Storm, seed);
+            weather.LightningStruck += () => strikes++;
+            TickInSteps(weather, RealSecondsPerWeather - 1, step);
+        }
+
+        return strikes;
+    }
+
+    private static void TickInSteps(WeatherSystem weather, double seconds, double step)
+    {
+        for (double elapsed = 0; elapsed + step <= seconds; elapsed += step)
+        {
+            weather.Tick(step);
+        }
+    }
 }
