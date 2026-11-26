@@ -20,7 +20,7 @@ Main (Node3D, main/Main.cs)       owns the one GameState and SoloGame, calls Tic
  ├─ ExtinguisherSpot (fire/)     server room wall: E puts the Fire out
  └─ desk computer                 DetectPlayerNearComputer shows the menu when near
      └─ ComputerMenu (computer_ui/)   emits MailPressed / MonitoringPressed / HelpPressed / AdminPressed
-         ├─ MailController   → MailApp     (mail_ui/)
+         ├─ MailController   → MailApp     (mail_ui/)  ReportPressed → Main.Phishing.Report
          ├─ MonitoringController → MonitorApp (monitor_ui/)
          └─ AdminController  → AdminApp    (admin_ui/)  ActionPressed → Game.Repair
 ```

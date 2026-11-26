@@ -10,6 +10,7 @@ public partial class Main : Node3D
     // Challenges and failures (issue #35). The game uses the GameState player, so there is one points source.
     private readonly SoloGame _game;
     private readonly ChallengeSpawner _spawner;
+    private readonly LightningDamage _lightningDamage;
     private readonly StoreInstancesOfIncidents _incidents;
     private readonly ElectricalFaultRisk _faultRisk;
     private readonly NightLog _nightLog = new();
@@ -29,13 +30,18 @@ public partial class Main : Node3D
 
     public GameState State => _state;
     public SoloGame Game => _game;
+    public PhishingIncidents Phishing { get; }
 
     public Main()
     {
         _state = new GameState();
         _game = new SoloGame(_state.Player);
+        _incidents = new StoreInstancesOfIncidents([() => new BrokenDisk(), () => new SecurityAttack()]);
+        _spawner = new ChallengeSpawner(_game, () => _incidents.PickRandom());
+        _lightningDamage = new LightningDamage(_state.Weather, _game, new Random());
         _game.ChallengeSucceeded += challenge => _state.RestoreSla(challenge.SlaRestoredOnSuccess);
         NightPlan plan = NightPlan.For(CurrentNight, _state.Servers);
+        Phishing = new PhishingIncidents(_state, _game, plan.FakeEmails);
         _incidents = new StoreInstancesOfIncidents(plan.Kinds);
         _spawner = new ChallengeSpawner(_game, plan.SpawnIntervalSeconds, () => _incidents.PickRandom());
         _faultRisk = new ElectricalFaultRisk(_game);
@@ -83,6 +89,7 @@ public partial class Main : Node3D
     private Rain _rain = null!;
     private RainLook _rainLook = null!;
     private RainSound _rainSound = null!;
+    private Lightning _lightning = null!;
 
     public override void _Ready()
     {
@@ -101,6 +108,8 @@ public partial class Main : Node3D
         _rain = GetNode<Rain>("Rain");
         _rainLook = GetNode<RainLook>("RainLook");
         _rainSound = GetNode<RainSound>("RainSound");
+        _lightning = GetNode<Lightning>("Lightning");
+        _lightning.Watch(_state.Weather);
         _environment = GetNode<WorldEnvironment>("WorldEnvironment").Environment;
         _dayAmbientEnergy = _environment.AmbientLightEnergy;
         _daySkyEnergy = _environment.BackgroundEnergyMultiplier;
@@ -158,18 +167,16 @@ public partial class Main : Node3D
     {
         double seconds = delta * _clockSpeed;
         _state.Tick(seconds);
-        _game.Tick(seconds);
+        // Incidents only happen at night: from 08:00 they neither start, nor run out, nor cost points.
         if (_state.Status == NightStatus.Running)
         {
+            _game.Tick(seconds);
             _state.ServerRoom.Tick(seconds, _state.HourOfDay, _game);
             _faultRisk.Tick(seconds, _state.ServerRoom.PowerDraw);
             _nightLog.Sample(_state);
-        }
-        _state.DrainSlaOverTime(_game.SlaDrainPerMinute + _state.ServerRoom.SlaDrainPerMinute, seconds);
-        if (!NightEnded())
-        {
             _spawner.Tick(seconds);
         }
+        _state.DrainSlaOverTime(_game.SlaDrainPerMinute + _state.ServerRoom.SlaDrainPerMinute, seconds);
         UpdateSun();
         UpdateMoon();
         _rain.ShowWeather(_state.Weather);
@@ -331,7 +338,11 @@ public partial class Main : Node3D
             return;
         }
 
-        if (key.Keycode == Key.F4)
+        if (key.Keycode == Key.F3)
+        {
+            _state.Weather.ForceStrike();
+        }
+        else if (key.Keycode == Key.F4)
         {
             _state.Weather.SkipToNext();
         }
@@ -357,7 +368,7 @@ public partial class Main : Node3D
 
     private void ShowStateAndPauseIfGameEnded()
     {
-        _hud.ShowState(_state);
+        _hud.ShowState(_state, _game);
         WriteNightLogOnce();
         GetTree().Paused = NightEnded();
         ShowNightReport();

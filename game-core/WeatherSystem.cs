@@ -6,12 +6,15 @@ public sealed class WeatherSystem(WeatherKind initialWeather, int seed)
 {
     private const double RealSecondsPerWeather = 120;
     private const float RainBlendRate = 0.05f;
+    private const double StrikesPerSecond = 1.0 / 15;
     private double _secondsUntilChange = RealSecondsPerWeather;
     private readonly Random _random = new(seed);
 
     public WeatherKind Current { get; private set; } = initialWeather;
 
     public float RainIntensity { get; private set; } = WeatherProfile.For(initialWeather).Rain;
+
+    public event Action? LightningStruck;
 
     public void Tick(double realSeconds)
     {
@@ -25,6 +28,15 @@ public sealed class WeatherSystem(WeatherKind initialWeather, int seed)
             _secondsUntilChange = RealSecondsPerWeather;
         }
 
+        if (Current == WeatherKind.Storm)
+        {
+            double chance = 1 - Math.Exp(-StrikesPerSecond * realSeconds);
+            if (_random.NextDouble() < chance)
+            {
+                ForceStrike();
+            }
+        }
+
         float targetRain = WeatherProfile.For(Current).Rain;
         float piece = 1f - MathF.Exp(-(RainBlendRate * (float)realSeconds));
         RainIntensity = RainIntensity + (targetRain - RainIntensity) * piece;
@@ -36,6 +48,11 @@ public sealed class WeatherSystem(WeatherKind initialWeather, int seed)
         Current = (WeatherKind)(((int)Current + 1) % Enum.GetValues<WeatherKind>().Length);
         RainIntensity = WeatherProfile.For(Current).Rain;
         _secondsUntilChange = RealSecondsPerWeather;
+    }
+
+    public void ForceStrike()
+    {
+        LightningStruck?.Invoke();
     }
 
     private WeatherKind NextAfter(WeatherKind kind)
