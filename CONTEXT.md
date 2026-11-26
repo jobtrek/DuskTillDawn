@@ -32,7 +32,7 @@ A low-power mode the player can turn on when the battery runs low: less Traffic 
 _Avoid_: load-shed mode, power saving
 
 **Mail**:
-A message in the computer's Mail app. Three kinds: a Warning mail (sent by an Incident when it starts, naming the Server it hits), a News mail (tech news, flavour and hints) and a Phishing mail (a fake that the player must report). The inbox empties at the start of each night.
+A message in the computer's Mail app. Three kinds: a Warning mail (sent by an Incident when it starts, naming the Server it hits, if it hits one), a News mail (tech news, flavour and hints) and a Phishing mail (a fake that the player must report). The inbox empties at the start of each night.
 _Avoid_: email, e-mail, message
 
 **Dashboard**:
