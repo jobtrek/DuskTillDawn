@@ -4,20 +4,20 @@ Part of the [GUI guide](README.md). Call `dusk-till-dawn/main/UiMotion.cs`, neve
 
 ## Open animation
 
-Full panels call `UiMotion.PlayLiftOpen`, one parallel tween:
+Full-screen panels (desk computer desktop, night report) call `UiMotion.PlayLiftOpen`. App windows (Mail, Monitoring, Admin) call `UiMotion.PlayWindowOpen`. Each is one parallel tween:
 
-| Property | From | To | Ease |
+| Property | Lift open | Window open | Ease |
 |---|---|---|---|
-| Panel offset (top + bottom) | 60% of viewport height below | 0 | `Back` / `Out` |
-| Panel scale | ~0.6 | 1 | `Back` / `Out` |
-| Panel rotation | ~-8° | 0 | `Cubic` / `Out` |
-| Backdrop modulate | transparent | white | linear |
-| `BlockReveal.Progress` | 0 | 1 | starts at half the open duration |
+| Panel offset (top + bottom) | 60% of viewport height below → 0 | not moved | `Back` / `Out` |
+| Panel scale | ~0.6 → 1 | 0.85 → 1 | `Back` / `Out` |
+| Panel rotation | ~-8° → 0 | not rotated | `Cubic` / `Out` |
+| Modulate | backdrop transparent → white | window transparent → white | linear |
+| `BlockReveal.Progress` | 0 → 1, from half the open | 0 → 1, from 40% of the open | linear |
 
 - Open under 0.5s (`OpenDuration = 0.45`), reveal under 0.7s (`RevealDuration = 0.6`). Both are `[Export]` fields.
 - Trigger it from `VisibilityChanged` when `IsVisibleInTree()`.
 - Store the returned tween in `_openTween` and pass it back next time: `UiMotion` kills it and resets every animated property first.
-- `PlayLiftOpen` sets the pivot to bottom-centre when the panel opens, so it lifts like a map.
+- `PlayLiftOpen` sets the pivot to bottom-centre when the panel opens, so it lifts like a map. App windows keep their pivot centred on `Resized`.
 
 ## Block reveal (`BlockReveal.cs`)
 
