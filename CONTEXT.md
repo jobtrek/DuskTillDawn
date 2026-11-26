@@ -15,6 +15,11 @@ _Avoid_: machine, host, node, box
 **Client**:
 A customer company hosted on a Server. When its Server breaks, the SLA drains by the number of Clients hurt. Every Client counts the same in v1.
 _Avoid_: customer, user, tenant
+
+**Solar panel**:
+One of the nine named panels on the Roof (PANEL-01 to PANEL-09) that charge the battery. Lightning in a Storm can break any intact panel, even during other Incidents; the player repairs each broken panel by standing next to it.
+_Avoid_: solar cell, module, PV
+
 **Electrical fault**:
 An Incident in the Basement power equipment. If ignored it escalates into a Fire. It is the only cause of Fire; heat alone never starts one.
 _Avoid_: short circuit, electrical fire (for the Warning stage)

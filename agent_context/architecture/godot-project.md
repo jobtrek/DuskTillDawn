@@ -32,14 +32,5 @@ Main (Node3D, main/Main.cs)       owns the one GameState and SoloGame, calls Tic
 - `*Controller.cs` (Node): glue. Gets `GameState` from `Main.State`, listens to the
   menu's signals, pushes values into the App, calls `GameState` methods on actions.
 - Only one app window is open at a time; walking away closes them.
-## Folders
 
-| Folder | Holds |
-|---|---|
-| `main/` | `Main.cs`, `main.tscn`, sky shader, `weather/` (rain nodes), UI folders `*_ui/` |
-| `main/computer_ui/` | Desk OS menu, `BlockReveal`, pixel textures |
-| `player/` | Player body and camera |
-| `levels/<floor>/` | Floor `.blend` files + per-level scripts |
-| `assets/` | Building `.blend` files |
-
-UI style rules: [../gui/README.md](../gui/README.md).
+Folders and what they hold: [godot-folders.md](godot-folders.md).
