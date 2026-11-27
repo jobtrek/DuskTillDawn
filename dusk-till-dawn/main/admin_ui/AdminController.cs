@@ -60,7 +60,9 @@ public partial class AdminController : Node
         {
             ServerStatus.OnUps => $"Battery empty: UPS {_serverRoom.SecondsLeft:0} s left",
             ServerStatus.Rebooting => $"Servers rebooting: {_serverRoom.SecondsLeft:0} s",
-            ServerStatus.ShutDownByHeat => "Servers off: too hot. Reboot them at the rack",
+            // A symptom, never the fix (docs/player-flow/challenges.md, Warning mails); "Servers off" matches the dashboard.
+            ServerStatus.ShutDownByHeat when _serverRoom.Heat >= ServerRoom.ThrottleHeat => "Servers off: too hot",
+            ServerStatus.ShutDownByHeat => "Servers off",
             ServerStatus.ShutDownCleanly or ServerStatus.Crashed => "Servers off: waiting for power",
             _ => $"Battery {_serverRoom.Battery:0} %",
         };
