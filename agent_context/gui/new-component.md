@@ -22,6 +22,7 @@ Part of the [GUI guide](README.md).
 | `UiMotion.PlayLiftOpen` / `PlayWindowOpen` | `main/UiMotion.cs` | Open animation |
 | `UiMotion.AddHover` | `main/UiMotion.cs` | Hover zoom on buttons |
 | `frame.png` | `main/computer_ui/textures/` | Default panel frame (NinePatch) |
+| `action_button.tres` | `main/` | Blue action button style (normal, hover, pressed): `ExtResource`, never a copied `sub_resource` |
 
 When a second component needs one of these, move it to `main/` (as `UiMotion.cs` was) and point both components at it, instead of copying it.
 

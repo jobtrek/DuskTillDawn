@@ -23,7 +23,7 @@ Part of the [GUI guide](README.md). Read the component's `.tscn`, its scripts, a
 11. Panels are sized with anchors in percent; pixel offsets only for inner details.
 12. Overlays (reveal, glows, vignettes) have `mouse_filter = Ignore`.
 13. Actions leave the component only as `[Signal]`s; the component never hides itself or touches game state.
-14. Shared pieces (`BlockReveal`, `frame.png`, `UiMotion`) are referenced, not copied. A second user of a piece still living in `computer_ui/` is a fail: move it to `main/`.
+14. Shared pieces (`BlockReveal`, `frame.png`, `UiMotion`, `action_button.tres`) are referenced, not copied. A second user of a piece still living in `computer_ui/` is a fail: move it to `main/`.
 15. Coexists with the other UI ([coexist.md](coexist.md)): every component that can be visible at the same time is named, and space, stacking, input and meaning each pass against it.
 
 ## Code
