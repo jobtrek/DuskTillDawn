@@ -28,6 +28,10 @@ _Avoid_: short circuit, electrical fire (for the Warning stage)
 The servers switching themselves off when the room gets too hot. They stay off until the room cools and the player reboots them at the racks.
 _Avoid_: crash, overheat fire
 
+**Recovering**:
+An Incident the player has fixed, but that only counts once the room is back to normal (the cooling failure: below 32 °C with the servers running, or only waiting for power). Its timer is stopped and it stays on the dashboard until then.
+_Avoid_: half-fixed, pending fix, cooling (as a state)
+
 **Start charge**:
 The battery level at 20:00, set by how clean the solar panels were during the day.
 _Avoid_: initial power, day charge

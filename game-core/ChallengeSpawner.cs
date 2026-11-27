@@ -63,11 +63,13 @@ public sealed class ChallengeSpawner
         }
     }
 
+    // A Recovering challenge counts as done here: the player's part is over, so the next Incident keeps coming.
     private void NoteEndedChallenges()
     {
         for (var i = 0; i < _kinds.Length; i++)
         {
-            if (_lastOfKind[i] is { State: ChallengeState.Succeeded or ChallengeState.Failed } && double.IsNaN(_lastEndedAt[i]))
+            if (_lastOfKind[i] is { State: ChallengeState.Succeeded or ChallengeState.Failed or ChallengeState.Recovering }
+                && double.IsNaN(_lastEndedAt[i]))
             {
                 _lastEndedAt[i] = _elapsedSeconds;
             }

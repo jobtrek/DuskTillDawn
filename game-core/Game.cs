@@ -176,6 +176,30 @@ public abstract class Game
         return false;
     }
 
+    // Some fixes only count once the room is back to normal (see ChallengeState.Recovering); Main calls this after each room tick.
+    public void FinishRecovered(ServerRoom room)
+    {
+        // Like Tick: once the game is lost, nothing moves and no more points are paid.
+        if (IsFinished)
+        {
+            return;
+        }
+
+        bool finishedAny = false;
+        for (var i = 0; i < _challenges.Count; i++)
+        {
+            if (_challenges[i].TryFinishRecovery(room))
+            {
+                finishedAny = true;
+            }
+        }
+
+        if (finishedAny)
+        {
+            RefreshServerStatus();
+        }
+    }
+
     public void Tick(double seconds)
     {
         ArgumentOutOfRangeException.ThrowIfNegative(seconds);

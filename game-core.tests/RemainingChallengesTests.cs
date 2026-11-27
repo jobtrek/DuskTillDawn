@@ -13,9 +13,9 @@ public class RemainingChallengesTests
         { nameof(PhishingEmail), "New urgent message", Room.Control, 100 },
     };
 
-    public static TheoryData<string, PlayerAction> RightActions => new()
+    // OverheatingServer is not here: its fix only counts once the room recovers (CoolingStepsTests).
+    public static TheoryData<string, PlayerAction> InstantFixRightActions => new()
     {
-        { nameof(OverheatingServer), PlayerAction.RestartCooling },
         { nameof(Fire), PlayerAction.UseExtinguisher },
         { nameof(UnpluggedCable), PlayerAction.PlugCable },
         { nameof(PhishingEmail), PlayerAction.ReportEmail },
@@ -33,7 +33,7 @@ public class RemainingChallengesTests
     }
 
     [Theory]
-    [MemberData(nameof(RightActions))]
+    [MemberData(nameof(InstantFixRightActions))]
     public void Only_its_own_action_fixes_the_challenge(string name, PlayerAction rightAction)
     {
         foreach (var action in Enum.GetValues<PlayerAction>())
@@ -59,12 +59,12 @@ public class RemainingChallengesTests
     }
 
     [Fact]
-    public void All_six_challenges_get_fixed_by_trying_every_action_without_checking_types()
+    public void Instant_fix_challenges_get_fixed_by_trying_every_action_without_checking_types()
     {
         var player = new PlayerProfile("Bilal");
         var challenges = new List<Challenge>
         {
-            new SecurityAttack(), new BrokenDisk(), new OverheatingServer(),
+            new SecurityAttack(), new BrokenDisk(),
             new Fire(), new UnpluggedCable(), new PhishingEmail(),
         };
 
@@ -78,7 +78,7 @@ public class RemainingChallengesTests
         }
 
         Assert.All(challenges, challenge => Assert.Equal(ChallengeState.Succeeded, challenge.State));
-        Assert.Equal((150 + 100 + 100 + 200 + 100 + 100) * 3 / 2, player.Points);
+        Assert.Equal((150 + 100 + 200 + 100 + 100) * 3 / 2, player.Points);
     }
 
     private static Challenge Create(string name)

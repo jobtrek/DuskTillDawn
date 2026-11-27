@@ -5,7 +5,7 @@ Same rules as [game-core.md](game-core.md): no Godot types, seeded by `GameState
 
 | File | Role |
 |---|---|
-| `ServerRoom.cs` | Heat (18–55 °C, zones), battery, Traffic, UPS, Auto-shutdown, Eco Mode; ticked by `Main` during the night |
+| `ServerRoom.cs` | Heat (18–55 °C, zones), battery, Traffic, UPS, Auto-shutdown, Eco Mode; ticked by `Main` during the night; it only reads the game, and `Main` calls `Game.FinishRecovered(room)` right after |
 | `Servers/` | Servers and their Clients: `Server` (name, Client names, load, status), `ServerHealth` (Ok / Warn / Down), `ServerRack` (8 fixed Servers set in code, `PickRandom`; optional `Random`, seeded by `GameState(seed)`) |
 | `SolarPanels/` | Roof solar panels: `SolarPanel` (name), `SolarArray` (9 panels PANEL-01..09, `PickRandom`, `PickRandomExcept(broken)`; seeded by `GameState(seed)`), owned by `GameState.SolarPanels` |
 | `SunPosition.cs`, `MoonPosition.cs` | Sky positions from the hour of day |
