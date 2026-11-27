@@ -50,6 +50,13 @@ In two-player mode, both players get the same challenge at the same time. The fi
 - The +50 % bonus follows `docs/game-v1.md`: reading the dashboard early pays.
 - Code: `game-core/PointsRule.cs`.
 
+### Wrong action
+
+- A repair action that fixes nothing while a challenge is running makes the player **busy for 5 s**: no repair works until it runs out, and the challenge timer keeps running. With no challenge running, an action costs nothing.
+- Why: guessing every action until one works must cost time, so the player diagnoses first.
+- On screen: "Wrong action: busy N s" on the admin console (repair buttons greyed) and on the rack, roof panel and extinguisher prompts.
+- Code: `game-core/Game.cs` (`Repair`, `WrongActionBusySeconds`), `game-core/PlayerProfile.cs`; text: `dusk-till-dawn/main/BusyText.cs`.
+
 ## 4. Challenges per night (proposal, to validate with the team)
 
 Our six challenges mapped to the v1 incidents (`docs/game-v1.md` §8):

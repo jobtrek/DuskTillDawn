@@ -10,8 +10,9 @@ Paths from the repo root. `dtd/` = `dusk-till-dawn/`. Open these first, search o
 | Incidents (code name Challenge) | `game-core/Challenge.cs`, one file per challenge (`Fire.cs`, …); rules in `docs/player-flow/challenges.md`; Servers and Clients they hit: `game-core/Servers/` |
 | Incident spawn rate / which incident spawns (random order) / per night | `game-core/ChallengeSpawner.cs` / `game-core/StoreInstancesOfIncidents.cs` / `game-core/NightPlan.cs`; current night in `dtd/main/Main.cs` |
 | Demo run: 3 Incidents easy → hard (Fire, traffic attack, Phishing mail), order, time limits | `game-core/ChallengeLadder.cs` (`Demo`) |
-| Player name, points, room | `game-core/PlayerProfile.cs` |
+| Player name, points, held item, busy time | `game-core/PlayerProfile.cs` |
 | Points rule (fast bonus, failure penalty) | `game-core/PointsRule.cs`; rule in `docs/player-flow/challenges.md` |
+| Wrong repair action: busy time (5 s), which repairs a busy player cannot do | `game-core/Game.cs` (`WrongActionBusySeconds`, `Repair`) |
 | Game modes (solo, duo), end of game, winner | `game-core/Game.cs`, `SoloGame.cs`, `DuoGame.cs` |
 | Weather kinds, chances, rain strength, strike rate | `game-core/Weather.cs`, `WeatherSystem.cs`; strike hits a panel: `LightningDamage.cs` |
 | Rain look, light dim, rain sound, lightning flash + thunder | `dtd/main/weather/Rain.cs`, `RainLook.cs` (Inspector values), `RainSound.cs`, `Lightning.cs`, `LightningBolt.cs` (bolt onto the hit panel); sounds in `weather/sounds/` (thunder clips: `thunder_sounds.tres`; sources: `CREDITS.md`) |

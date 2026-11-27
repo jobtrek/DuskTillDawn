@@ -230,12 +230,16 @@ public partial class Main : Node3D
         _game.Launch(challenge);
     }
 
-    // Debug only: tries every action on every challenge, as if the player fixed them all.
+    // Debug only: fixes every challenge as if the player knew each answer. It skips Game.Repair, whose wrong-action
+    // rule would make the player busy after the first action that does not fit.
     private void RepairAllChallenges()
     {
-        foreach (PlayerAction action in System.Enum.GetValues<PlayerAction>())
+        foreach (Challenge challenge in _game.Challenges)
         {
-            _game.Repair(_game.Players[0], action);
+            foreach (PlayerAction action in System.Enum.GetValues<PlayerAction>())
+            {
+                challenge.Repair(_game.Players[0], action);
+            }
         }
     }
 

@@ -4,7 +4,7 @@ Runtime flow and the App + Controller pattern: [godot-project.md](godot-project.
 
 | Folder | Holds |
 |---|---|
-| `main/` | `Main.cs`, `main.tscn`, sky shader, `weather/` (rain nodes), UI folders `*_ui/` |
+| `main/` | `Main.cs`, `main.tscn`, sky shader, `weather/` (rain nodes), UI folders `*_ui/`, shared UI helpers (`UiMotion.cs`, `BusyText.cs`) |
 | `main/computer_ui/` | Desk OS menu, `BlockReveal`, pixel textures |
 | `player/` | Player body and camera |
 | `levels/<floor>/` | Floor `.blend` files + per-level scripts |

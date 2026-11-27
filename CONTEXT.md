@@ -32,6 +32,10 @@ _Avoid_: crash, overheat fire
 The battery level at 20:00, set by how clean the solar panels were during the day.
 _Avoid_: initial power, day charge
 
+**Busy**:
+The few seconds a player loses after a repair action that fixes nothing while an Incident runs. A busy player cannot repair anything until the time runs out.
+_Avoid_: cooldown, stun, lockout
+
 **Eco Mode**:
 A low-power mode the player can turn on when the battery runs low: less Traffic served, slower drain.
 _Avoid_: load-shed mode, power saving

@@ -23,6 +23,7 @@ public partial class AdminController : Node
         menu.AdminPressed += () =>
         {
             ShowPower();
+            ShowBusy();
             _app.Show();
         };
         // Only one app window at a time: the other apps sit in the same spot.
@@ -44,7 +45,13 @@ public partial class AdminController : Node
         if (_app.IsVisibleInTree())
         {
             ShowPower();
+            ShowBusy();
         }
+    }
+
+    private void ShowBusy()
+    {
+        _app.ShowBusy(_game.Players[0].BusySecondsLeft);
     }
 
     private void ShowPower()
@@ -60,7 +67,8 @@ public partial class AdminController : Node
         _app.ShowPower(status, _serverRoom.EcoMode, _serverRoom.CanTurnOnEcoMode, _serverRoom.Status == ServerStatus.OnUps);
     }
 
-    // With no challenge running, an admin action does nothing and costs nothing.
+    // With no challenge running, an admin action does nothing and costs nothing; a wrong one during a challenge
+    // makes the player busy (Game.Repair decides).
     private void OnActionPressed(string system, string action)
     {
         if (action == "EcoMode")

@@ -17,6 +17,9 @@ public partial class AdminApp : Control
     private Label _powerStatus = null!;
     private Godot.Button _ecoMode = null!;
     private Godot.Button _gracefulShutdown = null!;
+    private Godot.Button _trafficFilter = null!;
+    private Godot.Button _cutFaultyCircuit = null!;
+    private Label _busy = null!;
 
     public override void _Ready()
     {
@@ -26,11 +29,13 @@ public partial class AdminApp : Control
         close.Pressed += () => EmitSignal(SignalName.CloseRequested);
         UiMotion.AddHover(close);
 
-        AddAction("Firewall", "EnableTrafficFilter");
-        AddAction("Power", "CutFaultyCircuit");
+        _trafficFilter = AddAction("Firewall", "EnableTrafficFilter");
+        _cutFaultyCircuit = AddAction("Power", "CutFaultyCircuit");
         _ecoMode = AddAction("Power", "EcoMode");
         _gracefulShutdown = AddAction("Power", "GracefulShutdown");
         _powerStatus = GetNode<Label>("Body/Panel/Sections/Power/Status");
+        _busy = GetNode<Label>("Body/Panel/Sections/Busy");
+        _busy.SelfModulate = UiMotion.LossTint;
 
         Resized += () => PivotOffset = Size / 2f;
         VisibilityChanged += () =>
@@ -56,6 +61,21 @@ public partial class AdminApp : Control
         _ecoMode.Text = ecoModeOn ? "Turn off Eco Mode" : "Eco Mode";
         SetEnabled(_ecoMode, ecoModeOn || canTurnOnEcoMode);
         SetEnabled(_gracefulShutdown, canShutDown);
+    }
+
+    // A wrong guess costs the sysadmin time: repairs stay greyed until it runs out.
+    // Eco Mode and Graceful shutdown are not repairs, so they stay as ShowPower set them.
+    public void ShowBusy(double secondsLeft)
+    {
+        bool busy = secondsLeft > 0;
+        _busy.Visible = busy;
+        if (busy)
+        {
+            _busy.Text = BusyText.For(secondsLeft);
+        }
+
+        SetEnabled(_trafficFilter, !busy);
+        SetEnabled(_cutFaultyCircuit, !busy);
     }
 
     private static void SetEnabled(Godot.Button button, bool enabled)

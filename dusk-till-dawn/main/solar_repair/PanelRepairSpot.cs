@@ -19,6 +19,7 @@ public partial class PanelRepairSpot : Node3D
     private readonly Dictionary<SolarPanel, PanelSlot> _slots = [];
     private Game _game = null!;
     private InteractionPrompt _prompt = null!;
+    private string _repairText = "";
     private LightningBolt _bolt = null!;
 
     // Soot over a struck panel, so it reads as burnt from the isometric camera.
@@ -34,6 +35,7 @@ public partial class PanelRepairSpot : Node3D
         var main = (Main)GetTree().CurrentScene;
         _game = main.Game;
         _prompt = GetNode<InteractionPrompt>("InteractionPrompt");
+        _repairText = _prompt.Text;
         _bolt = GetNode<LightningBolt>("Bolt");
         _game.ChallengeLaunched += OnChallengeLaunched;
 
@@ -98,9 +100,18 @@ public partial class PanelRepairSpot : Node3D
         }
 
         _prompt.Visible = reachable != null;
-        if (reachable != null && Input.IsActionJustPressed(RepairAction))
+        if (reachable == null)
         {
-            _game.RepairPanel(_game.Players[0], reachable);
+            return;
+        }
+
+        PlayerProfile profile = _game.Players[0];
+        _prompt.SetText(profile.IsBusy
+            ? BusyText.For(profile.BusySecondsLeft)
+            : _repairText);
+        if (!profile.IsBusy && Input.IsActionJustPressed(RepairAction))
+        {
+            _game.RepairPanel(profile, reachable);
         }
     }
 
