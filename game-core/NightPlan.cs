@@ -31,7 +31,7 @@ public sealed record NightPlan(double SpawnIntervalSeconds, int FakeEmails, Func
         return
         [
             () => new BrokenDisk(servers), () => new SecurityAttack(),
-            () => new UnpluggedCable(), () => new OverheatingServer(), () => new Fire(),
+            () => new UnpluggedCable(), () => new OverheatingServer(), () => new ElectricalFault(),
         ];
     }
 }
