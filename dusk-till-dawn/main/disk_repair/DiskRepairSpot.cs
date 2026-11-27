@@ -1,11 +1,12 @@
 using DuskTillDawn.Core;
 using Godot;
 
-// The rack in the server room. E swaps a broken disk (the red disk shows), restarts the failed AC,
-// or reboots the servers after a heat Auto-shutdown once the room has cooled down.
+// The rack in the server room. E opens the RackChoice: the player picks the fix (swap the disk, restart the AC,
+// reboot the servers after a heat Auto-shutdown) and a wrong repair makes them Busy.
 public partial class DiskRepairSpot : Node3D
 {
     private const string RepairAction = "repair";
+    private const string RebootServers = "RebootServers";
 
     [Export] public Node3D HealthyDisk { get; set; } = null!;
     [Export] public Node3D FailedDisk { get; set; } = null!;
@@ -13,6 +14,7 @@ public partial class DiskRepairSpot : Node3D
     private Game _game = null!;
     private ServerRoom _serverRoom = null!;
     private InteractionPrompt _prompt = null!;
+    private RackChoice _choice = null!;
     private bool _playerInRange;
 
     public override void _Ready()
@@ -21,6 +23,9 @@ public partial class DiskRepairSpot : Node3D
         _game = main.Game;
         _serverRoom = main.State.ServerRoom;
         _prompt = GetNode<InteractionPrompt>("InteractionPrompt");
+        _choice = GetNode<RackChoice>("RackChoice");
+        _choice.ChoicePressed += OnChoicePressed;
+        _choice.CloseRequested += () => _choice.Hide();
 
         var zone = GetNode<Area3D>("Zone");
         zone.BodyEntered += OnBodyEntered;
@@ -37,61 +42,47 @@ public partial class DiskRepairSpot : Node3D
 
     public override void _Process(double delta)
     {
-        bool broken = _game.IsRunning<BrokenDisk>();
-        ShowDisk(broken);
+        ShowDisk(_game.IsRunning<BrokenDisk>());
 
-        string? prompt = null;
-        if (broken)
-        {
-            prompt = "Press E to replace the disk";
-        }
-        else if (_game.IsRunning<OverheatingServer>())
-        {
-            prompt = "Press E to restart the cooling";
-        }
-        else if (_serverRoom.CanReboot)
-        {
-            prompt = "Press E to reboot the servers";
-        }
-        else if (_serverRoom.Status == ServerStatus.ShutDownByHeat)
-        {
-            prompt = $"Too hot to reboot: wait until {ServerRoom.ThrottleHeat:0} °C";
-        }
-
-        PlayerProfile player = _game.Players[0];
-        bool busyRepairing = player.IsBusy && (broken || _game.IsRunning<OverheatingServer>());
-        if (busyRepairing)
-        {
-            prompt = BusyText.For(player.BusySecondsLeft);
-        }
-
-        _prompt.Visible = _playerInRange && prompt != null;
+        // The choice covers the prompt's spot, so only one of them shows at a time.
+        _prompt.Visible = _playerInRange && !_choice.Visible;
         if (!_prompt.Visible)
         {
             return;
         }
 
-        _prompt.SetText(prompt!);
-        if (!busyRepairing && Input.IsActionJustPressed(RepairAction))
+        PlayerProfile player = _game.Players[0];
+        if (player.IsBusy)
         {
-            UseRack(broken);
+            _prompt.SetText(BusyText.For(player.BusySecondsLeft));
+            return;
+        }
+
+        _prompt.SetText(_serverRoom.Status == ServerStatus.ShutDownByHeat && !_serverRoom.CanReboot
+            ? $"Too hot to reboot: wait until {ServerRoom.ThrottleHeat:0} °C"
+            : "Press E to use the rack");
+        if (Input.IsActionJustPressed(RepairAction))
+        {
+            _choice.Show();
         }
     }
 
-    private void UseRack(bool broken)
+    private void OnChoicePressed(string action)
     {
-        if (broken)
-        {
-            _game.Repair(_game.Players[0], PlayerAction.ReplaceDisk);
-        }
-        else if (_game.IsRunning<OverheatingServer>())
-        {
-            _game.Repair(_game.Players[0], PlayerAction.RestartCooling);
-        }
-        else
+        _choice.Hide();
+        if (action == RebootServers)
         {
             _serverRoom.TryReboot();
+            return;
         }
+
+        if (!System.Enum.TryParse(action, out PlayerAction playerAction) || !System.Enum.IsDefined(playerAction))
+        {
+            GD.PushError($"Rack choice '{action}' is not a PlayerAction.");
+            return;
+        }
+
+        _game.Repair(_game.Players[0], playerAction);
     }
 
     // The zone also overlaps the rack and the floor; only the player counts.
@@ -108,6 +99,7 @@ public partial class DiskRepairSpot : Node3D
         if (body is CharacterBody3D)
         {
             _playerInRange = false;
+            _choice.Hide();
         }
     }
 

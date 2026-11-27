@@ -67,6 +67,14 @@ In two-player mode, both players get the same challenge at the same time. The fi
 - Exception: the Fire mail keeps "Grab an extinguisher". The flames already make the fix obvious.
 - Code: the `Warning` of each Incident in `game-core/` (`SecurityAttack.cs`, `Fire.cs`, …).
 
+### Rack choice
+
+- **E** at the server room rack opens a choice: **Replace disk**, **Restart cooling**, **Reboot servers**. The game no longer picks the fix for the player.
+- Replace disk and Restart cooling are repairs: a choice that fixes nothing while a challenge runs makes the player Busy (see Wrong action).
+- Reboot servers is not a repair: it only works after an Auto-shutdown once the room has cooled, and otherwise does nothing and costs nothing (like Eco Mode on the admin console).
+- While Busy, E shows the countdown and does not open the choice.
+- Code: `dusk-till-dawn/main/disk_repair/DiskRepairSpot.cs`.
+
 ## 4. Challenges per night (proposal, to validate with the team)
 
 Our six challenges mapped to the v1 incidents (`docs/game-v1.md` §8):
