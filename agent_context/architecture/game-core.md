@@ -23,9 +23,8 @@ Servers, roof panels, server room, weather and sky: [game-core-world.md](game-co
 | `Inbox.cs`, `Mail.cs` | News and Phishing schedule (`emails.json`), arrival, read and phishing-report state; `GameState.ReceiveWarning` adds an Incident's Warning mail (`Challenge.Warning`, linked by `Mail.ChallengeId`) |
 | `PhishingIncidents.cs` | An arriving Phishing mail launches a `PhishingEmail` (one at a time, `NightPlan.FakeEmails` per night); `Report(mailId)` repairs it and returns the points (Warning → Active after 1/5 of its time → Escalated after 4/5: 60 s and 4 min of the usual 5 min); `SendNow` makes one arrive at once for the Demo run |
 | `HeldItem.cs` | What the player carries (one item at a time) |
-Built so far vs v1 target ([game/rules-v1.md](../game/rules-v1.md)): 8 challenges, states
-Pending → Running → Succeeded/Failed; `Main` spawns the night 1 plan (`NightPlan`): `BrokenDisk` (hits one random Server),
-`SecurityAttack`, `OverheatingServer`, and lets `ElectricalFaultRisk` spawn faults.
+
+Built vs v1 ([game/rules-v1.md](../game/rules-v1.md)): 8 challenges, Pending → Running → Succeeded/Failed; `Main` plays night 1 (`NightPlan`) plus `ElectricalFaultRisk` faults.
 
 ## Rules for changes
 

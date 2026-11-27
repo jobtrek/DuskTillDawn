@@ -33,7 +33,7 @@ The battery level at 20:00, set by how clean the solar panels were during the da
 _Avoid_: initial power, day charge
 
 **Busy**:
-The few seconds a player loses after a repair action that fixes nothing while an Incident runs. A busy player cannot repair anything until the time runs out.
+The few seconds a player loses after a repair action that fixes nothing while an Incident runs. A busy player cannot repair anything until the time runs out, except reporting a Phishing mail (a wrong report already costs points).
 _Avoid_: cooldown, stun, lockout
 
 **Eco Mode**:

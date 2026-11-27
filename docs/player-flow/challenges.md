@@ -53,6 +53,7 @@ In two-player mode, both players get the same challenge at the same time. The fi
 ### Wrong action
 
 - A repair action that fixes nothing while a challenge is running makes the player **busy for 5 s**: no repair works until it runs out, and the challenge timer keeps running. With no challenge running, an action costs nothing.
+- Exception: reporting a mail in the Mail app is not blocked while busy. A wrong report already costs points, so it is not punished twice.
 - Why: guessing every action until one works must cost time, so the player diagnoses first.
 - On screen: "Wrong action: busy N s" on the admin console (repair buttons greyed) and on the rack, roof panel and extinguisher prompts.
 - Code: `game-core/Game.cs` (`Repair`, `WrongActionBusySeconds`), `game-core/PlayerProfile.cs`; text: `dusk-till-dawn/main/BusyText.cs`.
