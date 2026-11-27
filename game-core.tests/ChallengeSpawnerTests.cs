@@ -67,6 +67,21 @@ public class ChallengeSpawnerTests
     }
 
     [Fact]
+    public void A_recovering_challenge_counts_as_done_so_the_next_one_still_arrives()
+    {
+        var game = new SoloGame(new PlayerProfile("Bilal"));
+        var spawner = new ChallengeSpawner(game, Interval, () => new OverheatingServer());
+        spawner.Tick(Interval);
+        game.Repair(game.Players[0], PlayerAction.RestartCooling);
+        Assert.Equal(ChallengeState.Recovering, game.Challenges[0].State);
+
+        spawner.Tick(Interval);
+
+        Assert.Equal(2, game.Challenges.Count);
+        Assert.Equal(ChallengeState.Running, game.Challenges[1].State);
+    }
+
+    [Fact]
     public void A_fixed_challenge_comes_back_only_one_interval_after_its_fix()
     {
         var (game, spawner) = NewSpawner();

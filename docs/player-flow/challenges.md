@@ -75,6 +75,21 @@ In two-player mode, both players get the same challenge at the same time. The fi
 - While Busy, E shows the countdown and does not open the choice.
 - Code: `dusk-till-dawn/main/disk_repair/DiskRepairSpot.cs`.
 
+### Cooling failure steps
+
+Follows `docs/game-v1.md` §8 (Restart AC → wait below 32 °C → reboot servers).
+
+1. **Restart cooling** at the rack: the AC runs again and Heat starts to drop. The Incident timer stops, since the rest is waiting, not the player's fault.
+2. **Wait** until the room is below 32 °C.
+3. **Reboot servers** at the rack, only if they shut down (Auto-shutdown). Above 32 °C, Reboot does nothing and costs nothing.
+
+- **Resolved** when Heat is below 32 °C and the servers are running. The points are paid then, with the fast bonus counted from the time left when the cooling was restarted.
+- Exception: if the servers are off and the battery is empty, they cannot be rebooted until the sun charges it (06:00). The Incident is then Resolved as soon as the room is below 32 °C: the cooling is done, and the servers being off already drains the SLA.
+- On screen: the dashboard shows the Incident as **Recovering**, or **Servers off** once only the reboot is left (a symptom, not the fix).
+- While an Incident is Recovering, new Incidents keep arriving: for the spawn rate it counts as done, so the next one comes one interval after the fix. It can even be another cooling failure (the AC broke again); both then resolve once the room is cool.
+- At 08:00, an Incident still Running or Recovering counts as neither fixed nor failed in the night report: it is frozen with the night.
+- Code: `game-core/OverheatingServer.cs` (the steps), `game-core/Challenge.cs` (the Recovering state), `game-core/Game.cs` (`FinishRecovered`, called by `Main` after the room tick), `game-core/ServerRoom.cs` (Heat, reboot).
+
 ## 4. Challenges per night (proposal, to validate with the team)
 
 Our six challenges mapped to the v1 incidents (`docs/game-v1.md` §8):

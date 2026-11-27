@@ -10,6 +10,7 @@ Paths from the repo root. `dtd/` = `dusk-till-dawn/`. Open these first, search o
 | Incidents (code name Challenge) | `game-core/Challenge.cs`, one file per challenge (`Fire.cs`, …); rules in `docs/player-flow/challenges.md`; Servers and Clients they hit: `game-core/Servers/` |
 | Incident spawn rate / which incident spawns (random order) / per night | `game-core/ChallengeSpawner.cs` / `game-core/StoreInstancesOfIncidents.cs` / `game-core/NightPlan.cs`; current night in `dtd/main/Main.cs` |
 | Demo run: 3 Incidents easy → hard (Fire, traffic attack, Phishing mail), order, time limits | `game-core/ChallengeLadder.cs` (`Demo`) |
+| Cooling failure steps (when it counts as fixed: below 32 °C, servers running) | `game-core/OverheatingServer.cs` (`IsRecovered`); Recovering state: `game-core/Challenge.cs`; rule in `docs/player-flow/challenges.md` |
 | Player name, points, held item, busy time | `game-core/PlayerProfile.cs` |
 | Points rule (fast bonus, failure penalty) | `game-core/PointsRule.cs`; rule in `docs/player-flow/challenges.md` |
 | Wrong repair action: busy time (5 s), which repairs a busy player cannot do | `game-core/Game.cs` (`WrongActionBusySeconds`, `Repair`) |

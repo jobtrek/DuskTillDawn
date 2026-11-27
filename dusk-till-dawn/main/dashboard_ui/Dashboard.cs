@@ -3,8 +3,8 @@ using DuskTillDawn.Core;
 using Godot;
 
 /// <summary>
-/// Small HUD panel (top right): points, failures out of 3 and every running challenge with its room and timer.
-/// Main calls ShowGame every frame while the dashboard is visible. The dashboard only reads the game; it never changes it.
+/// Small HUD panel (top right): points, failures out of 3 and every running or recovering challenge with its room and timer.
+/// Main calls ShowGame every frame while the dashboard is visible. The dashboard only reads the game and the room; it never changes them.
 /// </summary>
 public partial class Dashboard : CanvasLayer
 {
@@ -37,11 +37,11 @@ public partial class Dashboard : CanvasLayer
         PlayAppear();
     }
 
-    public void ShowGame(SoloGame game)
+    public void ShowGame(SoloGame game, ServerRoom room)
     {
         ShowPoints(game.Players[0].Points);
         ShowFailures(game.Failures, game.IsLost);
-        ShowAlerts(game.Challenges);
+        ShowAlerts(game.Challenges, room);
     }
 
     private void ShowPoints(int points)
@@ -80,13 +80,14 @@ public partial class Dashboard : CanvasLayer
         }
     }
 
-    private void ShowAlerts(IReadOnlyList<Challenge> challenges)
+    private void ShowAlerts(IReadOnlyList<Challenge> challenges, ServerRoom room)
     {
         int shown = 0;
         for (int i = 0; i < challenges.Count; i++)
         {
             Challenge challenge = challenges[i];
-            if (challenge.State != ChallengeState.Running)
+            // A recovering Incident is not Resolved yet, so it stays listed until the room is back to normal.
+            if (challenge.State is not (ChallengeState.Running or ChallengeState.Recovering))
             {
                 continue;
             }
@@ -96,7 +97,7 @@ public partial class Dashboard : CanvasLayer
                 _rows.Add(new AlertRow(_alertList));
             }
 
-            _rows[shown].Show(challenge);
+            _rows[shown].Show(challenge, room);
             shown++;
         }
 
@@ -127,12 +128,16 @@ public partial class Dashboard : CanvasLayer
     /// <summary>One line of the alert list. Texts change only when the shown value changes.</summary>
     private sealed class AlertRow
     {
+        private const string RecoveringLabel = "Recovering";
+        private const string ServersOffLabel = "Servers off";
+
         private readonly HBoxContainer _box;
         private readonly Label _alert;
         private readonly Label _room;
         private readonly Label _time;
         private Challenge? _challenge;
         private int _seconds = -1;
+        private string? _waitLabel;
 
         public AlertRow(VBoxContainer parent)
         {
@@ -149,15 +154,30 @@ public partial class Dashboard : CanvasLayer
             parent.AddChild(_box);
         }
 
-        public void Show(Challenge challenge)
+        public void Show(Challenge challenge, ServerRoom room)
         {
             _box.Visible = true;
-            if (challenge != _challenge)
+            string? waitLabel = WaitLabel(challenge, room);
+            if (challenge != _challenge || waitLabel != _waitLabel)
             {
                 _challenge = challenge;
+                _waitLabel = waitLabel;
                 _seconds = -1;
+                bool calm = waitLabel == RecoveringLabel;
                 _alert.Text = challenge.Alert;
+                _alert.SelfModulate = calm ? Faded : Colors.White;
                 _room.Text = RoomName(challenge.Room);
+                if (waitLabel != null)
+                {
+                    _time.Text = waitLabel;
+                    _time.SelfModulate = calm ? Faded : Colors.White;
+                }
+            }
+
+            // The timer is stopped while it recovers: a label instead of a countdown.
+            if (waitLabel != null)
+            {
+                return;
             }
 
             int seconds = Mathf.CeilToInt(challenge.TimeRemaining);
@@ -169,6 +189,18 @@ public partial class Dashboard : CanvasLayer
             _seconds = seconds;
             _time.Text = $"{seconds / 60}:{seconds % 60:00}";
             _time.SelfModulate = seconds <= UrgentSeconds ? UiMotion.LossTint : Colors.White;
+        }
+
+        // Recovering is calm (the player did their part); "Servers off" is a symptom that still needs the player.
+        // A symptom, never the fix (docs/player-flow/challenges.md, Warning mails).
+        private static string? WaitLabel(Challenge challenge, ServerRoom room)
+        {
+            if (challenge.State != ChallengeState.Recovering)
+            {
+                return null;
+            }
+
+            return room.CanReboot ? ServersOffLabel : RecoveringLabel;
         }
 
         public void Hide()

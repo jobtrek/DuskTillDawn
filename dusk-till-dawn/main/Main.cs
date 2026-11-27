@@ -171,6 +171,8 @@ public partial class Main : Node3D
         {
             _game.Tick(seconds);
             _state.ServerRoom.Tick(seconds, _state.HourOfDay, _game);
+            // After the room tick, so a Recovering Incident sees this frame's heat and server status.
+            _game.FinishRecovered(_state.ServerRoom);
             _faultRisk.Tick(seconds, _state.ServerRoom.PowerDraw);
             _nightLog.Sample(_state);
             _spawner.Tick(seconds);
@@ -196,7 +198,7 @@ public partial class Main : Node3D
         // Only while visible, so a change made at the computer pops once the player walks away.
         if (_dashboard.Visible)
         {
-            _dashboard.ShowGame(_game);
+            _dashboard.ShowGame(_game, _state.ServerRoom);
         }
     }
 
