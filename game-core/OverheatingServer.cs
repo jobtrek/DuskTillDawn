@@ -4,7 +4,7 @@ namespace DuskTillDawn.Core;
 public sealed class OverheatingServer() : Challenge("Temperature too high", Room.Servers, points: 100, durationSeconds: 75)
 {
     public override WarningText Warning => new("Monitoring", "Server room overheating",
-        "Temperature is climbing fast. Restart the cooling.");
+        "Temperature is climbing fast. Check the Heat on Monitoring.");
 
     protected override bool IsRightAction(PlayerAction action)
     {

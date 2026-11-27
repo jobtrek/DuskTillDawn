@@ -4,7 +4,7 @@ namespace DuskTillDawn.Core;
 public sealed class ElectricalFault() : Challenge("Power fault in the basement", Room.Servers, points: 150, durationSeconds: 60)
 {
     public override WarningText Warning => new("Facility", "Electrical fault",
-        "A circuit is shorting. Cut it at the panel.");
+        "A circuit in the basement is shorting. Left alone, it could start a fire.");
 
     protected override bool IsRightAction(PlayerAction action)
     {
