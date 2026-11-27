@@ -15,7 +15,7 @@ Main (Node3D, main/Main.cs)       owns the one GameState and SoloGame, calls Tic
  ├─ Dashboard (dashboard_ui/)     reads SoloGame: points, failures, running challenges
  ├─ Player (player/Player.cs)     CharacterBody3D + camera
  ├─ Basement_Levels               imported .blend, Element States as child nodes
- ├─ DiskRepairSpot (disk_repair/) server room rack: red disk while a BrokenDisk runs, E repairs it (not while Busy)
+ ├─ DiskRepairSpot (disk_repair/) server room rack: red disk while a BrokenDisk runs, E opens RackChoice (rack_choice_ui/), the choice goes to Game.Repair (not while Busy)
  ├─ PanelRepairSpot (solar_repair/) Company roof: LightningBolt strikes a SolarPanel, each broken one smokes (PanelDamage) and has its own E zone (not while Busy)
  ├─ FireEffect (fire/)           server room: flickering flames + smoke while a Fire runs
  ├─ ExtinguisherSpot (fire/)     server room wall: E puts the Fire out (not while Busy)
