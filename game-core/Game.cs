@@ -13,6 +13,9 @@ public abstract class Game
     // Placeholder until the team agrees on the number (issue #105).
     private const double SlaDrainPerClient = 0.05;
 
+    // Placeholder until the team validates the number (issue #136).
+    public const double WrongActionBusySeconds = 5;
+
     protected Game(IEnumerable<PlayerProfile> players)
     {
         _players = [.. players];
@@ -104,19 +107,41 @@ public abstract class Game
     }
 
     // A player's fix reaches every challenge; each one decides whether this action repairs it.
-    public void Repair(PlayerProfile player, PlayerAction action)
+    // Guessing has a price: an action that fixes nothing while something is broken wastes the player's time.
+    public bool Repair(PlayerProfile player, PlayerAction action)
     {
+        if (player.IsBusy)
+        {
+            return false;
+        }
+
+        bool somethingWasBroken = IsRunning<Challenge>();
+        bool fixedSomething = false;
         foreach (Challenge challenge in _challenges)
         {
-            challenge.Repair(player, action);
+            if (challenge.Repair(player, action))
+            {
+                fixedSomething = true;
+            }
+        }
+
+        if (!fixedSomething && somethingWasBroken)
+        {
+            player.MakeBusy(WrongActionBusySeconds);
         }
 
         RefreshServerStatus();
+        return fixedSomething;
     }
 
     // Some tools only handle one problem per use (one extinguisher, one fire): the oldest running one is fixed.
     public bool RepairOne(PlayerProfile player, PlayerAction action)
     {
+        if (player.IsBusy)
+        {
+            return false;
+        }
+
         for (var i = 0; i < _challenges.Count; i++)
         {
             if (_challenges[i].Repair(player, action))
@@ -131,6 +156,11 @@ public abstract class Game
 
     public bool RepairPanel(PlayerProfile player, SolarPanel panel)
     {
+        if (player.IsBusy)
+        {
+            return false;
+        }
+
         for (var i = 0; i < _challenges.Count; i++)
         {
             if (_challenges[i] is DamagedSolarPanel damaged && damaged.Target == panel)
@@ -156,6 +186,11 @@ public abstract class Game
         }
 
         // A for loop over the list keeps the tick free of allocations.
+        for (var i = 0; i < _players.Count; i++)
+        {
+            _players[i].Tick(seconds);
+        }
+
         for (var i = 0; i < _challenges.Count; i++)
         {
             Challenge challenge = _challenges[i];

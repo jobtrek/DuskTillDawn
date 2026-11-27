@@ -58,6 +58,13 @@ public partial class DiskRepairSpot : Node3D
             prompt = $"Too hot to reboot: wait until {ServerRoom.ThrottleHeat:0} °C";
         }
 
+        PlayerProfile player = _game.Players[0];
+        bool busyRepairing = player.IsBusy && (broken || _game.IsRunning<OverheatingServer>());
+        if (busyRepairing)
+        {
+            prompt = BusyText.For(player.BusySecondsLeft);
+        }
+
         _prompt.Visible = _playerInRange && prompt != null;
         if (!_prompt.Visible)
         {
@@ -65,7 +72,7 @@ public partial class DiskRepairSpot : Node3D
         }
 
         _prompt.SetText(prompt!);
-        if (Input.IsActionJustPressed(RepairAction))
+        if (!busyRepairing && Input.IsActionJustPressed(RepairAction))
         {
             UseRack(broken);
         }

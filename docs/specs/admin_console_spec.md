@@ -37,7 +37,7 @@ A window inside `Map/Screen`, above `Icons`, below `BlockReveal`.
 | Tabs  | 25 %  | One tab per system. A red dot on a tab whose system has an Active Incident. |
 | Panel | 75 %  | The state of that system and its action buttons.                            |
 
-- Buttons always work, even with no Incident (e.g. restarting the app when nothing is wrong).
+- Repair buttons are greyed while the player is Busy (the 5 s after a wrong action during an Incident).
 - Each step must be done in order. A later step is greyed until the earlier one is done.
 
 ## Signals (UI emits, the game decides)
@@ -49,6 +49,5 @@ A window inside `Map/Screen`, above `Icons`, below `BlockReveal`.
 
 ## Open questions
 
-1. Does doing an action when nothing is wrong cost anything? (e.g. rebooting servers costs SLA while they are down.)
-2. Should an action take time (a progress bar), so the player feels the pressure?
-3. Does the red dot on a tab give away too much? It skips the "diagnose" step.
+1. Should an action take time (a progress bar), so the player feels the pressure?
+2. Does the red dot on a tab give away too much? It skips the "diagnose" step.

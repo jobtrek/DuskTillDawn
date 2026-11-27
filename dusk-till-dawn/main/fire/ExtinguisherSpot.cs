@@ -55,6 +55,11 @@ public partial class ExtinguisherSpot : Node3D
         {
             _prompt.SetText("Press E to pick up the extinguisher");
         }
+        else if (canUse && profile.IsBusy)
+        {
+            // Picking up is not a repair, so it still works while busy; only spraying waits.
+            _prompt.SetText(BusyText.For(profile.BusySecondsLeft));
+        }
         else if (canUse)
         {
             _prompt.SetText("Press E to use the extinguisher");
@@ -66,7 +71,7 @@ public partial class ExtinguisherSpot : Node3D
             {
                 PickUp(profile);
             }
-            else if (canUse)
+            else if (canUse && !profile.IsBusy)
             {
                 UseExtinguisher(profile);
             }

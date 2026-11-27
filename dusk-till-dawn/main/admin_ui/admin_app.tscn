@@ -133,6 +133,12 @@ theme_override_constants/margin_bottom = 16
 layout_mode = 2
 theme_override_constants/separation = 24
 
+[node name="Busy" type="Label" parent="Body/Panel/Sections"]
+visible = false
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Wrong action: busy 5 s"
+
 [node name="Firewall" type="VBoxContainer" parent="Body/Panel/Sections"]
 layout_mode = 2
 theme_override_constants/separation = 12

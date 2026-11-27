@@ -15,18 +15,16 @@ Servers, roof panels, server room, weather and sky: [game-core-world.md](game-co
 | `ChallengeLadder.cs` | Demo run: Ladder steps from Easy to Hard (`Demo`: Fire 90 s, `SecurityAttack` 75 s, Phishing mail 60 s). Listens to `Game` events: fixed → `StepWon` (UI calls `Continue`), failed → `Lost` (`Start` again). Not wired in Godot yet |
 | `NightPlan.cs` | Per night (1 to 5): which challenges can spawn, the spawn interval (180 s down to 75 s) and how many Phishing mails become Fake e-mails; table in `docs/player-flow/challenges.md` §4 |
 | `StoreInstancesOfIncidents.cs` | Holds the incident factories and picks one at random (`PickRandom`); optional `Random` for a fixed seed |
-| `PlayerProfile.cs` | Name, points (never below 0), room |
+| `PlayerProfile.cs` | Name, points (never below 0), held item, busy time after a wrong action (`MakeBusy`, `IsBusy`, `BusySecondsLeft`, `Tick`) |
 | `PointsRule.cs` | Points for a challenge: +50 % for a fast repair, −50 % for every player on a failure; `NightBonus` gives +200 plus 1 per SLA % for a won night |
-| `Game.cs` | Abstract game: players, challenges, failures, solved. `Tick` moves the challenges; `SlaDrainPerMinute` = distinct Clients on broken Servers × `SlaDrainPerClient` (each Client once), plus the flat drain of running ones with no Targets; sets each target's `Server.Status` to Down while it runs, Ok once it is fixed or failed; raises `ChallengeLaunched` (Main sends it to `GameState.ReceiveWarning`); each mode says when it is lost or finished |
+| `Game.cs` | Abstract game: players, challenges, failures, solved. `Tick` moves the players' busy time and the challenges; `Repair` returns whether it fixed something, refuses a busy player, and makes the player busy for `WrongActionBusySeconds` (5 s) when it fixes nothing while a challenge runs; `SlaDrainPerMinute` = distinct Clients on broken Servers × `SlaDrainPerClient` (each Client once), plus the flat drain of running ones with no Targets; sets each target's `Server.Status` to Down while it runs, Ok once it is fixed or failed; raises `ChallengeLaunched` (Main sends it to `GameState.ReceiveWarning`); each mode says when it is lost or finished |
 | `SoloGame.cs` | One player; lost after 3 failed challenges |
 | `DuoGame.cs` | Two-player race: ends after `ChallengeCount` challenges, `Winner` has the most points (null on a tie). Parked (contract: 1 player), not wired in Godot |
 | `Inbox.cs`, `Mail.cs` | News and Phishing schedule (`emails.json`), arrival, read and phishing-report state; `GameState.ReceiveWarning` adds an Incident's Warning mail (`Challenge.Warning`, linked by `Mail.ChallengeId`) |
 | `PhishingIncidents.cs` | An arriving Phishing mail launches a `PhishingEmail` (one at a time, `NightPlan.FakeEmails` per night); `Report(mailId)` repairs it and returns the points (Warning → Active after 1/5 of its time → Escalated after 4/5: 60 s and 4 min of the usual 5 min); `SendNow` makes one arrive at once for the Demo run |
 | `HeldItem.cs` | What the player carries (one item at a time) |
 
-Built so far vs v1 target ([game/rules-v1.md](../game/rules-v1.md)): 8 challenges, states
-Pending → Running → Succeeded/Failed; `Main` spawns the night 1 plan (`NightPlan`): `BrokenDisk` (hits one random Server),
-`SecurityAttack`, `OverheatingServer`, and lets `ElectricalFaultRisk` spawn faults.
+Built vs v1 ([game/rules-v1.md](../game/rules-v1.md)): 8 challenges, Pending → Running → Succeeded/Failed; `Main` plays night 1 (`NightPlan`) plus `ElectricalFaultRisk` faults.
 
 ## Rules for changes
 
