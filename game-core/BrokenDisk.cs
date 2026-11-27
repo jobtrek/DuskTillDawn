@@ -21,7 +21,7 @@ public sealed class BrokenDisk : Challenge
         {
             string server = TargetNames(whenNone: "a server");
             return new("Monitoring", $"Disk failing on {server}",
-                $"Disk errors reported on {server}. Replace the drive before it fails.");
+                $"Disk errors reported on {server}. Check it in the Servers tab of Monitoring.");
         }
     }
 

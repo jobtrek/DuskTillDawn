@@ -4,7 +4,7 @@ namespace DuskTillDawn.Core;
 public sealed class UnpluggedCable() : Challenge("A server is offline", Room.Servers, points: 100, durationSeconds: 60)
 {
     public override WarningText Warning => new("Monitoring", "Network link down",
-        "A cable came loose. Plug it back in.");
+        "A server stopped answering on the network. Go and look in the server room.");
 
     protected override bool IsRightAction(PlayerAction action)
     {

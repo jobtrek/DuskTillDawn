@@ -58,6 +58,15 @@ In two-player mode, both players get the same challenge at the same time. The fi
 - On screen: "Wrong action: busy N s" on the admin console (repair buttons greyed) and on the rack, roof panel and extinguisher prompts.
 - Code: `game-core/Game.cs` (`Repair`, `WrongActionBusySeconds`), `game-core/PlayerProfile.cs`; text: `dusk-till-dawn/main/BusyText.cs`.
 
+### Warning mails
+
+- A Warning mail says **what is going wrong** and **where it shows** (Monitoring, a floor), never the action that fixes it.
+- Example: "Someone is flooding the network. Check the traffic on Monitoring.", not "Turn on the traffic filter."
+- The dashboard alerts in §2 follow the same rule: a symptom, never a fix.
+- Why: the player diagnoses on the computer first, then walks to the fix. With the Busy rule, guessing costs time.
+- Exception: the Fire mail keeps "Grab an extinguisher". The flames already make the fix obvious.
+- Code: the `Warning` of each Incident in `game-core/` (`SecurityAttack.cs`, `Fire.cs`, …).
+
 ## 4. Challenges per night (proposal, to validate with the team)
 
 Our six challenges mapped to the v1 incidents (`docs/game-v1.md` §8):
